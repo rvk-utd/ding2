@@ -219,6 +219,8 @@ projects[menu_position][version] = "1.1"
 
 projects[message][subdir] = "contrib"
 projects[message][version] = "1.10"
+projects[message][patch][2051751] = "https://www.drupal.org/files/message-primary_nullable-2051751-7.patch"
+
 
 projects[metatag][subdir] = "contrib"
 projects[metatag][version] "1.10"
