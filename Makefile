@@ -28,7 +28,8 @@ circle-setup:
 	cd $(DRUPAL_SITE_PATH) && drush site-install ding2 --db-url=mysql://ubuntu@127.0.0.1/circle_test -y
 
 circle-run-unit-tests:
-	cd $(DRUPAL_SITE_PATH)
+	cd $(DRUPAL_SITE_PATH) && drush en ding_test -y
 	# Run all ding unit-tests
-	php scripts/run-tests.sh --xml $(CIRCLE_TEST_REPORTS)/ding-unittest "Ding! - Ting search unittest"
+	# Circleci has a proxy for the php-executable which confuses c
+	cd $(DRUPAL_SITE_PATH) && php scripts/run-tests.sh --php /opt/circleci/.phpenv/shims/php --xml $(CIRCLE_TEST_REPORTS)/ding-unittest "Ding! - Ting search unittest"
 
