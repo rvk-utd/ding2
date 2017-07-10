@@ -28,7 +28,7 @@ dependencies:
 test:
   override:
     - make circle-setup
-    - make circle-run-tests
+    - make circle-run-unit-tests
 
   post:
     # Clean up after site install.
