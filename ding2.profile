@@ -6,7 +6,7 @@
  */
 
 // Initialise profiler.
-!function_exists('profiler_v2') ? require_once 'libraries/profiler/profiler.inc' : FALSE;
+!function_exists('profiler_v2') ? require_once __DIR__ . '/libraries/profiler/profiler.inc' : FALSE;
 profiler_v2('ding2');
 
 /**
