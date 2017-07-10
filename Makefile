@@ -20,7 +20,7 @@ circle-setup:
 	# profile specified in the make file we use the one we have
 	# just build. This way we do not have to update drupal.make
 	# for each build.
-	drush make drupal.make --projects=drupal -y $(DRUPAL_SITE_PATH)
+	drush make drupal.make --concurrency=4 --projects=drupal -y $(DRUPAL_SITE_PATH)
 	# Copy the current profile which has just been built into Drupal core
 	mkdir $(DRUPAL_SITE_PATH)/profiles/ding2
 	cp -R ./* $(DRUPAL_SITE_PATH)/profiles/ding2/
