@@ -31,6 +31,7 @@ circle-run-unit-tests:
 	cd $(DRUPAL_SITE_PATH)/profiles/ding2/modules/ding_test && composer install
 	cd $(DRUPAL_SITE_PATH) && drush en ding_test -y
 	# Run all ding unit-tests
+	mkdir -p $(CIRCLE_TEST_REPORTS)/phpunit
 	# Circleci has a proxy for the php-executable which confuses run-tests.sh
 	cd $(DRUPAL_SITE_PATH) && php scripts/run-tests.sh --php /opt/circleci/.phpenv/shims/php --xml $(CIRCLE_TEST_REPORTS)/phpunit "Ding! - Ting search unittest"
 
