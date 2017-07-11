@@ -21,6 +21,12 @@ circle-setup:
 	# just build. This way we do not have to update drupal.make
 	# for each build.
 	drush make drupal.make --projects=drupal -y $(DRUPAL_SITE_PATH)
+
+	# As we're building core seperate from ding we're missing a patch in
+	# drupal.make to ding2 itself, apply it manually.
+	# Notice: this patch has to be upstreamed
+	patch -p1 < ding-core-patches/bpi-nullable-primary-key.patch
+
 	# Copy the current profile which has just been built into Drupal core
 	mkdir $(DRUPAL_SITE_PATH)/profiles/ding2
 	cp -R ./* $(DRUPAL_SITE_PATH)/profiles/ding2/
