@@ -1,0 +1,12 @@
+diff --git a/modules/bpi/bpi.install b/modules/bpi/bpi.install
+index 6165368..3f3bbc2 100644
+--- a/modules/bpi/bpi.install
++++ b/modules/bpi/bpi.install
+@@ -15,6 +15,7 @@ function bpi_schema() {
+     'fields' => array(
+       'id' => array(
+         'type' => 'serial',
++        'not null' => TRUE,
+       ),
+       'nid' => array(
+         'type' => 'int',
