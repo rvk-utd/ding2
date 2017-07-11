@@ -46,6 +46,7 @@ projects[date][version] = "2.8"
 projects[dibs][subdir] = "contrib"
 projects[dibs][version] = "1.0"
 projects[dibs][patch][] = "http://drupal.org/files/dibs-2107389-2.patch"
+projects[dibs][patch][2812891] = "https://www.drupal.org/files/issues/mysql_5.7_compatibility-2812891-2.patch"
 
 projects[diff][subdir] = "contrib"
 projects[diff][version] = "3.2"
@@ -219,6 +220,7 @@ projects[menu_position][version] = "1.1"
 
 projects[message][subdir] = "contrib"
 projects[message][version] = "1.10"
+projects[message][patch][2051751] = "https://www.drupal.org/files/message-primary_nullable-2051751-7.patch"
 
 projects[metatag][subdir] = "contrib"
 projects[metatag][version] "1.10"
@@ -500,7 +502,7 @@ libraries[zen-grids][download][tag] = "1.4"
 libraries[zen-grids][destination] = "libraries"
 
 libraries[jquery.imgareaselect][download][type] = "get"
-libraries[jquery.imgareaselect][download][url] =  http://odyniec.net/projects/imgareaselect/jquery.imgareaselect-0.9.10.zip
+libraries[jquery.imgareaselect][download][url] =  https://github.com/odyniec/imgareaselect/archive/v0.9.10.zip
 libraries[jquery.imgareaselect][directory_name] = "jquery.imgareaselect"
 libraries[jquery.imgareaselect][destination] = "libraries"
 

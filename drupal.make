@@ -19,3 +19,6 @@ projects[ding2][type] = "profile"
 projects[ding2][download][type] = "git"
 projects[ding2][download][url] = "git@github.com:ding2/ding2.git"
 projects[ding2][download][tag] = "7.x-3.0.2"
+; Temporary patch to make ding installable on mysql 5.7, should be removed when
+; upstreamed.
+projects[ding2][patch][] = ding-core-patches/bpi-nullable-primary-key.patch
