@@ -49,6 +49,6 @@ circle-run-unit-tests:
 	# so we have to specify the full path to the executable.
 	# Tests to be run are referenced as a comma-seperated list of group-names.
 	cd $(DRUPAL_SITE_PATH) && php scripts/run-tests.sh --php /opt/circleci/.phpenv/shims/php --xml $(CIRCLE_TEST_REPORTS)/phpunit \
-	  "Ding! - Ting search unittest"
+	  "Ding! - Ting search unittest","Ding! - Aleph unit tests"
 	cd $(DRUPAL_SITE_PATH) && php scripts/run-tests.sh --php /opt/circleci/.phpenv/shims/php --xml $(CIRCLE_TEST_REPORTS)/phpunit \
 	  --class ConnieSearchSearchProviderImplementationTestCase

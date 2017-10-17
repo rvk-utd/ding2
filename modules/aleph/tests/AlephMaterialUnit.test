@@ -6,12 +6,11 @@
  */
 
 use Drupal\aleph\Aleph\AlephMaterial;
-use Drupal\ding_test\DingUnitTestBase;
 
 /**
  * Class AlephMaterialUnitTest.
  */
-class AlephMaterialUnitTest extends DingUnitTestBase {
+class AlephMaterialUnitTest extends DrupalWebTestCase {
 
   /**
    * Returns the unit test description.
@@ -32,7 +31,7 @@ class AlephMaterialUnitTest extends DingUnitTestBase {
    * Parent sets up auto loading and our test-dependencies.
    */
   public function setUp() {
-    parent::setUp(['aleph']);
+    parent::setUp();
   }
 
   /**
