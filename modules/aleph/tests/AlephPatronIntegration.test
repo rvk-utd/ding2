@@ -1,0 +1,78 @@
+<?php
+
+/**
+ * @file
+ * Contains the Aleph Patron specific integration tests.
+ */
+
+use Drupal\ding_test\DingUnitTestBase;
+use Drupal\aleph\Aleph\AlephClient;
+use Drupal\aleph\Aleph\Handler\AlephPatronHandler;
+
+/**
+ * Class AlephPatronIntegrationTest.
+ */
+class AlephPatronIntegrationTest extends DingUnitTestBase {
+
+  private $client;
+
+  /**
+   * Returns the integration test description.
+   *
+   * @return array
+   *    The integration test description.
+   */
+  public static function getInfo() {
+    return array(
+      'name' => 'Aleph Patron',
+      'description' => 'Aleph Patron integration tests.',
+      'group' => 'Ding! - Aleph integration tests',
+      'dependencies' => array('ding_test'),
+    );
+  }
+
+  /**
+   * Parent sets up auto loading and our test-dependencies.
+   */
+  public function setUp() {
+    parent::setUp();
+    $this->client = new AlephClient('http://snorri.lb.is/X');
+  }
+
+  /**
+   * Test a valid login.
+   */
+  public function testValidLogin() {
+    $patron_handler = new AlephPatronHandler($this->client);
+    $result = $patron_handler->authenticate('4004006985', 'test1');
+    $this->assertTrue($result->isAuthenticated());
+  }
+
+  /**
+   * Test an invalid login.
+   */
+  public function testInvalidLogin() {
+    $patron_handler = new AlephPatronHandler($this->client);
+    $result = $patron_handler->authenticate('4004006985', 'invalid-pin');
+    $this->assertFalse($result->isAuthenticated());
+  }
+
+  /**
+   * Test patron 3 should be blocked.
+   */
+  public function testBlockedPatron() {
+    $patron_handler = new AlephPatronHandler($this->client);
+    $result = $patron_handler->authenticate('4004006987', 'test3');
+    $this->assertTrue($result->isBlocked());
+  }
+
+  /**
+   * Test patron 1 should not blocked.
+   */
+  public function testNonBlockedPatron() {
+    $patron_handler = new AlephPatronHandler($this->client);
+    $result = $patron_handler->authenticate('4004006985', 'test1');
+    $this->assertFalse($result->isBlocked());
+  }
+
+}

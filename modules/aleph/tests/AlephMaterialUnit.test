@@ -1,0 +1,60 @@
+<?php
+
+/**
+ * @file
+ * Contains the Aleph Material specific unit tests.
+ */
+
+use Drupal\aleph\Aleph\Entity\AlephMaterial;
+use Drupal\ding_test\DingUnitTestBase;
+
+/**
+ * Class AlephMaterialUnitTest.
+ */
+class AlephMaterialUnitTest extends DingUnitTestBase {
+
+  /**
+   * Returns the unit test description.
+   *
+   * @return array
+   *    The unit test description.
+   */
+  public static function getInfo() {
+    return array(
+      'name' => 'Aleph Material',
+      'description' => 'Aleph Material unit tests.',
+      'group' => 'Ding! - Aleph unit tests',
+      'dependencies' => array('ding_test'),
+    );
+  }
+
+  /**
+   * Parent sets up auto loading and our test-dependencies.
+   */
+  public function setUp() {
+    parent::setUp(['aleph']);
+  }
+
+  /**
+   * Test loan titles from local XML.
+   */
+  public function testLoanTitlesFromLocalXml() {
+    $xml_data = simplexml_load_file(__DIR__ . '/bor-info.xml');
+    $material = new AlephMaterial();
+    $loans = $material::loansFromBorInfo($xml_data);
+    $returned_loan_titles = array();
+    $expected_loan_titles = array(
+      'Merkt : glæpasaga / Emelie Schepp ; [Kristján H. Kristjánsson þýddi] ; lestur Kristján Frankl',
+      'Apt pupil [hljóðbók] / Stephen King ; read by Frank Muller.',
+      'Merkt : glæpasaga / Emelie Schepp ; Kristján H. Kristjánsson þýddi.',
+      'Spóla systir / [texti og myndir] Gillian Johnson ; Böðvar Guðmundsson íslenskaði.',
+      'Gengið af göflunum / André Franquin ; [þýðing: Aníta K. Jónsdóttir].',
+      'Svörtuloft / Arnaldur Indriðason.'
+    );
+    foreach ($loans as $key => $loan) {
+      $returned_loan_titles[$key] = $loan->getTitle();
+    }
+    $this->assertIdentical($returned_loan_titles, $expected_loan_titles);
+  }
+
+}

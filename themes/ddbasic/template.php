@@ -67,7 +67,7 @@ function ddbasic_preprocess_html(&$vars) {
   libraries_load('jquery.imagesloaded');
   libraries_load('html5shiv');
   libraries_load('masonry');
-
+  libraries_load('slick');
 }
 
 /**
@@ -443,12 +443,10 @@ function ddbasic_preprocess_menu_link(&$variables) {
         }
         break;
 
-      case 'view':
-        if ($path[0] === 'user') {
-          $notifications = ding_message_get_message_count();
-          if (!empty($notifications)) {
-            $variables['element']['#title'] .= ' <span class="menu-item-count">' . $notifications . '</span>';
-          }
+      case 'my-library':
+        $notifications = ding_message_get_message_count();
+        if (!empty($notifications)) {
+          $variables['element']['#title'] .= ' <span class="menu-item-count">' . $notifications . '</span>';
         }
         break;
     }
@@ -724,28 +722,6 @@ function ddbasic_process_page(&$vars) {
 }
 
 /**
- * Preprocess function for ting_object theme function.
- */
-function ddbasic_preprocess_ting_object(&$vars) {
-
-  switch ($vars['elements']['#entity_type']) {
-    case 'ting_object':
-
-      switch ($vars['elements']['#view_mode']) {
-        // Teaser.
-        case 'teaser':
-
-          // Check if overlay is disabled and set class.
-          if (theme_get_setting('ting_object_disable_overlay') == TRUE) {
-            $vars['classes_array'][] = 'no-overlay';
-          }
-          break;
-      }
-      break;
-  }
-}
-
-/**
  * Implements hook_process_ting_object().
  *
  * Adds wrapper classes to the different groups on the ting object.
@@ -810,6 +786,51 @@ function ddbasic_process_ting_object(&$vars) {
               $vars['object']
             ), 0, 1);
           }
+
+          // Check if teaser has rating function and remove abstract.
+          if (!empty($vars['content']['group_text']['group_rating']['ding_entity_rating_action'])) {
+            unset($vars['content']['group_text']['ting_abstract']);
+          }
+
+          break;
+
+        // Teaser no overlay.
+        case 'teaser_no_overlay':
+          $vars['content']['group_text']['read_more_button'] = array(
+            array(
+              '#theme' => 'link',
+              '#text' => t('Read more'),
+              '#path' => $uri_object['path'],
+              '#options' => array(
+                'attributes' => array(
+                  'class' => array(
+                    'action-button',
+                    'read-more-button',
+                  ),
+                ),
+                'html' => FALSE,
+              ),
+            ),
+            '#weight' => 9998,
+          );
+
+          if ($vars['object']->is('reservable')) {
+            $vars['content']['group_text']['reserve_button'] = ding_reservation_ding_entity_buttons(
+              'ding_entity',
+              $vars['object'],
+              'ajax'
+            );
+          }
+          if ($vars['object']->online_url) {
+            // Slice the output, so it only usese the online link button.
+            $vars['content']['group_text']['online_link'] = array_slice(ting_ding_entity_buttons(
+              'ding_entity',
+              $vars['object']
+            ), 0, 1);
+          }
+
+          //Truncate default title
+          $vars['static_title'] = '<div class="field-name-ting-title"><h2>' . add_ellipsis($vars['elements']['group_text']['group_inner']['ting_title'][0]['#markup'], 40) . '</h2></div>';
 
           // Check if teaser has rating function and remove abstract.
           if (!empty($vars['content']['group_text']['group_rating']['ding_entity_rating_action'])) {
@@ -1284,6 +1305,29 @@ function ddbasic_libraries_info() {
       ),
       'files' => array(
         'js' => array('dist/masonry.pkgd.min.js'),
+      ),
+    ),
+    'slick' => array(
+      'name' => 'Slick.js carousel library',
+      'path' => 'slick',
+      'vendor url' => 'https://github.com/kenwheeler/slick',
+      'download url' => 'https://github.com/kenwheeler/slick/archive/1.8.0.zip',
+      'version arguments' => array(
+        'file' => 'slick/slick.js',
+        'pattern' => '/Version:\s+([0-9a-zA-Z\.-]+)/',
+        'lines' => 15,
+      ),
+      'files' => array(
+        'js' => array('slick.min.js'),
+        'css' => array('slick.css'),
+      ),
+      'variants' => array(
+        'non-minified' => array(
+          'files' => array(
+            'js' => array('slick.js'),
+            'css' => array('slick.css'),
+          ),
+        ),
       ),
     ),
   );

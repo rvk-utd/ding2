@@ -1,0 +1,12 @@
+diff --git a/ding2.profile b/ding2.profile
+index 4f8e2d67..5ccbcdb9 100644
+--- a/ding2.profile
++++ b/ding2.profile
+@@ -318,6 +318,7 @@ function _ding2_remove_form_requirements(&$value, $key) {
+ function ding2_module_selection_form($form, &$form_state) {
+   // Available providers.
+   $providers = array(
++    'aleph' => 'Aleph',
+     'alma' => 'Alma',
+     'openruth' => 'Openruth',
+   );

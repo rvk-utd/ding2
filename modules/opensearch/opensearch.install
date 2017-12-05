@@ -9,6 +9,13 @@ function opensearch_install() {
 }
 
 /**
+ * Migrate variables from Ting to Opensearch.
+ */
+function opensearch_update_7000() {
+  opensearch_migrate_settings();
+}
+
+/**
  * Rename old ting variables to opensearch scope.
  */
 function opensearch_migrate_settings() {

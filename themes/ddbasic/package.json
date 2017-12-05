@@ -22,6 +22,8 @@
     "stylelint-config-standard": "^16.0.0"
   },
   "devDependencies": {
+    "gulp-batch": "^1.0.5",
+    "gulp-watch": "^4.3.11",
     "kss": "^3.0.0-beta.18"
   },
   "stylelint": {

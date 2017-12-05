@@ -1,0 +1,458 @@
+<?php
+
+/**
+ * @file
+ * Main module file for Primo.
+ */
+
+use Concat\Http\Middleware\Logger;
+use Drupal\xautoload\Adapter\LocalDirectoryAdapter;
+use Drupal\PSR3\Logger\Watchdog;
+use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\MessageFormatter;
+use Primo\BriefSearch\Client;
+use Primo\BriefSearch\Document;
+use Primo\Exception\TransferException;
+use Primo\Ting\ObjectMapper;
+use Primo\Ting\Result;
+
+// Cache entry type.
+define('PRIMO_CACHE_TING_OBJECT', 'primo-object');
+define('PRIMO_DEFAULT_CACHE_LIFETIME', 900);
+define('PRIMO_STATIC_CACHE', 'primo.module:_primo_cache');
+
+/**
+ * Implements hook_ding_provider().
+ */
+function primo_ding_provider() {
+  return array(
+    'title' => 'Primo provider',
+    'settings' => 'primo_settings_form',
+    'provides' => array(
+      'search' => array(
+        'prefix' => 'search',
+        'file' => 'includes/primo.search.inc',
+      ),
+    ),
+  );
+}
+
+/**
+ * Implements hook_menu().
+ */
+function primo_menu() {
+  $items = array();
+
+  // We also provide a cover implementation. Add a shortcut to the settings form
+  // under the cover settings as well.
+  $items['admin/config/ting/covers/primo'] = array(
+    'title' => 'Primo',
+    'description' => 'Configure integration with Primo service.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('primo_settings_form'),
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_LOCAL_TASK,
+  );
+
+  return $items;
+}
+
+/**
+ * Setting form for Primo configuration.
+ *
+ * @return []
+ *   A Form API array
+ */
+function primo_settings_form() {
+  $form = array();
+
+  $form['primo'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Primo service settings'),
+    '#tree' => FALSE,
+  );
+
+  $form['primo']['primo_base_url'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Base URL'),
+    '#description' => t('Base URL for Primo service.'),
+    '#required' => TRUE,
+    '#default_value' => variable_get('primo_base_url', ''),
+  );
+
+  $form['primo']['primo_institution_code'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Institution code'),
+    '#description' => t('Relevant for restricted scopes or for when searching against Primo Central.'),
+    '#required' => TRUE,
+    '#default_value' => variable_get('primo_institution_code', ''),
+  );
+
+  $form['primo']['primo_location_scopes'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Search scope'),
+    '#description' => t('List of institution codes the searches should be scoped within. The list must be comma-seperated without spaces and suitable for a local loc parameter. See <a href="@briefsearch-documentation">the Brief Search documentation</a>',
+      ['@briefsearch-documentation' => 'https://developers.exlibrisgroup.com/primo/apis/webservices/xservices/search/briefsearch']),
+    '#required' => FALSE,
+    '#default_value' => variable_get('primo_location_scopes', ''),
+  );
+
+  $form['primo']['primo_sourceid'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Source ID'),
+    '#description' => t('Used for creating record ID from source record ID.'),
+    '#required' => TRUE,
+    '#default_value' => variable_get('primo_sourceid', ''),
+  );
+
+  $form['primo']['primo_source_systems'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Source systems'),
+    '#default_value' => _primo_textarea_array_value(variable_get('primo_source_systems', [])),
+    '#value_callback' => '_primo_textarea_value_array',
+    '#description' => t("System identifies the system used by the source repositories indexed by Primo. Examples: Aleph, ADAM, MetaLib, SFX, and Digitool).\nEnter one per line and note that spelling must be exactly as it appears in Primo."),
+    '#required' => TRUE,
+  );
+
+  $form['primo']['primo_enable_logging'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Enable logging'),
+    '#default_value' => variable_get('primo_enable_logging', FALSE),
+    '#description' => t('Logs requests to the Primo webservice.'),
+  );
+
+  $form['#submit'][] = 'primo_settings_form_submit';
+  return system_settings_form($form);
+}
+
+/**
+ * Submit handler for the primo provider settings form.
+ */
+function primo_settings_form_submit($form, &$form_state) {
+  // Do some basic whitespace cleanup in case the user was sloppy.
+  if (isset($form_state['values']['primo_location_scopes'])) {
+    $form_state['values']['primo_location_scopes'] = trim(str_replace(' ', '', $form_state['values']['primo_location_scopes']));
+  }
+}
+
+/**
+ * Value callback for text area elements which represent arrays of strings.
+ *
+ * This callback is useful for textareas where the user is supposed to enter
+ * one value per line. The contents of the textarea is then mapped from a
+ * multiline string to an array of singleline strings.
+ *
+ * Use with #value_callback
+ *
+ * @param array $element
+ *   The form element.
+ * @param string|FALSE $input
+ *   The user input string. FALSE if there is no user input.
+ * @param array $form_state
+ *   The form state.
+ *
+ * @return string[]
+ *   Array of single-line strings.
+ */
+function _primo_textarea_value_array(array $element, $input = FALSE, $form_state = []) {
+  // Return any default value if no value is provided.
+  if ($input === FALSE) {
+    return isset($element['#default_value']) ? $element['#default_value'] : NULL;
+  }
+
+  // Split into multiple single-line strings and clean up whitespace.
+  $elements = explode("\n", $input);
+  return array_map('trim', $elements);
+}
+
+/**
+ * Converts an a array of strings to a single multiline array.
+ *
+ * This is basicly the reverse of _primo_textarea_value_array() and useful for
+ * displaying an array of strings in a textarea.
+ *
+ * @param mixed $array
+ *   Input value. Should be an array of strings.
+ *
+ * @return string
+ *   A single multiline string.
+ */
+function _primo_textarea_array_value($array) {
+  return implode("\n", $array);
+}
+
+/**
+ * Get a configured client for the Primo Brief Search service ready for use.
+ *
+ * @return \Primo\BriefSearch\Client
+ *   The client.
+ */
+function primo_client() {
+  $handler = HandlerStack::create();
+
+  if (variable_get('primo_enable_logging')) {
+    $watchdog = new Watchdog();
+    $watchdog->setWatchdogType('primo');
+    $formatter = new MessageFormatter(
+      'Request: {method} {uri}. Response: {code} {res_header_content-type} {res_header_content-length}'
+    );
+
+    $logger = new Logger($watchdog, $formatter);
+    $handler->push($logger, 'logger');
+  }
+
+  return new Client(
+    new GuzzleClient([
+      'handler' => $handler,
+      'base_uri' => variable_get('primo_base_url')
+    ]),
+    variable_get('primo_institution_code'),
+    ip_address(),
+    variable_get('primo_location_scopes', [])
+  );
+}
+
+/**
+ * Implements hook_ting_covers().
+ */
+function primo_ting_covers($entities) {
+  // A map from entity ids to urls for corresponding covers.
+  $covers = array();
+
+  $ids = array_map(function(TingEntity $entity) {
+    return $entity->ding_entity_id;
+  }, $entities);
+
+  try {
+    $client = primo_client();
+    $documents = $client->documents($ids);
+
+    $thumbnail_urls = array_map(function(Document $document) {
+      return $document->getThumbnailUrls();
+    }, $documents);
+
+    array_walk(
+      $thumbnail_urls,
+      function(array &$thumbnail_urls, $record_id) {
+        $thumbnail_urls = array_filter($thumbnail_urls, function ($url) use ($record_id) {
+          // Primo may return thumbnail urls to resources which are in fact not
+          // images. In fact some are not working at all. Request each of them
+          // to remove irrelevant ones. Use HEAD as we only care about status
+          // code and content type here.
+          $client = primo_client();
+          return $client->validateThumbnail($url);
+        });
+
+        // We can only handle a single thumbnail so only use the first.
+        $thumbnail_urls = array_shift($thumbnail_urls);
+      }
+    );
+
+    $covers = $thumbnail_urls;
+  }
+  catch (TransferException $e) {
+    // Do nothing. If an exception occurs then we simply to not return any
+    // covers from Primo.
+  }
+
+  return $covers;
+}
+
+/**
+ * Implements hook_xautoload().
+ */
+function primo_xautoload(LocalDirectoryAdapter $adapter) {
+  $adapter->addPsr4(
+    'Primo',
+    'src/Primo'
+  );
+}
+
+/**
+ * Implements hook_libraries_info().
+ */
+function primo_libraries_info() {
+  return array(
+    'log' => array(
+      'name' => 'PSR Log',
+      'vendor url' => 'https://github.com/php-fig/log',
+      'download url' => 'https://github.com/php-fig/log',
+      'version' => '1.0.2',
+      'xautoload' => function ($adapter) {
+        $adapter->composerJson('composer.json');
+      },
+    ),
+    'guzzle' => array(
+      'name' => 'Guzzle',
+      'vendor url' => 'https://github.com/guzzle/guzzle',
+      'download url' => 'https://github.com/guzzle/guzzle',
+      'version' => '6.2',
+      'xautoload' => function ($adapter) {
+        $adapter->composerJson('composer.json');
+      },
+    ),
+    'guzzle-log-middleware' => array(
+      'name' => 'Guzzle logging middleware',
+      'vendor url' => 'https://github.com/rtheunissen/guzzle-log-middleware',
+      'download url' => 'https://github.com/rtheunissen/guzzle-log-middleware',
+      'version' => 'v0.4.0',
+      'xautoload' => function ($adapter) {
+        $adapter->composerJson('composer.json');
+      },
+    ),
+    'iso-639' => array(
+      'name' => 'PHP ISO-639 library',
+      'vendor url' => 'https://github.com/matriphe/php-iso-639',
+      'download url' => 'https://github.com/matriphe/php-iso-639',
+      'version' => '1.2',
+      'xautoload' => function ($adapter) {
+        $adapter->composerJson('composer.json');
+      },
+    ),
+    'promises' => array(
+      'name' => 'Guzzle promises library',
+      'vendor url' => 'https://github.com/guzzle/promises',
+      'download url' => 'https://github.com/guzzle/promises',
+      'version' => '1.2',
+      'xautoload' => function ($adapter) {
+        $adapter->composerJson('composer.json');
+      },
+    ),
+    'http-message' => array(
+      'name' => 'Common interface for HTTP messages',
+      'vendor url' => 'https://github.com/php-fig/http-message',
+      'download url' => 'https://github.com/php-fig/http-message',
+      'version' => '1.0',
+      'xautoload' => function ($adapter) {
+        $adapter->composerJson('composer.json');
+      },
+    ),
+    'psr7' => array(
+      'name' => 'PSR-7 message implementation',
+      'vendor url' => 'https://github.com/guzzle/psr7',
+      'download url' => 'https://github.com/guzzle/psr7',
+      'version' => '1.3',
+      'xautoload' => function ($adapter) {
+        $adapter->composerJson('composer.json');
+      },
+    ),
+  );
+}
+
+/**
+ * Implements hook_module_implements_alter().
+ */
+function primo_module_implements_alter(&$implementations, $hook) {
+  // TODO Remove once the Primo provider is fully implemented
+  // Ding does not support mixing multiple partial implementations of a provider
+  // so we fall back to OpenSearch while we implement Primo. Thus we need to
+  // OpenSearch enabled but not make it act as a provider.
+  if ($hook === 'ding_provider') {
+    unset($implementations['opensearch']);
+  }
+}
+
+/**
+ * Get cached entry from the primo cache.
+ *
+ * @param string $id
+ *   The id (a Primo record id for objects).
+ * @param string $type
+ *   The type of data to cache, which is used to set the cache id. See
+ *   PRIMO_CACHE_* constants.
+ *
+ * @return mixed
+ *   The cached item based on the $type and $id given. If non found in the cache
+ *   NULL is returned.
+ */
+function _primo_cache_get($id, $type = PRIMO_CACHE_TING_OBJECT) {
+  $cid = $type . ':' . $id;
+
+  if ($ttl = variable_get('primo_cache_lifetime', PRIMO_DEFAULT_CACHE_LIFETIME)) {
+    $cache = cache_get($cid, 'cache_primo');
+    if ($cache && ($cache->expire > REQUEST_TIME)) {
+      // Return the cache entry if it has not been expired.
+      return $cache->data;
+    }
+  }
+  else {
+    // Without proper caching, use a static cache that only works on pr.
+    // request.
+    $cache = &drupal_static(PRIMO_STATIC_CACHE);
+    if (isset($cache) && array_key_exists($cid, $cache)) {
+      return $cache[$cid];
+    }
+  }
+  return FALSE;
+}
+
+/**
+ * Writes a cache entry.
+ *
+ * @param string $id
+ *   The id (a Primo record id for objects).
+ * @param mixed $value
+ *   The value to store in the cache.
+ * @param string $type
+ *   The type of data to cache, which is used to set the cache id. See
+ *   PRIMO_CACHE_* constants.
+ */
+function _primo_cache_set($id, $value, $type = PRIMO_CACHE_TING_OBJECT) {
+  // Define the cache id.
+  $cid = $type . ':' . $id;
+
+  if ($ttl = variable_get('primo_cache_lifetime', PRIMO_DEFAULT_CACHE_LIFETIME)) {
+    cache_set($cid, $value, 'cache_primo', REQUEST_TIME + $ttl);
+  }
+  else {
+    // Without proper caching, use a request-scoped static cache.
+    $cache = &drupal_static(PRIMO_STATIC_CACHE, []);
+    $cache[$cid] = $value;
+  }
+}
+
+/**
+ * Implements hook_flush_caches().
+ */
+function primo_flush_caches() {
+  // We have our own cache that core should be aware of.
+  return array('cache_primo');
+}
+
+/**
+ * Map Primo documents to Objects and insert them into the cache.
+ *
+ * @param \Primo\BriefSearch\Document[] $documents
+ *   The documents to be mapped.
+ *
+ * @return \Ting\TingObjectInterface[]
+ *   Mapped objects that has been inserted into the cache.
+ */
+function _primo_search_map_and_warm_cache_documents(array $documents) {
+  return array_map(
+    function (Document $document) {
+      $record_id = $document->getRecordId();
+      if (FALSE === ($object = _primo_cache_get($record_id))) {
+        // Map the Document to an object and write it to the cache.
+        $mapper = new ObjectMapper($document);
+        $object = $mapper->map();
+        _primo_cache_set($record_id, $object);
+      }
+      return $object;
+    }, $documents
+  );
+}
+
+/**
+ * Map Documents in a Primo Result into Objects and insert them into the cache.
+ *
+ * @param \Primo\Ting\Result $ting_result
+ *   The Result with Documents to be mapped.
+ *
+ * @return \Ting\TingObjectInterface[]
+ *   Mapped objects that has been inserted into the cache.
+ */
+function _primo_search_map_and_warm_cache_result(Result $ting_result) {
+  return _primo_search_map_and_warm_cache_documents($ting_result->getPrimoSearchresult()->getDocuments());
+}

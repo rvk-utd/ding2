@@ -1,0 +1,28 @@
+<?php
+/**
+ * @file
+ * Main install file for Primo.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function primo_schema() {
+  $schema = [];
+  // Cache table used by _primo_cache_get/set.
+  $schema['cache_primo'] = drupal_get_schema_unprocessed(
+    'system',
+    'cache'
+  );
+  return $schema;
+}
+
+/**
+ * Add cache table to cache objects we generate from searches.
+ */
+function primo_update_7001() {
+  $schema = primo_schema();
+  $ret = [];
+  $ret[] = db_create_table('cache_primo', $schema['cache_primo']);
+  return $ret;
+}

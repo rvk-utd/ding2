@@ -10,6 +10,7 @@ namespace Drupal\ding_test;
 
 use Drupal\xautoload\ClassLoader\ClassLoaderInterface;
 use DrupalUnitTestCase;
+use Prophecy\Prophet;
 
 class DingUnitTestBase extends DrupalUnitTestCase {
 
@@ -39,6 +40,6 @@ class DingUnitTestBase extends DrupalUnitTestCase {
     // We call parent late to make sure we have our autoloader in place.
     parent::setUp();
 
-    $this->prophet = new \Prophecy\Prophet();
+    $this->prophet = new Prophet;
   }
 }

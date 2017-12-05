@@ -13,6 +13,8 @@ var cleanCSS = require('gulp-clean-css');
 var concat = require('gulp-concat');
 var gulpStylelint = require('gulp-stylelint');
 var argv = require('yargs').argv;
+var batch = require('gulp-batch');
+var watch = require('gulp-watch');
 
 // We only want to process our own non-processed JavaScript files.
 // var jsPath = './scripts/ddbasic.!(*.min).js';
@@ -116,8 +118,13 @@ gulp.task('kss', 'Process SCSS using KSS / kss-node',
   */
 gulp.task('watch', 'Watch and process JS and SCSS files', ['uglify', 'sass'],
   function() {
-    gulp.watch(jsPath, ['jshint', 'uglify']);
-    gulp.watch(sassPath, ['validate-sass', 'sass']);
+    watch(jsPath, batch((events, done) => {
+      gulp.start(['jshint', 'uglify'], done);
+    }));
+
+    watch(sassPath, batch((events, done) => {
+      gulp.start(['validate-sass', 'sass'], done);
+    }));
   }
 );
 
