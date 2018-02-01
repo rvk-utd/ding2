@@ -47,7 +47,6 @@ function aleph_availability_items(array $provider_ids) {
  *   Holdings info.
  */
 function aleph_availability_holdings(array $provider_ids) {
-  $data = array();
   $results = array();
   $sub_libraries = array();
 
@@ -94,21 +93,15 @@ function aleph_availability_holdings(array $provider_ids) {
         );
       }
 
-      // Count how many of the materials are reserved or available across sub-
-      // libraries.
-      if (!$item->isReservable()) {
-        $reserved_count++;
-      }
-      else {
-        $available_count++;
-      }
+      // Count how many of the materials are on shelf / available and how
+      // many are reservable.
+      $item->isAvailable() ? $available_count++ : $reserved_count++;
 
       // Provide data for each material from the provider ID.
       $data = array(
         'local_id' => $item->getId(),
         'available' => $available_count > 0,
-        'reservable' => $available_count > 0,
-        'show_reservation_button' => $available_count > 0,
+        'reservable' => count($items) > 0,
         'total_count' => count($items),
         'reserved_count' => $reserved_count,
         'is_internet' => $item->getIsInternet(),
@@ -118,9 +111,9 @@ function aleph_availability_holdings(array $provider_ids) {
         'issues' => array(),
         'is_periodical' => FALSE,
       );
-    }
 
-    $results[$item->getId()] = $data;
+      $results[$item->getId()] = $data;
+    }
   }
 
   return $results;
