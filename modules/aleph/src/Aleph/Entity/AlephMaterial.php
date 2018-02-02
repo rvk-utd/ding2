@@ -22,7 +22,6 @@ class AlephMaterial {
   protected $loanDate;
   protected $loans;
   protected $placements = [];
-  protected $reservable = FALSE;
   protected $subLibrary;
   protected $subLibraryCode;
   protected $title;
@@ -138,7 +137,10 @@ class AlephMaterial {
    *    If the material is reservable.
    */
   public function isReservable() {
-    return $this->reservable;
+    // Should always return true because the user gets notified when they are
+    // able to pickup the item. This means it doesn't matter if the item is
+    // on shelf or not.
+    return TRUE;
   }
 
   /**
@@ -322,7 +324,12 @@ class AlephMaterial {
     $material->setTitle((string) $item->xpath('z13/z13-title')[0]);
     $material->setSubLibrary((string) $item->xpath('z30/z30-sub-library')[0]);
     $material->setCollection((string) $item->xpath('z30/z30-collection')[0]);
-    $material->setSubLibraryCode((string) $item->xpath('z36-sub-library-code')[0]);
+    if ($item->xpath('z36-sub-library-code')) {
+      $material->setSubLibraryCode((string) $item->xpath('z36-sub-library-code')[0]);
+    }
+    if ($item->xpath('z30-sub-library-code')) {
+      $material->setSubLibraryCode((string) $item->xpath('z30-sub-library-code')[0]);
+    }
     $material->setDueDate((string) $item->xpath('z36/z36-due-date')[0]);
     $material->setLoanDate((string) $item->xpath('z36/z36-loan-date')[0]);
 
@@ -337,11 +344,12 @@ class AlephMaterial {
 
     if ((string) $item->xpath('status')[0] === 'On Shelf') {
       $material->setAvailable(TRUE);
-      $material->reservable = TRUE;
     }
+
     if ($item->xpath('z30') === FALSE) {
       $material->setIsInternet(TRUE);
     }
+
     return $material;
   }
 
