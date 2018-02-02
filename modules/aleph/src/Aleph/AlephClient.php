@@ -295,11 +295,16 @@ class AlephClient {
    * @param \Drupal\aleph\Aleph\Entity\AlephRequest $request
    *    The request information.
    *
+   * @param \Drupal\aleph\Aleph\Entity\AlephHoldGroup[] $holding_groups
+   *    The holding groups.
+   *
    * @return \SimpleXMLElement
    * @throws \RuntimeException
    */
-  public function createReservation(AlephPatron $patron, AlephRequest $request) {
+  public function createReservation(AlephPatron $patron, AlephRequest
+  $request, $holding_groups) {
     $options = array();
+    $response = FALSE;
 
     $xml = new \SimpleXMLElement('<hold-request-parameters></hold-request-parameters>');
     $xml->addChild('pickup-location', $request->getPickupLocation());
@@ -308,20 +313,22 @@ class AlephClient {
 
     $options['body'] = 'post_xml=' . $xml->asXML();
 
-    // BIB library code + the system number.
-    // For example, USM01000050362.
     $rid = $this->mainLibrary . $request->getDocNumber();
 
-    // ADM library code + the item record key.
-    // For example, USM50000238843000320.
-    $iid = $request->getInstitutionCode() . $request->getDocNumber() .
-      $request->getItemSequence();
+    foreach ($holding_groups as $url => $holding_group) {
+      $response = $this->requestRest(
+        'PUT',
+        'patron/' . $patron->getId() . '/record/' . $rid . '/holds/' .
+        basename($url),
+        $options
+      );
 
-    return $this->requestRest(
-      'PUT',
-      'patron/' . $patron->getId() . '/record/' . $rid . '/items/' . $iid . '/hold',
-      $options
-    );
+      if ((string) $response->xpath('reply-code')[0] === '0000') {
+        return $response;
+      }
+    }
+
+    return $response;
   }
 
   /**
@@ -384,6 +391,23 @@ class AlephClient {
    */
   public function getPatronBlocks($bor_id) {
     return $this->requestRest('GET', 'patron/' . $bor_id . '/patronStatus/blocks');
+  }
+
+  /**
+   * @param \Drupal\aleph\Aleph\Entity\AlephPatron $patron
+   *    The Aleph patron.
+   * @param \Drupal\aleph\Aleph\Entity\AlephMaterial $material
+   *    The Aleph material.
+   *
+   * @return \SimpleXMLElement[]
+   * @throws \RuntimeException
+   */
+  public function getHoldingGroups(AlephPatron $patron, AlephMaterial $material) {
+    return $this->requestRest(
+      'GET',
+      'patron/' . $patron->getId() . '/record/' . $this->mainLibrary .
+      $material->getId() . '/holds?view=full&institution=ICE53'
+    )->xpath('hold/institution/group');
   }
 
 }

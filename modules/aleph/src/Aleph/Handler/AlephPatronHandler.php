@@ -5,6 +5,7 @@ namespace Drupal\aleph\Aleph\Handler;
 use DateTime;
 use Drupal\aleph\Aleph\AlephPatronInvalidPin;
 use Drupal\aleph\Aleph\Entity\AlephDebt;
+use Drupal\aleph\Aleph\Entity\AlephHoldGroup;
 use Drupal\aleph\Aleph\Entity\AlephLoan;
 use Drupal\aleph\Aleph\Entity\AlephMaterial;
 use Drupal\aleph\Aleph\Entity\AlephPatron;
@@ -226,16 +227,22 @@ class AlephPatronHandler extends AlephHandlerBase {
    * Create a reservation for a patron.
    *
    * @param AlephPatron $patron
+   *    The Aleph patron.
+   *
    * @param AlephReservation $reservation
+   *    The reservation object.
+   *
+   * @param AlephHoldGroup[] $holding_groups
+   *    The holding groups.
    *
    * @throws \RuntimeException
    *
    * @return \Drupal\aleph\Aleph\Entity\AlephRequestResponse
    */
-  public function createReservation($patron, $reservation) {
-    $response = $this->client->createReservation($patron,
-      $reservation->getRequest());
-
+  public function createReservation($patron, $reservation, $holding_groups) {
+    $response = $this->client->createReservation(
+      $patron, $reservation->getRequest(), $holding_groups
+    );
     return AlephRequestResponse::createRequestResponseFromXML($response);
   }
 
@@ -253,6 +260,22 @@ class AlephPatronHandler extends AlephHandlerBase {
       $reservation->getRequest());
 
     return AlephRequestResponse::createRequestResponseFromXML($response);
+  }
+
+  /**
+   * @param AlephPatron $patron
+   * @param AlephMaterial $material
+   *
+   * @return AlephHoldGroup[]
+   * @throws \RuntimeException
+   */
+  public function getHoldingGroups($patron, $material) {
+    $groups = $this->client->getHoldingGroups($patron, $material);
+    $result = [];
+    foreach ($groups as $group) {
+      $result[(string) $group['href']] = AlephHoldGroup::createHoldGroupFromXML($group);
+    }
+    return $result;
   }
 
   /**
