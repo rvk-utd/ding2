@@ -101,7 +101,7 @@ function aleph_availability_holdings(array $provider_ids) {
       $data = array(
         'local_id' => $item->getId(),
         'available' => $available_count > 0,
-        'reservable' => count($items) > 0,
+        'reservable' => $item->isReservable(),
         'total_count' => count($items),
         'reserved_count' => $reserved_count,
         'is_internet' => $item->getIsInternet(),
