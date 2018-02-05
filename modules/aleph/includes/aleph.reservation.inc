@@ -149,18 +149,19 @@ function aleph_reservation_default_interest_period($profile = NULL) {
  * Provider list callback.
  *
  * @param object $account
- *    User to list reservations for.
+ *   User to list reservations for.
  * @param string|null $requested_type
- *    Type of reservations to list. NULL for all.
+ *   Type of reservations to list. NULL for all.
  *
  * @return \DingProviderReservation[]
- *    Array of DingProviderReservations.
+ *   Array of DingProviderReservations.
  */
 function aleph_reservation_list($account, $requested_type = NULL) {
   // Throw exception if we're not logged in.
   try {
     ding_user_get_creds();
-  } catch (DingProviderAuthException $e) {
+  }
+  catch (DingProviderAuthException $e) {
     return [];
   }
 
@@ -301,10 +302,6 @@ function aleph_reservation_create($account, $id) {
   }
 }
 
-function aleph_reservation_update() {
-  return NULL;
-}
-
 /**
  * Delete a reservation for a given account.
  *
@@ -314,7 +311,7 @@ function aleph_reservation_update() {
  *   ID of a reservation.
  *
  * @return bool
- *    If the deletion succeeded or not.
+ *   If the deletion succeeded or not.
  *
  * @throws DingProviderAuthException
  * @throws DingProviderReservationUserError
@@ -381,35 +378,20 @@ function aleph_reservation_branch_name($branch_id) {
 /**
  * Provider pickup_branches callback.
  *
- * @param $account
- *    The Drupal account object.
+ * @param object $account
+ *   The Drupal account object.
  *
  * @return array
- *    The branches as key and name.
- *
+ *   The branches as key and name.
  */
 function aleph_reservation_pickup_branches($account) {
   // Throw exception if we're not logged in.
   try {
     ding_user_get_creds();
-  } catch (DingProviderAuthException $e) {
+  }
+  catch (DingProviderAuthException $e) {
     return [];
   }
   return aleph_get_branches();
 }
 
-function aleph_reservation_get_reservations() {
-  return NULL;
-}
-
-function aleph_reservation_clear_cache() {
-  return NULL;
-}
-
-function aleph_reservation_exists() {
-  return FALSE;
-}
-
-function aleph_reservation_format_date() {
-  return NULL;
-}

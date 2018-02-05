@@ -292,20 +292,20 @@ class AlephClient {
    * Create a reservation.
    *
    * @param \Drupal\aleph\Aleph\Entity\AlephPatron $patron
-   *    The Aleph patron.
+   *   The Aleph patron.
    *
    * @param \Drupal\aleph\Aleph\Entity\AlephRequest $request
-   *    The request information.
+   *   The request information.
    *
    * @param \Drupal\aleph\Aleph\Entity\AlephHoldGroup[] $holding_groups
-   *    The holding groups.
+   *   The holding groups.
    *
    * @return \SimpleXMLElement
+   *   The SimpleXMLElement from the raw XML response.
    *
    * @throws AlephClientException
    */
-  public function createReservation(AlephPatron $patron, AlephRequest
-  $request, $holding_groups) {
+  public function createReservation(AlephPatron $patron, AlephRequest $request, $holding_groups) {
     $options = array();
     $response = FALSE;
 
