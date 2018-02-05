@@ -242,11 +242,12 @@ function aleph_reservation_list($account, $requested_type = NULL) {
  * @return array
  *   Reservation information.
  *
- * @throws AlephClientException
  * @throws DingProviderAuthException
+ *   If the users is not logged in.
  * @throws DingProviderReservationExists
- *    Reservation exists.
- * @throws Exception
+ *   If reservation exists.
+ * @throws DingProviderUserException
+ *   Error messages shown to the user.
  */
 function aleph_reservation_create($account, $id) {
   $client = aleph_client();
@@ -255,7 +256,12 @@ function aleph_reservation_create($account, $id) {
   $patron = $patron_handler->getPatron();
 
   // Check if the users has this reservation and throw exception.
-  $reservations = $patron_handler->getReservations();
+  try {
+    $reservations = $patron_handler->getReservations();
+  }
+  catch (AlephClientException $e) {
+    throw new DingProviderUserException(t('Unable to get existing reservations.'));
+  }
 
   foreach ($reservations as $reservation) {
     if ($id === $reservation->getItem()->getId()) {
@@ -267,7 +273,11 @@ function aleph_reservation_create($account, $id) {
   $interest_period = aleph_reservation_default_interest_period();
 
   $end_request_date = new DateTime();
-  $end_request_date->add(new DateInterval('P' . $interest_period . 'D'));
+  try {
+    $end_request_date->add(new DateInterval('P' . $interest_period . 'D'));
+  }
+  catch (Exception $e) {
+  }
 
   // Build the reservation object.
   $defaults = aleph_reservation_default_options($account);
@@ -281,7 +291,12 @@ function aleph_reservation_create($account, $id) {
   $request->setDocNumber($id);
   $reservation->setRequest($request);
 
-  $holding_groups = $patron_handler->getHoldingGroups($patron, $material);
+  try {
+    $holding_groups = $patron_handler->getHoldingGroups($patron, $material);
+  }
+  catch (AlephClientException $e) {
+    throw new DingProviderUserException(t('Unable to get holding groups from the library system. Contact the library'));
+  }
 
   // Try to make the reservation.
   $response = NULL;
@@ -296,9 +311,11 @@ function aleph_reservation_create($account, $id) {
     }
     throw new DingProviderUserException(t($response->getNote()));
   }
-  catch (Exception $e) {
+  catch (AlephClientException $e) {
     watchdog_exception('aleph', $e);
-    return array();
+    throw new DingProviderUserException(t(
+      'We are unable to create a reservation in the library system. Please contact the library.'
+    ));
   }
 }
 
@@ -394,4 +411,3 @@ function aleph_reservation_pickup_branches($account) {
   }
   return aleph_get_branches();
 }
-

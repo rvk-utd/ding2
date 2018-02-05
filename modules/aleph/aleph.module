@@ -6,6 +6,7 @@
  */
 
 use Drupal\aleph\Aleph\AlephClient;
+use Drupal\aleph\Aleph\Exception\AlephClientException;
 use Drupal\aleph\Aleph\Handler\AlephPatronHandler;
 
 include_once 'aleph.features.inc';
@@ -287,3 +288,4 @@ function aleph_user_login(&$edit, $account) {
     $wrapper->save();
   }
 }
+
