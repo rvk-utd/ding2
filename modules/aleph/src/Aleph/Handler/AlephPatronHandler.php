@@ -3,7 +3,8 @@
 namespace Drupal\aleph\Aleph\Handler;
 
 use DateTime;
-use Drupal\aleph\Aleph\AlephPatronInvalidPin;
+use Drupal\aleph\Aleph\Exception\AlephClientException;
+use Drupal\aleph\Aleph\Exception\AlephPatronInvalidPin;
 use Drupal\aleph\Aleph\Entity\AlephDebt;
 use Drupal\aleph\Aleph\Entity\AlephHoldGroup;
 use Drupal\aleph\Aleph\Entity\AlephLoan;
@@ -54,7 +55,7 @@ class AlephPatronHandler extends AlephHandlerBase {
    * @return \Drupal\aleph\Aleph\AuthenticationResult
    *    The authenticated Aleph patron.
    *
-   * @throws \RuntimeException
+   * @throws AlephClientException
    */
   public function authenticate($bor_id, $verification, array $allowed_login_branches = []) {
     $response = $this->client->authenticate($bor_id, $verification);
@@ -86,7 +87,7 @@ class AlephPatronHandler extends AlephHandlerBase {
    *
    * @return \Drupal\aleph\Aleph\Entity\AlephMaterial[]
    *
-   * @throws \RuntimeException
+   * @throws AlephClientException
    */
   public function getLoans() {
     $results = array();
@@ -106,6 +107,9 @@ class AlephPatronHandler extends AlephHandlerBase {
    *
    * @return bool
    *    True if setting new pincode succeeded.
+   *
+   * @throws AlephClientException
+   * @throws \AlephPatronInvalidPin
    */
   public function setPin($pin) {
     try {
@@ -142,7 +146,7 @@ class AlephPatronHandler extends AlephHandlerBase {
    * @return \Drupal\aleph\Aleph\Entity\AlephDebt[]
    *    Array of AlephDebt objects.
    *
-   * @throws \RuntimeException
+   * @throws AlephClientException
    */
   public function getDebts() {
     $xml = $this->client->getDebts($this->getPatron());
@@ -154,7 +158,7 @@ class AlephPatronHandler extends AlephHandlerBase {
    * Get a patron's reservations.
    *
    * @return \Drupal\aleph\Aleph\Entity\AlephReservation[]
-   * @throws \RuntimeException
+   * @throws AlephClientException
    */
   public function getReservations() {
     $reservations = array();
@@ -198,7 +202,7 @@ class AlephPatronHandler extends AlephHandlerBase {
    * @param $ids
    *
    * @return AlephLoan[]
-   * @throws \RuntimeException
+   * @throws AlephClientException
    */
   public function renewLoans($ids) {
     $response = $this->client->renewLoans($this->getPatron(), $ids);
@@ -226,7 +230,7 @@ class AlephPatronHandler extends AlephHandlerBase {
   /**
    * Create a reservation for a patron.
    *
-   * @param AlephPatron $patron
+   * @param AlephPatron      $patron
    *    The Aleph patron.
    *
    * @param AlephReservation $reservation
@@ -235,9 +239,8 @@ class AlephPatronHandler extends AlephHandlerBase {
    * @param AlephHoldGroup[] $holding_groups
    *    The holding groups.
    *
-   * @throws \RuntimeException
-   *
-   * @return \Drupal\aleph\Aleph\Entity\AlephRequestResponse
+   * @return AlephRequestResponse
+   * @throws AlephClientException
    */
   public function createReservation($patron, $reservation, $holding_groups) {
     $response = $this->client->createReservation(
@@ -253,7 +256,7 @@ class AlephPatronHandler extends AlephHandlerBase {
    * @param AlephReservation $reservation
    *
    * @return \Drupal\aleph\Aleph\Entity\AlephRequestResponse
-   * @throws \RuntimeException
+   * @throws AlephClientException
    */
   public function deleteReservation($patron, $reservation) {
     $response = $this->client->deleteReservation($patron,
@@ -267,7 +270,7 @@ class AlephPatronHandler extends AlephHandlerBase {
    * @param AlephMaterial $material
    *
    * @return AlephHoldGroup[]
-   * @throws \RuntimeException
+   * @throws AlephClientException
    */
   public function getHoldingGroups($patron, $material) {
     $groups = $this->client->getHoldingGroups($patron, $material);
@@ -287,7 +290,7 @@ class AlephPatronHandler extends AlephHandlerBase {
    * @return string[] $result
    *    Array with branches the use is active in.
    *
-   * @throws \RuntimeException
+   * @throws AlephClientException
    */
   public function getActiveBranches($bor_id) {
     $branches = $this->client->getPatronBlocks($bor_id)->xpath('blocks_messages/institution/sublibrary/@code');

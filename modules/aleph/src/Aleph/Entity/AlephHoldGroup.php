@@ -67,7 +67,9 @@ class AlephHoldGroup {
     $pickup_locations = [];
 
     foreach ($xml->xpath('pickup-locations/pickup-location') as $pickup_location) {
-      $pickup_locations[(string) $pickup_location['code']] = (string) $pickup_location;
+      if (!empty($pickup_location['code'])) {
+        $pickup_locations[(string) $pickup_location['code']] = (string) $pickup_location;
+      }
     }
 
     $hold_group->setSubLibraryCode((string) $xml->xpath('sublibrary-code')[0]);

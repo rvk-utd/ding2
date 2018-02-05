@@ -11,7 +11,8 @@ use Drupal\aleph\Aleph\Entity\AlephMaterial;
 use Drupal\aleph\Aleph\Entity\AlephPatron;
 use Drupal\aleph\Aleph\Entity\AlephRequest;
 use Drupal\aleph\Aleph\Entity\AlephRequestResponse;
-use Exception;
+use Drupal\aleph\Aleph\Exception\AlephClientException;
+use Drupal\aleph\Aleph\Exception\AlephPatronInvalidPin;
 use GuzzleHttp\Client;
 
 /**
@@ -78,7 +79,7 @@ class AlephClient {
    * @return \SimpleXMLElement
    *    A SimpleXMLElement object.
    *
-   * @throws \RuntimeException
+   * @throws \Drupal\aleph\Aleph\Exception\AlephClientException
    */
   public function request($method, $operation, array $params = array()) {
     $options = array(
@@ -98,7 +99,7 @@ class AlephClient {
     }
 
     // Throw exception if the status from Aleph is not OK.
-    throw new \RuntimeException('Request error: ' . $response->code . $response->error);
+    throw new AlephClientException('Request error: ' . $response->code . $response->error);
   }
 
   /**
@@ -114,7 +115,7 @@ class AlephClient {
    * @return \SimpleXMLElement
    *    The returned XML from Aleph.
    *
-   * @throws \RuntimeException
+   * @throws AlephClientException
    */
   public function requestRest($method, $url, array $options = array()) {
     $response = $this->client->request(
@@ -127,7 +128,7 @@ class AlephClient {
     }
 
     // Throw exception if the status from Aleph is not OK.
-    throw new \RuntimeException('Request error: ' . $response->code . $response->error);
+    throw new AlephClientException('Request error: ' . $response->code . $response->error);
   }
 
   /**
@@ -141,7 +142,7 @@ class AlephClient {
    * @return \SimpleXMLElement
    *    The authentication response from Aleph or error message.
    *
-   * @throws \RuntimeException
+   * @throws AlephClientException
    */
   public function authenticate($bor_id, $verification) {
     $response = $this->request('GET', 'bor-auth', array(
@@ -161,7 +162,7 @@ class AlephClient {
    * @return \SimpleXMLElement
    *    The response from Aleph.
    *
-   * @throws \RuntimeException
+   * @throws AlephClientException
    */
   public function borInfo(AlephPatron $patron) {
     $response = $this->request('GET', 'bor-info', array(
@@ -182,7 +183,8 @@ class AlephClient {
    *
    * @return bool
    *
-   * @throws \Drupal\aleph\Aleph\AlephPatronInvalidPin
+   * @throws AlephClientException
+   * @throws AlephPatronInvalidPin
    */
   public function changePin(AlephPatron $patron, $new_pin) {
     $options = array();
@@ -204,7 +206,7 @@ class AlephClient {
       return TRUE;
     }
 
-    throw new AlephPatronInvalidPin();
+    throw new AlephPatronInvalidPin($response->getReplyText() . ': ' . $response->getNote());
   }
 
   /**
@@ -216,7 +218,7 @@ class AlephClient {
    * @return \SimpleXMLElement
    *    The SimpleXMLElement response from Aleph.
    *
-   * @throws \RuntimeException
+   * @throws AlephClientException
    */
   public function getDebts(AlephPatron $patron) {
     return $this->requestRest(
@@ -232,7 +234,7 @@ class AlephClient {
    * @return \SimpleXMLElement The SimpleXMLElement response from Aleph.
    *    The SimpleXMLElement response from Aleph.
    *
-   * @throws \RuntimeException
+   * @throws AlephClientException
    */
   public function getItems(AlephMaterial $material) {
     return $this->requestRest(
@@ -247,13 +249,13 @@ class AlephClient {
    * @param \Drupal\aleph\Aleph\Entity\AlephPatron $patron
    *    The patron to get loans from.
    *
-   * @param $loan_id
+   * @param bool $loan_id
    *    The loan ID to get specific loan.
    *
    * @return \SimpleXMLElement The response from Aleph.
    *    The response from Aleph.
    *
-   * @throws \RuntimeException
+   * @throws AlephClientException
    */
   public function getLoans(AlephPatron $patron, $loan_id = FALSE) {
     if ($loan_id) {
@@ -277,7 +279,7 @@ class AlephClient {
    * @return \SimpleXMLElement
    *    The response from Aleph.
    *
-   * @throws \RuntimeException
+   * @throws AlephClientException
    */
   public function getReservations(AlephPatron $patron) {
     return $this->requestRest(
@@ -299,7 +301,8 @@ class AlephClient {
    *    The holding groups.
    *
    * @return \SimpleXMLElement
-   * @throws \RuntimeException
+   *
+   * @throws AlephClientException
    */
   public function createReservation(AlephPatron $patron, AlephRequest
   $request, $holding_groups) {
@@ -337,7 +340,7 @@ class AlephClient {
    *
    * @return \SimpleXMLElement
    *
-   * @throws \RuntimeException
+   * @throws AlephClientException
    */
   public function renewLoans(AlephPatron $patron, array $ids) {
     $options = array();
@@ -361,11 +364,11 @@ class AlephClient {
   }
 
   /**
-   * @param \Drupal\aleph\Aleph\Entity\AlephPatron $patron
+   * @param \Drupal\aleph\Aleph\Entity\AlephPatron  $patron
    * @param \Drupal\aleph\Aleph\Entity\AlephRequest $request
    *
    * @return \SimpleXMLElement
-   * @throws \RuntimeException
+   * @throws AlephClientException
    */
   public function deleteReservation(AlephPatron $patron, AlephRequest
   $request) {
@@ -387,7 +390,7 @@ class AlephClient {
    *    The Aleph patron ID.
    *
    * @return \SimpleXMLElement
-   * @throws \RuntimeException
+   * @throws AlephClientException
    */
   public function getPatronBlocks($bor_id) {
     return $this->requestRest('GET', 'patron/' . $bor_id . '/patronStatus/blocks');
@@ -400,7 +403,7 @@ class AlephClient {
    *    The Aleph material.
    *
    * @return \SimpleXMLElement[]
-   * @throws \RuntimeException
+   * @throws AlephClientException
    */
   public function getHoldingGroups(AlephPatron $patron, AlephMaterial $material) {
     return $this->requestRest(

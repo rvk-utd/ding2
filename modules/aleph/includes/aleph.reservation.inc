@@ -7,6 +7,7 @@
 use Drupal\aleph\Aleph\Entity\AlephMaterial;
 use Drupal\aleph\Aleph\Entity\AlephRequest;
 use Drupal\aleph\Aleph\Entity\AlephReservation;
+use Drupal\aleph\Aleph\Exception\AlephClientException;
 use Drupal\aleph\Aleph\Handler\AlephPatronHandler;
 
 /**
@@ -157,7 +158,11 @@ function aleph_reservation_default_interest_period($profile = NULL) {
  */
 function aleph_reservation_list($account, $requested_type = NULL) {
   // Throw exception if we're not logged in.
-  ding_user_get_creds($account);
+  try {
+    ding_user_get_creds();
+  } catch (DingProviderAuthException $e) {
+    return [];
+  }
 
   $result = array(
     DING_RESERVATION_READY => array(),
@@ -220,9 +225,7 @@ function aleph_reservation_list($account, $requested_type = NULL) {
   if ($requested_type !== NULL && isset($result[$requested_type])) {
     return $result[$requested_type];
   }
-  else {
-    watchdog('aleph', 'Unknown reservation type (%type) requested', array('%type' => $requested_type), WATCHDOG_ERROR);
-  }
+  watchdog('aleph', 'Unknown reservation type (%type) requested', array('%type' => $requested_type), WATCHDOG_ERROR);
 
   return $result;
 }
@@ -238,11 +241,11 @@ function aleph_reservation_list($account, $requested_type = NULL) {
  * @return array
  *   Reservation information.
  *
- * @throws \DingProviderReservationExists
- *   Reservation exists.
- * @throws \DingProviderUserException
- *    General exception.
- * @throws \DingProviderAuthException
+ * @throws AlephClientException
+ * @throws DingProviderAuthException
+ * @throws DingProviderReservationExists
+ *    Reservation exists.
+ * @throws Exception
  */
 function aleph_reservation_create($account, $id) {
   $client = aleph_client();
@@ -310,10 +313,12 @@ function aleph_reservation_update() {
  * @param string $id
  *   ID of a reservation.
  *
- * @throws \DingProviderAuthException
- * @throws \DingProviderUserException
- *
  * @return bool
+ *    If the deletion succeeded or not.
+ *
+ * @throws DingProviderAuthException
+ * @throws DingProviderReservationUserError
+ * @throws \Drupal\aleph\Aleph\Exception\AlephClientException
  */
 function aleph_reservation_delete($account, $id) {
   $patron_handler = new AlephPatronHandler(aleph_client());
@@ -381,10 +386,15 @@ function aleph_reservation_branch_name($branch_id) {
  *
  * @return array
  *    The branches as key and name.
+ *
  */
 function aleph_reservation_pickup_branches($account) {
   // Throw exception if we're not logged in.
-  ding_user_get_creds($account);
+  try {
+    ding_user_get_creds();
+  } catch (DingProviderAuthException $e) {
+    return [];
+  }
   return aleph_get_branches();
 }
 
