@@ -224,6 +224,15 @@ function aleph_form_profile2_form_alter(&$form, &$form_state) {
 }
 
 /**
+ * Disable the 'update reservation' button as it's not possible in Aleph.
+ */
+function aleph_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id === 'ding_reservation_reservations_notready_form') {
+    unset($form['actions_container']['actions_top']['update']);
+  }
+}
+
+/**
  * Pincode validation.
  */
 function aleph_pin_form_validate($form, &$form_state) {
