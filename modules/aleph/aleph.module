@@ -296,4 +296,3 @@ function aleph_user_login(&$edit, $account) {
     $wrapper->save();
   }
 }
-

@@ -99,7 +99,7 @@ class AlephClient {
     }
 
     // Throw exception if the status from Aleph is not OK.
-    throw new AlephClientException('Request error: ' . $response->code . $response->error);
+    throw new AlephClientException($response->error, $response->code);
   }
 
   /**
@@ -320,11 +320,11 @@ class AlephClient {
 
     // Try to make the reservation against each holding group.
     // If the reservation is OK, the reply code is '0000' and we stop.
-    foreach ($holding_groups as $url => $holding_group) {
+    foreach ($holding_groups as $holding_group) {
       $response = $this->requestRest(
         'PUT',
         'patron/' . $patron->getId() . '/record/' . $rid . '/holds/' .
-        basename($url),
+        basename($holding_group->getUrl()),
         $options
       );
 
@@ -419,7 +419,7 @@ class AlephClient {
     return $this->requestRest(
       'GET',
       'patron/' . $patron->getId() . '/record/' . $this->mainLibrary .
-      $material->getId() . '/holds?view=full&institution=ICE53'
+      $material->getId() . '/holds?view=full'
     )->xpath('hold/institution/group');
   }
 

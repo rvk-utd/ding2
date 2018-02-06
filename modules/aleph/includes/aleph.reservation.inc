@@ -244,7 +244,7 @@ function aleph_reservation_list($account, $requested_type = NULL) {
  * @throws DingProviderUserException
  *   Error messages shown to the user.
  * @throws Exception
- *    New DateInterval throws a generic exception.
+ *   New DateInterval throws a generic exception.
  */
 function aleph_reservation_create($account, $id) {
   $client = aleph_client();

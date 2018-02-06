@@ -14,6 +14,27 @@ class AlephHoldGroup {
   protected $subLibrary;
   protected $subLibraryCode;
   protected $pickupLocations = [];
+  protected $url;
+
+  /**
+   * Get the hold group URL.
+   *
+   * @return string
+   *   The hold group URL.
+   */
+  public function getUrl() {
+    return $this->url;
+  }
+
+  /**
+   * Set the hold group URL.
+   *
+   * @param string $url
+   *   The hold group URL.
+   */
+  public function setUrl($url) {
+    $this->url = $url;
+  }
 
   /**
    * Get name of the holding group sub library.
@@ -96,8 +117,8 @@ class AlephHoldGroup {
 
     $hold_group->setSubLibraryCode((string) $xml->xpath('sublibrary-code')[0]);
     $hold_group->setSubLibrary((string) $xml->xpath('sublibrary')[0]);
-
     $hold_group->setPickupLocations($pickup_locations);
+    $hold_group->setUrl((string) $xml['href']);
 
     return $hold_group;
   }

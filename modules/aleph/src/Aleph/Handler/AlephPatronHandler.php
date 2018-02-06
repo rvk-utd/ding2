@@ -282,12 +282,15 @@ class AlephPatronHandler extends AlephHandlerBase {
    * @throws AlephClientException
    */
   public function getHoldingGroups($patron, $material) {
-    $groups = $this->client->getHoldingGroups($patron, $material);
-    $result = [];
-    foreach ($groups as $group) {
-      $result[(string) $group['href']] = AlephHoldGroup::createHoldGroupFromXML($group);
-    }
-    return $result;
+    $xml_groups = $this->client->getHoldingGroups($patron, $material);
+    $groups = array_map(function(\SimpleXMLElement $group) {
+      return AlephHoldGroup::createHoldGroupFromXML($group);
+    }, $xml_groups);
+
+    $allowed_branches = aleph_get_branches();
+    return array_filter($groups, function(AlephHoldGroup $group) use ($allowed_branches) {
+      return array_key_exists($group->getSubLibraryCode(), $allowed_branches);
+    });
   }
 
   /**
