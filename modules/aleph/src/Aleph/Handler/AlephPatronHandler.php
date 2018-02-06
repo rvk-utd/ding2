@@ -31,10 +31,10 @@ class AlephPatronHandler extends AlephHandlerBase {
    * AlephPatronHandler constructor.
    *
    * @param \Drupal\aleph\Aleph\AlephClient $client
-   *    The Aleph client.
+   *   The Aleph client.
    *
    * @param \Drupal\aleph\Aleph\Entity\AlephPatron $patron
-   *    The Aleph patron.
+   *   The Aleph patron.
    */
   public function __construct(AlephClient $client, AlephPatron $patron = NULL) {
     parent::__construct($client);
@@ -46,14 +46,14 @@ class AlephPatronHandler extends AlephHandlerBase {
    * Authenticate user from Aleph.
    *
    * @param string $bor_id
-   *    The user ID (z303-id).
+   *   The user ID (z303-id).
    * @param string $verification
-   *    The user pin-code/verification code.
+   *   The user pin-code/verification code.
    * @param string[] $allowed_login_branches
-   *    Allowed login branches.
+   *   Allowed login branches.
    *
    * @return \Drupal\aleph\Aleph\AuthenticationResult
-   *    The authenticated Aleph patron.
+   *   The authenticated Aleph patron.
    *
    * @throws AlephClientException
    */
@@ -85,7 +85,8 @@ class AlephPatronHandler extends AlephHandlerBase {
    *
    * @var \SimpleXMLElement[] $loans
    *
-   * @return \Drupal\aleph\Aleph\Entity\AlephMaterial[]
+   * @return AlephMaterial[]
+   *   Array of Aleph Materials.
    *
    * @throws AlephClientException
    */
@@ -103,13 +104,12 @@ class AlephPatronHandler extends AlephHandlerBase {
    * Change patron's pin code.
    *
    * @param string $pin
-   *    The new pin code.
+   *   The new pin code.
    *
    * @return bool
-   *    True if setting new pincode succeeded.
+   *   True if setting new pincode succeeded.
    *
    * @throws AlephClientException
-   * @throws \AlephPatronInvalidPin
    */
   public function setPin($pin) {
     try {
@@ -125,7 +125,7 @@ class AlephPatronHandler extends AlephHandlerBase {
    * Set the Aleph patron object.
    *
    * @param AlephPatron $patron
-   *    The Aleph patron.
+   *   The Aleph patron.
    */
   public function setPatron(AlephPatron $patron) {
     $this->patron = $patron;
@@ -144,7 +144,7 @@ class AlephPatronHandler extends AlephHandlerBase {
    * Get patron debts.
    *
    * @return \Drupal\aleph\Aleph\Entity\AlephDebt[]
-   *    Array of AlephDebt objects.
+   *   Array of AlephDebt objects.
    *
    * @throws AlephClientException
    */
@@ -157,7 +157,7 @@ class AlephPatronHandler extends AlephHandlerBase {
   /**
    * Get a patron's reservations.
    *
-   * @return \Drupal\aleph\Aleph\Entity\AlephReservation[]
+   * @return AlephReservation[]
    * @throws AlephClientException
    */
   public function getReservations() {
@@ -230,14 +230,14 @@ class AlephPatronHandler extends AlephHandlerBase {
   /**
    * Create a reservation for a patron.
    *
-   * @param AlephPatron      $patron
-   *    The Aleph patron.
+   * @param AlephPatron $patron
+   *   The Aleph patron.
    *
    * @param AlephReservation $reservation
-   *    The reservation object.
+   *   The reservation object.
    *
    * @param AlephHoldGroup[] $holding_groups
-   *    The holding groups.
+   *   The holding groups.
    *
    * @return AlephRequestResponse
    * @throws AlephClientException
@@ -255,7 +255,7 @@ class AlephPatronHandler extends AlephHandlerBase {
    * @param AlephPatron $patron
    * @param AlephReservation $reservation
    *
-   * @return \Drupal\aleph\Aleph\Entity\AlephRequestResponse
+   * @return AlephRequestResponse
    * @throws AlephClientException
    */
   public function deleteReservation($patron, $reservation) {
@@ -266,29 +266,37 @@ class AlephPatronHandler extends AlephHandlerBase {
   }
 
   /**
+   * Get the holding groups.
+   *
+   * Holding groups are groups items for each sub library based on material ID.
+   *
    * @param AlephPatron $patron
+   *   The AlephPatron object.
+   *
    * @param AlephMaterial $material
+   *   The AlephMaterial object.
    *
    * @return AlephHoldGroup[]
+   *   Array of Aleph hold groups.
+   *
    * @throws AlephClientException
    */
   public function getHoldingGroups($patron, $material) {
     $groups = $this->client->getHoldingGroups($patron, $material);
-    $result = [];
-    foreach ($groups as $group) {
-      $result[(string) $group['href']] = AlephHoldGroup::createHoldGroupFromXML($group);
-    }
-    return $result;
+
+    return array_map(function ($group) {
+      return (string) $group['href'] = AlephHoldGroup::createHoldGroupFromXML($group);
+    }, $groups);
   }
 
   /**
    * Get the branches where the patron is active.
    *
    * @param string $bor_id
-   *    The Aleph patron ID.
+   *   The Aleph patron ID.
    *
-   * @return string[] $result
-   *    Array with branches the use is active in.
+   * @return string[]
+   *   Array with branches the use is active in.
    *
    * @throws AlephClientException
    */

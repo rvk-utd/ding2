@@ -224,12 +224,11 @@ function aleph_form_profile2_form_alter(&$form, &$form_state) {
 }
 
 /**
- * Disable the 'update reservation' button as it's not possible in Aleph.
+ * Implements hook_form_form_id_alter().
  */
-function aleph_form_alter(&$form, &$form_state, $form_id) {
-  if ($form_id === 'ding_reservation_reservations_notready_form') {
-    unset($form['actions_container']['actions_top']['update']);
-  }
+function aleph_form_ding_reservation_reservations_notready_form_alter(&$form, &$form_state, $form_id) {
+  // Disable the 'update reservation' button as it's not possible in Aleph.
+  unset($form['actions_container']['actions_top']['update']);
 }
 
 /**

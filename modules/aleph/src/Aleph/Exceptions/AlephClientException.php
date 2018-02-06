@@ -3,7 +3,7 @@
 namespace Drupal\aleph\Aleph\Exception;
 
 /**
- * Define exceptions for different error conditions inside the Aleph client.
+ * Exception used when the HTTP response from Aleph is not 200.
  */
 
 class AlephClientException extends \Exception { }

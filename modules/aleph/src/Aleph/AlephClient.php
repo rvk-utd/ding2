@@ -70,16 +70,16 @@ class AlephClient {
    * Perform request to the Aleph server.
    *
    * @param string $method
-   *    The query method (GET, POST, etc.).
+   *   The query method (GET, POST, etc.).
    * @param string $operation
-   *    The operation to run in Aleph.
+   *   The operation to run in Aleph.
    * @param array $params
-   *    The extra query parameters to send.
+   *   The extra query parameters to send.
    *
    * @return \SimpleXMLElement
-   *    A SimpleXMLElement object.
+   *   A SimpleXMLElement object.
    *
-   * @throws \Drupal\aleph\Aleph\Exception\AlephClientException
+   * @throws AlephClientException
    */
   public function request($method, $operation, array $params = array()) {
     $options = array(
@@ -135,12 +135,12 @@ class AlephClient {
    * Authenticate the patron.
    *
    * @param string $bor_id
-   *    Patron ID.
+   *   Patron ID.
    * @param string $verification
-   *    Patron PIN.
+   *   Patron PIN.
    *
    * @return \SimpleXMLElement
-   *    The authentication response from Aleph or error message.
+   *   The authentication response from Aleph or error message.
    *
    * @throws AlephClientException
    */
@@ -247,13 +247,13 @@ class AlephClient {
    * Get patron's loans.
    *
    * @param \Drupal\aleph\Aleph\Entity\AlephPatron $patron
-   *    The patron to get loans from.
+   *   The patron to get loans from.
    *
-   * @param bool $loan_id
-   *    The loan ID to get specific loan.
+   * @param string|false $loan_id
+   *   The loan ID to get specific loan.
    *
-   * @return \SimpleXMLElement The response from Aleph.
-   *    The response from Aleph.
+   * @return \SimpleXMLElement
+   *   The response from Aleph.
    *
    * @throws AlephClientException
    */
@@ -300,7 +300,7 @@ class AlephClient {
    * @param \Drupal\aleph\Aleph\Entity\AlephHoldGroup[] $holding_groups
    *   The holding groups.
    *
-   * @return \SimpleXMLElement
+   * @return \SimpleXMLElement|false
    *   The SimpleXMLElement from the raw XML response.
    *
    * @throws AlephClientException
@@ -318,6 +318,8 @@ class AlephClient {
 
     $rid = $this->mainLibrary . $request->getDocNumber();
 
+    // Try to make the reservation against each holding group.
+    // If the reservation is OK, the reply code is '0000' and we stop.
     foreach ($holding_groups as $url => $holding_group) {
       $response = $this->requestRest(
         'PUT',
@@ -397,12 +399,20 @@ class AlephClient {
   }
 
   /**
+   * Get holding groups.
+   *
+   * Holding groups are used to make reservations from the material ID.
+   * There's one for each library and it contains information about items
+   * from the library.
+   *
    * @param \Drupal\aleph\Aleph\Entity\AlephPatron $patron
-   *    The Aleph patron.
+   *   The Aleph patron.
    * @param \Drupal\aleph\Aleph\Entity\AlephMaterial $material
-   *    The Aleph material.
+   *   The Aleph material.
    *
    * @return \SimpleXMLElement[]
+   *   XML response from Aleph with holding groups.
+   *
    * @throws AlephClientException
    */
   public function getHoldingGroups(AlephPatron $patron, AlephMaterial $material) {
