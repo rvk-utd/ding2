@@ -346,8 +346,10 @@ class AlephMaterial {
       $material->setPlacements($placements);
     }
 
-    if ((string) $item->xpath('status')[0] === 'On Shelf') {
-      $material->setAvailable(TRUE);
+    if ($item->xpath('status')) {
+      if ((string) $item->xpath('status')[0] === 'On Shelf') {
+        $material->setAvailable(TRUE);
+      }
     }
 
     if ($item->xpath('z30') === FALSE) {
