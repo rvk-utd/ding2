@@ -158,12 +158,7 @@ function aleph_reservation_default_interest_period($profile = NULL) {
  */
 function aleph_reservation_list($account, $requested_type = NULL) {
   // Throw exception if we're not logged in.
-  try {
-    ding_user_get_creds();
-  }
-  catch (DingProviderAuthException $e) {
-    return [];
-  }
+  ding_user_get_creds();
 
   $result = array(
     DING_RESERVATION_READY => array(),
@@ -248,6 +243,8 @@ function aleph_reservation_list($account, $requested_type = NULL) {
  *   If reservation exists.
  * @throws DingProviderUserException
  *   Error messages shown to the user.
+ * @throws Exception
+ *    New DateInterval throws a generic exception.
  */
 function aleph_reservation_create($account, $id) {
   $client = aleph_client();
@@ -273,11 +270,7 @@ function aleph_reservation_create($account, $id) {
   $interest_period = aleph_reservation_default_interest_period();
 
   $end_request_date = new DateTime();
-  try {
-    $end_request_date->add(new DateInterval('P' . $interest_period . 'D'));
-  }
-  catch (Exception $e) {
-  }
+  $end_request_date->add(new DateInterval('P' . $interest_period . 'D'));
 
   // Build the reservation object.
   $defaults = aleph_reservation_default_options($account);
@@ -332,7 +325,7 @@ function aleph_reservation_create($account, $id) {
  *
  * @throws DingProviderAuthException
  * @throws DingProviderReservationUserError
- * @throws \Drupal\aleph\Aleph\Exception\AlephClientException
+ * @throws AlephClientException
  */
 function aleph_reservation_delete($account, $id) {
   $patron_handler = new AlephPatronHandler(aleph_client());
@@ -400,14 +393,12 @@ function aleph_reservation_branch_name($branch_id) {
  *
  * @return array
  *   The branches as key and name.
+ *
+ * @throws DingProviderAuthException
+ *    If the patron is not logged in.
  */
 function aleph_reservation_pickup_branches($account) {
   // Throw exception if we're not logged in.
-  try {
-    ding_user_get_creds();
-  }
-  catch (DingProviderAuthException $e) {
-    return [];
-  }
+  ding_user_get_creds();
   return aleph_get_branches();
 }
