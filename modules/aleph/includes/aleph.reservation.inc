@@ -302,7 +302,9 @@ function aleph_reservation_create($account, $id) {
         'queue_number' => NULL,
       );
     }
-    throw new DingProviderUserException(t($response->getNote()));
+    else {
+      throw new DingProviderUserException(t($response->getNote()));
+    }
   }
   catch (AlephClientException $e) {
     watchdog_exception('aleph', $e);
