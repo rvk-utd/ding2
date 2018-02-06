@@ -305,7 +305,7 @@ class AlephClient {
    *
    * @throws AlephClientException
    */
-  public function createReservation(AlephPatron $patron, AlephRequest $request, $holding_groups) {
+  public function createReservation(AlephPatron $patron, AlephRequest $request, array $holding_groups) {
     $options = array();
     $response = FALSE;
 
