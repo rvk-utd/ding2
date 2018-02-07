@@ -32,7 +32,7 @@ class AlephHoldGroup {
    * @param string $url
    *   The hold group URL.
    */
-  public function setUrl($url) {
+  protected function setUrl($url) {
     $this->url = $url;
   }
 

@@ -128,7 +128,7 @@ class AlephClient {
     }
 
     // Throw exception if the status from Aleph is not OK.
-    throw new AlephClientException('Request error: ' . $response->code . $response->error);
+    throw new AlephClientException($response->error, $response->code);
   }
 
   /**
