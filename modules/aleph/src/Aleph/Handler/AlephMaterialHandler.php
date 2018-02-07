@@ -4,6 +4,7 @@ namespace Drupal\aleph\Aleph\Handler;
 
 use Drupal\aleph\Aleph\AlephClient;
 use Drupal\aleph\Aleph\Entity\AlephMaterial;
+use Drupal\aleph\Aleph\Exception\AlephClientException;
 
 /**
  * Class AlephMaterialHandler.
@@ -31,7 +32,7 @@ class AlephMaterialHandler extends AlephHandlerBase {
    * @return \Drupal\aleph\Aleph\Entity\AlephMaterial[]
    *    Array with Aleph Materials.
    *
-   * @throws \RuntimeException
+   * @throws AlephClientException
    */
   public function getHoldings(AlephMaterial $material) {
     $aleph_items = $this->client->getItems($material)->xpath('items/item');

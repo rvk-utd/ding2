@@ -4,8 +4,10 @@
  * Handles reservation with Aleph.
  */
 
+use Drupal\aleph\Aleph\Entity\AlephMaterial;
 use Drupal\aleph\Aleph\Entity\AlephRequest;
 use Drupal\aleph\Aleph\Entity\AlephReservation;
+use Drupal\aleph\Aleph\Exception\AlephClientException;
 use Drupal\aleph\Aleph\Handler\AlephPatronHandler;
 
 /**
@@ -52,7 +54,8 @@ function aleph_reservation_options($account, $default_value = '') {
   }
 
   $form = array();
-  $form += ding_reservation_default_options_branch('alma_preferred_branch', $default, $branches);
+  $form += ding_reservation_default_options_branch('aleph_preferred_branch',
+    $default, $branches);
   if (variable_get('ding_reservation_disable_interest_date') !== 1) {
     $form += ding_reservation_interest_period_selector('interest_period', $interest_period, $periods);
   }
@@ -146,16 +149,16 @@ function aleph_reservation_default_interest_period($profile = NULL) {
  * Provider list callback.
  *
  * @param object $account
- *    User to list reservations for.
+ *   User to list reservations for.
  * @param string|null $requested_type
- *    Type of reservations to list. NULL for all.
+ *   Type of reservations to list. NULL for all.
  *
  * @return \DingProviderReservation[]
- *    Array of DingProviderReservations.
+ *   Array of DingProviderReservations.
  */
 function aleph_reservation_list($account, $requested_type = NULL) {
   // Throw exception if we're not logged in.
-  ding_user_get_creds($account);
+  ding_user_get_creds();
 
   $result = array(
     DING_RESERVATION_READY => array(),
@@ -218,9 +221,7 @@ function aleph_reservation_list($account, $requested_type = NULL) {
   if ($requested_type !== NULL && isset($result[$requested_type])) {
     return $result[$requested_type];
   }
-  else {
-    watchdog('aleph', 'Unknown reservation type (%type) requested', array('%type' => $requested_type), WATCHDOG_ERROR);
-  }
+  watchdog('aleph', 'Unknown reservation type (%type) requested', array('%type' => $requested_type), WATCHDOG_ERROR);
 
   return $result;
 }
@@ -236,17 +237,28 @@ function aleph_reservation_list($account, $requested_type = NULL) {
  * @return array
  *   Reservation information.
  *
- * @throws \DingProviderReservationExists
- *   Reservation exists.
- * @throws \DingProviderUserException
- *    General exception.
+ * @throws DingProviderAuthException
+ *   If the users is not logged in.
+ * @throws DingProviderReservationExists
+ *   If reservation exists.
+ * @throws DingProviderUserException
+ *   Error messages shown to the user.
+ * @throws Exception
+ *   New DateInterval throws a generic exception.
  */
 function aleph_reservation_create($account, $id) {
-  $patron_handler = new AlephPatronHandler(aleph_client());
+  $client = aleph_client();
+  $patron_handler = new AlephPatronHandler($client);
   $patron_handler->setPatron(aleph_get_patron_by_account());
+  $patron = $patron_handler->getPatron();
 
   // Check if the users has this reservation and throw exception.
-  $reservations = $patron_handler->getReservations();
+  try {
+    $reservations = $patron_handler->getReservations();
+  }
+  catch (AlephClientException $e) {
+    throw new DingProviderUserException(t('Unable to get existing reservations.'));
+  }
 
   foreach ($reservations as $reservation) {
     if ($id === $reservation->getItem()->getId()) {
@@ -264,34 +276,40 @@ function aleph_reservation_create($account, $id) {
   $defaults = aleph_reservation_default_options($account);
   $reservation = new AlephReservation();
   $request = new AlephRequest();
+  $material = new AlephMaterial();
+  $material->setId($id);
   $request->setRequestDate(new DateTime());
   $request->setEndRequestDate($end_request_date);
   $request->setPickupLocation($defaults['aleph_preferred_branch']);
+  $request->setDocNumber($id);
   $reservation->setRequest($request);
 
+  try {
+    $holding_groups = $patron_handler->getHoldingGroups($patron, $material);
+  }
+  catch (AlephClientException $e) {
+    throw new DingProviderUserException(t('Unable to get holding groups from the library system. Contact the library'));
+  }
+
   // Try to make the reservation.
-  $patron = $patron_handler->getPatron();
   $response = NULL;
   try {
-    $response = $patron_handler->createReservation($patron, $reservation);
+    $response = $patron_handler->createReservation($patron, $reservation, $holding_groups);
+    if ($response->success()) {
+      return array(
+        'branch' => $request->getPickupLocation(),
+        // Queue number not supported by Aleph.
+        'queue_number' => NULL,
+      );
+    }
+    throw new DingProviderUserException(t($response->getReplyText()));
   }
-  catch (Exception $e) {
+  catch (AlephClientException $e) {
     watchdog_exception('aleph', $e);
-    return array();
+    throw new DingProviderUserException(t(
+      'We are unable to create a reservation in the library system. Please contact the library.'
+    ));
   }
-
-  if ($response->success()) {
-    return array(
-      'branch' => $request->getPickupLocation(),
-      // Queue number not supported by Aleph.
-      'queue_number' => NULL,
-    );
-  }
-  throw new DingProviderUserException(t($response->getNote()));
-}
-
-function aleph_reservation_update() {
-  return NULL;
 }
 
 /**
@@ -302,10 +320,12 @@ function aleph_reservation_update() {
  * @param string $id
  *   ID of a reservation.
  *
- * @throws \DingProviderAuthException
- * @throws \DingProviderUserException
- *
  * @return bool
+ *   If the deletion succeeded or not.
+ *
+ * @throws DingProviderAuthException
+ * @throws DingProviderReservationUserError
+ * @throws AlephClientException
  */
 function aleph_reservation_delete($account, $id) {
   $patron_handler = new AlephPatronHandler(aleph_client());
@@ -368,30 +388,17 @@ function aleph_reservation_branch_name($branch_id) {
 /**
  * Provider pickup_branches callback.
  *
- * @param $account
- *    The Drupal account object.
+ * @param object $account
+ *   The Drupal account object.
  *
  * @return array
- *    The branches as key and name.
+ *   The branches as key and name.
+ *
+ * @throws DingProviderAuthException
+ *    If the patron is not logged in.
  */
 function aleph_reservation_pickup_branches($account) {
   // Throw exception if we're not logged in.
-  ding_user_get_creds($account);
+  ding_user_get_creds();
   return aleph_get_branches();
-}
-
-function aleph_reservation_get_reservations() {
-  return NULL;
-}
-
-function aleph_reservation_clear_cache() {
-  return NULL;
-}
-
-function aleph_reservation_exists() {
-  return FALSE;
-}
-
-function aleph_reservation_format_date() {
-  return NULL;
 }

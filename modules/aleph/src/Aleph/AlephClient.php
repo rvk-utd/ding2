@@ -11,7 +11,8 @@ use Drupal\aleph\Aleph\Entity\AlephMaterial;
 use Drupal\aleph\Aleph\Entity\AlephPatron;
 use Drupal\aleph\Aleph\Entity\AlephRequest;
 use Drupal\aleph\Aleph\Entity\AlephRequestResponse;
-use Exception;
+use Drupal\aleph\Aleph\Exception\AlephClientException;
+use Drupal\aleph\Aleph\Exception\AlephPatronInvalidPin;
 use GuzzleHttp\Client;
 
 /**
@@ -69,16 +70,16 @@ class AlephClient {
    * Perform request to the Aleph server.
    *
    * @param string $method
-   *    The query method (GET, POST, etc.).
+   *   The query method (GET, POST, etc.).
    * @param string $operation
-   *    The operation to run in Aleph.
+   *   The operation to run in Aleph.
    * @param array $params
-   *    The extra query parameters to send.
+   *   The extra query parameters to send.
    *
    * @return \SimpleXMLElement
-   *    A SimpleXMLElement object.
+   *   A SimpleXMLElement object.
    *
-   * @throws \RuntimeException
+   * @throws AlephClientException
    */
   public function request($method, $operation, array $params = array()) {
     $options = array(
@@ -98,7 +99,7 @@ class AlephClient {
     }
 
     // Throw exception if the status from Aleph is not OK.
-    throw new \RuntimeException('Request error: ' . $response->code . $response->error);
+    throw new AlephClientException($response->error, $response->code);
   }
 
   /**
@@ -114,7 +115,7 @@ class AlephClient {
    * @return \SimpleXMLElement
    *    The returned XML from Aleph.
    *
-   * @throws \RuntimeException
+   * @throws AlephClientException
    */
   public function requestRest($method, $url, array $options = array()) {
     $response = $this->client->request(
@@ -127,21 +128,21 @@ class AlephClient {
     }
 
     // Throw exception if the status from Aleph is not OK.
-    throw new \RuntimeException('Request error: ' . $response->code . $response->error);
+    throw new AlephClientException($response->error, $response->code);
   }
 
   /**
    * Authenticate the patron.
    *
    * @param string $bor_id
-   *    Patron ID.
+   *   Patron ID.
    * @param string $verification
-   *    Patron PIN.
+   *   Patron PIN.
    *
    * @return \SimpleXMLElement
-   *    The authentication response from Aleph or error message.
+   *   The authentication response from Aleph or error message.
    *
-   * @throws \RuntimeException
+   * @throws AlephClientException
    */
   public function authenticate($bor_id, $verification) {
     $response = $this->request('GET', 'bor-auth', array(
@@ -161,7 +162,7 @@ class AlephClient {
    * @return \SimpleXMLElement
    *    The response from Aleph.
    *
-   * @throws \RuntimeException
+   * @throws AlephClientException
    */
   public function borInfo(AlephPatron $patron) {
     $response = $this->request('GET', 'bor-info', array(
@@ -182,7 +183,8 @@ class AlephClient {
    *
    * @return bool
    *
-   * @throws \Drupal\aleph\Aleph\AlephPatronInvalidPin
+   * @throws AlephClientException
+   * @throws AlephPatronInvalidPin
    */
   public function changePin(AlephPatron $patron, $new_pin) {
     $options = array();
@@ -204,7 +206,7 @@ class AlephClient {
       return TRUE;
     }
 
-    throw new AlephPatronInvalidPin();
+    throw new AlephPatronInvalidPin($response->getReplyText() . ': ' . $response->getNote());
   }
 
   /**
@@ -216,7 +218,7 @@ class AlephClient {
    * @return \SimpleXMLElement
    *    The SimpleXMLElement response from Aleph.
    *
-   * @throws \RuntimeException
+   * @throws AlephClientException
    */
   public function getDebts(AlephPatron $patron) {
     return $this->requestRest(
@@ -232,7 +234,7 @@ class AlephClient {
    * @return \SimpleXMLElement The SimpleXMLElement response from Aleph.
    *    The SimpleXMLElement response from Aleph.
    *
-   * @throws \RuntimeException
+   * @throws AlephClientException
    */
   public function getItems(AlephMaterial $material) {
     return $this->requestRest(
@@ -245,15 +247,15 @@ class AlephClient {
    * Get patron's loans.
    *
    * @param \Drupal\aleph\Aleph\Entity\AlephPatron $patron
-   *    The patron to get loans from.
+   *   The patron to get loans from.
    *
-   * @param $loan_id
-   *    The loan ID to get specific loan.
+   * @param string|false $loan_id
+   *   The loan ID to get specific loan.
    *
-   * @return \SimpleXMLElement The response from Aleph.
-   *    The response from Aleph.
+   * @return \SimpleXMLElement
+   *   The response from Aleph.
    *
-   * @throws \RuntimeException
+   * @throws AlephClientException
    */
   public function getLoans(AlephPatron $patron, $loan_id = FALSE) {
     if ($loan_id) {
@@ -277,7 +279,7 @@ class AlephClient {
    * @return \SimpleXMLElement
    *    The response from Aleph.
    *
-   * @throws \RuntimeException
+   * @throws AlephClientException
    */
   public function getReservations(AlephPatron $patron) {
     return $this->requestRest(
@@ -290,16 +292,22 @@ class AlephClient {
    * Create a reservation.
    *
    * @param \Drupal\aleph\Aleph\Entity\AlephPatron $patron
-   *    The Aleph patron.
+   *   The Aleph patron.
    *
    * @param \Drupal\aleph\Aleph\Entity\AlephRequest $request
-   *    The request information.
+   *   The request information.
    *
-   * @return \SimpleXMLElement
-   * @throws \RuntimeException
+   * @param \Drupal\aleph\Aleph\Entity\AlephHoldGroup[] $holding_groups
+   *   The holding groups.
+   *
+   * @return \SimpleXMLElement|false
+   *   The SimpleXMLElement from the raw XML response.
+   *
+   * @throws AlephClientException
    */
-  public function createReservation(AlephPatron $patron, AlephRequest $request) {
+  public function createReservation(AlephPatron $patron, AlephRequest $request, array $holding_groups) {
     $options = array();
+    $response = FALSE;
 
     $xml = new \SimpleXMLElement('<hold-request-parameters></hold-request-parameters>');
     $xml->addChild('pickup-location', $request->getPickupLocation());
@@ -308,20 +316,24 @@ class AlephClient {
 
     $options['body'] = 'post_xml=' . $xml->asXML();
 
-    // BIB library code + the system number.
-    // For example, USM01000050362.
     $rid = $this->mainLibrary . $request->getDocNumber();
 
-    // ADM library code + the item record key.
-    // For example, USM50000238843000320.
-    $iid = $request->getInstitutionCode() . $request->getDocNumber() .
-      $request->getItemSequence();
+    // Try to make the reservation against each holding group.
+    // If the reservation is OK, the reply code is '0000' and we stop.
+    foreach ($holding_groups as $holding_group) {
+      $response = $this->requestRest(
+        'PUT',
+        'patron/' . $patron->getId() . '/record/' . $rid . '/holds/' .
+        basename($holding_group->getUrl()),
+        $options
+      );
 
-    return $this->requestRest(
-      'PUT',
-      'patron/' . $patron->getId() . '/record/' . $rid . '/items/' . $iid . '/hold',
-      $options
-    );
+      if ((string) $response->xpath('reply-code')[0] === '0000') {
+        return $response;
+      }
+    }
+
+    return $response;
   }
 
   /**
@@ -330,7 +342,7 @@ class AlephClient {
    *
    * @return \SimpleXMLElement
    *
-   * @throws \RuntimeException
+   * @throws AlephClientException
    */
   public function renewLoans(AlephPatron $patron, array $ids) {
     $options = array();
@@ -354,11 +366,11 @@ class AlephClient {
   }
 
   /**
-   * @param \Drupal\aleph\Aleph\Entity\AlephPatron $patron
+   * @param \Drupal\aleph\Aleph\Entity\AlephPatron  $patron
    * @param \Drupal\aleph\Aleph\Entity\AlephRequest $request
    *
    * @return \SimpleXMLElement
-   * @throws \RuntimeException
+   * @throws AlephClientException
    */
   public function deleteReservation(AlephPatron $patron, AlephRequest
   $request) {
@@ -380,10 +392,35 @@ class AlephClient {
    *    The Aleph patron ID.
    *
    * @return \SimpleXMLElement
-   * @throws \RuntimeException
+   * @throws AlephClientException
    */
   public function getPatronBlocks($bor_id) {
     return $this->requestRest('GET', 'patron/' . $bor_id . '/patronStatus/blocks');
+  }
+
+  /**
+   * Get holding groups.
+   *
+   * Holding groups are used to make reservations from the material ID.
+   * There's one for each library and it contains information about items
+   * from the library.
+   *
+   * @param \Drupal\aleph\Aleph\Entity\AlephPatron $patron
+   *   The Aleph patron.
+   * @param \Drupal\aleph\Aleph\Entity\AlephMaterial $material
+   *   The Aleph material.
+   *
+   * @return \SimpleXMLElement[]
+   *   XML response from Aleph with holding groups.
+   *
+   * @throws AlephClientException
+   */
+  public function getHoldingGroups(AlephPatron $patron, AlephMaterial $material) {
+    return $this->requestRest(
+      'GET',
+      'patron/' . $patron->getId() . '/record/' . $this->mainLibrary .
+      $material->getId() . '/holds?view=full'
+    )->xpath('hold/institution/group');
   }
 
 }

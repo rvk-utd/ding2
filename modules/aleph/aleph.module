@@ -6,6 +6,7 @@
  */
 
 use Drupal\aleph\Aleph\AlephClient;
+use Drupal\aleph\Aleph\Exception\AlephClientException;
 use Drupal\aleph\Aleph\Handler\AlephPatronHandler;
 
 include_once 'aleph.features.inc';
@@ -220,6 +221,14 @@ function aleph_form_profile2_form_alter(&$form, &$form_state) {
   $form['profile_provider_aleph']['field_aleph_email']['#disabled'] = TRUE;
   $form['profile_provider_aleph']['field_aleph_phone_number']['#disabled'] = TRUE;
   $form['profile_provider_aleph']['field_aleph_expiry_date']['#disabled'] = TRUE;
+}
+
+/**
+ * Implements hook_form_form_id_alter().
+ */
+function aleph_form_ding_reservation_reservations_notready_form_alter(&$form, &$form_state, $form_id) {
+  // Disable the 'update reservation' button as it's not possible in Aleph.
+  unset($form['actions_container']['actions_top']['update']);
 }
 
 /**

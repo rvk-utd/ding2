@@ -125,6 +125,15 @@ class AlephRequest {
   protected $institutionCode;
 
   /**
+   * Array of URLs to hold groups.
+   *
+   * @var string[]
+   * For example:
+   * http://<server>/rest-dlf/patron/<patron_id>/record/ICE01000335901/holds/ICE53000335901001570
+   */
+  protected $holdGroupURLs;
+
+  /**
    * Set the status message.
    *
    * @param string $status
@@ -382,6 +391,26 @@ class AlephRequest {
    */
   public function getInstitutionCode() {
     return $this->institutionCode;
+  }
+
+  /**
+   * Get hold group URLs.
+   *
+   * @return string[]
+   *  The hold group URLs.
+   */
+  public function getHoldGroupURLs() {
+    return $this->holdGroupURLs;
+  }
+
+  /**
+   * Set the hold group URLs.
+   *
+   * @param string[] $holdGroupURLs
+   *    The hold group URLs.
+   */
+  public function setHoldGroupURLs(array $holdGroupURLs) {
+    $this->holdGroupURLs = $holdGroupURLs;
   }
 
 }

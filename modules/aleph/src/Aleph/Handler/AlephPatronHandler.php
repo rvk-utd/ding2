@@ -3,8 +3,10 @@
 namespace Drupal\aleph\Aleph\Handler;
 
 use DateTime;
-use Drupal\aleph\Aleph\AlephPatronInvalidPin;
+use Drupal\aleph\Aleph\Exception\AlephClientException;
+use Drupal\aleph\Aleph\Exception\AlephPatronInvalidPin;
 use Drupal\aleph\Aleph\Entity\AlephDebt;
+use Drupal\aleph\Aleph\Entity\AlephHoldGroup;
 use Drupal\aleph\Aleph\Entity\AlephLoan;
 use Drupal\aleph\Aleph\Entity\AlephMaterial;
 use Drupal\aleph\Aleph\Entity\AlephPatron;
@@ -29,10 +31,10 @@ class AlephPatronHandler extends AlephHandlerBase {
    * AlephPatronHandler constructor.
    *
    * @param \Drupal\aleph\Aleph\AlephClient $client
-   *    The Aleph client.
+   *   The Aleph client.
    *
    * @param \Drupal\aleph\Aleph\Entity\AlephPatron $patron
-   *    The Aleph patron.
+   *   The Aleph patron.
    */
   public function __construct(AlephClient $client, AlephPatron $patron = NULL) {
     parent::__construct($client);
@@ -44,16 +46,16 @@ class AlephPatronHandler extends AlephHandlerBase {
    * Authenticate user from Aleph.
    *
    * @param string $bor_id
-   *    The user ID (z303-id).
+   *   The user ID (z303-id).
    * @param string $verification
-   *    The user pin-code/verification code.
+   *   The user pin-code/verification code.
    * @param string[] $allowed_login_branches
-   *    Allowed login branches.
+   *   Allowed login branches.
    *
    * @return \Drupal\aleph\Aleph\AuthenticationResult
-   *    The authenticated Aleph patron.
+   *   The authenticated Aleph patron.
    *
-   * @throws \RuntimeException
+   * @throws AlephClientException
    */
   public function authenticate($bor_id, $verification, array $allowed_login_branches = []) {
     $response = $this->client->authenticate($bor_id, $verification);
@@ -83,9 +85,10 @@ class AlephPatronHandler extends AlephHandlerBase {
    *
    * @var \SimpleXMLElement[] $loans
    *
-   * @return \Drupal\aleph\Aleph\Entity\AlephMaterial[]
+   * @return AlephMaterial[]
+   *   Array of Aleph Materials.
    *
-   * @throws \RuntimeException
+   * @throws AlephClientException
    */
   public function getLoans() {
     $results = array();
@@ -101,10 +104,12 @@ class AlephPatronHandler extends AlephHandlerBase {
    * Change patron's pin code.
    *
    * @param string $pin
-   *    The new pin code.
+   *   The new pin code.
    *
    * @return bool
-   *    True if setting new pincode succeeded.
+   *   True if setting new pincode succeeded.
+   *
+   * @throws AlephClientException
    */
   public function setPin($pin) {
     try {
@@ -120,7 +125,7 @@ class AlephPatronHandler extends AlephHandlerBase {
    * Set the Aleph patron object.
    *
    * @param AlephPatron $patron
-   *    The Aleph patron.
+   *   The Aleph patron.
    */
   public function setPatron(AlephPatron $patron) {
     $this->patron = $patron;
@@ -139,9 +144,9 @@ class AlephPatronHandler extends AlephHandlerBase {
    * Get patron debts.
    *
    * @return \Drupal\aleph\Aleph\Entity\AlephDebt[]
-   *    Array of AlephDebt objects.
+   *   Array of AlephDebt objects.
    *
-   * @throws \RuntimeException
+   * @throws AlephClientException
    */
   public function getDebts() {
     $xml = $this->client->getDebts($this->getPatron());
@@ -152,8 +157,8 @@ class AlephPatronHandler extends AlephHandlerBase {
   /**
    * Get a patron's reservations.
    *
-   * @return \Drupal\aleph\Aleph\Entity\AlephReservation[]
-   * @throws \RuntimeException
+   * @return AlephReservation[]
+   * @throws AlephClientException
    */
   public function getReservations() {
     $reservations = array();
@@ -197,7 +202,7 @@ class AlephPatronHandler extends AlephHandlerBase {
    * @param $ids
    *
    * @return AlephLoan[]
-   * @throws \RuntimeException
+   * @throws AlephClientException
    */
   public function renewLoans($ids) {
     $response = $this->client->renewLoans($this->getPatron(), $ids);
@@ -226,16 +231,21 @@ class AlephPatronHandler extends AlephHandlerBase {
    * Create a reservation for a patron.
    *
    * @param AlephPatron $patron
+   *   The Aleph patron.
+   *
    * @param AlephReservation $reservation
+   *   The reservation object.
    *
-   * @throws \RuntimeException
+   * @param AlephHoldGroup[] $holding_groups
+   *   The holding groups.
    *
-   * @return \Drupal\aleph\Aleph\Entity\AlephRequestResponse
+   * @return AlephRequestResponse
+   * @throws AlephClientException
    */
-  public function createReservation($patron, $reservation) {
-    $response = $this->client->createReservation($patron,
-      $reservation->getRequest());
-
+  public function createReservation($patron, $reservation, $holding_groups) {
+    $response = $this->client->createReservation(
+      $patron, $reservation->getRequest(), $holding_groups
+    );
     return AlephRequestResponse::createRequestResponseFromXML($response);
   }
 
@@ -245,8 +255,8 @@ class AlephPatronHandler extends AlephHandlerBase {
    * @param AlephPatron $patron
    * @param AlephReservation $reservation
    *
-   * @return \Drupal\aleph\Aleph\Entity\AlephRequestResponse
-   * @throws \RuntimeException
+   * @return AlephRequestResponse
+   * @throws AlephClientException
    */
   public function deleteReservation($patron, $reservation) {
     $response = $this->client->deleteReservation($patron,
@@ -256,15 +266,43 @@ class AlephPatronHandler extends AlephHandlerBase {
   }
 
   /**
+   * Get the holding groups.
+   *
+   * Holding groups are groups items for each sub library based on material ID.
+   *
+   * @param AlephPatron $patron
+   *   The AlephPatron object.
+   *
+   * @param AlephMaterial $material
+   *   The AlephMaterial object.
+   *
+   * @return AlephHoldGroup[]
+   *   Array of Aleph hold groups.
+   *
+   * @throws AlephClientException
+   */
+  public function getHoldingGroups($patron, $material) {
+    $xml_groups = $this->client->getHoldingGroups($patron, $material);
+    $groups = array_map(function(\SimpleXMLElement $group) {
+      return AlephHoldGroup::createHoldGroupFromXML($group);
+    }, $xml_groups);
+
+    $allowed_branches = aleph_get_branches();
+    return array_filter($groups, function(AlephHoldGroup $group) use ($allowed_branches) {
+      return array_key_exists($group->getSubLibraryCode(), $allowed_branches);
+    });
+  }
+
+  /**
    * Get the branches where the patron is active.
    *
    * @param string $bor_id
-   *    The Aleph patron ID.
+   *   The Aleph patron ID.
    *
-   * @return string[] $result
-   *    Array with branches the use is active in.
+   * @return string[]
+   *   Array with branches the use is active in.
    *
-   * @throws \RuntimeException
+   * @throws AlephClientException
    */
   public function getActiveBranches($bor_id) {
     $branches = $this->client->getPatronBlocks($bor_id)->xpath('blocks_messages/institution/sublibrary/@code');

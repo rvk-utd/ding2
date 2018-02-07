@@ -330,8 +330,12 @@ class AlephMaterial {
     if ($item->xpath('z30-sub-library-code')) {
       $material->setSubLibraryCode((string) $item->xpath('z30-sub-library-code')[0]);
     }
-    $material->setDueDate((string) $item->xpath('z36/z36-due-date')[0]);
-    $material->setLoanDate((string) $item->xpath('z36/z36-loan-date')[0]);
+    if ($item->xpath('z36/z36-due-date')) {
+      $material->setDueDate((string) $item->xpath('z36/z36-due-date')[0]);
+    }
+    if ($item->xpath('z36/z36-loan-date')) {
+      $material->setLoanDate((string) $item->xpath('z36/z36-loan-date')[0]);
+    }
 
     // Note placements of the material.
     $placements = array_map(function ($path) use ($item) {
@@ -342,8 +346,10 @@ class AlephMaterial {
       $material->setPlacements($placements);
     }
 
-    if ((string) $item->xpath('status')[0] === 'On Shelf') {
-      $material->setAvailable(TRUE);
+    if ($item->xpath('status')) {
+      if ((string) $item->xpath('status')[0] === 'On Shelf') {
+        $material->setAvailable(TRUE);
+      }
     }
 
     if ($item->xpath('z30') === FALSE) {
