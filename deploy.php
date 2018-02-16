@@ -91,6 +91,13 @@ server('test', 'test-bbsding.borgarbokasafn.is')
   ->identityFile()
   ->set('deploy_path', '/var/www/sites/test-bbsding');
 
+// Server setup.
+server('live', 'live-bbsding.borgarbokasafn.is')
+  ->stage('live')
+  ->user('webmaster')
+  ->identityFile()
+  ->set('deploy_path', '/var/www/sites/live-bbsding');
+
 desc("Ensure the profile has been checked out");
 task('build:prepare', function () {
   $repository = trim(get('repository'));
