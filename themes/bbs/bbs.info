@@ -1,0 +1,9 @@
+name = BBS Subtheme
+description = BBS subtheme for ding2
+core = 7.x
+base theme = ddbasic
+
+stylesheets[all][] = sass_css/components/menu.css
+stylesheets[all][] = sass_css/components/header.css
+stylesheets[all][] = sass_css/class.css
+

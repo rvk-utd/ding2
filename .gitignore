@@ -1,8 +1,17 @@
 /modules/contrib
 /libraries
-themes/ddbasic/node_modules
 config.php
 .docker-sync
 vendor
 /themes/ddbasic/scripts/min
-/themes/ddbasic/sass_css_verbose_output
+
+
+# Ignore Mac files
+.DS_STORE
+
+# Ignore node_modules
+node_modules
+
+# Ignore compiled css
+sass_css
+sass_css_verbose_output
