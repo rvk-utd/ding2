@@ -9,3 +9,5 @@ stylesheets[all][] = sass_css/class.css
 stylesheets[all][] = sass_css/overrides.css
 
 scripts[] = scripts/menu.js
+
+plugins[panels][layouts] = layouts

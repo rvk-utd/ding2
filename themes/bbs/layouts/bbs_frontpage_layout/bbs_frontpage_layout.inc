@@ -1,0 +1,16 @@
+<?php
+$plugin['bbs_frontpage_layout'] = array(
+    'title' => t('BBS frontpage layout'),
+    'icon' => 'bbs_frontpage_layout.png',
+    'theme' => 'bbs_frontpage_layout',
+    'admin_css' => 'bbs_frontpage_layout.css',
+    'category' => 'Ding2, theme',
+    'regions' => array(
+        'menu' => t('Menu'),
+        'new-user' => t('New User 1'),
+        'new-user2' => t('New User 2'),
+        'main-info' => t('Main Info'),
+        'sec-info' => t('Secondary Info'),
+        'sec-info2' => t('Secondary Info 2'),
+    ),
+);
