@@ -6,4 +6,6 @@ base theme = ddbasic
 stylesheets[all][] = sass_css/components/menu.css
 stylesheets[all][] = sass_css/components/header.css
 stylesheets[all][] = sass_css/class.css
+stylesheets[all][] = sass_css/overrides.css
 
+scripts[] = scripts/menu.js

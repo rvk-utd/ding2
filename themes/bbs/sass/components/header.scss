@@ -1,0 +1,125 @@
+/*
+Styles for the header
+ */
+
+.topbar {
+  height: 70px;
+  z-index: 1 !important;
+  background-color: #b03033;
+}
+
+.topbar-menu {
+  float: right;
+  margin: 0;
+
+  li {
+    float: left;
+    margin: 0;
+    height: 70px;
+    list-style-type: none !important;
+    list-style-image: none !important;
+    color: #fff;
+    padding: 0;
+
+    .last & {
+      padding-right: 50px;
+    }
+
+    a {
+      color: #fff;
+      margin: 30px;
+      width: 100%;
+    }
+  }
+
+  .topbar-link {
+    color: #ffff;
+  }
+
+  li.topbar-link-search {
+    background-color: rgba(0, 0, 0, 0.08);
+
+    .form-item-search-block-form {
+      float: right;
+
+      input {
+        background-color: rgba(0, 0, 0, 0);
+        color: #fff;
+        width: 155px;
+
+        &:focus {
+          box-shadow: none;
+          width: 300px;
+        }
+
+        &::placeholder {
+          color: #fff;
+        }
+      }
+    }
+
+    .form-wrapper {
+      float: left;
+      margin-top: 20px;
+      padding-left: 27px;
+    }
+  }
+
+  li.topbar-link-opening-hours {
+    background-color: rgba(0, 0, 0, 0.12);
+
+    &::after {
+      display: none;
+    }
+  }
+
+  li.topbar-link-user {
+    background-color: rgba(0, 0, 0, 0.2);
+
+    &::after {
+      display: none;
+    }
+  }
+
+  li.topbar-link-menu {
+    background-color: rgba(0, 0, 0, 0.24);
+  }
+
+  span.details {
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 20px;
+  }
+}
+
+.icon-clock::after {
+  content: "\e90e";
+  font-size: 50px;
+  font-family: icomoon;
+  speak: none;
+  font-style: normal;
+  font-weight: 400;
+  font-variant: normal;
+  text-transform: none;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+  top: 25px;
+}
+
+.icon-user::after {
+  content: "\e90b";
+  font-size: 50px;
+  font-family: icomoon;
+  speak: none;
+  font-style: normal;
+  font-weight: 400;
+  font-variant: normal;
+  text-transform: none;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+  top: 25px;
+}
+
+.logo {
+  float: left;
+}
