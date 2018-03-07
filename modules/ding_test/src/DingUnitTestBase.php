@@ -12,6 +12,9 @@ use Drupal\xautoload\ClassLoader\ClassLoaderInterface;
 use DrupalUnitTestCase;
 use Prophecy\Prophet;
 
+/**
+ * Base class for unit tests which rely on XAutoload for class loading.
+ */
 class DingUnitTestBase extends DrupalUnitTestCase {
 
   /**

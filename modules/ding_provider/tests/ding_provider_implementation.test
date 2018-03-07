@@ -1,14 +1,16 @@
 <?php
 
+use Ting\Search\TingSearchRequest;
 use Ting\Search\TingSearchResultInterface;
 use Ting\Search\TingSearchSort;
-use Ting\Search\TingSearchRequest;
 
 /**
- * @file
- * Test provider implementation.
+ * Base class for testing implementations of different types of providers.
+ *
+ * Direct child classes define tests of specific types of providers e.g.
+ * availability, loan, search or user. Second level child classes should then
+ * implement tests of specific provider implementations.
  */
-
 class DingProviderImplementationTestCase extends DrupalWebTestCase {
   protected $profile = 'ding2';
 
@@ -382,12 +384,13 @@ abstract class DingSearchProviderImplementationTestCase extends DingProviderImpl
    * @return \Ting\Search\TingSearchResultInterface
    *   The expected search result.
    */
-  public abstract function getSearchResult($query);
+  public abstract function getSearchResult(TingSearchRequest $query);
 
   /**
    * Result of getAllRelations down to supported relations.
    *
-   * @return \TingRelation[].
+   * @return \TingRelation[]
+   *   The relations.
    */
   public abstract function getFilteredRelations();
 
@@ -424,17 +427,18 @@ abstract class DingSearchProviderImplementationTestCase extends DingProviderImpl
   public abstract function getExpectedCommonFields();
 
   /**
-   * Returns a list of translated object ID's.
+   * Returns a list of translated object IDs.
    *
    * @return string[]
-   *   List of translated object ids.
+   *   List of translated object IDs.
    */
   public abstract function getTranslatedObjectIds();
 
   /**
-   * Returns a list of material ID's.
+   * Returns a list of material IDs.
    *
-   * @return array
+   * @return string[]
+   *   Sample object IDs.
    */
   public abstract function getLocalObjectIds();
 
@@ -442,6 +446,7 @@ abstract class DingSearchProviderImplementationTestCase extends DingProviderImpl
    * Returns a single translated object ID.
    *
    * @return string
+   *   Translated object ID.
    */
   public abstract function getTranslatedObjectId();
 
@@ -449,6 +454,7 @@ abstract class DingSearchProviderImplementationTestCase extends DingProviderImpl
    * Returns a single material ID.
    *
    * @return string
+   *   Sample object ID.
    */
   public abstract function getSingleLocalObjectId();
 
@@ -460,7 +466,7 @@ abstract class DingSearchProviderImplementationTestCase extends DingProviderImpl
     $materials_from_provider = ding_provider_invoke('search', 'material_types');
     $this->assertEqual($expected_materials, $materials_from_provider);
   }
-  
+
   /**
    * Verify that the provider returns the expected list of sources.
    */
@@ -475,7 +481,8 @@ abstract class DingSearchProviderImplementationTestCase extends DingProviderImpl
    */
   public function testObjectLoad() {
     $expected_objects = $this->getLoadedObjects();
-    $objects_from_provider = ding_provider_invoke('search', 'object_load', $expected_objects);
+    $object_ids = array_keys($expected_objects);
+    $objects_from_provider = ding_provider_invoke('search', 'object_load', $object_ids);
     $this->assertEqual($expected_objects, $objects_from_provider);
   }
 
@@ -484,7 +491,8 @@ abstract class DingSearchProviderImplementationTestCase extends DingProviderImpl
    */
   public function testCollectionLoad() {
     $expected_collection = $this->getLoadedCollection();
-    $collection_from_provider = ding_provider_invoke('search', 'collection_load', $expected_collection);
+    $collection_id = $expected_collection->getPrimaryObject()->getId();
+    $collection_from_provider = ding_provider_invoke('search', 'collection_load', $collection_id);
     $this->assertEqual($expected_collection, $collection_from_provider);
   }
 
@@ -558,20 +566,15 @@ abstract class DingSearchProviderImplementationTestCase extends DingProviderImpl
     $test_query_2 = 'test=query';
     $test_query_3 = '123';
 
-    /**
-     * @var \Ting\Search\TingSearchRequest $query
-     */
+    /* @var \Ting\Search\TingSearchRequest $query */
     $query = ding_provider_invoke('search', 'prepare_reference_query', $test_query_1);
-    // Plain search should be a fuzzy text-search.
-    $this->assertTrue($query->isFuzzy());
+    // Plain search should be a full text-search.
     $this->assertEqual($query->getFullTextQuery(), $test_query_1);
 
     $query = ding_provider_invoke('search', 'prepare_reference_query', $test_query_2);
-    $this->assertFalse($query->isFuzzy());
     $this->assertEqual($query->getRawQuery(), $test_query_2);
 
     $query = ding_provider_invoke('search', 'prepare_reference_query', $test_query_3);
-    $this->assertFalse($query->isFuzzy());
     $this->assertEqual($query->getMaterialFilter(), [$test_query_3]);
   }
 

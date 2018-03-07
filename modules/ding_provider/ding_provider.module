@@ -5,7 +5,6 @@
  */
 
 use Ting\TingObject;
-use Ting\TingObjectInterface;
 
 /**
  * Implements hook_menu().
