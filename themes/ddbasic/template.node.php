@@ -123,37 +123,6 @@ function ddbasic_preprocess__node__ding_news(&$variables) {
         $variables['news_teaser_image'] = '<div class="ding-news-list-image background-image-styling-16-9"></div>';
       }
       break;
-
-    case 'teaser_no_overlay':
-      array_push($variables['classes_array'], 'node-teaser-no-overlay');
-
-      if (!empty($variables['field_ding_news_list_image'][0]['uri'])) {
-        // Get image url to use as background image.
-        $uri = $variables['field_ding_news_list_image'][0]['uri'];
-
-        $image_title = $variables['field_ding_news_list_image'][0]['title'];
-
-        // If in view with large first teaser and first in view.
-        $current_view = $variables['view']->current_display;
-        $views_with_large_first = array('ding_news_frontpage_list');
-        if (in_array($current_view, $views_with_large_first) && $variables['view']->result[0]->nid == $variables['nid']) {
-          $img_url = image_style_url('ding_panorama_list_large_wide', $uri);
-          $variables['classes_array'][] = 'ding-news-highlighted';
-        }
-        else {
-          $img_url = image_style_url('ding_panorama_list_large', $uri);
-        }
-        if (!empty($image_title)) {
-          $variables['news_teaser_image'] = '<div class="ding-news-list-image background-image-styling-16-9" style="background-image:url(' . $img_url . ')" title="' . $image_title . '"></div>';
-        }
-        else {
-          $variables['news_teaser_image'] = '<div class="ding-news-list-image background-image-styling-16-9" style="background-image:url(' . $img_url . ')"></div>';
-        }
-      }
-      else {
-        $variables['news_teaser_image'] = '<div class="ding-news-list-image background-image-styling-16-9"></div>';
-      }
-      break;
   }
 }
 
@@ -161,7 +130,6 @@ function ddbasic_preprocess__node__ding_news(&$variables) {
  * Ding event.
  */
 function ddbasic_preprocess__node__ding_event(&$variables) {
-
   $date = field_get_items('node', $variables['node'], 'field_ding_event_date');
 
   $price = field_get_items('node', $variables['node'], 'field_ding_event_price');
@@ -194,10 +162,23 @@ function ddbasic_preprocess__node__ding_event(&$variables) {
 
       // Date.
       if (!empty($date)) {
-        $start_date = strtotime($date[0]['value']);
-        $end_date = strtotime($date[0]['value2']);
+        // When the user saves the event time (e.g. danish time 2018-01-10 00:00),
+        // the value is saved in the database in UTC time 
+        // (e.g. UTC time 2018-01-09 23:00). To print out the date/time properly
+        // We first need to create the dateObject with the UTC database time, and
+        // afterwards we can convert the dateObject db-time to localtime.
 
-        $variables['event_date'] = format_date($start_date, 'ding_date_only_version2');
+        // Create a dateObject from startdate, set base timezone to UTC
+        $date_start = new DateObject($date[0]['value'], new DateTimeZone($date[0]['timezone_db']));
+        // Set timezone to local timezone
+        $date_start->setTimezone(new DateTimeZone($date[0]['timezone']));
+
+        // Create a dateObject from enddate, set base timezone to UTC
+        $date_end = new DateObject($date[0]['value2'], new DateTimeZone($date[0]['timezone_db']));
+        // Set timezone to local timezone
+        $date_end->setTimezone(new DateTimeZone($date[0]['timezone']));
+
+        $variables['event_date'] = date_format_date($date_start, 'ding_date_only_version2');
         $event_time_view_settings = array(
           'label' => 'hidden',
           'type' => 'date_default',
@@ -208,11 +189,11 @@ function ddbasic_preprocess__node__ding_event(&$variables) {
         );
 
         // If start and end date days are equal.
-        if (date('Ymd', $start_date) !== date('Ymd', $end_date)) {
-          $variables['event_date'] .= ' - ' . format_date($end_date, 'ding_date_only_version2');
+        if ($date_start->format('Ymd') !== $date_end->format('Ymd')) {
+          $variables['event_date'] .= ' - ' . date_format_date($date_end, 'ding_date_only_version2');
         }
         // If start and end date days and time are not equal.
-        if ($start_date !== $end_date) {
+        if ($date_start->format('YmdHi') !== $date_end->format('YmdHi')) {
           $event_time_view_settings['settings']['fromto'] = 'both';
         }
 
@@ -242,7 +223,7 @@ function ddbasic_preprocess__node__ding_event(&$variables) {
         $variables['share_button'] = array(
           '#theme' => 'ding_sharer',
           '#label' => t('Share this event'),
-        );;
+        );
 
         // Make book/participate in event button.
         $price = ding_base_get_value('node', $variables['node'], 'field_ding_event_price');
@@ -335,15 +316,6 @@ function ddbasic_preprocess__node__ding_group(&$variables) {
       $img_uri = $variables['field_ding_group_list_image'][0]['uri'];
       if (!empty($img_uri)) {
         $variables['background_image'] = image_style_url('ding_panorama_list_large_desaturate', $img_uri);
-      }
-      break;
-
-    case 'teaser_no_overlay':
-      array_push($variables['classes_array'], 'node-teaser-no-overlay');
-
-      $img_field = field_get_items('node', $variables['node'], 'field_ding_group_list_image', 'uri');
-      if (!empty($img_field)) {
-        $variables['background_image'] = image_style_url('ding_panorama_list_large', $img_field[0]['uri']);
       }
       break;
 
