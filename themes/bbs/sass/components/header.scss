@@ -92,8 +92,7 @@ Styles for the header
   }
 }
 
-.icon-clock::after {
-  content: "\e90e";
+.icon {
   font-size: 50px;
   font-family: icomoon;
   speak: none;
@@ -106,18 +105,13 @@ Styles for the header
   top: 25px;
 }
 
+.icon-clock::after {
+  content: "\e90e";
+
+}
+
 .icon-user::after {
   content: "\e90b";
-  font-size: 50px;
-  font-family: icomoon;
-  speak: none;
-  font-style: normal;
-  font-weight: 400;
-  font-variant: normal;
-  text-transform: none;
-  -webkit-font-smoothing: antialiased;
-  position: relative;
-  top: 25px;
 }
 
 .logo {

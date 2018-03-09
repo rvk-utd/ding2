@@ -10,40 +10,40 @@
  */
 ?>
 <div class="frontpage">
-    <div class="left-side">
-        <?php if (!empty($content['menu'])): ?>
-        <div class="menu">
-            <?php print $content['menu']; ?>
-        </div>
-        <?php endif ?>
-        <?php if (!empty($content['new-user'])): ?>
-        <div class="new-user">
-            <?php print $content['new-user']; ?>
-        </div>
-        <?php endif ?>
-        <?php if (!empty($content['new-user2'])): ?>
-            <div class="new-user">
-            <?php print $content['new-user2']; ?>
-        </div>
-        <?php endif ?>
-    </div>
-    <div class="right-side">
-        <?php if (!empty($content['main-info'])): ?>
-        <div class="main-info">
-            <?php print $content['main-info']; ?>
-        </div>
-        <?php endif ?>
-        <div class="secondary-info">
-            <?php if (!empty($content['sec-info'])): ?>
-            <div class="secondary-info-item">
-                <?php print $content['sec-info']; ?>
+    <div class="main-content">
+        <div class="row">
+            <div class="left-side">
+                <?php if (!empty($content['menu'])): ?>
+                    <div class="menu-wrapper">
+                        <?php print $content['menu']; ?>
+                    </div>
+                <?php endif ?>
             </div>
-            <?php endif ?>
-            <?php if (!empty($content['sec-info2'])): ?>
-                <div class="secondary-info-item">
-                <?php print $content['sec-info2']; ?>
+            <div class="right-side">
+                <?php if (!empty($content['main-info'])): ?>
+                    <div class="main-info">
+                        <?php print $content['main-info']; ?>
+                    </div>
+                <?php endif ?>
             </div>
-            <?php endif ?>
+        </div>
+        <div class="row">
+            <div class="left-side">
+                <?php if (!empty($content['new-user'])): ?>
+                    <div class="new-user">
+                        <?php print $content['new-user']; ?>
+                    </div>
+                <?php endif ?>
+            </div>
+            <div class="right-side">
+                <div class="secondary-info">
+                    <?php if (!empty($content['sec-info'])): ?>
+                        <div class="secondary-info-item">
+                            <?php print $content['sec-info']; ?>
+                        </div>
+                    <?php endif ?>
+                </div>
+            </div>
         </div>
     </div>
 </div>

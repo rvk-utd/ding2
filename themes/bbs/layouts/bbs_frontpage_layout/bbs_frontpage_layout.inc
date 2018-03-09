@@ -7,10 +7,8 @@ $plugin['bbs_frontpage_layout'] = array(
     'category' => 'Ding2, theme',
     'regions' => array(
         'menu' => t('Menu'),
-        'new-user' => t('New User 1'),
-        'new-user2' => t('New User 2'),
+        'new-user' => t('New User'),
         'main-info' => t('Main Info'),
         'sec-info' => t('Secondary Info'),
-        'sec-info2' => t('Secondary Info 2'),
     ),
 );

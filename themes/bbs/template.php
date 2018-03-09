@@ -52,8 +52,8 @@ function bbs_menu_link__menu_tabs_menu($vars) {
             $element['#localized_options']['attributes']['class'][] = 'default-override';
 
         case 'user':
-            $title_prefix = '<i class="icon-user"></i>';
-            $title_suffix = '<i class="icon-arrow-down"></i>';
+            $title_prefix = '<i class="icon icon-user"></i>';
+            $title_suffix = '<i class="icon icon-arrow-down"></i>';
             // If a user is logged in we change the menu item title.
             if (user_is_logged_in()) {
                 $element['#href'] = 'user/me/view';
@@ -106,20 +106,20 @@ function bbs_menu_link__menu_tabs_menu($vars) {
             break;
 
         case 'user/logout':
-            $title_prefix = '<i class="icon-signout"></i>';
+            $title_prefix = '<i class="icon icon-signout"></i>';
             $element['#localized_options']['attributes']['class'][] = 'topbar-link-signout';
             $element['#attributes']['class'][] = 'topbar-link-signout';
 
             break;
 
         case 'libraries':
-            $title_prefix = '<i class="icon-clock"></i>';
+            $title_prefix = '<i class="icon icon-clock"></i>';
             $element['#localized_options']['attributes']['class'][] = 'topbar-link-opening-hours';
             $element['#attributes']['class'][] = 'topbar-link-opening-hours';
             break;
 
         default:
-            $title_prefix = '<i class="icon-align-justify"></i>';
+            $title_prefix = '<i class="icon icon-align-justify"></i>';
             $element['#localized_options']['attributes']['class'][] = 'topbar-link-menu';
             $element['#attributes']['class'][] = 'topbar-link-menu';
             break;
@@ -131,4 +131,35 @@ function bbs_menu_link__menu_tabs_menu($vars) {
 
 function bbs_form_search_block_form_alter(&$form, &$form_state, $form_id) {
     $form['actions']['submit'] = array('#type' => 'image_button', '#src' => base_path() . path_to_theme() . '/images/search.svg');
+}
+
+function bbs_menu_link__menu_frontpage_menu($vars) {
+    $element = $vars['element'];
+
+    // Make sure text string is treated as html by l function.
+    $element['#localized_options']['html'] = TRUE;
+
+    // Add some icons to our top-bar menu. We use system paths to check against.
+    switch ($element['#href']) {
+        case 'search':
+            $element['#attributes']['class'][] = 'menu-item menu-item-search';
+            $element['#localized_options']['attributes']['class'][] = 'menu-item menu-item-search';
+            $form = drupal_get_form('search_block_form');
+            $output =  drupal_render($form);
+            return '<li' . drupal_attributes($element['#attributes']) . '>' . $output . "</li>\n";
+
+        case 'libraries':
+            $title_prefix = '<i class="icon icon-clock"></i>';
+            $element['#attributes']['class'][] = 'menu-item menu-item-hours';
+            break;
+
+        case 'contact':
+            $title_prefix = '<i class="icon icon-letter"></i>';
+            $element['#localized_options']['attributes']['class'][] = 'menu-item menu-item-contact';
+            $element['#attributes']['class'][] = 'menu-item menu-item-contact';
+
+    }
+    $output = l($title_prefix . '<span class="details">' . $element['#title'] . '</span>', $element['#href'], $element['#localized_options']);
+    return '<li' . drupal_attributes($element['#attributes']) . '>' . $output . "</li>\n";
+
 }
