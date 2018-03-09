@@ -3,15 +3,18 @@ description = BBS subtheme for ding2
 core = 7.x
 base theme = ddbasic
 
-;// Overridden from base theme
+;// Overridden CSS from base theme
 stylesheets[all][] = sass_css/components/menu.css
 stylesheets[all][] = sass_css/components/header.css
 stylesheets[all][] = sass_css/class.css
 
-;// New stylesheets
+;// New CSS stylesheets
 stylesheets[all][] = sass_css/overrides.css
 stylesheets[all][] = sass_css/frontpage/frontpage.css
 
+;// Overridden JS from base theme
 scripts[] = scripts/menu.js
+scripts[] = scripts/node/event.js
+
 
 plugins[panels][layouts] = layouts
