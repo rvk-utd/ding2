@@ -1,0 +1,5 @@
+name = BBS Frontpage
+description = Includes default views and quicktabs for BBS Frontpage
+package = BBS
+core = 7.x
+version = "7.x-0.18"

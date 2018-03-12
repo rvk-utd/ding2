@@ -16,6 +16,9 @@ dependencies[] = overlay
 dependencies[] = color
 dependencies[] = translation
 
+; BBS modules
+dependencies[] = quicktabs
+
 ; If this module is not enabled OG will not work correctly.
 dependencies[] = field_ui
 
