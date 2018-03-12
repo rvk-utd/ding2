@@ -8,17 +8,21 @@ use Connie\Search\ConnieSearchResult;
 use Connie\Search\ConnieTingObject;
 use Connie\Search\ConnieTingObjectCollection;
 use Ting\Search\TingSearchCommonFields;
+use Ting\Search\TingSearchRequest;
 
 /**
- * @file
- * Test that the example provider implementation module passes the same
+ * Connie search provider test case.
+ *
+ * This test that the example provider implementation module passes the same
  * tests as the real providers.
  */
-
 class ConnieSearchSearchProviderImplementationTestCase extends DingSearchProviderImplementationTestCase {
 
   /**
    * Return metadata about the test.
+   *
+   * @return array
+   *   Map of test metadata.
    */
   public static function getInfo() {
     return [
@@ -31,7 +35,7 @@ class ConnieSearchSearchProviderImplementationTestCase extends DingSearchProvide
   /**
    * Indicate which modules this test-class depends on.
    */
-  public  function setUp() {
+  public function setUp() {
     parent::setUp(['connie_search', 'ding_provider', 'ting', 'xautoload']);
   }
 
@@ -54,6 +58,7 @@ class ConnieSearchSearchProviderImplementationTestCase extends DingSearchProvide
   public function getSources() {
     return ['source A', 'source B'];
   }
+
   /**
    * Expected return-value of search_object_load.
    *
@@ -61,7 +66,7 @@ class ConnieSearchSearchProviderImplementationTestCase extends DingSearchProvide
    *   List of expected objects.
    */
   public function getLoadedObjects() {
-    return [new ConnieTingObject()];
+    return ['object1' => new ConnieTingObject('object1')];
   }
 
   /**
@@ -71,7 +76,7 @@ class ConnieSearchSearchProviderImplementationTestCase extends DingSearchProvide
    *   The expected collection.
    */
   public function getLoadedCollection() {
-    return ConnieTingObjectCollection::getSingleCollection();
+    return ConnieTingObjectCollection::getSingleCollection('object1');
   }
 
   /**
@@ -83,7 +88,7 @@ class ConnieSearchSearchProviderImplementationTestCase extends DingSearchProvide
    * @return \Ting\Search\TingSearchResultInterface
    *   The expected search result.
    */
-  public function getSearchResult($query) {
+  public function getSearchResult(TingSearchRequest $query) {
     return new ConnieSearchResult($query);
   }
 
@@ -153,26 +158,26 @@ class ConnieSearchSearchProviderImplementationTestCase extends DingSearchProvide
   }
 
   /**
-   * Return array of sample object ID's.
+   * Return array of sample object IDs.
    *
-   * @return array
-   *   Sample object ID's.
+   * @return string[]
+   *   Sample object IDs.
    */
   public function getLocalObjectIds() {
     return array('1234', '4321', '1111');
   }
 
   /**
-   * Return array of translated ID's.
+   * Return array of translated IDs.
    *
    * @return array
-   *   Translated object ID's.
+   *   Translated object IDs.
    */
   public function getTranslatedObjectIds() {
     return array(
       '1234' => '1337-test:1234',
       '4321' => '1337-test:4321',
-      '1111' => '1337-test:1111'
+      '1111' => '1337-test:1111',
     );
   }
 
@@ -180,13 +185,15 @@ class ConnieSearchSearchProviderImplementationTestCase extends DingSearchProvide
    * Return single sample object ID.
    *
    * @return string
-   *   Sample object ID.Ø
+   *   Sample object ID.
    */
   public function getSingleLocalObjectId() {
     return '1111';
   }
 
   /**
+   * Returns a single translated object ID.
+   *
    * @return string
    *   Translated object ID.
    */
@@ -195,7 +202,7 @@ class ConnieSearchSearchProviderImplementationTestCase extends DingSearchProvide
   }
 
   /**
-   * Test translation of object ID's.
+   * Test translation of object IDs.
    */
   public function testObjectIds() {
     // Test arrays.
@@ -208,7 +215,7 @@ class ConnieSearchSearchProviderImplementationTestCase extends DingSearchProvide
 
     $this->assertTrue(is_array($response));
 
-    // Test single value (string)
+    // Test single value (string).
     $response = ding_provider_build_entity_id($this->getSingleLocalObjectId());
 
     $this->assertIdentical(
@@ -218,4 +225,5 @@ class ConnieSearchSearchProviderImplementationTestCase extends DingSearchProvide
 
     $this->assertTrue(is_string($response));
   }
+
 }

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Test for ting search module.
+ */
+
 use Drupal\ding_test\DingUnitTestBase;
 use Prophecy\Argument;
 use Ting\Search\BooleanStatementGroup;
@@ -10,7 +15,17 @@ use Ting\Search\TingSearchRequest;
 use Ting\Search\TingSearchStrategyInterface;
 use Ting\Search\UnsupportedSearchQueryException;
 
+/**
+ * Unit tests for searches.
+ */
 class DingSearchUnitTest extends DingUnitTestBase {
+
+  /**
+   * Return metadata about the test.
+   *
+   * @return array
+   *   Map of test metadata.
+   */
   public static function getInfo() {
     return array(
       'name' => 'Ting search Unittests',
@@ -20,15 +35,9 @@ class DingSearchUnitTest extends DingUnitTestBase {
     );
   }
 
-  public function setUp() {
-    // Parent sets up autoloading and our test-dependencies so get it in the
-    // loop as quickly as possible.
-    parent::setUp();
-
-    // Any subsequent setup goes here.
-  }
-
-  // Initial test-case for testing tests.
+  /**
+   * Initial test-case for testing tests.
+   */
   public function testOk() {
     // Set up the response we're going to return in a moment.
     $response = $this->prophet->prophesize("Psr\Http\Message\ResponseInterface");
@@ -46,8 +55,6 @@ class DingSearchUnitTest extends DingUnitTestBase {
 
   /**
    * Test that we can add filters to a search request as expected.
-   *
-   * @throws \Exception
    */
   public function testTingSearchRequestFilters() {
     // Setup a search request with a dummy strategy that will never be used as
@@ -74,16 +81,15 @@ class DingSearchUnitTest extends DingUnitTestBase {
       new TingSearchFieldFilter('field3', 'value'),
     ], BooleanStatementInterface::OP_OR);
 
-
-    $query->addFieldFilters($_1_filter_list);
-    $query->addFieldFilters($_2_single_filter);
-    $query->addFieldFilters($_3_filter_group);
+    $query->addFilters($_1_filter_list);
+    $query->addFilters($_2_single_filter);
+    $query->addFilters($_3_filter_group);
     // Use the shorthand for testing 4). This is basically a shorthand for 2)
     // so we use the same field-name to be able to test it in a moment.
     $query->addFieldFilter('field2', 'value');
 
     // This should have added four boolean statement groups.
-    $resulting_filters = $query->getFieldFilters();
+    $resulting_filters = $query->getFilters();
     $this->assertTrue((count($resulting_filters) == 4));
     $this->assertTrue($resulting_filters[0] instanceof BooleanStatementGroup, 'Filter group 1 is a BooleanStatementGroup');
     $this->assertTrue($resulting_filters[1] instanceof BooleanStatementGroup, 'Filter group 2 is a BooleanStatementGroup');
@@ -116,7 +122,7 @@ class DingSearchUnitTest extends DingUnitTestBase {
 
     // Test that the filter is rejected.
     try {
-      $query->addFieldFilters($invalid);
+      $query->addFilters($invalid);
     }
     catch (UnsupportedSearchQueryException $e) {
       // All is ok.
