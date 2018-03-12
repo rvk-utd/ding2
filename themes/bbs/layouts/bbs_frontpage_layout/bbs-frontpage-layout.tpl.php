@@ -9,7 +9,7 @@
  * - $css_id: unique id if present.
  */
 ?>
-<div class="frontpage">
+<div class="frontpage-content">
     <div class="main-content">
         <div class="row">
             <div class="left-side">
@@ -45,5 +45,16 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="secondary-content">
+        <?php if (!empty($content['secondary-content'])): ?>
+            <?php print $content['secondary-content']; ?>
+        <?php endif ?>
+    </div>
+    <div class="tertiary-content">
+        <?php if (!empty($content['tertiary-content'])): ?>
+            <?php print $content['tertiary-content']; ?>
+        <?php endif ?>
     </div>
 </div>

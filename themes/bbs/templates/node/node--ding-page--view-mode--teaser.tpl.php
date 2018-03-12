@@ -84,19 +84,12 @@
  * @see template_process()
  */
 ?>
-<div class="frontpage-teaser event-teaser" style="background-image: url(<?php print file_create_url($node->field_ding_event_title_image['und'][0]['uri']);  ?>)">
+<div class="frontpage-teaser" style="background-image: url(<?php print file_create_url($node->field_ding_page_title_image['und'][0]['uri']);  ?>)">
     <div class="teaser-info">
         <h3 class="title-text"><?php print $title; ?></h3>
-        <span class="date-info">
-            <?php print render($content['field_ding_event_date']); ?>
-        </span>
-        <span class="location-info">
-            <?php print render($content['field_ding_event_location']); ?>
+        <span class="lead-text">
+            <?php print render($content['field_ding_page_lead']); ?>
         </span>
         <a class=learn-more" href="<?php print $node_url; ?>"><?php print t('Learn More'); ?></a>
     </div>
 </div>
-
-
-
-

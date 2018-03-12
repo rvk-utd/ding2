@@ -10,5 +10,7 @@ $plugin['bbs_frontpage_layout'] = array(
         'new-user' => t('New User'),
         'main-info' => t('Main Info'),
         'sec-info' => t('Secondary Info'),
+        'secondary-content' => t('Secondary Content'),
+        'tertiary-content' => t('Tertiary Content'),
     ),
 );
