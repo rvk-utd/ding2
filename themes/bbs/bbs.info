@@ -8,6 +8,7 @@ stylesheets[all][] = sass_css/components/menu.css
 stylesheets[all][] = sass_css/components/header.css
 stylesheets[all][] = sass_css/class.css
 stylesheets[all][] = sass_css/components/footer.css
+stylesheets[all][] = sass_css/components/node/news.css
 
 ;// New CSS stylesheets
 stylesheets[all][] = sass_css/overrides.css

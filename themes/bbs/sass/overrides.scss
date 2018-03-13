@@ -1,8 +1,13 @@
 
 body {
-  padding-top: 80px !important;
 
-  .menu-open & {
+  padding-top: 0;
+
+  &.front {
+    padding-top: 80px;
+  }
+
+  &.menu-is-open {
     padding-top: 0;
   }
 }
