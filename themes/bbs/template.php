@@ -8,6 +8,7 @@
 
 function bbs_menu_link__menu_tabs_menu($vars) {
     global $user;
+    global $language ;
 
     // Check if the class array is empty.
     if (empty($vars['element']['#attributes']['class'])) {
@@ -46,10 +47,14 @@ function bbs_menu_link__menu_tabs_menu($vars) {
             $output =  drupal_render(drupal_get_form('search_block_form'));
             return '<li' . drupal_attributes($element['#attributes']) . '>' . $output . $sub_menu . "</li>\n";
 
-
         case 'node':
-            // Special placeholder for mobile user menu. Fall through to next case.
-            $element['#localized_options']['attributes']['class'][] = 'default-override';
+            // Special placeholder for language switcher.
+            $element['#attributes']['class'][] = 'topbar-language';
+            $element['#localized_options']['attributes']['class'][] = 'topbar-language';
+            $block =  module_invoke('locale', 'block_view', 'language');
+            $lang_name = $language->language ;
+            return '<li' . drupal_attributes($element['#attributes']) . '><span class="current-language">' .
+                $lang_name . '</span>' . $block['content'] . $sub_menu . "</li>\n";
 
         case 'user':
             $title_prefix = '<i class="icon icon-user"></i>';
