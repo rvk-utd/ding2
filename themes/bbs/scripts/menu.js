@@ -2,6 +2,7 @@
 (function (scope, $) {
   'use strict';
 
+  var ddbasic;
   // Hide and show header on mobile
   var last_scroll_top = 0,
       scroll_delta = 100,
@@ -54,6 +55,8 @@
         body.toggleClass('menu-is-open');
         body.removeClass('mobile-search-is-open pane-login-is-open mobile-usermenu-is-open');
         body.toggleClass('overlay-is-active');
+        $('.topbar-link-menu-inner').toggleClass('active');
+
         if(body.hasClass('mobile-menu-is-open')) {
           body.addClass('overlay-is-active');
         } else {

@@ -147,7 +147,7 @@ function bbs_menu_link__menu_tabs_menu($vars) {
             $title_prefix = '<i class="icon icon-align-justify"></i>';
             $element['#localized_options']['attributes']['class'][] = 'topbar-link-menu';
             $element['#attributes']['class'][] = 'topbar-link-menu';
-            $output = '<span></span><span></span><span></span><span></span>';
+            $output = '<div class="topbar-link-menu-inner">' . '<span></span><span></span><span></span><span></span>' . '</div>';
             return '<li' . drupal_attributes($element['#attributes']) . '>' . $output . "</li>\n";
     }
 

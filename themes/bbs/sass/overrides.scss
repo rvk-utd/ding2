@@ -26,4 +26,39 @@ ul {
 
 a {
   color: white;
+
+  &.underline {
+    font-weight: 800;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      height: 2px;
+      width: 100%;
+      background-color: white;
+    }
+  }
+}
+
+.main-info {
+  width: 100%;
+  height: 100%;
+}
+
+.panel-pane {
+  width: 100%;
+  height: 100%;
+
+  .panel-pane-inner {
+    width: 100%;
+    height: 100%;
+
+    .pane-content {
+      width: 100%;
+      height: 100%;
+    }
+  }
 }

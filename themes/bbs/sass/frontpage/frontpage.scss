@@ -25,6 +25,17 @@
         }
       }
     }
+
+    .view-content {
+      .item-list {
+        ul {
+          display: flex;
+          li {
+            width: 100%;
+          }
+        }
+      }
+    }
   }
 
   .frontpage-teaser {
@@ -82,20 +93,29 @@
   .new-user {
     .block-item {
       display: flex;
+      justify-content: space-between;
       margin-bottom: 20px;
       padding: 40px;
 
       .text {
         font-size: 22px;
+        font-weight: 800;
         color: white;
       }
 
       .read-more {
         font-size: 17px;
+        font-weight: 800;
+        position: relative;
 
-        &::after {
+        &::before {
           content: '';
-          border: 2px solid white;
+          position: absolute;
+          left: 0;
+          bottom: -5px;
+          height: 2px;
+          width: 100%;
+          background-color: white;
         }
       }
     }
@@ -118,6 +138,20 @@
         }
       }
     }
+  }
+}
+
+.navigation-wrapper {
+  display: block;
+  opacity: 0;
+  top: -100vh;
+  transition: 0.5s ease-in-out;
+}
+
+.menu-is-open {
+  .navigation-wrapper {
+    opacity: 1;
+    top: 99px;
   }
 }
 
