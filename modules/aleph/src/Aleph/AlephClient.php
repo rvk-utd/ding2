@@ -138,19 +138,27 @@ class AlephClient {
    *   Patron ID.
    * @param string $verification
    *   Patron PIN.
+   * @param string $sub_library
+   *   The branch/sublibrary to authenticate against.
    *
    * @return \SimpleXMLElement
    *   The authentication response from Aleph or error message.
    *
    * @throws AlephClientException
    */
-  public function authenticate($bor_id, $verification) {
-    $response = $this->request('GET', 'bor-auth', array(
+  public function authenticate($bor_id, $verification, $sub_library = '') {
+    if (!empty($sub_library)) {
+      return $this->request('GET', 'bor-auth', array(
+        'bor_id' => $bor_id,
+        'verification' => $verification,
+        'sub_library' => $sub_library,
+      ));
+    }
+
+    return $this->request('GET', 'bor-auth', array(
       'bor_id' => $bor_id,
       'verification' => $verification,
     ));
-
-    return $response;
   }
 
   /**
