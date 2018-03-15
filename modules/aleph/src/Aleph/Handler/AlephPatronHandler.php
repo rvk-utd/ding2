@@ -58,6 +58,14 @@ class AlephPatronHandler extends AlephHandlerBase {
    * @throws AlephClientException
    */
   public function authenticate($bor_id, $verification, array $allowed_login_branches = []) {
+    $patron = new AlephPatron();
+
+    if (0 === strpos($bor_id, 'GE')) {
+      $patron->setLibraryCardID($bor_id);
+      $response = $this->client->borByKey($patron);
+      $bor_id = (string) $response->xpath('internal-id')[0];
+    }
+
     $response = $this->client->authenticate($bor_id, $verification);
 
     $result = new AuthenticationResult(
@@ -66,7 +74,6 @@ class AlephPatronHandler extends AlephHandlerBase {
     );
 
     if ($result->isAuthenticated()) {
-      $patron = new AlephPatron();
       $patron->setId($bor_id);
       $patron->setVerification($verification);
       $patron->setName((string) $response->xpath('z303/z303-name')[0]);

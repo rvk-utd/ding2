@@ -21,6 +21,7 @@ class AlephPatron {
   protected $email;
   protected $phoneNumber;
   protected $expiryDate;
+  protected $libraryCardID;
 
   /**
    * Return the patron's name.
@@ -140,4 +141,20 @@ class AlephPatron {
     $this->expiryDate = $expiryDate;
   }
 
+  /**
+   * Get the library card ID.
+   */
+  public function getLibraryCardID() {
+    return $this->libraryCardID;
+  }
+
+  /**
+   * Set the library card ID.
+   *
+   * @param string $libraryCardID
+   *   The library card ID.
+   */
+  public function setLibraryCardID($libraryCardID) {
+    $this->libraryCardID = $libraryCardID;
+  }
 }
