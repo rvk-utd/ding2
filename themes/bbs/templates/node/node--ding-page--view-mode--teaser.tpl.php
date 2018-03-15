@@ -84,7 +84,11 @@
  * @see template_process()
  */
 ?>
+<?php if ($node->field_ding_page_title_image): ?>
 <div class="frontpage-teaser" style="background-image: url(<?php print file_create_url($node->field_ding_page_title_image['und'][0]['uri']);  ?>)">
+<?php else: ?>
+<div class="frontpage-teaser">
+<?php endif; ?>
     <div class="teaser-info">
         <h3 class="title-text"><?php print $title; ?></h3>
         <span class="lead-text">
