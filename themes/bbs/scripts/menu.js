@@ -42,7 +42,7 @@
     attach: function(context, settings) {
       var topbar_link_user = $('a.topbar-link-user', context),
           close_user_login = $('.close-user-login', context),
-          topbar_menu_btn = $('a.topbar-link-menu', context),
+          topbar_menu_btn = $('li.topbar-link-menu', context),
           search_btn = $('a.topbar-link-search', context),
           search_extended_btn = $('a.search-extended-button', context),
           first_level_expanded = $('.main-menu-wrapper > .main-menu > .expanded > a', context),

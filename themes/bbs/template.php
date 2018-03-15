@@ -9,11 +9,14 @@
 function bbs_menu_link__main_menu($vars) {
     $element = $vars['element'];
 
-    $sub_menu = '';
     if ($element['#below']) {
-        $sub_menu = '<div class="sub-menu">' . drupal_render($element['#below']) . '</div>';
+        $sub_menu = '<div class="sub-menu hidden">' . drupal_render($element['#below']) . '</div>';
+        $output = '<div class="menu-button">' . $element['#title'] . '</div>';
     }
-    $output = l($element['#title'], $element['#href']);
+    else {
+        $sub_menu = '';
+        $output = l($element['#title'], $element['#href']);
+    }
     return '<li' . drupal_attributes($element['#attributes']) . '>' . $output . $sub_menu . "</li>\n";
 
 }
@@ -144,7 +147,8 @@ function bbs_menu_link__menu_tabs_menu($vars) {
             $title_prefix = '<i class="icon icon-align-justify"></i>';
             $element['#localized_options']['attributes']['class'][] = 'topbar-link-menu';
             $element['#attributes']['class'][] = 'topbar-link-menu';
-            break;
+            $output = '<span></span><span></span><span></span><span></span>';
+            return '<li' . drupal_attributes($element['#attributes']) . '>' . $output . "</li>\n";
     }
 
     $output = l($title_prefix . '<span class="details">' . $element['#title'] . '</span>' . $title_suffix, $element['#href'], $element['#localized_options']);
