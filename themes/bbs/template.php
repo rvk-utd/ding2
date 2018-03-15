@@ -1,11 +1,28 @@
 <?php
 
+
 /**
  * Implements theme_menu_link().
  *
- * Add specific markup for top-bar menu exposed as menu_block_4.
+ * Add specific markup for main menu.
  */
+function bbs_menu_link__main_menu($vars) {
+    $element = $vars['element'];
 
+    $sub_menu = '';
+    if ($element['#below']) {
+        $sub_menu = '<div class="sub-menu">' . drupal_render($element['#below']) . '</div>';
+    }
+    $output = l($element['#title'], $element['#href']);
+    return '<li' . drupal_attributes($element['#attributes']) . '>' . $output . $sub_menu . "</li>\n";
+
+}
+
+/**
+ * Implements theme_menu_link().
+ *
+ * Add specific markup for top-bar menu.
+ */
 function bbs_menu_link__menu_tabs_menu($vars) {
     global $user;
     global $language ;
