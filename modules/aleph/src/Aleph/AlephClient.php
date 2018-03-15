@@ -78,28 +78,31 @@ class AlephClient {
    *
    * @return \SimpleXMLElement
    *   A SimpleXMLElement object.
-   *
-   * @throws AlephClientException
    */
   public function request($method, $operation, array $params = array()) {
-    $options = array(
-      'query' => array(
-        'op' => $operation,
-        'library' => 'ICE53',
-      ) + $params,
-      'allow_redirects' => FALSE,
-    );
+    try {
+      $options = array(
+        'query' => array(
+          'op' => $operation,
+          'library' => 'ICE53',
+        ) + $params,
+        'allow_redirects' => FALSE,
+      );
 
-    // Send the request.
-    $response = $this->client->request($method, $this->baseUrl, $options);
+      // Send the request.
+      $response = $this->client->request($method, $this->baseUrl, $options);
 
-    // Status from Aleph is OK.
-    if ($response->getStatusCode() === 200) {
-      return new \SimpleXMLElement($response->getBody());
+      // Status from Aleph is OK.
+      if ($response->getStatusCode() === 200) {
+        return new \SimpleXMLElement($response->getBody());
+      }
+
+      // Throw exception if the status from Aleph is not OK.
+      throw new AlephClientException($response->error, $response->code);
     }
-
-    // Throw exception if the status from Aleph is not OK.
-    throw new AlephClientException($response->error, $response->code);
+    catch (AlephClientException $e) {
+      watchdog_exception('aleph', $e, t('Aleph returned a non 200 HTTP status coe'), [], WATCHDOG_ALERT);
+    }
   }
 
   /**
@@ -114,21 +117,25 @@ class AlephClient {
    *
    * @return \SimpleXMLElement
    *    The returned XML from Aleph.
-   *
-   * @throws AlephClientException
    */
   public function requestRest($method, $url, array $options = array()) {
-    $response = $this->client->request(
-      $method, $this->baseUrlRest . '/' . $url,
-      $options
-    );
-    // Status from Aleph is OK.
-    if ($response->getStatusCode() === 200) {
-      return new \SimpleXMLElement($response->getBody());
-    }
+    try {
+      $response = $this->client->request(
+        $method, $this->baseUrlRest . '/' . $url,
+        $options
+      );
 
-    // Throw exception if the status from Aleph is not OK.
-    throw new AlephClientException($response->error, $response->code);
+      // Status from Aleph is OK.
+      if ($response->getStatusCode() === 200) {
+        return new \SimpleXMLElement($response->getBody());
+      }
+
+      // Throw exception if the status from Aleph is not OK.
+      throw new AlephClientException($response->error, $response->code);
+    }
+    catch (AlephClientException $e) {
+      watchdog_exception('aleph', $e, t('Aleph returned a non 200 HTTP status coe'), [], WATCHDOG_ALERT);
+    }
   }
 
   /**
@@ -143,8 +150,6 @@ class AlephClient {
    *
    * @return \SimpleXMLElement
    *   The authentication response from Aleph or error message.
-   *
-   * @throws AlephClientException
    */
   public function authenticate($bor_id, $verification, $sub_library = '') {
     if (!empty($sub_library)) {
@@ -169,8 +174,6 @@ class AlephClient {
    *
    * @return \SimpleXMLElement
    *    The response from Aleph.
-   *
-   * @throws AlephClientException
    */
   public function borInfo(AlephPatron $patron) {
     $response = $this->request('GET', 'bor-info', array(
@@ -191,7 +194,6 @@ class AlephClient {
    *
    * @return bool
    *
-   * @throws AlephClientException
    * @throws AlephPatronInvalidPin
    */
   public function changePin(AlephPatron $patron, $new_pin) {
@@ -225,8 +227,6 @@ class AlephClient {
    *
    * @return \SimpleXMLElement
    *    The SimpleXMLElement response from Aleph.
-   *
-   * @throws AlephClientException
    */
   public function getDebts(AlephPatron $patron) {
     return $this->requestRest(
@@ -241,8 +241,6 @@ class AlephClient {
    *
    * @return \SimpleXMLElement The SimpleXMLElement response from Aleph.
    *    The SimpleXMLElement response from Aleph.
-   *
-   * @throws AlephClientException
    */
   public function getItems(AlephMaterial $material) {
     return $this->requestRest(
@@ -262,8 +260,6 @@ class AlephClient {
    *
    * @return \SimpleXMLElement
    *   The response from Aleph.
-   *
-   * @throws AlephClientException
    */
   public function getLoans(AlephPatron $patron, $loan_id = FALSE) {
     if ($loan_id) {
@@ -286,8 +282,6 @@ class AlephClient {
    *
    * @return \SimpleXMLElement
    *    The response from Aleph.
-   *
-   * @throws AlephClientException
    */
   public function getReservations(AlephPatron $patron) {
     return $this->requestRest(
@@ -310,8 +304,6 @@ class AlephClient {
    *
    * @return \SimpleXMLElement|false
    *   The SimpleXMLElement from the raw XML response.
-   *
-   * @throws AlephClientException
    */
   public function createReservation(AlephPatron $patron, AlephRequest $request, array $holding_groups) {
     $options = array();
@@ -349,8 +341,6 @@ class AlephClient {
    * @param array $ids
    *
    * @return \SimpleXMLElement
-   *
-   * @throws AlephClientException
    */
   public function renewLoans(AlephPatron $patron, array $ids) {
     $options = array();
@@ -378,7 +368,6 @@ class AlephClient {
    * @param \Drupal\aleph\Aleph\Entity\AlephRequest $request
    *
    * @return \SimpleXMLElement
-   * @throws AlephClientException
    */
   public function deleteReservation(AlephPatron $patron, AlephRequest
   $request) {
@@ -400,7 +389,6 @@ class AlephClient {
    *    The Aleph patron ID.
    *
    * @return \SimpleXMLElement
-   * @throws AlephClientException
    */
   public function getPatronBlocks($bor_id) {
     return $this->requestRest('GET', 'patron/' . $bor_id . '/patronStatus/blocks');
@@ -420,8 +408,6 @@ class AlephClient {
    *
    * @return \SimpleXMLElement[]
    *   XML response from Aleph with holding groups.
-   *
-   * @throws AlephClientException
    */
   public function getHoldingGroups(AlephPatron $patron, AlephMaterial $material) {
     return $this->requestRest(
@@ -439,8 +425,6 @@ class AlephClient {
    *
    * @return \SimpleXMLElement
    *   The response from Aleph.
-   *
-   * @throws AlephClientException
    */
   public function borByKey(AlephPatron $patron) {
     $response = $this->request('GET', 'bor-by-key', array(
