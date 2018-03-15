@@ -22,6 +22,15 @@
 
         .teaser-info {
           padding: 60px 70px;
+
+          h3 {
+            font-size: 22px;
+            font-weight: bold;
+          }
+
+          .field {
+            padding-bottom: 20px;
+          }
         }
       }
     }
@@ -30,6 +39,7 @@
       .item-list {
         ul {
           display: flex;
+
           li {
             width: 100%;
           }
@@ -41,6 +51,19 @@
   .frontpage-teaser {
     background-size: cover;
     background-repeat: no-repeat;
+
+    .teaser-info {
+      padding: 50px;
+      color: white;
+
+      .title-text {
+        font-size: 22px;
+      }
+
+      .date-info {
+        padding-bottom: 20px;
+      }
+    }
   }
 
   .menu-wrapper {
@@ -101,22 +124,6 @@
         font-size: 22px;
         font-weight: 800;
         color: white;
-      }
-
-      .read-more {
-        font-size: 17px;
-        font-weight: 800;
-        position: relative;
-
-        &::before {
-          content: '';
-          position: absolute;
-          left: 0;
-          bottom: -5px;
-          height: 2px;
-          width: 100%;
-          background-color: white;
-        }
       }
     }
   }
