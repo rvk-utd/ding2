@@ -2,11 +2,11 @@
   background-color: #232323;
 
   .footer-inner {
-    margin-left: 130px;
-    margin-right: 130px;
-    padding-bottom: 130px;
     display: flex;
     flex-direction: row;
+    padding-bottom: 130px;
+    margin-left: 130px;
+    margin-right: 130px;
 
     .panel-pane {
       flex: 1;
@@ -16,28 +16,31 @@
       font-weight: 300;
       line-height: 30px;
 
-      h2 {
-        color: #fff;
-        font-size: 17px;
-        font-weight: bold;
-        line-height: 22px;
-        padding-top: 165px;
-      }
-
-      a {
-        color: #fff;
-      }
-
       &.pane-block-1 {
         margin-right: 50px;
       }
-      
-      .contact-information {
-        padding-top: 80px;
 
-        .footer-logo {
-          max-width: 220px;
-          margin-bottom: 40px;
+      .panel-pane-inner {
+        h2 {
+          color: #fff;
+          font-size: 17px;
+          font-weight: bold;
+          line-height: 22px;
+          padding-top: 165px;
+        }
+
+        a {
+          color: #fff;
+          font-weight: 300;
+        }
+
+        .contact-information {
+          padding-top: 80px;
+
+          .footer-logo {
+            max-width: 220px;
+            margin-bottom: 40px;
+          }
         }
       }
     }

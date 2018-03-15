@@ -1,6 +1,5 @@
-
 body {
-
+  font-family: 'Cooper Hewitt', sans-serif;
   padding-top: 0;
 
   &.front {
@@ -10,4 +9,21 @@ body {
   &.menu-is-open {
     padding-top: 0;
   }
+}
+
+ul {
+  li {
+    list-style: none;
+  }
+
+  &.menu {
+    li {
+      margin: 0;
+      list-style: none;
+    }
+  }
+}
+
+a {
+  color: white;
 }

@@ -1,6 +1,6 @@
 .frontpage-content {
   margin-top: 86px;
-  max-width: 1000px;
+  max-width: 1400px;
   margin-left: auto;
   margin-right: auto;
 
@@ -10,17 +10,26 @@
 
     .row {
       display: flex;
-      flex-direction: row;
       margin: 10px;
 
       .left-side {
-        flex-basis: 380px;
+        flex-basis: 33%;
+      }
+
+      .right-side {
+        flex-basis: 67%;
+        color: white;
+
+        .teaser-info {
+          padding: 60px 70px;
+        }
       }
     }
   }
 
   .frontpage-teaser {
-    background-size: contain;
+    background-size: cover;
+    background-repeat: no-repeat;
   }
 
   .menu-wrapper {
@@ -72,8 +81,23 @@
 
   .new-user {
     .block-item {
+      display: flex;
       margin-bottom: 20px;
       padding: 40px;
+
+      .text {
+        font-size: 22px;
+        color: white;
+      }
+
+      .read-more {
+        font-size: 17px;
+
+        &::after {
+          content: '';
+          border: 2px solid white;
+        }
+      }
     }
   }
 
@@ -95,7 +119,6 @@
       }
     }
   }
-
 }
 
 .skyblue {
@@ -105,4 +128,3 @@
 .yellow {
   background: #eb983f;
 }
-
