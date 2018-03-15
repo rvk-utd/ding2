@@ -423,4 +423,23 @@ class AlephClient {
     )->xpath('hold/institution/group');
   }
 
+  /**
+   * Get patron ID from library card ID.
+   *
+   * @param \Drupal\aleph\Aleph\Entity\AlephPatron $patron
+   *   The Aleph Patron.
+   *
+   * @return \SimpleXMLElement
+   *   The response from Aleph.
+   *
+   * @throws AlephClientException
+   */
+  public function borByKey(AlephPatron $patron) {
+    $response = $this->request('GET', 'bor-by-key', array(
+      'bor_id' => $patron->getLibraryCardID(),
+    ));
+
+    return $response;
+  }
+
 }
