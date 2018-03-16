@@ -15,3 +15,6 @@ node_modules
 # Ignore compiled css
 sass_css
 sass_css_verbose_output
+
+# Ignore minified js
+scripts/min/
