@@ -54,8 +54,6 @@ class AlephPatronHandler extends AlephHandlerBase {
    *
    * @return \Drupal\aleph\Aleph\AuthenticationResult
    *   The authenticated Aleph patron.
-   *
-   * @throws AlephClientException
    */
   public function authenticate($bor_id, $verification, array $allowed_login_branches = []) {
     $patron = new AlephPatron();
@@ -97,8 +95,6 @@ class AlephPatronHandler extends AlephHandlerBase {
    *
    * @return AlephMaterial[]
    *   Array of Aleph Materials.
-   *
-   * @throws AlephClientException
    */
   public function getLoans() {
     $results = array();
@@ -118,8 +114,6 @@ class AlephPatronHandler extends AlephHandlerBase {
    *
    * @return bool
    *   True if setting new pincode succeeded.
-   *
-   * @throws AlephClientException
    */
   public function setPin($pin) {
     try {
@@ -145,6 +139,7 @@ class AlephPatronHandler extends AlephHandlerBase {
    * Get the Aleph patron object.
    *
    * @return \Drupal\aleph\Aleph\Entity\AlephPatron
+   *   The Aleph patron object.
    */
   public function getPatron() {
     return $this->patron;
@@ -155,8 +150,6 @@ class AlephPatronHandler extends AlephHandlerBase {
    *
    * @return \Drupal\aleph\Aleph\Entity\AlephDebt[]
    *   Array of AlephDebt objects.
-   *
-   * @throws AlephClientException
    */
   public function getDebts() {
     $xml = $this->client->getDebts($this->getPatron());
@@ -168,7 +161,7 @@ class AlephPatronHandler extends AlephHandlerBase {
    * Get a patron's reservations.
    *
    * @return AlephReservation[]
-   * @throws AlephClientException
+   *   Array of Aleph reservation objects.
    */
   public function getReservations() {
     $reservations = array();
@@ -209,12 +202,13 @@ class AlephPatronHandler extends AlephHandlerBase {
   /**
    * Renew a patron's loans.
    *
-   * @param $ids
+   * @param array $ids
+   *   The ID's to renew.
    *
    * @return AlephLoan[]
-   * @throws AlephClientException
+   *   Array of AlephLoan objects.
    */
-  public function renewLoans($ids) {
+  public function renewLoans(array $ids) {
     $response = $this->client->renewLoans($this->getPatron(), $ids);
     $loans = $response->xpath('renewals/institution/loan');
     $renewed_loans = array();
@@ -241,16 +235,16 @@ class AlephPatronHandler extends AlephHandlerBase {
    * Create a reservation for a patron.
    *
    * @param AlephPatron $patron
-   *   The Aleph patron.
+   *   The Aleph patron object.
    *
    * @param AlephReservation $reservation
-   *   The reservation object.
+   *   The Aleph reservation object.
    *
    * @param AlephHoldGroup[] $holding_groups
    *   The holding groups.
    *
    * @return AlephRequestResponse
-   * @throws AlephClientException
+   *   The AlephRequestResponse object.
    */
   public function createReservation($patron, $reservation, $holding_groups) {
     $response = $this->client->createReservation(
@@ -263,10 +257,12 @@ class AlephPatronHandler extends AlephHandlerBase {
    * Delete a reservation.
    *
    * @param AlephPatron $patron
+   *   The Aleph patron object.
    * @param AlephReservation $reservation
+   *   The Aleph reservation object.
    *
    * @return AlephRequestResponse
-   * @throws AlephClientException
+   *   The AlephRequestResponse object.
    */
   public function deleteReservation($patron, $reservation) {
     $response = $this->client->deleteReservation($patron,
@@ -288,8 +284,6 @@ class AlephPatronHandler extends AlephHandlerBase {
    *
    * @return AlephHoldGroup[]
    *   Array of Aleph hold groups.
-   *
-   * @throws AlephClientException
    */
   public function getHoldingGroups($patron, $material) {
     $xml_groups = $this->client->getHoldingGroups($patron, $material);
@@ -311,8 +305,6 @@ class AlephPatronHandler extends AlephHandlerBase {
    *
    * @return string[]
    *   Array with branches the use is active in.
-   *
-   * @throws AlephClientException
    */
   public function getActiveBranches($bor_id) {
     $branches = $this->client->getPatronBlocks($bor_id)->xpath('blocks_messages/institution/sublibrary/@code');
