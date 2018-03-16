@@ -6,12 +6,13 @@
  *
  * Add specific markup for main menu.
  */
+
 function bbs_menu_link__main_menu($vars) {
     $element = $vars['element'];
 
     if ($element['#below']) {
         $sub_menu = '<div class="sub-menu hidden">' . drupal_render($element['#below']) . '</div>';
-        $output = '<div class="menu-button">' . $element['#title'] . '</div>';
+        $output = '<a href class="menu-button">' . $element['#title'] . '</a>';
     }
     else {
         $sub_menu = '';

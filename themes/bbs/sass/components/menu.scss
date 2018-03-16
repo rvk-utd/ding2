@@ -2,16 +2,59 @@
 Styles for the overlay menu
  */
 
+body.menu-is-open {
+  overflow: hidden;
+}
+
 .navigation-wrapper {
-  display: none;
   height: 100vh;
   position: fixed;
   background-color: #b03033 !important;
   z-index: 3;
   left: 0;
   width: 100%;
+  transition: 0.5s ease-in-out;
+  top: -100vh;
 
   .menu-is-open & {
-    display: block;
+    top: 70px;
+  }
+}
+
+.navigation-inner {
+  width: 700px;
+  margin: auto;
+
+  .main-menu-wrapper {
+    color: #fff;
+
+    & > .main-menu {
+      top: 130px;
+      position: absolute;
+    }
+
+    .sub-menu {
+      display: block;
+      top: 0;
+      position: absolute;
+      margin-left: 300px;
+
+      &.hidden {
+        display: none;
+      }
+
+      li {
+        font-size: 22px;
+        font-weight: 500;
+      }
+    }
+
+    li {
+      margin: 10px;
+      list-style: none;
+      font-size: 38px;
+      font-weight: bold;
+      line-height: 70px;
+    }
   }
 }

@@ -17,4 +17,4 @@ sass_css
 sass_css_verbose_output
 
 # Ignore minified js
-scripts/min/
+/themes/bbs/scripts/min/
