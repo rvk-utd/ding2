@@ -50,14 +50,14 @@ class AlephClient {
    *
    * @param string $base_url
    *   The base url for the Aleph end-point.
-   * @param $base_url_rest
-   *    The base url for the Aleph REST end-point.
+   * @param string $base_url_rest
+   *   The base url for the Aleph REST end-point.
    *
-   * @param $main_library
-   *    The main library. For example ICE01.
+   * @param string $main_library
+   *   The main library. For example ICE01.
    *
-   * @param $filter_institution
-   *    The institution filter to set. ICE53 for example.
+   * @param string $filter_institution
+   *   The institution filter to set. ICE53 for example.
    */
   public function __construct($base_url, $base_url_rest, $main_library, $filter_institution) {
     $this->baseUrl = $base_url;
@@ -109,14 +109,14 @@ class AlephClient {
    * Send a request via the REST service.
    *
    * @param string $method
-   *    The method to use, like post, get, put, etc.
+   *   The method to use, like post, get, put, etc.
    * @param string $url
-   *    The URL the send the request to.
+   *   The URL the send the request to.
    * @param array $options
-   *    The options to send via GuzzleHttp.
+   *   The options to send via GuzzleHttp.
    *
    * @return \SimpleXMLElement
-   *    The returned XML from Aleph.
+   *   The returned XML from Aleph.
    */
   public function requestRest($method, $url, array $options = array()) {
     try {
@@ -170,10 +170,10 @@ class AlephClient {
    * Get information about the patron.
    *
    * @param \Drupal\aleph\Aleph\Entity\AlephPatron $patron
-   *    The Aleph Patron.
+   *   The Aleph Patron.
    *
    * @return \SimpleXMLElement
-   *    The response from Aleph.
+   *   The response from Aleph.
    */
   public function borInfo(AlephPatron $patron) {
     $response = $this->request('GET', 'bor-info', array(
@@ -188,11 +188,12 @@ class AlephClient {
    * Change the patrons pin code.
    *
    * @param \Drupal\aleph\Aleph\Entity\AlephPatron $patron
-   *    The Aleph patron.
+   *   The Aleph patron.
    * @param string $new_pin
-   *    The new pin code.
+   *   The new pin code.
    *
    * @return bool
+   *   True if pin code was changed.
    *
    * @throws AlephPatronInvalidPin
    */
@@ -223,10 +224,10 @@ class AlephClient {
    * Get patrons debts.
    *
    * @param \Drupal\aleph\Aleph\Entity\AlephPatron $patron
-   *    The Aleph patron to get debts from.
+   *   The Aleph patron to get debts from.
    *
    * @return \SimpleXMLElement
-   *    The SimpleXMLElement response from Aleph.
+   *   The SimpleXMLElement response from Aleph.
    */
   public function getDebts(AlephPatron $patron) {
     return $this->requestRest(
@@ -236,11 +237,13 @@ class AlephClient {
   }
 
   /**
-   * @param \Drupal\aleph\Aleph\Entity\AlephMaterial $material
-   *    The Aleph material to get items from.
+   * Get items from a material.
    *
-   * @return \SimpleXMLElement The SimpleXMLElement response from Aleph.
-   *    The SimpleXMLElement response from Aleph.
+   * @param \Drupal\aleph\Aleph\Entity\AlephMaterial $material
+   *   The Aleph material to get items from.
+   *
+   * @return \SimpleXMLElement
+   *   The SimpleXMLElement response from Aleph.
    */
   public function getItems(AlephMaterial $material) {
     return $this->requestRest(
@@ -279,9 +282,10 @@ class AlephClient {
    * Get a patron's reservations.
    *
    * @param \Drupal\aleph\Aleph\Entity\AlephPatron $patron
+   *   The Aleph patron.
    *
    * @return \SimpleXMLElement
-   *    The response from Aleph.
+   *   The response from Aleph.
    */
   public function getReservations(AlephPatron $patron) {
     return $this->requestRest(
@@ -337,10 +341,15 @@ class AlephClient {
   }
 
   /**
+   * Renew a patron's loans.
+   *
    * @param \Drupal\aleph\Aleph\Entity\AlephPatron $patron
+   *   The Aleph patron.
    * @param array $ids
+   *   The ID's of the loans to renew.
    *
    * @return \SimpleXMLElement
+   *   The response from Aleph.
    */
   public function renewLoans(AlephPatron $patron, array $ids) {
     $options = array();
@@ -364,13 +373,17 @@ class AlephClient {
   }
 
   /**
-   * @param \Drupal\aleph\Aleph\Entity\AlephPatron  $patron
+   * Delete a reservation.
+   *
+   * @param \Drupal\aleph\Aleph\Entity\AlephPatron $patron
+   *   The Patron who needs to delete a reservation.
    * @param \Drupal\aleph\Aleph\Entity\AlephRequest $request
+   *   The Aleph request object.
    *
    * @return \SimpleXMLElement
+   *   The response from Aleph.
    */
-  public function deleteReservation(AlephPatron $patron, AlephRequest
-  $request) {
+  public function deleteReservation(AlephPatron $patron, AlephRequest $request) {
     // ADM library code + the item record key.
     // For example, USM50000238843000320.
     $iid = $request->getInstitutionCode() . $request->getDocNumber() .
@@ -386,9 +399,10 @@ class AlephClient {
    * Get information about the institutions and branches from the patron ID.
    *
    * @param string $bor_id
-   *    The Aleph patron ID.
+   *   The Aleph patron ID.
    *
    * @return \SimpleXMLElement
+   *   The response from Aleph.
    */
   public function getPatronBlocks($bor_id) {
     return $this->requestRest('GET', 'patron/' . $bor_id . '/patronStatus/blocks');
