@@ -1,0 +1,37 @@
+<?php
+
+/**
+ * @file
+ * Ting search carousel module main file.
+ */
+
+
+/**
+ * Implements hook_block_info().
+ */
+function bbs_frontpage_content_blocks_block_info() {
+  return array(
+    'bbs_frontpage_main' => array(
+      'info' => 'BBS Main Content Block',
+    )
+  );
+}
+
+/**
+ * Implements hook_block_view().
+ * @param $delta
+ * @return array
+ */
+function bbs_frontpage_content_blocks_block_view($delta) {
+    $block = array();
+    switch($delta) {
+        case 'bbs_frontpage_main':
+            $item = reset(views_get_view_result('nodequeue_5', 'block'));
+            $node = node_load($item->nid);
+            $view = node_view($node, 'teaser');
+            $block['content'] = $view;
+            break;
+    }
+    return $block;
+}
+

@@ -1,0 +1,4 @@
+name = BBS Frontpage Content Blocks
+description = Render Frontpage content
+package = BBS
+core = "7.x"
