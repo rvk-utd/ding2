@@ -448,4 +448,41 @@ class AlephClient {
     return $response;
   }
 
+
+  /**
+   * Create a patron in Aleph.
+   *
+   * @param AlephPatron $patron
+   *   The Aleph patron object.
+   *
+   * @return \SimpleXMLElement
+   *   The response from Aleph.
+   */
+  public function createPatron(AlephPatron $patron) {
+    $options = [];
+
+    $xml = new \SimpleXMLElement('<get-new-patron></get-new-patron>');
+    $new_patron = $xml->addChild('new-patron');
+    $new_patron
+      ->addChild('patron-name', $patron->getName())
+      ->addChild('internal-id', $patron->getId())
+      // Local sub library is hardcoded to BBAAA,
+      // as all new users should be there.
+      ->addChild('local-sub-library', 'BBAAA')
+      ->addChild('internal-id-verification', $patron->getVerification())
+      ->addChild('email-address', $patron->getEmail())
+      // The other value is GER (german), so we hard-code english.
+      ->addChild('con-lng', 'ENG')
+      // Add up to a total of 4 phone numbers.
+      ->addChild('telephone-1', $patron->getPhoneNumber());
+
+    $options['body'] = 'post_xml=' . $xml->asXML();
+
+    return $this->requestRest(
+      'PUT',
+      'patron',
+      $options
+    );
+  }
+
 }
