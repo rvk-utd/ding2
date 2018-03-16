@@ -1,1 +1,0 @@
-$(document).ready(function(){"use strict";$(".topbar-link-menu").click(function(){$("topbar-link-menu-inner").toggleClass("active"),$("topbar-link-menu-inner").hasClass("active")?$("body").addClass("overlay-is-active"):$("body").removeClass("overlay-is-active")})});
