@@ -1,0 +1,31 @@
+.quicktabs-tabs {
+  & .active a {
+    color: #b13135 !important;
+    font-size: 20px !important;
+    font-weight: 600 !important;
+  }
+
+  a {
+    color: #888 !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+  }
+}
+
+.slick-arrow {
+  position: absolute;
+  top: 155px;
+
+  &.slick-next {
+    right: 0;
+  }
+
+  &.slick-prev {
+    left: -80px;
+  }
+
+  &.slick-disabled {
+    display: none !important;
+  }
+}
+

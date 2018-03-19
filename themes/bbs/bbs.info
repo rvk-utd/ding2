@@ -14,10 +14,12 @@ stylesheets[all][] = sass_css/components/node/news.css
 stylesheets[all][] = sass_css/overrides.css
 stylesheets[all][] = sass_css/frontpage/frontpage.css
 stylesheets[all][] = sass_css/fonts.css
+stylesheets[all][] = sass_css/components/bbs-carousel.css
 
 ;// Overridden JS from base theme
 scripts[] = scripts/menu.js
 scripts[] = scripts/node/event.js
 
+scripts[] = scripts/event-carousel.js
 
 plugins[panels][layouts] = layouts
