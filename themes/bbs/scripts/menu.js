@@ -4,7 +4,7 @@
      * Menu functionality.
      */
     Drupal.behaviors.menu = {
-        attach: function (context, settings) {
+        attach: function (context) {
             var topbar_menu_btn = $('li.topbar-link-menu', context),
                 topbar_link_user = $('a.topbar-link-user', context),
                 close_user_login = $('.close-user-login', context),
@@ -12,7 +12,7 @@
                 topbar_menu = $('.topbar-link-menu-inner'),
                 main_menu_button = $('a.menu-button'),
                 sub_menu = $('.sub-menu'),
-                expanded_menu;
+                ddbasic;
 
             topbar_menu_btn.on('click', function (evt) {
                 evt.preventDefault();
@@ -41,7 +41,7 @@
                 $(this).addClass('expanded');
                 $(this).parent().find('.sub-menu').removeClass('hidden');
 
-            })
+            });
         }
-    }
+    };
 })(this, jQuery);

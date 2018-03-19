@@ -29,8 +29,12 @@ Styles for the header
 
     a {
       color: #fff;
-      margin: 30px;
+      margin: 25px;
       width: 100%;
+    }
+
+    .details {
+      display: none;
     }
   }
 
@@ -40,6 +44,11 @@ Styles for the header
 
   li.topbar-link-search {
     background-color: rgba(0, 0, 0, 0.08);
+
+    #search-block-form {
+      display: flex;
+      align-items: center;
+    }
 
     .form-item-search-block-form {
       float: right;
@@ -55,7 +64,7 @@ Styles for the header
         }
 
         &::placeholder {
-          color: #fff;
+          color: rgba(255, 255, 255, 0.7);
         }
       }
     }
@@ -84,6 +93,8 @@ Styles for the header
   }
 
   li.topbar-language {
+    background-color: rgba(0, 0, 0, 0.16);
+
     .current-language {
       text-transform: uppercase;
       margin: 30px;
@@ -98,7 +109,7 @@ Styles for the header
       li:not(:last-child)::after {
         content: '/';
         font-size: 42px;
-        color: rgba(255,255,255,0.1);
+        color: rgba(255, 255, 255, 0.1);
         position: relative;
         top: 30px;
       }

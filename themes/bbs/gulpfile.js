@@ -57,6 +57,7 @@ gulp.task('validate-sass', 'Validate the SCSS', function () {
     .src(testPath)
     .pipe(gulpStylelint({
      syntax: 'scss',
+     fix: true,
      reporters: [
         {formatter: 'string', console: true}
       ]

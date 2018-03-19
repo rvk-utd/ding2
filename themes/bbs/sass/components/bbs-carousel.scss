@@ -14,18 +14,35 @@
 
 .slick-arrow {
   position: absolute;
+  border: none;
   top: 155px;
+  background-color: #B03033;
+  height: 50px;
+  width: 50px;
+  font-size: 0;
 
   &.slick-next {
     right: 0;
+
+    &::after {
+      content: url('../../../images/icons/arrow.png');
+    }
   }
 
   &.slick-prev {
     left: -80px;
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    transform: rotate(180deg);
+
+    &::after {
+      content: url('../../../images/icons/arrow.png');
+    }
   }
 
   &.slick-disabled {
     display: none !important;
   }
 }
-
