@@ -58,7 +58,18 @@ class AlephPatronHandler extends AlephHandlerBase {
    * @throws AlephClientException
    */
   public function authenticate($bor_id, $verification, array $allowed_login_branches = []) {
+    $patron = new AlephPatron();
+
+    if (0 === strpos($bor_id, 'GE')) {
+      $patron->setLibraryCardID($bor_id);
+      $response = $this->client->borByKey($patron);
+      $bor_id = (string) $response->xpath('internal-id')[0];
+    }
+
     $response = $this->client->authenticate($bor_id, $verification);
+    // Sub library is hardcoded in order to show correct expiry date.
+    // Most users are active in the BBAAA branch.
+    $response_sub_library = $this->client->authenticate($bor_id, $verification, 'BBAAA');
 
     $result = new AuthenticationResult(
       $this->client, $bor_id, $verification, $allowed_login_branches,
@@ -66,12 +77,11 @@ class AlephPatronHandler extends AlephHandlerBase {
     );
 
     if ($result->isAuthenticated()) {
-      $patron = new AlephPatron();
       $patron->setId($bor_id);
       $patron->setVerification($verification);
       $patron->setName((string) $response->xpath('z303/z303-name')[0]);
       $patron->setEmail((string) $response->xpath('z304/z304-email-address')[0]);
-      $patron->setExpiryDate((string) $response->xpath('z305/z305-expiry-date')[0]);
+      $patron->setExpiryDate((string) $response_sub_library->xpath('z305/z305-expiry-date')[0]);
       $patron->setPhoneNumber((string) $response->xpath('z304/z304-telephone')[0]);
       $this->setPatron($patron);
       $result->setPatron($patron);

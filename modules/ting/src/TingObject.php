@@ -73,11 +73,6 @@ class TingObject implements TingObjectInterface {
     return $this->relations;
   }
 
-  // TODO BBS-SAL BBS-153: Temporary fix to allow the pseudo object to be accessed via
-  // properties, must be removed together with the dynamic property functions
-  // at the bottom of this class when the SAL port is complete.
-  protected $localProperties = [];
-
   /**
    * {@inheritdoc}
    */
@@ -629,7 +624,7 @@ class TingObject implements TingObjectInterface {
   }
 
   /**
-   * Returns a short for the material.
+   * Returns a short description of the contents of the material.
    *
    * @return string|FALSE
    *   The abstract.
@@ -639,104 +634,144 @@ class TingObject implements TingObjectInterface {
   }
 
   /**
-   * @param mixed $abstract
+   * Sets a short description of the contents of the material.
+   *
+   * @param string $abstract
+   *   A short description of the contents of the material
    */
   public function setAbstract($abstract) {
     $this->abstract = $abstract;
   }
 
   /**
-   * @param mixed $classifications
+   * Sets the material classification.
+   *
+   * @param string $classifications
+   *   The material classification.
    */
   public function setClassifications($classifications) {
     $this->classifications = $classifications;
   }
 
   /**
-   * @param mixed $contributors
+   * Set the contributors to the material.
+   *
+   * @param string[] $contributors
+   *   List of contributors, empty if none could be found.
    */
-  public function setContributors($contributors) {
+   public function setContributors($contributors) {
     $this->contributors = $contributors;
   }
 
   /**
-   * @param mixed $creators
+   * Set names of the creators of the material with surname first.
+   *
+   * @param string[] $creators
+   *   Creator names, surname first.
    */
   public function setCreatorsFormatSurnameFirst($creators) {
     $this->creatorsFormatSurnameFirst = $creators;
   }
 
   /**
-   * @param mixed $creators
+   * Set names of the creators of the material in default format.
+   *
+   * @param string[] $creators
+   *   Creator names, default format.
    */
   public function setCreatorsFormatDefault($creators) {
     $this->creatorsFormatDefault = $creators;
   }
 
   /**
-   * @param mixed $isLocal
+   * Set whether the material is local.
+   *
+   * @param $isLocal bool
+   *   Whether the material is local.
    */
   public function setIsLocal($isLocal) {
     $this->isLocal = $isLocal;
   }
 
   /**
-   * @param mixed $language
+   * Set the language of the material.
+   *
+   * @param string $language
+   *   The language.
    */
   public function setLanguage($language) {
     $this->language = $language;
   }
 
   /**
-   * @param mixed $materialSource
+   * Returns the original source of the material.
+   *
+   * @param string $materialSource
+   *   The source of the material.
    */
   public function setMaterialSource($materialSource) {
     $this->materialSource = $materialSource;
   }
 
   /**
-   * @param mixed $online
+   * Set whether the material is a purely online material.
+   *
+   * @param bool $online
+   *   TRUE if the material can only be found online.
    */
   public function setOnline($online) {
     $this->online = $online;
   }
 
   /**
-   * @param mixed $onlineUrl
+   * Set URL where the material can be found online.
+   *
+   * @param string $onlineUrl
+   *   The URL.
    */
   public function setOnlineUrl($onlineUrl) {
     $this->onlineUrl = $onlineUrl;
   }
 
   /**
-   * @param array $relations
+   * Set materials related to this material.
+   *
+   * @param \TingRelation[] $relations
+   *   An array of relations.
    */
   public function setRelations(array $relations) {
     $this->relations = $relations;
   }
 
   /**
-   * @param mixed $seriesTitles
+   * Set list of titles of the series the material is a part of.
+   *
+   * @param string[] $seriesTitles
+   *   List of titles, empty if none could be found.
    */
   public function setSeriesTitles($seriesTitles) {
     $this->seriesTitles = $seriesTitles;
   }
 
   /**
-   * @param mixed $subjects
+   * Set list of subjects/keywords for the material.
+   *
+   * @param string[] $subjects
+   *   List of subjects, empty if none could be found.
    */
   public function setSubjects($subjects) {
     $this->subjects = $subjects;
   }
 
   /**
-   * @param array $localProperties
+   * Sets which properties should be delegates to a Open Search object
+   *
+   * @param string[] $localProperties
+   *   Property names which not be delegated.
    */
   public function setLocalProperties(array $localProperties) {
     $this->localProperties = $localProperties;
   }
-
-
 
   /**
    * Returns the creators of the material.
@@ -745,9 +780,9 @@ class TingObject implements TingObjectInterface {
    *
    * @param string $format
    *   TingObjectInterface::NAME_FORMAT_* formats to specify how the authors
-   *   names should be formatted.s
+   *   names should be formatted.
    *
-   * @return string[].
+   * @return string[]
    *   The list of formatted author-names, empty if none was found.
    */
   public function getCreators($format = self::NAME_FORMAT_DEFAULT) {
@@ -826,46 +861,6 @@ class TingObject implements TingObjectInterface {
    */
   public function getSeriesTitles() {
     return $this->seriesTitles;
-  }
-
-  /**
-   * Handle property reads.
-   *
-   * Delegates all non-local property reads to the Open Search object.
-   */
-  public function __get($name) {
-    // Handle local properties.
-    if (in_array($name, $this->localProperties)) {
-      return $this->$name;
-    }
-
-    return NULL;
-  }
-
-  /**
-   * Handle property mutation.
-   */
-  public function __set($name, $value) {
-    if (in_array($name, $this->localProperties)) {
-      $this->$name = $value;
-    }
-  }
-
-  /**
-   * Test if a property is present.
-   */
-  public function __isset($name) {
-    return isset($this->openSearchObject->$name);
-  }
-
-  /**
-   * Unsets a property.
-   */
-  public function __unset($name) {
-    // Handle local properties.
-    if (in_array($name, $this->localProperties)) {
-      unset($this->$name);
-    }
   }
 
 }
