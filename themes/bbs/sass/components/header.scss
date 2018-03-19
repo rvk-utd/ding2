@@ -21,6 +21,7 @@ Styles for the header
     list-style-image: none !important;
     color: #fff;
     padding: 0;
+    display: flex;
 
     .last & {
       padding-right: 50px;
@@ -79,6 +80,37 @@ Styles for the header
 
     &::after {
       display: none;
+    }
+  }
+
+  li.topbar-language {
+    .current-language {
+      text-transform: uppercase;
+      margin: 30px;
+
+      .menu-is-open & {
+        display: none;
+      }
+    }
+    .language-switcher-locale-session {
+      display: none;
+
+      li:not(:last-child)::after {
+        content: '/';
+        font-size: 42px;
+        color: rgba(255,255,255,0.1);
+        position: relative;
+        top: 30px;
+      }
+
+      .menu-is-open & {
+        display: block;
+      }
+
+      a.active {
+        color: #fff !important;
+        font-weight: 700;
+      }
     }
   }
 
@@ -169,6 +201,11 @@ Styles for the header
     font-size: 15px;
     font-weight: 500;
     line-height: 20px;
+    display: none;
+
+    .menu-is-open & {
+      display: block;
+    }
   }
 }
 
@@ -182,7 +219,6 @@ Styles for the header
   text-transform: none;
   -webkit-font-smoothing: antialiased;
   position: relative;
-  top: 25px;
 }
 
 .icon-clock::after {

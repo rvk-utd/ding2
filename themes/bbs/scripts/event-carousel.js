@@ -1,6 +1,6 @@
 (function (scope, $) {
     'use strict';
-    Drupal.behaviors.misc = {
+    Drupal.behaviors.eventcarousel = {
         attach: function () {
             var quicktabs_lists = $('#quicktabs-events .item-list ul'),
                 tabs = $('#quicktabs-events .quicktabs-tab')
