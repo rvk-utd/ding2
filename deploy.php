@@ -179,17 +179,17 @@ task('build:ding2', function () {
   run("node_modules/.bin/gulp uglify sass");
 });
 
+desc("Clear caches.");
+task('drush:ccall', function () {
+  cd('{{release_path}}');
+  run("{{drush}} cc all");
+});
+
 desc("Run database updates.");
 task('drush:updb', function () {
   set('updb_ran', true);
   cd('{{release_path}}');
   run("{{drush}} updb -y");
-});
-
-desc("Clear caches.");
-task('drush:ccall', function () {
-  cd('{{release_path}}');
-  run("{{drush}} cc all");
 });
 
 desc("Set site offline.");
