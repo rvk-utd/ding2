@@ -153,8 +153,10 @@ task('build:ding2', function () {
   cd('{{deploy_path}}');
   run('cp -ar build {{release_path}}/profiles/ding2');
   cd('{{release_path}}/profiles/ding2');
-  writeln("<info>Drush install'ing ding2</info>");
+  writeln("<info>Drush installing ding2</info>");
   run("{{drush}} make ding2.make --no-core -y --contrib-destination=.");
+  writeln("<info>Drush installing innskraning</info>");
+  run("{{drush}} make innskraning.make --no-core -y --contrib-destination=.");
 
   cd('{{release_path}}/profiles/ding2');
   if (test('[ -f composer.json ]')) {
