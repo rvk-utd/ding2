@@ -1,14 +1,6 @@
 body {
   font-family: 'Cooper Hewitt', sans-serif;
   padding-top: 0;
-
-  &.front {
-    padding-top: 80px;
-  }
-
-  &.menu-is-open {
-    padding-top: 0;
-  }
 }
 
 ul {

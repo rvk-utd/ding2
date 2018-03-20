@@ -15,14 +15,14 @@
 .slick-arrow {
   position: absolute;
   border: none;
-  top: 155px;
+  top: 140px;
   background-color: #B03033;
   height: 50px;
   width: 50px;
   font-size: 0;
 
   &.slick-next {
-    right: 0;
+    right: -65px;
 
     &::after {
       content: url('../../../images/icons/arrow.png');
@@ -30,7 +30,7 @@
   }
 
   &.slick-prev {
-    left: -80px;
+    left: -95px;
     -webkit-transform: rotate(180deg);
     -moz-transform: rotate(180deg);
     -o-transform: rotate(180deg);

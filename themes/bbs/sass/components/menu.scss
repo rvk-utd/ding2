@@ -13,11 +13,13 @@ body.menu-is-open {
   z-index: 3;
   left: 0;
   width: 100%;
-  transition: 0.5s ease-in-out;
+  transition: 0.3s cubic-bezier(0.4, 0, 1, 1);
   top: -100vh;
+  opacity: 0;
 
   .menu-is-open & {
     top: 70px;
+    opacity: 1;
   }
 }
 

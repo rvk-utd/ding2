@@ -1,23 +1,25 @@
 .frontpage-content {
-  margin-top: 86px;
-  max-width: 1400px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 30px;
 
   .main-content {
     display: flex;
     flex-direction: column;
+    margin-top: 130px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1400px;
 
     .row {
       display: flex;
-      margin: 10px;
 
       .left-side {
-        flex-basis: 33%;
+        flex-basis: 30%;
+        padding: 10px;
       }
 
       .right-side {
-        flex-basis: 67%;
+        flex-basis: 70%;
+        padding: 10px;
         color: white;
 
         .teaser-info {
@@ -46,6 +48,28 @@
         }
       }
     }
+
+    .secondary-info {
+      .views-row {
+        display: flex;
+
+        .views-column {
+          width: 50%;
+
+          &.views-column-1 {
+            padding-right: 10px;
+          }
+
+          &.views-column-2 {
+            padding-left: 10px;
+          }
+
+          .frontpage-teaser {
+            height: 100%;
+          }
+        }
+      }
+    }
   }
 
   .frontpage-teaser {
@@ -67,6 +91,8 @@
   }
 
   .menu-wrapper {
+    height: 100%;
+    width: 100%;
     padding: 40px;
     background-color: #b03033;
 
@@ -114,11 +140,20 @@
   }
 
   .new-user {
+    height: 100%;
+
+    .panel-pane {
+      height: 50%;
+
+      &:first-child {
+        padding-bottom: 20px;
+      }
+    }
     .block-item {
       display: flex;
-      justify-content: space-between;
-      margin-bottom: 20px;
-      padding: 40px;
+      justify-content: space-around;
+      align-items: center;
+      height: 100%;
 
       .text {
         font-size: 22px;
@@ -129,6 +164,11 @@
   }
 
   .secondary-content {
+
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1400px;
+
     .quicktabs-wrapper {
       .event-teaser {
         height: 320px;
@@ -143,6 +183,30 @@
           display: flex;
           flex-flow: column-reverse;
         }
+      }
+    }
+  }
+
+  .border-wrapper {
+    z-index: -5;
+    height: 100%;
+    width: 100%;
+    margin-bottom: 50px;
+
+    .border-element {
+      height: 100%;
+      width: 100%;
+      border: 7px solid;
+      border-color: rgba(0, 0, 0, 0.06);
+      position: relative;
+      padding: 50px;
+
+      .border-image {
+        background: #fff;
+        position: absolute;
+        bottom: -10px;
+        left: -9px;
+        width: 30px;
       }
     }
   }

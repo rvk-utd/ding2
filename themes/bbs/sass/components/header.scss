@@ -3,9 +3,18 @@ Styles for the header
  */
 
 .topbar {
+  top: 80px;
   height: 70px;
   z-index: 1 !important;
   background-color: #b03033;
+  position: fixed;
+  left: 0;
+  right: 0;
+
+  .menu-is-open & {
+    top: 0 !important;
+    transition: 0.3s cubic-bezier(0.4, 0, 1, 1);
+  }
 }
 
 .topbar-menu {
@@ -31,10 +40,7 @@ Styles for the header
       color: #fff;
       margin: 25px;
       width: 100%;
-    }
-
-    .details {
-      display: none;
+      display: flex;
     }
   }
 
@@ -52,15 +58,17 @@ Styles for the header
 
     .form-item-search-block-form {
       float: right;
+      padding-bottom: 6px;
 
       input {
         background-color: rgba(0, 0, 0, 0);
         color: #fff;
         width: 155px;
+        transition: width 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 
         &:focus {
           box-shadow: none;
-          width: 300px;
+          width: 400px;
         }
 
         &::placeholder {
