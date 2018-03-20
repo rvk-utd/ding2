@@ -179,6 +179,12 @@ task('build:ding2', function () {
   run("node_modules/.bin/gulp uglify sass");
 });
 
+desc("Registry rebuild.");
+task('drush:rr', function () {
+  cd('{{release_path}}');
+  run("{{drush}} rr");
+});
+
 desc("Clear caches.");
 task('drush:ccall', function () {
   cd('{{release_path}}');
@@ -272,8 +278,9 @@ task('deploy', [
   'deploy:shared',
   'drush:db_dump',
   'drush:site_offline',
-  'drush:updb',
+  'drush:rr',
   'drush:ccall',
+  'drush:updb',
   'drush:site_online',
   'deploy:symlink',
   'deploy:unlock',
