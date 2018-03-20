@@ -10,6 +10,7 @@
     font-size: 16px !important;
     font-weight: 500 !important;
   }
+
 }
 
 .slick-arrow {
@@ -44,5 +45,21 @@
 
   &.slick-disabled {
     display: none !important;
+  }
+}
+
+.see-all {
+  font-weight: 600;
+  color: #fff;
+  padding: 10px 15px;
+  background-color: #B03033;
+  width: fit-content;
+  margin-bottom: 80px;
+  margin-left: 30px;
+}
+
+.slick-slider {
+  li.slick-slide {
+      margin-bottom: 40px !important;
   }
 }
