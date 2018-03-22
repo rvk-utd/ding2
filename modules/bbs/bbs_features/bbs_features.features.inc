@@ -1,8 +1,15 @@
 <?php
 /**
  * @file
- * bbs_nodequeues.features.inc
+ * bbs_features.features.inc
  */
+
+/**
+ * Implements hook_views_api().
+ */
+function bbs_features_views_api($module = NULL, $api = NULL) {
+  return array("api" => "3.0");
+}
 
 /**
  * Implements hook_fe_nodequeue_export_fields().

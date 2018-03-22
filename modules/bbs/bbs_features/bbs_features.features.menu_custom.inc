@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * bbs_nodequeues.features.menu_custom.inc
+ * bbs_features.features.menu_custom.inc
  */
 
 /**
