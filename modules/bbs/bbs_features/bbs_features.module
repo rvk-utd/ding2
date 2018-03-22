@@ -4,4 +4,4 @@
  * Code for the BBS Nodequeues feature.
  */
 
-include_once 'bbs_nodequeues.features.inc';
+include_once 'bbs_features.features.inc';

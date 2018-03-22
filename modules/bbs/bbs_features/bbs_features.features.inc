@@ -7,7 +7,7 @@
 /**
  * Implements hook_fe_nodequeue_export_fields().
  */
-function bbs_nodequeues_fe_nodequeue_export_fields() {
+function bbs_features_fe_nodequeue_export_fields() {
   $nodequeues = array();
 
   // Exported nodequeues: frontpage_main_event
