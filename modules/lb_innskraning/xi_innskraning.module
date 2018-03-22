@@ -2,7 +2,7 @@
 
 /**
  * Implements hook_permission
- * 
+ *
  * Adds permission to allow users to administer SSO login
  */
 function xi_innskraning_permission() {
@@ -15,10 +15,10 @@ function xi_innskraning_permission() {
 }
 
 /**
- * 
- * According to https://dgtlmoon.com/drupal_7_anonymous_sessions from Drupal 7.37 
+ *
+ * According to https://dgtlmoon.com/drupal_7_anonymous_sessions from Drupal 7.37
  * drupal is no more tracking the session for anonymous users, that is why we need
- * to start session on hook_init() and set some variable into it 
+ * to start session on hook_init() and set some variable into it
  *
  * Implements hook_init()
  */
@@ -78,7 +78,7 @@ function _xi_innsrkaning_login_request($id, $issuer, $destination) {
 	$providerNameStr = '';
 	// consumer URL
 	$consume_url = url('saml/consume', array('absolute' => TRUE));
-	
+
 	// set language
   $lang = 'is-IS';
   if ($provider != '') {
@@ -110,7 +110,7 @@ AUTHNREQUEST;
 
   $deflatedRequest = gzdeflate($request);
   $base64Request = base64_encode($deflatedRequest);
-  
+
   return $base64Request;
 }
 
@@ -124,7 +124,7 @@ function _xi_innsrkaning_get_key($name = FALSE) {
 	if ($name) {
 		return $file_location;
 	}
-	
+
 	if ($file_location != '') {
 		$key = file_get_contents($file_location);
 	}
@@ -136,13 +136,13 @@ function _xi_innsrkaning_get_key($name = FALSE) {
  * sign the SAML request
  */
 function _xi_innsrkaning_signature($samlRequest, $relayState, $signAlgorithm = XMLSecurityKey::RSA_SHA1) {
-	
+
 	$key = _xi_innsrkaning_get_key();
 	if (!$key) {
 		drupal_set_message(t('No key provided, authentication can not be finished.'), 'info');
 		drupal_goto('user/login');
 	}
-	
+
 	$objKey = new XMLSecurityKey($signAlgorithm, array('type' => 'private'));
   $objKey->loadKey($key, false);
 
@@ -151,21 +151,21 @@ function _xi_innsrkaning_signature($samlRequest, $relayState, $signAlgorithm = X
   $msg .= '&SigAlg=' . urlencode($signAlgorithm);
   $signature = $objKey->signData($msg);
   return base64_encode($signature);
-}	
+}
 
 /**
  * Create the login link for https://innskraning.island.is
  */
 function _xi_innsrkaning_saml_login() {
 	include libraries_get_path('xmlseclibs') . '/xmlseclibs.php';
-	
+
 	$provider_url = 'https://innskraning.island.is';
   $url = $provider_url;
   $id = variable_get('xi_innskraning_id', '');
   $sid = sha1(session_id());
   $url .= "?id=$id&authid=$sid";
   watchdog('xi_innsrkaning', 'Redirect to SAML login url: ' . $url);
-	
+
 	// prepare the parameters to sent to
 	$parameters['id'] = $id;
 	$parameters['authid'] = $sid;
@@ -176,8 +176,8 @@ function _xi_innsrkaning_saml_login() {
 	// sign the request
 	/*$signature = _xi_innsrkaning_signature($samlRequest, $parameters['RelayState']);
   $parameters['SigAlg'] = XMLSecurityKey::RSA_SHA1;
-  $parameters['Signature'] = $signature;*/	
-	
+  $parameters['Signature'] = $signature;*/
+
 	header('Pragma: no-cache');
   header('Cache-Control: no-cache, must-revalidate');
   drupal_goto($provider_url, array('query' => $parameters));
@@ -187,41 +187,41 @@ function _xi_innsrkaning_saml_login() {
  * Consume authentications from https://innskraning.island.is
  */
 function _xi_innsrkaning_saml_endpoint() {
-  
+
   // Extract token from request
   if (!array_key_exists('token', $_POST)) {
    watchdog('xi_innsrkaning', "Post parameter 'token' not found in SAML response.");
-   drupal_goto('user/login'); 
+   drupal_goto('user/login');
    return FALSE;
   }
-  $token = $_POST['token'];  
+  $token = $_POST['token'];
   // Decode the request.
-  $xml = base64_decode($token);  
-  
+  $xml = base64_decode($token);
+
 	// TEST xml
 	//$xml = file_get_contents('/var/www/vhosts/dev/htdocs/sites/all/modules/custom/lb_innskraning/test/SAML_response_signed.xml');
-	
+
   // Load XML document
   $dom = new DOMDocument();
   $dom->loadXML($xml);
-	
+
   if (!$dom) {
-  	drupal_set_message(t('Authentication failed'), 'error');  	
+  	drupal_set_message(t('Authentication failed'), 'error');
     watchdog('xi_innsrkaning', 'SAML Response could not be processed');
 		watchdog('xi_innsrkaning', "XML:<br/> $xml");
-		drupal_goto('user/login'); 
+		drupal_goto('user/login');
    	return FALSE;
   }
 
   // Retrieve name
   $name = _xi_get_attribute_by_name($dom, 'Name');
   // Retrieve ssn
-  $ssn = _xi_get_attribute_by_name($dom, 'UserSSN');  
+  $ssn = _xi_get_attribute_by_name($dom, 'UserSSN');
   // Provide a message
-  watchdog('xi_innsrkaning', "Attempt to login '$name' with SSN: $ssn");	
+  watchdog('xi_innsrkaning', "Attempt to login '$name' with SSN: $ssn");
   // verify response
   try {
-    $verify = _xi_verify($dom);     
+    $verify = _xi_verify($dom);
   }
   catch (Exception $ex) {
   	drupal_set_message(t('Authentication failed'), 'error');
@@ -237,12 +237,12 @@ function _xi_innsrkaning_saml_endpoint() {
   // Make sure user is not logged ind
   $login_success = FALSE;
   if (user_is_logged_in()) {
-    drupal_set_message(t('You cannot login with https://innskraning.island.is while you are logged in. Please log out first'));  
+    drupal_set_message(t('You cannot login with https://innskraning.island.is while you are logged in. Please log out first'));
   }
   else {
     // OK, let's log the user in
-    $login_success = _xi_activate_user_by_ssn($ssn);    
-  }  
+    $login_success = _xi_activate_user_by_ssn($ssn);
+  }
 
   if ($login_success) {
     // Go to frontpage
@@ -269,8 +269,8 @@ function _xi_get_attribute_by_name($dom, $name) {
     if ($attributePropName == $name) {
       $attributeValue = $attribute->getElementsByTagName('AttributeValue')->item(0);
       $ssn = $attributeValue->nodeValue;
-      return $ssn;  
-    }    
+      return $ssn;
+    }
   }
 }
 
@@ -299,18 +299,18 @@ function _xi_activate_user_by_ssn($ssn) {
   $uids = array_keys($results['user']);
   if (count($uids) > 1) {
     watchdog('xi_innsrkaning', "Multiple users found  SSN $ssn: " . implode(',', $uids));
-    return FALSE; 
+    return FALSE;
   }
-	
+
   $uid = $uids[0];
   $candidate = user_load($uid);
   $username = $candidate->name;
   // User blocked
   if (user_is_blocked($username)) {
     watchdog('xi_innsrkaning', "User $username is blocked and can therefore not be logged in. SSN was $ssn.");
-    return FALSE; 
+    return FALSE;
   }
-  
+
   // OK, let's log the user in
   global $user;
   $user = $candidate;
@@ -324,10 +324,10 @@ function _xi_activate_user_by_ssn($ssn) {
  */
 function _xi_verify($xmlDoc) {
 	global $base_url;
-	
+
   // Load library
   include libraries_get_path('xmlseclibs') . '/xmlseclibs.php';
-	
+
 	// Check SAML version
   if ($xmlDoc->documentElement->getAttribute('Version') != '2.0') {
     throw new Exception('Unsupported SAML version');
@@ -343,25 +343,25 @@ function _xi_verify($xmlDoc) {
 	if ($status->length == 0) {
 		throw new Exception('Missing Status on response');
 	}
-	
+
 	$statusCode = $status->item(0)->getElementsByTagName('StatusCode');
-	
+
 	if ($statusCode->length == 0) {
     throw new Exception('Missing Status Code on response');
   }
-	
+
 	$code = $statusCode->item(0)->getAttribute('Value');
-  
+
 	if ($code != 'urn:oasis:names:tc:SAML:2.0:status:Success') {
 		throw new Exception('User was not authenticated with Island.is');
-	}	
-	
+	}
+
 	// Check number of Assestions
   $singleAssertion = $xmlDoc->getElementsByTagName('Assertion');
   if ($singleAssertion->length != 1) {
     throw new Exception('SAML Response must contain 1 assertion');
   }
-	
+
 	// Validate XML file structure
   $schemaFile = libraries_get_path('php-saml') .'/lib/Saml2/schemas/saml-schema-protocol-2.0.xsd';
   $oldEntityLoader = libxml_disable_entity_loader(false);
@@ -370,78 +370,78 @@ function _xi_verify($xmlDoc) {
   if (!$res) {
     $xmlErrors = libxml_get_errors();
 		watchdog('xi_innsrkaning', 'Error validating the metadata: @vars', array('@vars' => var_export($xmlErrors, true)));
-		throw new Exception('Error validating the metadata');    
+		throw new Exception('Error validating the metadata');
     return FALSE;
   }
-	
+
 	// check destination
-	$destination = trim($xmlDoc->documentElement->getAttribute('Destination'));	
-	$currentURL = $base_url. '/'. request_path();	
+	$destination = trim($xmlDoc->documentElement->getAttribute('Destination'));
+	$currentURL = $base_url. '/'. request_path();
 	if ($destination !== $currentURL) {
 		throw new Exception("The response was received at $currentURL instead of $destination");
 	}
-	
+
 	$user_agent = _xi_get_user_agent($xmlDoc);
 	if ($user_agent !== $_SERVER['HTTP_USER_AGENT']) {
 		throw new Exception('Request was done from another browser');
 	}
-	
+
 	// check the issuer
 	/*$issuer = $xmlDoc->getElementsByTagName('Issuer');
 
 	if ($issuer->length < 1) {
-		throw new Exception('There is no issuer info in the document');    
+		throw new Exception('There is no issuer info in the document');
 	} elseif ($issuer->item(0)->textContent != 'Innskraning') {
 		$current_issuer = $issuer->item(0)->textContent;
 		throw new Exception("The issuer is $current_issuer instead of Innskraning");
 	}*/
-	
+
 	// check the digital signature
   $xmlsec = new XMLSecurityDSig();
   $objXMLSecDSig = new XMLSecurityDSig();
   $objDSig = $objXMLSecDSig->locateSignature($xmlDoc);
-  
+
   if ($objDSig == NULL) {
    throw new Exception("Cannot locate Signature Node");
   }
   $objXMLSecDSig->canonicalizeSignedInfo();
   $objXMLSecDSig->idKeys = array('ID');
   $objXMLSecDSig->idNS = array('wsu'=>'http://docs.oasisopen.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd');
-  
+
   $retVal = $objXMLSecDSig->validateReference();
-		
+
   if ($retVal == NULL) {
     throw new Exception("Reference Validation Failed");
   }
-  
-  /*$saml_sid = _xi_get_attribute_by_name($xmlDoc, 'AuthID');  
+
+  /*$saml_sid = _xi_get_attribute_by_name($xmlDoc, 'AuthID');
   $sid = sha1(session_id());
-	
+
 	if ($saml_sid && $saml_sid != $sid) {
 		watchdog('xi_innsrkaning', t("User with session id @sid is trying to log in with @saml_sid", array('@sid' => $sid, '@saml_sid' => $saml_sid)));
 		throw new Exception("Trying to authenticate the wrong user.");
 	}*/
-	
+
   if (!_xi_verify_date($xmlDoc)) {
     throw new Exception("Conditions not valid.");
   }
-	
+
   /*if (!_xi_verify_conditions($xmlDoc, _xi_get_client_ip())){
     throw new Exception("Invalid client ip.");
   }*/
   $objKey = $objXMLSecDSig->locateKey();
-	
+
   if (! $objKey ) {
     throw new Exception("Key not found");
   }
   $key = NULL;
-	
+
   $objKeyInfo = XMLSecEnc::staticLocateKeyInfo($objKey, $objDSig);
-	
+
   if (!_xi_verify_cert($objKeyInfo)) {
     throw new Exception("Certificate not valid");
-  }	
-  
+  }
+
   if (!$objKeyInfo->key && empty($key)) {
 		$key = _xi_innsrkaning_get_key(TRUE);
     $objKey->loadKey($key, TRUE);
@@ -465,7 +465,7 @@ function _xi_locate_subject_confirmation($doc) {
   $xpath = new DOMXPath($doc);
   $xpath->registerNamespace('assertion','urn:oasis:names:tc:SAML:2.0:assertion');
   $nodeset = $xpath->query(
-    ".//assertion:Assertion/assertion:Subject/assertion:SubjectConfirmation/assertion:SubjectConfirmationData", 
+    ".//assertion:Assertion/assertion:Subject/assertion:SubjectConfirmation/assertion:SubjectConfirmationData",
     $doc
   );
   return $nodeset->item(0);
@@ -492,14 +492,14 @@ function _xi_verify_conditions($doc, $ip) {
 		throw new Exception("Invalid Expiration date.");
 	}
 	$now = (int) date(time());
-	
+
 	if ($now > $endTime) {
-		throw new Exception("Subject confirmation is expired.");  
+		throw new Exception("Subject confirmation is expired.");
 	}
-	
+
   if (!strcmp($ip, "::1")) {
-    $ip = "127.0.0.1"; 
-  }   
+    $ip = "127.0.0.1";
+  }
   if (strcmp($address, $ip)) {
     throw new Exception("Invalid IP address.");
     return false;
@@ -513,7 +513,7 @@ function _xi_verify_conditions($doc, $ip) {
  */
 function _xi_verify_date($doc) {
   try {
-    $conditions = _xi_locate_conditions($doc);		
+    $conditions = _xi_locate_conditions($doc);
   }
   catch (Exception $e) {
     throw new Exception("Exception while locating Conditions");
@@ -525,13 +525,13 @@ function _xi_verify_date($doc) {
   }
   try {
     $start = $conditions->getAttribute('NotBefore');
-    $end = $conditions->getAttribute('NotOnOrAfter');		
+    $end = $conditions->getAttribute('NotOnOrAfter');
   }
   catch (Exception $e) {
     throw new Exception("Exception while locating start or end");
     return false;
   }
-	
+
   if (!$start || !$end) {
     throw new Exception("Unable to locate start (NotBefore) or end (NotOnOrAfter)");
     return false;
@@ -544,7 +544,7 @@ function _xi_verify_date($doc) {
     return false;
   }
   $now = (int) date(time());
-	
+
   $inSpan = $startTime < $now && $now < $endTime;
 
   if (!$inSpan) {
@@ -556,19 +556,19 @@ function _xi_verify_date($doc) {
 
 /**
  * Check valid response certificate from Island.is
- */ 
-function _xi_verify_cert($objKeyInfo) {  
+ */
+function _xi_verify_cert($objKeyInfo) {
   $caFile = _xi_innsrkaning_get_key();
-  
+
   $caCert = openssl_x509_read($caFile);
   $caCertParsed = openssl_x509_parse($caCert, true);
-	
+
   $cert = $objKeyInfo->getX509Certificate();
   $parsed = openssl_x509_parse($cert);
-		
+
   date_default_timezone_set('Atlantic/Reykjavik');
   $dateFrom = (int) date($parsed['validFrom_time_t']);
-  $dateTo = (int) date($parsed['validTo_time_t']);	
+  $dateTo = (int) date($parsed['validTo_time_t']);
   $nowTime = (int) date(time());
   if ($nowTime < $dateFrom || $nowTime > $dateTo) {
     throw new Exception("Certificate expired or not valid yet");
@@ -576,7 +576,7 @@ function _xi_verify_cert($objKeyInfo) {
 
   $kennitala = $parsed['subject']['serialNumber'];
   $issuer = $parsed['issuer']['CN'];
-  
+
   if ($kennitala != "6503760649") {
     throw new Exception("Ekki rétt kennitala í undirritunarskilríki");
     return false;
@@ -589,9 +589,9 @@ function _xi_verify_cert($objKeyInfo) {
   $subjectKey = $caCertParsed['extensions']['subjectKeyIdentifier'];
   $authKey = $parsed['extensions']['authorityKeyIdentifier'];
   $authKey = str_replace('keyid:', '', $authKey);
-	
+
 	$authKey = trim($authKey);
-	
+
   if (strcasecmp($subjectKey, $authKey)) {
     throw new Exception("Not correct CA");
     return false;
