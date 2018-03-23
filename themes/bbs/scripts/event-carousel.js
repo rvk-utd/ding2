@@ -16,3 +16,25 @@
         }
     };
 })(this, jQuery);
+
+(function (scope, $) {
+    'use strict';
+    Drupal.behaviors.recommendedcontent = {
+        attach: function () {
+            var views = $('.view-carousel');
+            console.log(views);
+            views.each(function () {
+                var slides = 3;
+                if ($(this).hasClass('view-library-content-roll')) {
+                    slides = 4;
+                }
+                else if ($(this).hasClass('view-recommended-content')) {
+                    slides = 2;
+                }
+                var list = $(this).find('.item-list ul');
+                $(list).not('.slick-initialized').slick({ 'slidesToShow': slides, 'outerEdgeLimit': true, 'infinite': false});
+            });
+
+        }
+    };
+})(this, jQuery);

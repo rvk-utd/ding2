@@ -1,10 +1,8 @@
 .frontpage-content {
-  margin: 30px;
-
   .main-content {
     display: flex;
     flex-direction: column;
-    margin-top: 130px;
+    margin-top: 80px;
     margin-left: auto;
     margin-right: auto;
     max-width: 1400px;
@@ -163,16 +161,27 @@
     }
   }
 
-  .secondary-content {
-
-    margin-left: auto;
-    margin-right: auto;
+  .content-wrapper {
+    margin: 30px auto;
     max-width: 1400px;
+  }
 
+  .content-block {
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+
+  .logo-wrapper {
+    background-image: url(/profiles/ding2/themes/bbs/images/icons/logo.svg);
+    background-repeat: no-repeat;
+    background-position: bottom left;
+    background-size: contain;
+  }
+
+  .secondary-content {
     .quicktabs-wrapper {
       .event-teaser {
         height: 320px;
-        width: 380px;
         display: flex;
 
         .field-label {
@@ -187,11 +196,17 @@
     }
   }
 
+  .quaternary-content {
+    background-color: rgba(0, 0, 0, 0.08);
+  }
+
+  .red-background {
+    background-color: #b03033;
+  }
+
   .border-wrapper {
     z-index: -5;
-    height: 100%;
-    width: 100%;
-    margin-bottom: 50px;
+    margin: 30px 30px 50px;
 
     .border-element {
       height: 100%;
@@ -218,4 +233,10 @@
 
 .yellow {
   background: #eb983f;
+}
+
+.red-background {
+  h2 {
+    color: #fff;
+  }
 }

@@ -10,37 +10,64 @@
     font-size: 16px !important;
     font-weight: 500 !important;
   }
+}
 
+.carousel-list-tabs {
+  & .active a {
+    color: #b13135 !important;
+    font-size: 20px !important;
+    font-weight: 600 !important;
+  }
+
+  a {
+    color: #888 !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+
+    &::after {
+      display: none;
+    }
+  }
 }
 
 .slick-arrow {
   position: absolute;
   border: none;
-  top: 140px;
-  background-color: #B03033;
-  height: 50px;
-  width: 50px;
+  top: 140px !important;
+  background-color: #b03033;
+  height: 50px !important;
+  width: 50px !important;
   font-size: 0;
+  cursor: pointer;
 
-  &.slick-next {
-    right: -65px;
+  .red-background & {
+    background-color: #fff;
+  }
 
-    &::after {
-      content: url('../../../images/icons/arrow.png');
+  &::after {
+    content: url('../../../images/icons/arrow.png') !important;
+    position: relative !important;
+    background-color: transparent !important;
+    height: auto !important;
+    width: auto !important;
+    font-size: 0 !important;
+
+    .red-background & {
+      content: url('../../../images/icons/arrow-red.svg') !important;
     }
   }
 
+  &.slick-next {
+    right: -65px;
+  }
+
   &.slick-prev {
-    left: -95px;
+    left: -95px !important;
     -webkit-transform: rotate(180deg);
     -moz-transform: rotate(180deg);
     -o-transform: rotate(180deg);
     -ms-transform: rotate(180deg);
     transform: rotate(180deg);
-
-    &::after {
-      content: url('../../../images/icons/arrow.png');
-    }
   }
 
   &.slick-disabled {

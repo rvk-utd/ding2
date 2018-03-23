@@ -13,7 +13,8 @@
                 topbar = $('.topbar'),
                 main_menu_button = $('a.menu-button'),
                 sub_menu = $('.sub-menu'),
-                top = 80;
+                top = 80,
+                redBackgroundOffset = $('.red-background').offset();
 
             topbar_menu_btn.on('click', function (evt) {
                 evt.preventDefault();
@@ -59,6 +60,14 @@
                     else {
                         topbar.css('top', top - yOffset);
                     }
+
+                    if (yOffset >= redBackgroundOffset.top) {
+                        topbar.addClass('opaque');
+                    }
+                    else {
+                        topbar.removeClass('opaque');
+                    }
+
                 }
             }
             else {

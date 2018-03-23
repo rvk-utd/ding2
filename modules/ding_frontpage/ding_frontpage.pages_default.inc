@@ -7,76 +7,77 @@
 /**
  * Implements hook_default_page_manager_pages().
  */
-function ding_frontpage_default_page_manager_pages() {
-  $page = new stdClass();
-  $page->disabled = FALSE; /* Edit this to true to make a default page disabled initially */
-  $page->api_version = 1;
-  $page->name = 'ding_frontpage';
-  $page->task = 'page';
-  $page->admin_title = 'Ding frontpage';
-  $page->admin_description = 'Front page.';
-  $page->path = 'ding_frontpage';
-  $page->access = array(
-    'type' => 'none',
-    'settings' => NULL,
-  );
-  $page->menu = array();
-  $page->arguments = array();
-  $page->conf = array(
-    'admin_paths' => FALSE,
-  );
-  $page->default_handlers = array();
-  $handler = new stdClass();
-  $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
-  $handler->api_version = 1;
-  $handler->name = 'page_ding_frontpage_panel_context';
-  $handler->task = 'page';
-  $handler->subtask = 'ding_frontpage';
-  $handler->handler = 'panel_context';
-  $handler->weight = 0;
-  $handler->conf = array(
-    'title' => 'Ding frontpage',
-    'no_blocks' => 0,
-    'pipeline' => 'ipe',
-    'css_id' => '',
-    'css' => '',
-    'contexts' => array(),
-    'relationships' => array(),
-  );
-  $display = new panels_display();
-  $display->layout = 'ding_layout_1';
-  $display->layout_settings = array();
-  $display->panel_settings = array(
-    'style_settings' => array(
-      'default' => NULL,
-      'top' => NULL,
-      'left' => NULL,
-      'right' => NULL,
-      'bottom' => NULL,
-      'top_secondary' => NULL,
-      'main_content' => NULL,
-      'main_left_right' => NULL,
-      'main_right_right' => NULL,
-      'attachment_4_1' => NULL,
-      'attachment_4_2' => NULL,
-      'attachment_4_3' => NULL,
-      'attachment_4_4' => NULL,
-      'attachment_3_1' => NULL,
-      'attachment_3_2' => NULL,
-      'attachment_3_3' => NULL,
-      'attachment_2_1' => NULL,
-      'attachment_2_2' => NULL,
-      'attachment_1_1' => NULL,
-      'primary' => NULL,
-      'secondary' => NULL,
-      'tertiary' => NULL,
-    ),
-  );
-  $display->cache = array();
-  $display->title = '';
-  $display->uuid = '6795d6ae-3c57-4fb4-b339-3d6373acce88';
-  $display->content = array();
-  $display->panels = array();
+function ding_frontpage_default_page_manager_pages()
+{
+    $page = new stdClass();
+    $page->disabled = FALSE; /* Edit this to true to make a default page disabled initially */
+    $page->api_version = 1;
+    $page->name = 'ding_frontpage';
+    $page->task = 'page';
+    $page->admin_title = 'Ding frontpage';
+    $page->admin_description = 'Front page.';
+    $page->path = 'ding_frontpage';
+    $page->access = array(
+        'type' => 'none',
+        'settings' => NULL,
+    );
+    $page->menu = array();
+    $page->arguments = array();
+    $page->conf = array(
+        'admin_paths' => FALSE,
+    );
+    $page->default_handlers = array();
+    $handler = new stdClass();
+    $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
+    $handler->api_version = 1;
+    $handler->name = 'page_ding_frontpage_panel_context';
+    $handler->task = 'page';
+    $handler->subtask = 'ding_frontpage';
+    $handler->handler = 'panel_context';
+    $handler->weight = 0;
+    $handler->conf = array(
+        'title' => 'Ding frontpage',
+        'no_blocks' => 0,
+        'pipeline' => 'ipe',
+        'css_id' => '',
+        'css' => '',
+        'contexts' => array(),
+        'relationships' => array(),
+    );
+    $display = new panels_display();
+    $display->layout = 'ding_layout_1';
+    $display->layout_settings = array();
+    $display->panel_settings = array(
+        'style_settings' => array(
+            'default' => NULL,
+            'top' => NULL,
+            'left' => NULL,
+            'right' => NULL,
+            'bottom' => NULL,
+            'top_secondary' => NULL,
+            'main_content' => NULL,
+            'main_left_right' => NULL,
+            'main_right_right' => NULL,
+            'attachment_4_1' => NULL,
+            'attachment_4_2' => NULL,
+            'attachment_4_3' => NULL,
+            'attachment_4_4' => NULL,
+            'attachment_3_1' => NULL,
+            'attachment_3_2' => NULL,
+            'attachment_3_3' => NULL,
+            'attachment_2_1' => NULL,
+            'attachment_2_2' => NULL,
+            'attachment_1_1' => NULL,
+            'primary' => NULL,
+            'secondary' => NULL,
+            'tertiary' => NULL,
+        ),
+    );
+    $display->cache = array();
+    $display->title = '';
+    $display->uuid = '6795d6ae-3c57-4fb4-b339-3d6373acce88';
+    $display->content = array();
+    $display->panels = array();
     $pane = new stdClass();
     $pane->pid = 'new-74a49488-f11d-40b6-8211-52e84c8b296a';
     $pane->panel = 'primary';
@@ -87,7 +88,7 @@ function ding_frontpage_default_page_manager_pages() {
     $pane->configuration = array();
     $pane->cache = array();
     $pane->style = array(
-      'settings' => NULL,
+        'settings' => NULL,
     );
     $pane->css = array();
     $pane->extras = array();
@@ -104,12 +105,12 @@ function ding_frontpage_default_page_manager_pages() {
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
-      'override_title' => 1,
-      'override_title_text' => '',
+        'override_title' => 1,
+        'override_title_text' => '',
     );
     $pane->cache = array();
     $pane->style = array(
-      'settings' => NULL,
+        'settings' => NULL,
     );
     $pane->css = array();
     $pane->extras = array();
@@ -126,14 +127,14 @@ function ding_frontpage_default_page_manager_pages() {
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
-      'count' => '5',
-      'override_title' => 0,
-      'override_title_text' => '',
-      'override_title_heading' => 'h2',
+        'count' => '5',
+        'override_title' => 0,
+        'override_title_text' => '',
+        'override_title_heading' => 'h2',
     );
     $pane->cache = array();
     $pane->style = array(
-      'settings' => NULL,
+        'settings' => NULL,
     );
     $pane->css = array();
     $pane->extras = array();
@@ -150,22 +151,22 @@ function ding_frontpage_default_page_manager_pages() {
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
-      'ding_campaign_count' => 3,
-      'ding_campaign_offset' => 0,
-      'ding_campaign_style' => 'ding_campaign_full_width',
-      'context' => array(
-        0 => 'empty',
-        1 => 'empty',
-        2 => 'empty',
-        3 => 'empty',
-      ),
-      'override_title' => 0,
-      'override_title_text' => '',
-      'override_title_heading' => 'h2',
+        'ding_campaign_count' => 3,
+        'ding_campaign_offset' => 0,
+        'ding_campaign_style' => 'ding_campaign_full_width',
+        'context' => array(
+            0 => 'empty',
+            1 => 'empty',
+            2 => 'empty',
+            3 => 'empty',
+        ),
+        'override_title' => 0,
+        'override_title_text' => '',
+        'override_title_heading' => 'h2',
     );
     $pane->cache = array();
     $pane->style = array(
-      'settings' => NULL,
+        'settings' => NULL,
     );
     $pane->css = array();
     $pane->extras = array();
@@ -182,39 +183,39 @@ function ding_frontpage_default_page_manager_pages() {
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
-      'view_mode' => 'teaser',
-      'sort_weight' => FALSE,
-      'max' => '20',
-      'min' => '10',
-      'random' => 1,
-      'selected_keys' => array(
-        'ting_object' => 'ting_object',
-        'frontpage' => 'frontpage',
-      ),
-      'context' => array(
-        0 => 'empty',
-        1 => 'empty',
-        2 => 'empty',
-        3 => 'empty',
-      ),
-      'override_title' => 0,
-      'override_title_text' => '',
-      'override_title_heading' => 'h2',
+        'view_mode' => 'teaser',
+        'sort_weight' => FALSE,
+        'max' => '20',
+        'min' => '10',
+        'random' => 1,
+        'selected_keys' => array(
+            'ting_object' => 'ting_object',
+            'frontpage' => 'frontpage',
+        ),
+        'context' => array(
+            0 => 'empty',
+            1 => 'empty',
+            2 => 'empty',
+            3 => 'empty',
+        ),
+        'override_title' => 0,
+        'override_title_text' => '',
+        'override_title_heading' => 'h2',
     );
     $pane->cache = array(
-      'method' => 'lazy',
-      'settings' => array(
-        'load_strategy' => 'pane-visible',
-        'show_spinner' => 1,
-        'load_text' => '',
-      ),
+        'method' => 'lazy',
+        'settings' => array(
+            'load_strategy' => 'pane-visible',
+            'show_spinner' => 1,
+            'load_text' => '',
+        ),
     );
     $pane->style = array(
-      'settings' => NULL,
+        'settings' => NULL,
     );
     $pane->css = array(
-      'css_id' => '',
-      'css_class' => '',
+        'css_id' => '',
+        'css_class' => '',
     );
     $pane->extras = array();
     $pane->position = 4;
@@ -230,15 +231,15 @@ function ding_frontpage_default_page_manager_pages() {
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
-      'month' => '',
-      'libcode' => 0,
-      'override_title' => 1,
-      'override_title_text' => 'Månedens populæreste titler',
-      'override_title_heading' => 'h2',
+        'month' => '',
+        'libcode' => 0,
+        'override_title' => 1,
+        'override_title_text' => 'Månedens populæreste titler',
+        'override_title_heading' => 'h2',
     );
     $pane->cache = array();
     $pane->style = array(
-      'settings' => NULL,
+        'settings' => NULL,
     );
     $pane->css = array();
     $pane->extras = array();
@@ -255,16 +256,16 @@ function ding_frontpage_default_page_manager_pages() {
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
-      'override_title' => 1,
-      'override_title_text' => 'Library news',
+        'override_title' => 1,
+        'override_title_text' => 'Library news',
     );
     $pane->cache = array();
     $pane->style = array(
-      'settings' => NULL,
+        'settings' => NULL,
     );
     $pane->css = array(
-      'css_id' => '',
-      'css_class' => '',
+        'css_id' => '',
+        'css_class' => '',
     );
     $pane->extras = array();
     $pane->position = 1;
@@ -279,18 +280,18 @@ function ding_frontpage_default_page_manager_pages() {
     $pane->subtype = 'all_opening_hours';
     $pane->shown = TRUE;
     $pane->access = array(
-      'plugins' => array(
-        0 => array(
-          'name' => 'opening_hours_frontpage',
-          'settings' => NULL,
-          'not' => FALSE,
+        'plugins' => array(
+            0 => array(
+                'name' => 'opening_hours_frontpage',
+                'settings' => NULL,
+                'not' => FALSE,
+            ),
         ),
-      ),
     );
     $pane->configuration = array();
     $pane->cache = array();
     $pane->style = array(
-      'settings' => NULL,
+        'settings' => NULL,
     );
     $pane->css = array();
     $pane->extras = array();
@@ -307,16 +308,16 @@ function ding_frontpage_default_page_manager_pages() {
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
-      'override_title' => 0,
-      'override_title_text' => '',
+        'override_title' => 0,
+        'override_title_text' => '',
     );
     $pane->cache = array();
     $pane->style = array(
-      'settings' => NULL,
+        'settings' => NULL,
     );
     $pane->css = array(
-      'css_id' => '',
-      'css_class' => '',
+        'css_id' => '',
+        'css_class' => '',
     );
     $pane->extras = array();
     $pane->position = 3;
@@ -332,13 +333,13 @@ function ding_frontpage_default_page_manager_pages() {
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
-      'override_title' => 1,
-      'override_title_text' => 'Udvalgte temaer',
-      'override_title_heading' => 'h2',
+        'override_title' => 1,
+        'override_title_text' => 'Udvalgte temaer',
+        'override_title_heading' => 'h2',
     );
     $pane->cache = array();
     $pane->style = array(
-      'settings' => NULL,
+        'settings' => NULL,
     );
     $pane->css = array();
     $pane->extras = array();
@@ -347,12 +348,13 @@ function ding_frontpage_default_page_manager_pages() {
     $pane->uuid = '21e4a892-88bb-4aa3-9fc4-fa91c0333938';
     $display->content['new-21e4a892-88bb-4aa3-9fc4-fa91c0333938'] = $pane;
     $display->panels['tertiary'][0] = 'new-21e4a892-88bb-4aa3-9fc4-fa91c0333938';
-  $display->hide_title = PANELS_TITLE_NONE;
-  $display->title_pane = '0';
-  $handler->conf['display'] = $display;
-  $page->default_handlers[$handler->name] = $handler;
-  $pages['ding_frontpage'] = $page;
+    $display->hide_title = PANELS_TITLE_NONE;
+    $display->title_pane = '0';
+    $handler->conf['display'] = $display;
+    $page->default_handlers[$handler->name] = $handler;
+    $pages['ding_frontpage'] = $page;
 
+    // BBS Frontpage Variant
     $handler = new stdClass();
     $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
     $handler->api_version = 1;
@@ -406,6 +408,7 @@ function ding_frontpage_default_page_manager_pages() {
             'sec-info2' => NULL,
             'secondary-content' => NULL,
             'tertiary-content' => NULL,
+            'quaternary-content' => NULL,
         ),
         'style' => 'default',
     );
@@ -415,16 +418,28 @@ function ding_frontpage_default_page_manager_pages() {
     $display->content = array();
     $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-bfb4fccf-0e44-4cbd-b99c-488edb3dcae8';
+    $pane->pid = 'new-41a7473c-dff3-4009-9691-680fd76d2f80';
     $pane->panel = 'main-info';
-    $pane->type = 'block';
-    $pane->subtype = 'bbs_frontpage_content_blocks-bbs_frontpage_main';
+    $pane->type = 'views';
+    $pane->subtype = 'nodequeue_5';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
-        'override_title' => 0,
+        'override_pager_settings' => 0,
+        'use_pager' => 0,
+        'nodes_per_page' => '0',
+        'pager_id' => '0',
+        'offset' => '0',
+        'more_link' => 0,
+        'feed_icons' => 0,
+        'panel_args' => 0,
+        'link_to_view' => 0,
+        'args' => '',
+        'url' => '',
+        'display' => 'block',
+        'override_title' => 1,
         'override_title_text' => '',
-        'override_title_heading' => 'h2',
+        'override_title_heading' => 'span',
     );
     $pane->cache = array();
     $pane->style = array(
@@ -434,9 +449,9 @@ function ding_frontpage_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $pane->uuid = 'bfb4fccf-0e44-4cbd-b99c-488edb3dcae8';
-    $display->content['new-bfb4fccf-0e44-4cbd-b99c-488edb3dcae8'] = $pane;
-    $display->panels['main-info'][0] = 'new-bfb4fccf-0e44-4cbd-b99c-488edb3dcae8';
+    $pane->uuid = '41a7473c-dff3-4009-9691-680fd76d2f80';
+    $display->content['new-41a7473c-dff3-4009-9691-680fd76d2f80'] = $pane;
+    $display->panels['main-info'][0] = 'new-41a7473c-dff3-4009-9691-680fd76d2f80';
     $pane = new stdClass();
     $pane->pid = 'new-9bfff131-d8d9-4a78-a792-563777923dff';
     $pane->panel = 'menu';
@@ -513,6 +528,41 @@ function ding_frontpage_default_page_manager_pages() {
     $display->content['new-b2beaeaa-380c-4439-b605-3d5540bf71a8'] = $pane;
     $display->panels['new-user'][1] = 'new-b2beaeaa-380c-4439-b605-3d5540bf71a8';
     $pane = new stdClass();
+    $pane->pid = 'new-6dd6ceed-7ae6-4ec3-8710-33760e8fdd57';
+    $pane->panel = 'quaternary-content';
+    $pane->type = 'views';
+    $pane->subtype = 'library_content_roll';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+        'override_pager_settings' => 0,
+        'use_pager' => 0,
+        'nodes_per_page' => '0',
+        'pager_id' => '0',
+        'offset' => '0',
+        'more_link' => 0,
+        'feed_icons' => 0,
+        'panel_args' => 0,
+        'link_to_view' => 0,
+        'args' => '',
+        'url' => '',
+        'display' => 'block',
+        'override_title' => 0,
+        'override_title_text' => '',
+        'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+        'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = '6dd6ceed-7ae6-4ec3-8710-33760e8fdd57';
+    $display->content['new-6dd6ceed-7ae6-4ec3-8710-33760e8fdd57'] = $pane;
+    $display->panels['quaternary-content'][0] = 'new-6dd6ceed-7ae6-4ec3-8710-33760e8fdd57';
+    $pane = new stdClass();
     $pane->pid = 'new-a9acb13d-e4de-4c6d-b44a-a09f5abf33e1';
     $pane->panel = 'sec-info';
     $pane->type = 'views';
@@ -548,6 +598,29 @@ function ding_frontpage_default_page_manager_pages() {
     $display->content['new-a9acb13d-e4de-4c6d-b44a-a09f5abf33e1'] = $pane;
     $display->panels['sec-info'][0] = 'new-a9acb13d-e4de-4c6d-b44a-a09f5abf33e1';
     $pane = new stdClass();
+    $pane->pid = 'new-ceb25e6d-c6f0-4b2b-952e-74560f6597a0';
+    $pane->panel = 'secondary-content';
+    $pane->type = 'carousel';
+    $pane->subtype = 'carousel';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+        'override_title' => 0,
+        'override_title_text' => '',
+        'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+        'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = 'ceb25e6d-c6f0-4b2b-952e-74560f6597a0';
+    $display->content['new-ceb25e6d-c6f0-4b2b-952e-74560f6597a0'] = $pane;
+    $display->panels['secondary-content'][0] = 'new-ceb25e6d-c6f0-4b2b-952e-74560f6597a0';
+    $pane = new stdClass();
     $pane->pid = 'new-59deef14-25e3-40a1-b1a2-4c25d5bdbf9d';
     $pane->panel = 'secondary-content';
     $pane->type = 'block';
@@ -565,11 +638,11 @@ function ding_frontpage_default_page_manager_pages() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 0;
+    $pane->position = 1;
     $pane->locks = array();
     $pane->uuid = '59deef14-25e3-40a1-b1a2-4c25d5bdbf9d';
     $display->content['new-59deef14-25e3-40a1-b1a2-4c25d5bdbf9d'] = $pane;
-    $display->panels['secondary-content'][0] = 'new-59deef14-25e3-40a1-b1a2-4c25d5bdbf9d';
+    $display->panels['secondary-content'][1] = 'new-59deef14-25e3-40a1-b1a2-4c25d5bdbf9d';
     $pane = new stdClass();
     $pane->pid = 'new-885d390a-895f-4fec-b90e-f32ef910e03f';
     $pane->panel = 'secondary-content';
@@ -588,16 +661,51 @@ function ding_frontpage_default_page_manager_pages() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 1;
+    $pane->position = 2;
     $pane->locks = array();
     $pane->uuid = '885d390a-895f-4fec-b90e-f32ef910e03f';
     $display->content['new-885d390a-895f-4fec-b90e-f32ef910e03f'] = $pane;
-    $display->panels['secondary-content'][1] = 'new-885d390a-895f-4fec-b90e-f32ef910e03f';
+    $display->panels['secondary-content'][2] = 'new-885d390a-895f-4fec-b90e-f32ef910e03f';
+    $pane = new stdClass();
+    $pane->pid = 'new-3a6726be-35ae-433a-840b-35316c61513b';
+    $pane->panel = 'tertiary-content';
+    $pane->type = 'views';
+    $pane->subtype = 'recommended_content';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+        'override_pager_settings' => 0,
+        'use_pager' => 0,
+        'nodes_per_page' => '',
+        'pager_id' => '0',
+        'offset' => '0',
+        'more_link' => 1,
+        'feed_icons' => 0,
+        'panel_args' => 0,
+        'link_to_view' => 0,
+        'args' => '',
+        'url' => '',
+        'display' => 'block',
+        'override_title' => 1,
+        'override_title_text' => 'Við mælum með',
+        'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+        'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = '3a6726be-35ae-433a-840b-35316c61513b';
+    $display->content['new-3a6726be-35ae-433a-840b-35316c61513b'] = $pane;
+    $display->panels['tertiary-content'][0] = 'new-3a6726be-35ae-433a-840b-35316c61513b';
     $display->hide_title = PANELS_TITLE_NONE;
     $display->title_pane = '0';
     $handler->conf['display'] = $display;
-    $page->default_handlers[$handler->name] = $handler;
 
-  return $pages;
+
+    return $pages;
 
 }

@@ -12,5 +12,6 @@ $plugin['bbs_frontpage_layout'] = array(
         'sec-info' => t('Secondary Info'),
         'secondary-content' => t('Secondary Content'),
         'tertiary-content' => t('Tertiary Content'),
+        'quaternary-content' => t('Quaternary Content'),
     ),
 );
