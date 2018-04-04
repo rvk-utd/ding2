@@ -146,15 +146,15 @@ function connie_search_search_prepare_reference_query($query_string) {
   $query = ting_start_query();
 
   if (is_numeric($query_string)) {
-    $query->setMaterialFilter($query_string);
+    $query = $query->withMaterialFilter($query_string);
   }
   elseif (strpos($query_string, '=') !== FALSE) {
     // The query seems to contain something advanced, process it as a raw query.
-    $query->setRawQuery($query_string);
+    $query = $query->withRawQuery($query_string);
   }
   else {
     // Just perform a general full text search.
-    $query->setFullTextQuery($query_string);
+    $query = $query->withFullTextQuery($query_string);
   }
   return $query;
 }
@@ -251,17 +251,4 @@ function connie_search_search_autocomplete($query) {
   }
 
   return $items;
-}
-
-/**
- * Quotes a search string to make it compatible with the provider.
- *
- * @param string $search_string
- *   The search string.
- *
- * @return string
- *   The quoted search string.
- */
-function connie_search_search_search_quote($search_string) {
-  return str_replace('"', '\"', $search_string);
 }

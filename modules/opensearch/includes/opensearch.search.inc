@@ -124,8 +124,8 @@ function opensearch_search_search(TingSearchRequest $ting_query) {
 
   // Add a general quoted free text search.
   if (!empty($free_text_query = $ting_query->getFullTextQuery())) {
-    $free_text_query = _ting_search_quote($ting_query->getFullTextQuery());
-    $query_parts[] = $free_text_query;
+    $cqlDoctor = new TingSearchCqlDoctor($free_text_query);
+    $query_parts[] = $cqlDoctor->string_to_cql();
   }
 
   // Add field filter.
@@ -213,6 +213,10 @@ function opensearch_search_search(TingSearchRequest $ting_query) {
     $options['numFacets'] = $ting_query->getTermsPerFacet();
   }
 
+  if (!empty($ting_query->getFacets())) {
+    $options['facets'] = $ting_query->getFacets();
+  }
+
   // Whether to return all materials from matched collections.
   $options['allObjects'] = $ting_query->getPopulateCollections();
 
@@ -228,13 +232,12 @@ function opensearch_search_search(TingSearchRequest $ting_query) {
   if (empty($search_result)) {
     throw new SearchProviderException("Unable to execute search, inspect logs for details");
   }
-  $result = new OpenSearchTingSearchResult($search_result, $ting_query);
 
-  // Handle the situation where opensearch sets a default sort.
-  if (empty($result->getSearchRequest()->getSorts()) && !empty($result->openSearchResult->sortUsed)) {
-    $sort_used = $result->openSearchResult->sortUsed;
+  // Handle the situation where OpenSearch sets a default sort.
+  if (empty($ting_query->getSorts()) && !empty($search_result->sortUsed)) {
+    $sort_used = $search_result->sortUsed;
     // In situations where we're configured to default to sort by "rank_general"
-    // opensearch may choose to use rank_main_title for the actual sort. Instead
+    // OpenSearch may choose to use rank_main_title for the actual sort. Instead
     // of introducing two different ways of ranking by title, we instead
     // interpret it as "rank_title".
     if ($sort_used === 'rank_main_title') {
@@ -246,11 +249,11 @@ function opensearch_search_search(TingSearchRequest $ting_query) {
     $provider_sorts = opensearch_search_sort_options();
     if (array_key_exists($sort_used, $provider_sorts)) {
       $sort_instance = $provider_sorts[$sort_used]['sort'];
-      $result->getSearchRequest()->addSorts($sort_instance);
+      $ting_query = $ting_query->withSorts($sort_instance);
     }
   }
 
-  return $result;
+  return new OpenSearchTingSearchResult($search_result, $ting_query);
 }
 
 /**
@@ -529,12 +532,12 @@ function opensearch_search_prepare_reference_query($query_string) {
   if (preg_match('/(^\d+$)|(^\d+:\d+$)|(=)/', $query_string)) {
     // The query is either ISBN, tid or CQL search expression.
     // Add as raw (eg non-escaped) string.
-    $query->setRawQuery($query_string);
+    $query = $query->withRawQuery($query_string);
   }
   else {
     // Do a full-text search with the wildcard character appended to expand
     // search results until we have a hit.
-    $query->setFullTextQuery($query_string . '*');
+    $query = $query->withFullTextQuery($query_string . '*');
   }
 
   return $query;
@@ -730,18 +733,4 @@ function opensearch_search_autocomplete($query) {
   }
 
   return $items;
-}
-
-/**
- * Quotes a search string to make it compatible with the provider.
- *
- * @param string $search_string
- *   The search string.
- *
- * @return string
- *   The quoted search string.
- */
-function opensearch_search_search_quote($search_string) {
-  $cql_doc = new TingSearchCqlDoctor($search_string);
-  return $cql_doc->string_to_cql($search_string);
 }
