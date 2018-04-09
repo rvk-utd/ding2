@@ -173,7 +173,7 @@ function primo_search_search(TingSearchRequest $ting_query) {
   }
 
   // Handle filters.
-  if (!empty($field_filters = $ting_query->getFieldFilters())) {
+  if (!empty($field_filters = $ting_query->getFilters())) {
     $renderer = new PrimoStatementRenderer(_primo_common_field_mapping());
     $queries = array_merge_recursive($queries, $renderer->renderStatements($field_filters));
   }

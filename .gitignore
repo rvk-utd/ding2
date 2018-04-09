@@ -1,6 +1,8 @@
 /modules/contrib
 /libraries
 config.php
+tests/behat/.idea/
+.gitignore
 .docker-sync
 vendor
 /themes/ddbasic/scripts/min

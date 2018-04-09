@@ -421,6 +421,20 @@ projects[views_bulk_operations][version] = "3.3"
 projects[views_responsive_grid][subdir] = "contrib"
 projects[views_responsive_grid][version] = "1.3"
 
+projects[views_rss][subdir] = "contrib"
+projects[views_rss][version] = "2.0-rc4"
+
+; This specific checkout is only because of the module is dev branch only.
+projects[views_rss_media][type] = "module"
+projects[views_rss_media][subdir] = "contrib"
+projects[views_rss_media][download][type] = "git"
+projects[views_rss_media][download][url] = "http://git.drupal.org/project/views_rss_media.git"
+projects[views_rss_media][download][revision] = "14f7cc90d41c0186d2356ff528ac316a16eba3fd"
+; Prevents yielding strict warning about variables that should be passed by reference in views_rss_media_requirements().
+projects[views_rss_media][patch][] = "https://www.drupal.org/files/issues/strict-warning-2149287-1.patch"
+; Changing REQUIREMENT_ERROR to REQUIREMENT_WARNING so the installation of module will pass.
+projects[views_rss_media][patch][] = "https://www.drupal.org/files/issues/views_rss_media-2550589-1.patch"
+
 ; Development version where the "unpublished" status have been fixed on the content edit page.
 projects[view_unpublished][subdir] = "contrib"
 projects[view_unpublished][download][type] = "git"
@@ -459,7 +473,7 @@ projects[xautoload][version] = "5.7"
 libraries[bpi-client][destination] = "modules/bpi/lib"
 libraries[bpi-client][download][type] = "git"
 libraries[bpi-client][download][url] = "http://github.com/ding2/bpi-client.git"
-libraries[bpi-client][download][tag] = "7.x-4.3.0-rc2"
+libraries[bpi-client][download][tag] = "7.x-4.3.0-rc4"
 
 libraries[ckeditor][download][type] = "get"
 libraries[ckeditor][download][url] = http://download.cksource.com/CKEditor/CKEditor/CKEditor%204.4.7/ckeditor_4.4.7_full.zip
@@ -529,7 +543,7 @@ libraries[psr7][destination] = "libraries"
 libraries[ting-client][download][type] = "git"
 libraries[ting-client][download][url] = "http://github.com/ding2/ting-client.git"
 libraries[ting-client][destination] = "modules/opensearch/lib"
-libraries[ting-client][download][tag] = "7.x-4.3.0-rc2"
+libraries[ting-client][download][tag] = "7.x-4.3.0-rc4"
 
 libraries[zen-grids][download][type] = "git"
 libraries[zen-grids][download][url] = "https://github.com/JohnAlbin/zen-grids.git"
@@ -568,3 +582,8 @@ libraries[masonry][download][type] = "get"
 libraries[masonry][download][url] = https://github.com/desandro/masonry/archive/v4.1.1.zip
 libraries[masonry][directory_name] = "masonry"
 libraries[masonry][destination] = "libraries"
+
+libraries[smart-app-banner][download][type] = "get"
+libraries[smart-app-banner][download][url] = https://github.com/kudago/smart-app-banner/archive/v1.3.0.zip
+libraries[smart-app-banner][directory_name] = "smart-app-banner"
+libraries[smart-app-banner][destination] = "libraries"
