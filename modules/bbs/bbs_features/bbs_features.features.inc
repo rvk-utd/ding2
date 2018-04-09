@@ -75,5 +75,56 @@ function bbs_features_fe_nodequeue_export_fields() {
     'count' => 0,
   );
 
+  // Exported nodequeues: literature_main_content
+  $nodequeues['literature_main_content'] = array(
+    'name' => 'literature_main_content',
+    'title' => 'Literature main content',
+    'subqueue_title' => '',
+    'size' => 1,
+    'link' => '',
+    'link_remove' => '',
+    'owner' => 'nodequeue',
+    'show_in_ui' => 1,
+    'show_in_tab' => 1,
+    'show_in_links' => 0,
+    'reference' => 0,
+    'reverse' => 0,
+    'insert_at_front' => 0,
+    'i18n' => 0,
+    'subqueues' => 1,
+    'types' => array(
+      0 => 'ding_event',
+      1 => 'ding_news',
+    ),
+    'roles' => array(),
+    'count' => 0,
+  );
+
+  // Exported nodequeues: literature_sub_content
+  $nodequeues['literature_sub_content'] = array(
+    'name' => 'literature_sub_content',
+    'title' => 'Literature sub content',
+    'subqueue_title' => '',
+    'size' => 2,
+    'link' => '',
+    'link_remove' => '',
+    'owner' => 'nodequeue',
+    'show_in_ui' => 1,
+    'show_in_tab' => 1,
+    'show_in_links' => 0,
+    'reference' => 0,
+    'reverse' => 0,
+    'insert_at_front' => 0,
+    'i18n' => 0,
+    'subqueues' => 1,
+    'types' => array(
+      0 => 'ding_event',
+      1 => 'ding_news',
+      2 => 'ding_page',
+    ),
+    'roles' => array(),
+    'count' => 0,
+  );
+
   return $nodequeues;
 }
