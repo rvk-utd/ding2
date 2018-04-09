@@ -95,6 +95,16 @@
   .ding-carousel-item {
     width: 180px !important;
 
+    a.read-more-button {
+      color: #888888;
+      font-weight: 600;
+      font-size: 14px;
+      
+      &::before {
+        background-color: #888888;
+      }
+    }
+
     .ding-entity-rating {
       display: none;
      }
