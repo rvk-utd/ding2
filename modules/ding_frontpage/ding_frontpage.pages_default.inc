@@ -704,6 +704,7 @@ function ding_frontpage_default_page_manager_pages()
     $display->hide_title = PANELS_TITLE_NONE;
     $display->title_pane = '0';
     $handler->conf['display'] = $display;
+    $pages['bbs_frontpage'] = $page;
 
 
     return $pages;
