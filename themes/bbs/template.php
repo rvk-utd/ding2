@@ -70,12 +70,15 @@ function bbs_menu_link__menu_tabs_menu($vars) {
 
         case 'node':
             // Special placeholder for language switcher.
+            /* In the future we would like to have an actual switcher
             $element['#attributes']['class'][] = 'topbar-language';
             $element['#localized_options']['attributes']['class'][] = 'topbar-language';
             $block =  module_invoke('locale', 'block_view', 'language');
             $lang_name = $language->language ;
             return '<li' . drupal_attributes($element['#attributes']) . '><span class="current-language">' .
                 $lang_name . '</span>' . $block['content'] . $sub_menu . "</li>\n";
+            */
+            return '<li class="topbar-language"><a href="#"><span class="long-name">English</span><span class="short-name">EN</span></a></li>';
 
         case 'user':
             $title_prefix = '<i class="icon icon-user"></i>';

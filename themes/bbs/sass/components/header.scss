@@ -102,7 +102,21 @@ Styles for the header
 
   li.topbar-language {
     background-color: rgba(0, 0, 0, 0.16);
+    .long-name {
+      display: none;
+      .menu-is-open & {
+        display: block;
+      }
+    }
 
+    .short-name {
+      .menu-is-open & {
+        display: none;
+      }
+    }
+
+
+    /* We are not currently using the language switcher
     .current-language {
       text-transform: uppercase;
       margin: 30px;
@@ -131,6 +145,7 @@ Styles for the header
         font-weight: 700;
       }
     }
+    */
   }
 
   li.topbar-link-menu {

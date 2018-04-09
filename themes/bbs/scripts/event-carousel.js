@@ -2,8 +2,8 @@
     'use strict';
     Drupal.behaviors.eventcarousel = {
         attach: function () {
-            var quicktabs_lists = $('#quicktabs-events .item-list ul'),
-                tabs = $('#quicktabs-events .quicktabs-tab');
+            var quicktabs_lists = $('.quicktabs-wrapper .item-list ul'),
+                tabs = $('.quicktabs-wrapper .quicktabs-tab');
 
             quicktabs_lists.each(function () {
                 $(this).not('.slick-initialized').slick({'slidesToShow': 3, 'slidesToScroll': 1, 'infinite': false});
@@ -22,7 +22,6 @@
     Drupal.behaviors.recommendedcontent = {
         attach: function () {
             var views = $('.view-carousel');
-            console.log(views);
             views.each(function () {
                 var slides = 3;
                 if ($(this).hasClass('view-library-content-roll')) {

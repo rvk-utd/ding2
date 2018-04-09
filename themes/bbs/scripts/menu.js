@@ -14,6 +14,7 @@
                 main_menu_button = $('a.menu-button'),
                 sub_menu = $('.sub-menu'),
                 top = 80,
+                admin_menu_offset = $('#admin-menu').outerHeight() || 0,
                 redBackgroundOffset = $('.red-background').offset();
 
             topbar_menu_btn.on('click', function (evt) {
@@ -35,6 +36,10 @@
                 body.removeClass('overlay-is-active');
             });
 
+
+            // Show first menu item as expanded
+            sub_menu.first().removeClass('hidden');
+
             main_menu_button.on('click', function (evt) {
                 evt.preventDefault();
 
@@ -49,16 +54,16 @@
 
             if (body.hasClass('front')) {
                 if ($(window).scrollTop() >= top) {
-                    topbar.css('top', 0);
+                    topbar.css('top', admin_menu_offset);
                 }
 
                 window.onscroll = function () {
                     var yOffset = $(window).scrollTop();
                     if (yOffset >= top) {
-                        topbar.css('top', 0);
+                        topbar.css('top', admin_menu_offset);
                     }
                     else {
-                        topbar.css('top', top - yOffset);
+                        topbar.css('top', top - yOffset + admin_menu_offset);
                     }
 
                     if (yOffset >= redBackgroundOffset.top) {
@@ -67,11 +72,10 @@
                     else {
                         topbar.removeClass('opaque');
                     }
-
                 }
             }
             else {
-                topbar.css('top', 0);
+                topbar.css('top', admin_menu_offset);
             }
 
         }
