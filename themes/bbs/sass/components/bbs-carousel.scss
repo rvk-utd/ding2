@@ -90,3 +90,24 @@
       margin-bottom: 40px !important;
   }
 }
+
+.ding-carousel {
+  .ding-carousel-item {
+    width: 180px !important;
+
+    .field-group-format group-rating {
+      display: none;
+     }
+     
+     .field field-name-ting-type {
+     display: none;
+     }
+
+    .ting-cover {
+      img {
+        height: 230px;
+        width: 100%;
+      }
+    }
+  }
+}
