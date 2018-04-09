@@ -18,5 +18,10 @@
     <?php print render($content); ?>
 
   </div>
+    <div class="activities">
+  	<div class="read-more">
+  		<a class="underline" href="<?php print $ting_object_url_object; ?>">Lesa meira</a>
+  	</div>
+  </div>
   <?php print render($content['ding_serendipity_info']); ?>
 </div>
