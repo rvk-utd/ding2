@@ -37,3 +37,15 @@
         }
     };
 })(this, jQuery);
+
+(function (scope, $) {
+    'use strict';
+    Drupal.behaviors.bbstingcarousel = {
+        attach: function () {
+            var read_more_button = $('.inner .read-more-button');
+            read_more_button.each(function () {
+                $(this).addClass('underline');
+            });
+        }
+    };
+})(this, jQuery);
