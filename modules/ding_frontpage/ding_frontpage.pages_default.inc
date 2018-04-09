@@ -9,6 +9,7 @@
  */
 function ding_frontpage_default_page_manager_pages()
 {
+    $pages = array();
     $page = new stdClass();
     $page->disabled = FALSE; /* Edit this to true to make a default page disabled initially */
     $page->api_version = 1;
@@ -28,7 +29,7 @@ function ding_frontpage_default_page_manager_pages()
     );
     $page->default_handlers = array();
     $handler = new stdClass();
-    $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
+    $handler->disabled = TRUE; /* Edit this to true to make a default handler disabled initially */
     $handler->api_version = 1;
     $handler->name = 'page_ding_frontpage_panel_context';
     $handler->task = 'page';
@@ -352,9 +353,8 @@ function ding_frontpage_default_page_manager_pages()
     $display->title_pane = '0';
     $handler->conf['display'] = $display;
     $page->default_handlers[$handler->name] = $handler;
-    $pages['ding_frontpage'] = $page;
+    $pages['Ding Frontpage'] = $page;
 
-    // BBS Frontpage Variant
     $handler = new stdClass();
     $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
     $handler->api_version = 1;
@@ -362,7 +362,7 @@ function ding_frontpage_default_page_manager_pages()
     $handler->task = 'page';
     $handler->subtask = 'ding_frontpage';
     $handler->handler = 'panel_context';
-    $handler->weight = 2;
+    $handler->weight = 1;
     $handler->conf = array(
         'title' => 'BBS Frontpage',
         'no_blocks' => 0,
@@ -704,9 +704,8 @@ function ding_frontpage_default_page_manager_pages()
     $display->hide_title = PANELS_TITLE_NONE;
     $display->title_pane = '0';
     $handler->conf['display'] = $display;
-    $pages['bbs_frontpage'] = $page;
+    $page->default_handlers[$handler->name] = $handler;
 
-
+    $pages['BBS Frontpage'] = $page;
     return $pages;
-
 }
