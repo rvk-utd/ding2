@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the BBS Inspiration Page feature.
+ */
+
+include_once 'bbs_inspiration_page.features.inc';
