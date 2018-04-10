@@ -1,0 +1,14 @@
+name = BBS Inspiration Page
+core = 7.x
+package = BBS
+dependencies[] = ctools
+dependencies[] = fe_nodequeue
+dependencies[] = page_manager
+features[ctools][] = page_manager:pages_default:1
+features[fe_nodequeue][] = ding_tabroll_frontpage
+features[fe_nodequeue][] = inspiration_main_content
+features[fe_nodequeue][] = inspiration_subcontent_lower_lef
+features[fe_nodequeue][] = inspiration_subcontent_lower_rig
+features[fe_nodequeue][] = inspiration_subcontent_upper
+features[features_api][] = api:2
+features[page_manager_pages][] = inspiration
