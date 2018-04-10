@@ -13,9 +13,10 @@ stylesheets[all][] = sass_css/components/node/news.css
 ;// New CSS stylesheets
 stylesheets[all][] = sass_css/overrides.css
 stylesheets[all][] = sass_css/frontpage/frontpage.css
-styleshhets[all][] = sass_css/pages/literature.css
+stylesheets[all][] = sass_css/pages/literature.css
 stylesheets[all][] = sass_css/fonts.css
 stylesheets[all][] = sass_css/components/bbs-carousel.css
+stylesheets[all][] = sass_css/components/messages.css
 
 ;// Overridden JS from base theme
 scripts[] = scripts/menu.js

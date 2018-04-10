@@ -16,9 +16,15 @@
       }
 
       .right-side {
-        flex-basis: 70%;
+        flex: 70%;
         padding: 10px;
         color: white;
+
+        h2 {
+          &.pane-title {
+            display: none;
+          }
+        }
 
         .teaser-info {
           padding: 60px 70px;
@@ -36,8 +42,8 @@
     }
 
     ul {
-      margin: 0 !important;
       display: flex;
+      margin: 0 !important;
 
       li {
         margin: 0 !important;
@@ -89,25 +95,76 @@
   .menu-wrapper {
     height: 100%;
     width: 100%;
-    padding: 40px;
     background-color: #b03033;
 
-    h2 {
-      padding-top: 20px;
-      height: 80px;
-      width: 300px;
-      color: #fff;
-      font-family: "Cooper Hewitt";
-      font-size: 26px;
-      font-weight: bold;
-      line-height: 40px;
-      text-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+    .column-item {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      h2 {
+        flex: 1;
+        width: 300px;
+        color: #fff;
+        font-family: "Cooper Hewitt";
+        font-size: 26px;
+        font-weight: bold;
+        line-height: 40px;
+        text-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+        padding: 80px 20px 0px 20px;
+      }
     }
 
     .menu {
+      flex-direction: column;
+
       li {
         list-style-type: none !important;
         list-style-image: none !important;
+      }
+
+      .menu-item {
+        min-height: 20px;
+        background-color: rgba(0, 0, 0, .08);
+
+        &:nth-of-type(2) {
+          background-color: rgba(0, 0, 0, .12);
+        }
+
+        &:nth-of-type(3) {
+          background-color: rgba(0, 0, 0, .16);
+        }
+
+        &:nth-of-type(4) {
+          background-color: rgba(0, 0, 0, .2);
+        }
+
+        &:nth-of-type(5) {
+          background-color: rgba(0, 0, 0, .24);
+        }
+
+        a {
+          display: flex;
+          align-items: center;
+
+          .icon {
+            font-size: 40px;
+          }
+        }
+
+        form {
+          div {
+            &:first-of-type {
+              display: flex;
+              flex-direction: row-reverse;
+              justify-content: flex-end;
+
+              .form-actions {
+                padding-left: 13px;
+              }
+            }
+          }
+        }
       }
 
       .form-item-search-block-form {
@@ -147,9 +204,15 @@
     }
     .block-item {
       display: flex;
-      justify-content: space-around;
+      justify-content: space-between;
       align-items: center;
       height: 100%;
+      min-width: 380px;
+      padding: 40px;
+
+      p {
+        margin: 0;
+      }
 
       .text {
         font-size: 22px;
@@ -160,7 +223,6 @@
   }
 
   .content-wrapper {
-    margin: 30px auto;
     max-width: 1400px;
   }
 
@@ -177,6 +239,9 @@
   }
 
   .secondary-content {
+    display: flex;
+    justify-content: center;
+
     .quicktabs-wrapper {
       .event-teaser {
         height: 320px;

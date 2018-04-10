@@ -1,5 +1,15 @@
-.page-bokmenntir {
-  .topbar {
-    background: red;
+body {
+  &.page-bokmenntir {
+    .ding2-site-template {
+      .site-header {
+        .topbar {
+          top: 0;
+          background-color: #47A49D;
+        }
+        .navigation-wrapper {
+          background-color: #47A49D !important;
+        }
+      }
+    }
   }
 }
