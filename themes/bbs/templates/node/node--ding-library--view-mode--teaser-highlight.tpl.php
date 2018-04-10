@@ -18,10 +18,14 @@ if ($content['field_ding_library_mail']) {
             <div class="address">
                 <?php print render($content['field_ding_library_addresse']) ?>
             </div>
-            <div class="opening-hours-title">
                 <span class="icon icon-clock"></span>
-                <?php print t('Opening hours') ?>
-            </div>
+                <?php if (!empty($opening_hours)) : ?>
+                    <div class="libraries-opening-hours js-opening-hours-toggle-element"<?php if (variable_get('ding_ddbasic_opening_hours_extended_title', FALSE)): print ' data-extended-title="1"';
+                    endif; ?>>
+                        <?php print $opening_hours;  ?>
+                    </div>
+
+                <?php endif; ?>
         </div>
     </div>
 </div>
