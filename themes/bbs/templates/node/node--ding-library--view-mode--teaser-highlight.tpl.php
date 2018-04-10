@@ -9,25 +9,27 @@ if ($content['field_ding_library_mail']) {
 <?php if ($node->field_ding_library_title_image): ?>
 <div class="library-image" style="background-image: url('<?php print file_create_url($node->field_ding_library_title_image['und'][0]['uri']);  ?>')"></div>
 <?php endif;?>
-<div class="title">
-    <?php print $title; ?>
+<div class="text-wrapper">
+    <div class="title">
+        <?php print $title; ?>
+    </div>
+    <div class="info-wrapper">
+        <div class="info">
+            <div class="address">
+                <?php print render($content['field_ding_library_addresse']) ?>
+            </div>
+            <div class="opening-hours-title">
+                <span class="icon icon-clock"></span>
+                <?php print t('Opening hours') ?>
+            </div>
+        </div>
+    </div>
 </div>
-
-<div class="info-wrapper">
-    <div class="info">
-        <div class="address">
-            <?php print render($content['field_ding_library_addresse']) ?>
-        </div>
-        <div class="opening-hours-title">
-            <?php print t('Opening hours') ?>
-        </div>
-        <div class="contact">
-            <div class="telephone">
-                <?php print render($content['field_ding_library_phone_number']) ?>
-            </div>
-            <div class="email">
-                <?php print render($content['field_ding_library_mail']) ?>
-            </div>
-        </div>
+<div class="contact-wrapper">
+    <div class="telephone">
+        <?php print render($content['field_ding_library_phone_number']) ?>
+    </div>
+    <div class="email">
+        <?php print render($content['field_ding_library_mail']) ?>
     </div>
 </div>
