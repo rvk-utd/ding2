@@ -1,0 +1,60 @@
+.page-libraries {
+  padding-top: 80px;
+
+  .pane-ding-library-ding-library-libraries-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 1400px;
+    margin: 120px auto;
+    padding: 0 20px;
+
+    .library-list {
+      display: flex;
+      flex-wrap: wrap;
+
+      .views-row {
+        padding: 0;
+        margin: 0 10px;
+        background-color: #B03033;
+        color: white;
+
+        .library-image {
+          width: 380px;
+          height: 270px;
+          margin-top: -1px;
+
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: auto 100%;
+        }
+
+        .title {
+          font-size: 24px;
+          font-weight: 700;
+          line-height: 40px;
+        }
+
+        .contact {
+          display: flex;
+          margin-top: 20px;
+
+          .telephone {
+            flex: 1;
+            padding: 20px;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.08);
+          }
+
+          .email {
+            flex: 1;
+            padding: 20px;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.12);
+          }
+        }
+      }
+    }
+  }
+}
