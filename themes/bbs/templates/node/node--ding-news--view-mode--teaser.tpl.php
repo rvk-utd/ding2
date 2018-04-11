@@ -2,7 +2,7 @@
 
 /**
  * @file
- * DDBasic's theme implementation to display event nodes.
+ * DDBasic's theme implementation to display news nodes.
  *
  * Available variables:
  * - $title: the (sanitized) title of the node.
@@ -74,25 +74,22 @@
  * rule that was previously applied.
  *
  * ddbasic specific variables:
- * - $event_date: Event date or period
- * - $event_time: Event time or time-span
- * - $event_price: Event price with 'kr.' suffix - if no price is set $event_price equals 'Free'
- * - $event_background_image: Image url for event image
+ * - $ddbasic_updated: Information about latest update on the node created from
+ *   $date during ddbasic_preprocess_node().
+ * - $news_full_submitted: Submitted date and time
+ * - $news_full_changed: Changed date and time
+ * - $news_submitted: Submitted date
+ * - $news_teaser_image: Div with image as background or empty div if no image
  *
  * @see template_preprocess()
  * @see template_preprocess_node()
  * @see template_process()
  */
 ?>
-<div class="frontpage-teaser event-teaser" <?php if(!empty($content['field_ding_event_list_image'])){?>style="background-image: url(<?php print file_create_url($node->field_ding_event_list_image['und'][0]['uri']);  ?>)"<?php } ?>>
+ <div class="frontpage-teaser event-teaser" <?php if(!empty($content['field_ding_news_list_image'])){?>style="background-image: url(<?php print file_create_url($node->field_ding_news_list_image['und'][0]['uri']); ?>)"<?php } ?>>
     <div class="teaser-info">
         <h3 class="title-text"><?php print $title; ?></h3>
-        <span class="date-info">
-            <?php print render($content['field_ding_event_date']); ?>
-        </span>
-        <span class="location-info">
-            <?php print render($content['field_ding_event_location']); ?>
-        </span>
+        <span class="lead"><?php print render($content['field_ding_news_lead']); ?></span>
         <a class=learn-more" href="<?php print $node_url; ?>"><?php print t('Learn More'); ?></a>
     </div>
 </div>
