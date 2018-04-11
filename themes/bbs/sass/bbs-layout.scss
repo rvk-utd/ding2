@@ -251,10 +251,15 @@
   }
 
   .logo-wrapper {
+    background-color: #b03033;
     background-image: url('/profiles/ding2/themes/bbs/images/icons/logo.svg');
     background-repeat: no-repeat;
     background-position: bottom left;
     background-size: contain;
+
+    h2 {
+      color: #fff;
+    }
   }
 
   .secondary-content {
@@ -280,10 +285,6 @@
 
   .quaternary-content {
     background-color: rgba(0, 0, 0, 0.08);
-  }
-
-  .red-background {
-    background-color: #b03033;
   }
 
   .border-wrapper {
@@ -327,10 +328,4 @@
 
 .yellow {
   background: #eb983f;
-}
-
-.red-background {
-  h2 {
-    color: #fff;
-  }
 }

@@ -1,14 +1,24 @@
-body {
-  &.page-bokmenntir {
-    .ding2-site-template {
-      .site-header {
-        .topbar {
-          top: 0;
-          background-color: #47A49D;
-        }
-        .navigation-wrapper {
-          background-color: #47A49D;
-        }
+.page-bokmenntir {
+  .ding2-site-template {
+    .site-header {
+      .topbar {
+        top: 0;
+        background-color: #47A49D;
+      }
+      .navigation-wrapper {
+        background-color: #47A49D;
+      }
+    }
+
+    .frontpage-content {
+      .slick-arrow {
+        background-color: #47a49d;
+      }
+      .menu-wrapper {
+        background-color: #47a49d;
+      }
+      .logo-wrapper {
+        background-color: #47a49d;
       }
     }
   }
