@@ -93,6 +93,6 @@
         <span class="location-info">
             <?php print render($content['field_ding_event_location']); ?>
         </span>
-        <a class=learn-more" href="<?php print $node_url; ?>"><?php print t('Learn More'); ?></a>
+        <a class="underline" href="<?php print $node_url; ?>"><?php print t('Learn More'); ?></a>
     </div>
 </div>

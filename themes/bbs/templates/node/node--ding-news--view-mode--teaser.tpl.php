@@ -90,6 +90,6 @@
     <div class="teaser-info">
         <h3 class="title-text"><?php print $title; ?></h3>
         <span class="lead"><?php print render($content['field_ding_news_lead']); ?></span>
-        <a class=learn-more" href="<?php print $node_url; ?>"><?php print t('Learn More'); ?></a>
+        <a class="underline" href="<?php print $node_url; ?>"><?php print t('Learn More'); ?></a>
     </div>
 </div>
