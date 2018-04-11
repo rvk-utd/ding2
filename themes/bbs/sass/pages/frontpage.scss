@@ -1,12 +1,22 @@
 body.front {
-  .menu-wrapper {
-    background-color: #b03033;
+  .site-header {
+    .topbar {
+      background-color: #b03033;
+    }
+    .navigation-wrapper {
+      background-color: #b03033;
+    }
   }
-  .new-user .panel-pane {
-    height: 50%;
 
-    &:first-child {
-      margin-bottom: 20px;
+  .bbs-layout-content {
+    .slick-arrow {
+      background-color: #b03033;
+    }
+    .menu-wrapper {
+      background-color: #b03033;
+    }
+    .logo-wrapper {
+      background-color: #b03033;
     }
   }
 }
