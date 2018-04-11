@@ -95,6 +95,12 @@ Styles for the header
   li.topbar-link-user {
     background-color: rgba(0, 0, 0, 0.2);
 
+    span.details {
+     .logged-in & {
+       display: block;
+     }
+    }
+
     &::after {
       display: none;
     }

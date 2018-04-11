@@ -24,10 +24,12 @@
             });
 
             topbar_link_user.on('click', function (evt) {
-                evt.preventDefault();
-                body.removeClass('menu-is-open');
-                topbar_menu.removeClass('active');
-                ddbasic.openLogin();
+                if (!body.hasClass('logged-in')) {
+                    evt.preventDefault();
+                    body.removeClass('menu-is-open');
+                    topbar_menu.removeClass('active');
+                    ddbasic.openLogin();
+                }
             });
 
             close_user_login.on('click', function (evt) {
@@ -72,7 +74,7 @@
                     else {
                         topbar.removeClass('opaque');
                     }
-                }
+                };
             }
             else {
                 topbar.css('top', admin_menu_offset);
