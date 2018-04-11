@@ -77,6 +77,12 @@
           background-size: auto 100%;
         }
 
+        .library-icons {
+          padding: 0 8px;
+          background-repeat: no-repeat;
+          background-size: 14px;
+        }
+
         .text-wrapper {
           padding: 30px;
 
@@ -90,6 +96,8 @@
             display: flex;
 
             .info {
+              width: 100%;
+
               .field {
                 padding-left: 10px;
               }
@@ -99,9 +107,56 @@
                 padding: 10px 0;
               }
 
-              .opening-hours-title {
-                display: flex;
+              .opening-hours-wrapper {
+                position: relative;
                 padding: 10px 0;
+
+                .icon {
+                  position: absolute;
+                  left: 0;
+                  top: 7px;
+                  font-size: 32px;
+                  margin-left: -8px;
+                }
+
+                .opening-hours-toggle {
+                  padding-left: 27px;
+                }
+
+                .libraries-opening-hours {
+                  position: relative;
+                  padding-top: 20px;
+
+                  .opening-hours-table {
+
+                    .even {
+                      background-color: rgba(0, 0, 0, 0);
+                    }
+                    .odd {
+                      background-color: rgba(0, 0, 0, 0.08);
+                    }
+
+                    .opening-hours-table-notice {
+                      color: white;
+                    }
+                  }
+
+                  .button-next {
+                    &::after {
+                      color: white;
+                      background-color: rgba(0, 0, 0, 0.16);
+                    }
+                  }
+
+                  .button-previous {
+                    float: left;
+
+                    &::after {
+                      color: white;
+                      background-color: rgba(0, 0, 0, 0.16);
+                    }
+                  }
+                }
               }
 
               .country {
