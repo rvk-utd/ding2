@@ -3,8 +3,6 @@
     /**
      * Menu functionality.
      */
-     var ddbasic;
-
     Drupal.behaviors.menu = {
         attach: function (context) {
             var topbar_menu_btn = $('li.topbar-link-menu', context),
