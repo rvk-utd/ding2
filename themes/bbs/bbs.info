@@ -12,7 +12,7 @@ stylesheets[all][] = sass_css/components/node/news.css
 
 ;// New CSS stylesheets
 stylesheets[all][] = sass_css/overrides.css
-stylesheets[all][] = sass_css/frontpage/frontpage.css
+stylesheets[all][] = sass_css/bbs-layout.css
 stylesheets[all][] = sass_css/pages/literature.css
 stylesheets[all][] = sass_css/pages/libraries.css
 stylesheets[all][] = sass_css/fonts.css

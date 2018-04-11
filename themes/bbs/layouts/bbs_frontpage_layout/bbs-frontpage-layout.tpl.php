@@ -9,7 +9,7 @@
  * - $css_id: unique id if present.
  */
 ?>
-<div class="frontpage-content">
+<div class="bbs-layout-content">
     <div class="border-wrapper">
         <div class="border-element">
             <div class="main-content content-block">
