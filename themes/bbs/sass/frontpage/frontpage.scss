@@ -91,6 +91,7 @@
   }
 
   .frontpage-teaser {
+    background-image: url('/profiles/ding2/themes/bbs/images/library-stock.jpg');
     background-size: cover;
     background-repeat: no-repeat;
 
@@ -243,12 +244,14 @@
   }
 
   .content-block {
+    display: flex;
+    justify-content: center;
     padding-top: 30px;
     padding-bottom: 30px;
   }
 
   .logo-wrapper {
-    background-image: url(/profiles/ding2/themes/bbs/images/icons/logo.svg);
+    background-image: url('/profiles/ding2/themes/bbs/images/icons/logo.svg');
     background-repeat: no-repeat;
     background-position: bottom left;
     background-size: contain;

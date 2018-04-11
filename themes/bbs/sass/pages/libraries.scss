@@ -1,6 +1,14 @@
 .page-libraries {
   padding-top: 80px;
 
+  .topbar {
+    background-color: #225CA4;
+  }
+
+  .navigation-wrapper {
+    background-color: #225CA4;
+  }
+
   .pane-ding-library-ding-library-libraries-list {
     display: flex;
     flex-direction: column;
@@ -15,9 +23,48 @@
       flex-wrap: wrap;
 
       .views-row {
+        border: none;
+
+        &:nth-of-type(6n+1) {
+          .library-items {
+            background-color: #B03033;
+          }
+        }
+
+        &:nth-of-type(6n+2) {
+          .library-items {
+            background-color: #E36D38;
+          }
+        }
+
+        &:nth-of-type(6n+3) {
+          .library-items {
+            background-color: #99C355;
+          }
+        }
+
+        &:nth-of-type(6n+4) {
+          .library-items {
+            background-color: #5F338C;
+          }
+        }
+
+        &:nth-of-type(6n+5) {
+          .library-items {
+            background-color: #EB983F;
+          }
+        }
+
+        &:nth-of-type(6n+6) {
+          .library-items {
+            background-color: #47A49D;
+          }
+        }
+      }
+
+      .library-items {
         padding: 0;
         margin: 0 10px;
-        background-color: #B03033;
         color: white;
 
         .library-image {
@@ -30,17 +77,53 @@
           background-size: auto 100%;
         }
 
-        .title {
-          font-size: 24px;
-          font-weight: 700;
-          line-height: 40px;
+        .text-wrapper {
+          padding: 30px;
+
+          .title {
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 40px;
+          }
+
+          .info-wrapper {
+            display: flex;
+
+            .info {
+              .field {
+                padding-left: 10px;
+              }
+
+              .address {
+                display: flex;
+                padding: 10px 0;
+              }
+
+              .opening-hours-title {
+                display: flex;
+                padding: 10px 0;
+              }
+
+              .country {
+                display: none;
+              }
+              .addressfield-container-inline {
+                display: none;
+              }
+            }
+          }
         }
 
-        .contact {
+        .contact-wrapper {
           display: flex;
-          margin-top: 20px;
+
+          .field {
+            margin-left: 10px;
+          }
 
           .telephone {
+            display: flex;
+            justify-content: center;
             flex: 1;
             padding: 20px;
             text-align: center;
@@ -48,6 +131,8 @@
           }
 
           .email {
+            display: flex;
+            justify-content: center;
             flex: 1;
             padding: 20px;
             text-align: center;
