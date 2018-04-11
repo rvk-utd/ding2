@@ -1,0 +1,12 @@
+body.front {
+  .menu-wrapper {
+    background-color: #b03033;
+  }
+  .new-user .panel-pane {
+    height: 50%;
+
+    &:first-child {
+      margin-bottom: 20px;
+    }
+  }
+}

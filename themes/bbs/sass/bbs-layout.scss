@@ -112,7 +112,11 @@
   .menu-wrapper {
     height: 100%;
     width: 100%;
-    background-color: #b03033;
+
+    .panel-pane {
+      height: 100%;
+      width: 100%;
+    }
 
     .column-item {
       display: flex;
@@ -213,12 +217,21 @@
     height: 100%;
 
     .panel-pane {
-      height: 50%;
+      height: 100%;
 
-      &:first-child {
-        margin-bottom: 20px;
+      .view {
+        height: 100%;
+
+        .views-row {
+          height: 100%;
+
+          .frontpage-teaser {
+            height: 100%;
+          }
+        }
       }
     }
+
     .block-item {
       display: flex;
       justify-content: space-between;
