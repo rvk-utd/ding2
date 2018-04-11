@@ -271,3 +271,7 @@ Styles for the header
 .logo {
   float: left;
 }
+
+body.overlay-is-active {
+  background-color: inherit !important;
+}
