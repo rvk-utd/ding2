@@ -3,7 +3,12 @@ body {
   padding-top: 0;
 }
 
-h1 h2 h3 h4 h5 h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: 'Cooper Hewitt', sans-serif;
 }
 
@@ -56,4 +61,37 @@ a {
 .main-info {
   width: 100%;
   height: 100%;
+
+  .panel-pane {
+    height: 100%;
+
+    .view {
+      height: 100%;
+
+      .item-list {
+        height: 100%;
+
+        ul {
+          height: 100%;
+
+          .views-row {
+            height: 100%;
+
+            .frontpage-teaser {
+              height: 100%;
+
+              .teaser-info {
+                height: 100%;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.user-login-form .submit-button-with-icon .color-and-icon {
+  padding: 0;
+  position: relative;
 }
