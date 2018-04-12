@@ -45,7 +45,10 @@ function bbs_features_fe_nodequeue_export_fields() {
     'subqueues' => 1,
     'types' => array(
       0 => 'ding_event',
-      1 => 'ding_news',
+      1 => 'ding_group',
+      2 => 'ding_library',
+      3 => 'ding_news',
+      4 => 'ding_page',
     ),
     'roles' => array(),
     'count' => 0,
@@ -69,7 +72,9 @@ function bbs_features_fe_nodequeue_export_fields() {
     'i18n' => 1,
     'subqueues' => 1,
     'types' => array(
-      0 => 'ding_page',
+      0 => 'ding_event',
+      1 => 'ding_news',
+      2 => 'ding_page',
     ),
     'roles' => array(),
     'count' => 0,
