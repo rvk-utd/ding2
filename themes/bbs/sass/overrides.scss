@@ -10,6 +10,7 @@ h4,
 h5,
 h6 {
   font-family: 'Cooper Hewitt', sans-serif;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 ul {
@@ -30,6 +31,7 @@ ul {
 
 a {
   color: white;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 
   &.underline {
     font-size: 17px;
@@ -41,7 +43,7 @@ a {
       position: absolute;
       left: 0;
       bottom: -5px;
-      height: 2px;
+      height: 3px;
       width: 100%;
       background-color: white;
     }
@@ -93,6 +95,10 @@ a {
       }
     }
   }
+}
+
+h2.pane-title {
+  margin-left: 1.5rem;
 }
 
 .user-login-form .submit-button-with-icon .color-and-icon {

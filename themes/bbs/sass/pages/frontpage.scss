@@ -9,14 +9,23 @@ body.front {
   }
 
   .bbs-layout-content {
-    .slick-arrow {
-      background-color: #b03033;
-    }
     .menu-wrapper {
       background-color: #b03033;
     }
     .logo-wrapper {
       background-color: #b03033;
+    }
+
+    .quicktabs-tabs {
+      & .active a {
+        color: #b13135 !important;
+      }
+    }
+
+    .carousel-list-tabs {
+      & .active a {
+        color: #b13135 !important;
+      }
     }
   }
 }

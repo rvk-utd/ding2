@@ -1,6 +1,8 @@
 .quicktabs-tabs {
+  margin-left: 1.5rem;
+  margin-bottom: 50px;
+
   & .active a {
-    color: #b13135 !important;
     font-size: 20px !important;
     font-weight: 600 !important;
   }
@@ -10,11 +12,17 @@
     font-size: 16px !important;
     font-weight: 500 !important;
   }
+
+  li {
+    margin-right: 40px !important;
+  }
 }
 
 .carousel-list-tabs {
+  margin-left: 10px;
+  margin-bottom: 10px;
+
   & .active a {
-    color: #b13135 !important;
     font-size: 20px !important;
     font-weight: 600 !important;
   }
@@ -28,13 +36,17 @@
       display: none;
     }
   }
+
+  li {
+    margin-right: 40px;
+  }
 }
 
 .slick-arrow {
   position: absolute;
   border: none;
   top: 140px !important;
-  background-color: #b03033;
+  background-color: grey;
   height: 50px !important;
   width: 50px !important;
   font-size: 0;
@@ -93,6 +105,12 @@
     background-image: url('/profiles/ding2/themes/bbs/images/library-stock.jpg');
     background-size: cover;
     background-repeat: no-repeat;
+  }
+
+  .frontpage-teaser {
+    display: flex;
+    align-items: flex-end;
+    min-height: 325px;
   }
 }
 
