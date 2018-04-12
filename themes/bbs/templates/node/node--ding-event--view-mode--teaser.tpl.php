@@ -87,12 +87,7 @@
 <div class="frontpage-teaser event-teaser" <?php if(!empty($content['field_ding_event_list_image'])){?>style="background-image: url(<?php print file_create_url($node->field_ding_event_list_image['und'][0]['uri']);  ?>)"<?php } ?>>
     <div class="teaser-info">
         <h3 class="title-text"><?php print $title; ?></h3>
-        <span class="date-info">
-            <?php print render($content['field_ding_event_date']); ?>
-        </span>
-        <span class="location-info">
-            <?php print render($content['field_ding_event_location']); ?>
-        </span>
+        <span class="lead"><?php print render($content['field_ding_eventg_lead']); ?></span>
         <a class="underline" href="<?php print $node_url; ?>"><?php print t('Learn More'); ?></a>
     </div>
 </div>
