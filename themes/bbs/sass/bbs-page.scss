@@ -1,0 +1,84 @@
+.bbs-page {
+  position: relative;
+
+  .bbs-top-page-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 85vh;
+
+    .bbs-page-banner-image {
+      height: 470px;
+      width: 100%;
+      background-image: url('/profiles/ding2/themes/bbs/images/library-stock.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    .bbs-page-text-wrapper {
+      padding: 100px;
+      width: 100%;
+      max-width: 1400px;
+
+      h2.page-title {
+        font-size: 38px;
+        font-weight: 700;
+        margin-bottom: 50px;
+      }
+
+      p {
+        color: #888;
+        max-width: 600px;
+      }
+    }
+  }
+
+  .sidebar {
+    position: absolute;
+    right: 10%;
+    top: 600px;
+    width: 400px;
+    background-color: #5F338C;
+
+    .contextual-links-region {
+      position: relative;
+      margin: 0;
+
+      h2.sub-menu-title {
+        position: absolute;
+        top: -60px;
+        left: 20px;
+
+        a {
+          font-size: 22px;
+          font-weight: 600;
+          color: black;
+        }
+      }
+
+      ul {
+        padding: 40px 30px;
+
+        li {
+          list-style: none;
+          margin-bottom: 30px;
+
+          &:last-of-type {
+            margin: 0;
+          }
+
+          a {
+            font-size: 18px;
+            font-weight: 500;
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+}
+
+body.page-node {
+  padding-top: 80px;
+}

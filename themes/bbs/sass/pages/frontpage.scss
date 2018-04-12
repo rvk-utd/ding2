@@ -15,13 +15,16 @@ body.front {
     .logo-wrapper {
       background-color: #b03033;
     }
-
+    .secondary-content {
+      .slick-arrow {
+        background-color: #b03033;
+      }
+    }
     .quicktabs-tabs {
       & .active a {
         color: #b13135 !important;
       }
     }
-
     .carousel-list-tabs {
       & .active a {
         color: #b13135 !important;

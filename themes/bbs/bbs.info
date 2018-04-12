@@ -14,9 +14,11 @@ stylesheets[all][] = sass_css/components/form/form-user-login.css
 ;// New CSS stylesheets
 stylesheets[all][] = sass_css/overrides.css
 stylesheets[all][] = sass_css/bbs-layout.css
+stylesheets[all][] = sass_css/bbs-page.css
 stylesheets[all][] = sass_css/pages/literature.css
 stylesheets[all][] = sass_css/pages/libraries.css
 stylesheets[all][] = sass_css/pages/frontpage.css
+stylesheets[all][] = sass_css/pages/inspiration.css
 stylesheets[all][] = sass_css/fonts.css
 stylesheets[all][] = sass_css/components/bbs-carousel.css
 stylesheets[all][] = sass_css/components/messages.css

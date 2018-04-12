@@ -1,4 +1,8 @@
 .bbs-layout-content {
+  .content-wrapper {
+    max-width: 1400px;
+  }
+
   .main-content {
     display: flex;
     flex-direction: column;
@@ -252,10 +256,6 @@
         color: white;
       }
     }
-  }
-
-  .content-wrapper {
-    max-width: 1400px;
   }
 
   .content-block {
