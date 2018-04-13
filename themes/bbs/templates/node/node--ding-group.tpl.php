@@ -79,19 +79,18 @@
  */
 ?>
 <div class="<?php print $classes; ?>"<?php print $attributes; ?>>
-    <?php if(!empty($node->field_ding_group_title_image)): ?>
 
-        <img class="title-image" src="<?php print file_create_url($node->field_ding_group_title_image['und'][0]['uri']); ?>"/>
-
-    <?php endif; ?>
-
-    <h2 class="page-title"><?php print $title; ?></h2>
-
-    <div class="node-lead">
-        <?php print render($content['field_ding_group_lead']) ?>
+  <div class="bbs-top-page-content">
+    <div class="bbs-page-banner-image"
+      <?php if(!empty($node->field_ding_group_title_image)): ?>
+        style="background-image: url(<?php print file_create_url($node->field_ding_group_title_image['und'][0]['uri']); ?>);"
+      <?php endif; ?>/>
     </div>
-    <div class="node-body">
-        <?php print render($content['field_ding_group_body']) ?>
+
+    <div class="bbs-page-text-wrapper">
+      <h2 class="page-title"><?php print $title; ?></h2>
+      <?php print render($content['field_ding_group_body']) ?>
     </div>
+  </div>
 
 </div>

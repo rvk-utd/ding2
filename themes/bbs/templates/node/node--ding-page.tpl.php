@@ -87,7 +87,11 @@
 <div class="<?php print $classes; ?>"<?php print $attributes; ?>>
 
     <div class="bbs-top-page-content">
-      <div class="bbs-page-banner-image" style="background-image: url(<?php print file_create_url($node->field_ding_page_title_image['und'][0]['uri']); ?>);"/></div>
+      <div class="bbs-page-banner-image"
+        <?php if(!empty($node->field_ding_page_title_image)): ?>
+          style="background-image: url(<?php print file_create_url($node->field_ding_page_title_image['und'][0]['uri']); ?>);"
+        <?php endif; ?>/>
+      </div>
 
       <div class="bbs-page-text-wrapper">
         <h2 class="page-title"><?php print $title; ?></h2>
