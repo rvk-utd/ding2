@@ -1,6 +1,20 @@
 <?php
 
-
+function bbs_color_map($element) {
+    $path = $element['#href'];
+    switch ($path) {
+        case '':
+            return 'bbs-red';
+        case 'fraedsla':
+            return 'bbs-blue';
+        case 'arrangementer':
+            return 'bbs-yellow';
+        case 'nyheder':
+            return 'bbs-skyblue';
+        case 'libraries':
+            return 'bbs-green';
+    }
+}
 /**
  * Implements theme_menu_link().
  *
@@ -8,15 +22,20 @@
  */
 
 function bbs_menu_link__main_menu($vars) {
+
     $element = $vars['element'];
+    $color_class = bbs_color_map($element);
+
+    $element['#localized_options']['attributes']['class'][] = 'menu-button';
+    $element['#localized_options']['attributes']['id'][] = $color_class;
 
     if ($element['#below']) {
         $sub_menu = '<div class="sub-menu hidden">' . drupal_render($element['#below']) . '</div>';
-        $output = '<a href class="menu-button">' . $element['#title'] . '</a>';
+        $output = l($element['#title'], $element['#href'],  $element['#localized_options']);
     }
     else {
         $sub_menu = '';
-        $output = l($element['#title'], $element['#href']);
+        $output = l($element['#title'], $element['#href'], $element['#localized_options']);
     }
     return '<li' . drupal_attributes($element['#attributes']) . '>' . $output . $sub_menu . "</li>\n";
 

@@ -39,18 +39,21 @@
             });
 
 
-            // Show first menu item as expanded
-            sub_menu.first().removeClass('hidden');
-
-            main_menu_button.on('click', function (evt) {
-                evt.preventDefault();
-
+            main_menu_button.hover(function (evt) {
                 // remove previously expanded
                 main_menu_button.removeClass('expanded');
                 sub_menu.addClass('hidden');
 
                 $(this).addClass('expanded');
                 $(this).parent().find('.sub-menu').removeClass('hidden');
+
+                var color = $(this).attr('id');
+                if (color) {
+                    body.attr('id', color);
+                }
+                else {
+                    body.attr('id', '');
+                }
 
             });
 
