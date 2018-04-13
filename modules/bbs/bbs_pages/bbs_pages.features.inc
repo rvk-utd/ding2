@@ -7,7 +7,7 @@
 /**
  * Implements hook_ctools_plugin_api().
  */
-function bbs_inspiration_page_ctools_plugin_api($module = NULL, $api = NULL) {
+function bbs_pages_ctools_plugin_api($module = NULL, $api = NULL) {
   if ($module == "page_manager" && $api == "pages_default") {
     return array("version" => "1");
   }
@@ -16,7 +16,7 @@ function bbs_inspiration_page_ctools_plugin_api($module = NULL, $api = NULL) {
 /**
  * Implements hook_fe_nodequeue_export_fields().
  */
-function bbs_inspiration_page_fe_nodequeue_export_fields() {
+function bbs_pages_fe_nodequeue_export_fields() {
   $nodequeues = array();
 
   // Exported nodequeues: ding_tabroll_frontpage

@@ -1,7 +1,0 @@
-<?php
-/**
- * @file
- * Code for the BBS Families Page feature.
- */
-
-include_once 'bbs_families_page.features.inc';

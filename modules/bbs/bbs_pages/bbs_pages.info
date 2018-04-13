@@ -1,4 +1,4 @@
-name = BBS Inspiration Page
+name = BBS Pages
 core = 7.x
 package = BBS
 dependencies[] = ctools
