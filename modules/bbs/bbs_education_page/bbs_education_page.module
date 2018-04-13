@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the BBS Education Page feature.
+ */
+
+include_once 'bbs_education_page.features.inc';
