@@ -226,6 +226,25 @@
     }
   }
 
+  .block-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    min-width: 380px;
+    padding: 40px;
+
+    p {
+      margin: 0;
+    }
+
+    .text {
+      font-size: 22px;
+      font-weight: 700;
+      color: white;
+    }
+  }
+
   .new-user {
     .panel-pane {
       height: 100%;
@@ -235,25 +254,6 @@
         .frontpage-teaser {
           height: 100%;
         }
-      }
-    }
-
-    .block-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      height: 100%;
-      min-width: 380px;
-      padding: 40px;
-
-      p {
-        margin: 0;
-      }
-
-      .text {
-        font-size: 22px;
-        font-weight: 700;
-        color: white;
       }
     }
   }

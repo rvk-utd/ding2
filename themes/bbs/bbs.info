@@ -19,6 +19,7 @@ stylesheets[all][] = sass_css/pages/literature.css
 stylesheets[all][] = sass_css/pages/libraries.css
 stylesheets[all][] = sass_css/pages/frontpage.css
 stylesheets[all][] = sass_css/pages/inspiration.css
+stylesheets[all][] = sass_css/pages/education.css
 stylesheets[all][] = sass_css/fonts.css
 stylesheets[all][] = sass_css/components/bbs-carousel.css
 stylesheets[all][] = sass_css/components/messages.css
