@@ -30,6 +30,12 @@
           }
         }
 
+        .main-info {
+          h3.title-text {
+            font-size: 32px;
+          }
+        }
+
         .teaser-info {
           padding: 60px 70px;
 
@@ -113,11 +119,23 @@
       }
 
       .title-text {
-        font-size: 32px;
+        font-size: 22px;
+        font-weight: bold;
+        letter-spacing: -0.3px;
+        line-height: 30px;
       }
 
       .date-info {
         padding-bottom: 20px;
+      }
+    }
+
+    &.event-teaser {
+      .teaser-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: flex-start;
       }
     }
   }
@@ -159,7 +177,7 @@
         height: 70px;
         background-color: rgba(0, 0, 0, 0.08);
         padding-left: 15px;
-        padding-top: 5px;
+        padding-top: 6px;
 
         &:nth-of-type(2) {
           background-color: rgba(0, 0, 0, 0.12);
@@ -183,6 +201,10 @@
 
           .icon {
             font-size: 40px;
+          }
+
+          &.menu-item {
+            background-color: transparent;
           }
         }
 
@@ -230,6 +252,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: #b03033;
     height: 100%;
     min-width: 380px;
     padding: 40px;
@@ -335,25 +358,28 @@
   .views-row {
     margin-bottom: 0 !important;
   }
-
-  .frontpage-teaser.event-teaser {
-    .teaser-info {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      align-items: flex-start;
-
-      h3.title-text {
-        font-size: 32px;
-      }
-    }
-  }
 }
 
 .skyblue {
-  background: #4cb2ea;
+  background-color: #4cb2ea !important;
 }
 
 .yellow {
-  background: #eb983f;
+  background-color: #eb983f !important;
+}
+
+.bbs-orange {
+  background-color: #E36D38 !important;
+}
+
+.bbs-green {
+  background-color: #99C355 !important;
+}
+
+.bbs-teal {
+  background-color: #47A49D !important;
+}
+
+.bbs-blue {
+  background-color: #4CB2EA !important;
 }

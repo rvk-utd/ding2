@@ -112,6 +112,18 @@
     align-items: flex-end;
     min-height: 325px;
   }
+
+  .book {
+    h2 {
+      font-size: 18px;
+      margin: 0;
+      padding-top: 28px;
+    }
+    .field-name-ting-author {
+      margin-top: 4px;
+      margin-bottom: 25px;
+    }
+  }
 }
 
 .ding-carousel {

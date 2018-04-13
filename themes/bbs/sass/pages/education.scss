@@ -1,3 +1,34 @@
 body.page-fraedsla {
+  .site-header {
+    .topbar {
+      background-color: #EB983F;
+    }
+    .navigation-wrapper {
+      background-color: #EB983F;
+    }
+  }
 
+  .bbs-layout-content {
+    .menu-wrapper {
+      background-color: #EB983F;
+    }
+    .logo-wrapper {
+      background-color: #EB983F;
+    }
+    .secondary-content {
+      .slick-arrow {
+        background-color: #EB983F;
+      }
+    }
+    .quicktabs-tabs {
+      & .active a {
+        color: #EB983F !important;
+      }
+    }
+    .carousel-list-tabs {
+      & .active a {
+        color: #EB983F !important;
+      }
+    }
+  }
 }
