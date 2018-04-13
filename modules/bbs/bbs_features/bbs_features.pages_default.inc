@@ -122,29 +122,6 @@ function bbs_features_default_page_manager_pages() {
     $display->content['new-01508884-c06f-4c06-97e5-b531238f421b'] = $pane;
     $display->panels['new-user'][0] = 'new-01508884-c06f-4c06-97e5-b531238f421b';
     $pane = new stdClass();
-    $pane->pid = 'new-1b822b47-0ce4-466d-ab27-68a9e18efc20';
-    $pane->panel = 'new-user';
-    $pane->type = 'block';
-    $pane->subtype = 'block-9';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'override_title' => 0,
-      'override_title_text' => '',
-      'override_title_heading' => 'h2',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 1;
-    $pane->locks = array();
-    $pane->uuid = '1b822b47-0ce4-466d-ab27-68a9e18efc20';
-    $display->content['new-1b822b47-0ce4-466d-ab27-68a9e18efc20'] = $pane;
-    $display->panels['new-user'][1] = 'new-1b822b47-0ce4-466d-ab27-68a9e18efc20';
-    $pane = new stdClass();
     $pane->pid = 'new-bffd521f-4004-45a9-ac41-67bac21b145e';
     $pane->panel = 'sec-info';
     $pane->type = 'views';

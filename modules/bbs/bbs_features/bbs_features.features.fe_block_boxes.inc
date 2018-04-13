@@ -14,33 +14,19 @@ function bbs_features_default_fe_block_boxes() {
   $fe_block_boxes->info = 'BBS Frontpage Block 1';
   $fe_block_boxes->format = 'ding_wysiwyg';
   $fe_block_boxes->machine_name = 'bbs_frontpage_new_1';
-  $fe_block_boxes->body = '<div class="block-item skyblue"><div class="text">Nýr á safninu?</div><a class="underline" href="#">Lesa meira</a></div>';
+  $fe_block_boxes->body = '<div class="block-item bbs-skyblue"><div class="text">Nýr á safninu?</div><a class="underline" href="#">Lesa meira</a></div>
+<div class="block-item bbs-yellow"><div class="text">New at the library?</div><a class="underline" href="#">Learn more</a></div>';
 
   $export['bbs_frontpage_new_1'] = $fe_block_boxes;
-
-  $fe_block_boxes = new stdClass();
-  $fe_block_boxes->info = 'BBS Frontpage Block 2';
-  $fe_block_boxes->format = 'ding_wysiwyg';
-  $fe_block_boxes->machine_name = 'bbs_frontpage_new_2';
-  $fe_block_boxes->body = '<div class="block-item yellow"><div class="text">New at the library?</div><a class="underline" href="#">Learn more</a></div>';
-
-  $export['bbs_frontpage_new_2'] = $fe_block_boxes;
 
   $fe_block_boxes = new stdClass();
   $fe_block_boxes->info = 'BBS Literature Block 1';
   $fe_block_boxes->format = 'ding_wysiwyg';
   $fe_block_boxes->machine_name = 'bbs_literature_1';
-  $fe_block_boxes->body = '<div class="block-item skyblue"><div class="text">Innkaupstillaga</div><a class="underline" href="#">Lesa meira</a></div>';
+  $fe_block_boxes->body = '<div class="block-item bbs-skyblue"><div class="text">Innkaupstillaga</div><a class="underline" href="#">Lesa meira</a></div>
+<div class="block-item bbs-skyblue"><div class="text">Fréttabréf</div><a class="underline" href="#">Lesa meira</a></div>';
 
   $export['bbs_literature_1'] = $fe_block_boxes;
-
-  $fe_block_boxes = new stdClass();
-  $fe_block_boxes->info = 'BBS Literature Block 2';
-  $fe_block_boxes->format = 'ding_wysiwyg';
-  $fe_block_boxes->machine_name = 'bbs_literature_block_2';
-  $fe_block_boxes->body = '<div class="block-item skyblue"><div class="text">Fréttabréf</div><a class="underline" href="#">Lesa meira</a></div>';
-
-  $export['bbs_literature_block_2'] = $fe_block_boxes;
 
   $fe_block_boxes = new stdClass();
   $fe_block_boxes->info = 'Education links lower';
