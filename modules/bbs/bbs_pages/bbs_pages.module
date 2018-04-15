@@ -4,3 +4,4 @@
  * Code for the BBS Inspiration Page feature.
  */
 
+include_once 'bbs_pages.features.inc';
