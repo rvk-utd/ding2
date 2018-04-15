@@ -355,6 +355,7 @@ function ding_frontpage_default_page_manager_pages()
     $page->default_handlers[$handler->name] = $handler;
     $pages['Ding Frontpage'] = $page;
 
+    // BBS Frontpage
     $page = new stdClass();
     $page->disabled = FALSE; /* Edit this to true to make a default page disabled initially */
     $page->api_version = 1;
@@ -761,10 +762,10 @@ function ding_frontpage_default_page_manager_pages()
     $display->content = array();
     $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-41a7473c-dff3-4009-9691-680fd76d2f80';
+    $pane->pid = 'new-066e3ba3-3e1c-401b-a439-603b32c2fa94';
     $pane->panel = 'main-info';
     $pane->type = 'views';
-    $pane->subtype = 'nodequeue_5';
+    $pane->subtype = 'frontpage_main_content';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -780,9 +781,9 @@ function ding_frontpage_default_page_manager_pages()
         'args' => '',
         'url' => '',
         'display' => 'block',
-        'override_title' => 1,
+        'override_title' => 0,
         'override_title_text' => '',
-        'override_title_heading' => 'span',
+        'override_title_heading' => 'h2',
     );
     $pane->cache = array();
     $pane->style = array(
@@ -792,9 +793,9 @@ function ding_frontpage_default_page_manager_pages()
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $pane->uuid = '41a7473c-dff3-4009-9691-680fd76d2f80';
-    $display->content['new-41a7473c-dff3-4009-9691-680fd76d2f80'] = $pane;
-    $display->panels['main-info'][0] = 'new-41a7473c-dff3-4009-9691-680fd76d2f80';
+    $pane->uuid = '066e3ba3-3e1c-401b-a439-603b32c2fa94';
+    $display->content['new-066e3ba3-3e1c-401b-a439-603b32c2fa94'] = $pane;
+    $display->panels['main-info'][0] = 'new-066e3ba3-3e1c-401b-a439-603b32c2fa94';
     $pane = new stdClass();
     $pane->pid = 'new-9bfff131-d8d9-4a78-a792-563777923dff';
     $pane->panel = 'menu';
@@ -883,10 +884,10 @@ function ding_frontpage_default_page_manager_pages()
     $display->content['new-6dd6ceed-7ae6-4ec3-8710-33760e8fdd57'] = $pane;
     $display->panels['quaternary-content'][0] = 'new-6dd6ceed-7ae6-4ec3-8710-33760e8fdd57';
     $pane = new stdClass();
-    $pane->pid = 'new-a9acb13d-e4de-4c6d-b44a-a09f5abf33e1';
+    $pane->pid = 'new-84370374-2910-44da-bc55-7d1ca9f0343f';
     $pane->panel = 'sec-info';
     $pane->type = 'views';
-    $pane->subtype = 'nodequeue_6';
+    $pane->subtype = 'frontpage_sub_content';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -914,9 +915,9 @@ function ding_frontpage_default_page_manager_pages()
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $pane->uuid = 'a9acb13d-e4de-4c6d-b44a-a09f5abf33e1';
-    $display->content['new-a9acb13d-e4de-4c6d-b44a-a09f5abf33e1'] = $pane;
-    $display->panels['sec-info'][0] = 'new-a9acb13d-e4de-4c6d-b44a-a09f5abf33e1';
+    $pane->uuid = '84370374-2910-44da-bc55-7d1ca9f0343f';
+    $display->content['new-84370374-2910-44da-bc55-7d1ca9f0343f'] = $pane;
+    $display->panels['sec-info'][0] = 'new-84370374-2910-44da-bc55-7d1ca9f0343f';
     $pane = new stdClass();
     $pane->pid = 'new-ceb25e6d-c6f0-4b2b-952e-74560f6597a0';
     $pane->panel = 'secondary-content';
@@ -1025,7 +1026,6 @@ function ding_frontpage_default_page_manager_pages()
     $display->title_pane = '0';
     $handler->conf['display'] = $display;
     $page->default_handlers[$handler->name] = $handler;
-
     $pages['BBS Frontpage'] = $page;
     return $pages;
 }
