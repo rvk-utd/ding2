@@ -1,6 +1,7 @@
 /**
 Styles for the overlay menu
  */
+@import '../_variables.scss';
 
 body.menu-is-open {
   overflow: hidden;
@@ -58,5 +59,41 @@ body.menu-is-open {
       font-weight: bold;
       line-height: 70px;
     }
+  }
+}
+
+body#bbs-yellow {
+   .topbar {
+     background-color: $bbs-yellow;
+   }
+   .navigation-wrapper {
+     background-color: $bbs-yellow;
+   }
+ }
+
+body#bbs-skyblue {
+  .topbar {
+    background-color: $bbs-skyblue;
+  }
+  .navigation-wrapper {
+    background-color: $bbs-skyblue;
+  }
+}
+
+body#bbs-seagreen {
+  .topbar {
+    background-color: $bbs-seagreen;
+  }
+  .navigation-wrapper {
+    background-color: $bbs-seagreen;
+  }
+}
+
+body#bbs-seagreen {
+  .topbar {
+    background-color: $bbs-limegreen;
+  }
+  .navigation-wrapper {
+    background-color: $bbs-limegreen;
   }
 }

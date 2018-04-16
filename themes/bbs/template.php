@@ -6,13 +6,13 @@ function bbs_color_map($element) {
         case '':
             return 'bbs-red';
         case 'fraedsla':
-            return 'bbs-blue';
+            return 'bbs-limegreen';
         case 'arrangementer':
             return 'bbs-yellow';
         case 'nyheder':
             return 'bbs-skyblue';
         case 'libraries':
-            return 'bbs-green';
+            return 'bbs-seagreen';
     }
 }
 /**
