@@ -102,6 +102,41 @@ function bbs_pages_default_page_manager_pages()
     $display->content['new-9207d172-a05d-49d7-9438-fc241ac15c3f'] = $pane;
     $display->panels['main-info'][0] = 'new-9207d172-a05d-49d7-9438-fc241ac15c3f';
     $pane = new stdClass();
+    $pane->pid = 'new-2700d9cc-dc38-4b22-a5b2-d7913ec871b1';
+    $pane->panel = 'menu';
+    $pane->type = 'views';
+    $pane->subtype = 'literature_main_content';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+        'override_pager_settings' => 0,
+        'use_pager' => 0,
+        'nodes_per_page' => '0',
+        'pager_id' => '0',
+        'offset' => '0',
+        'more_link' => 0,
+        'feed_icons' => 0,
+        'panel_args' => 0,
+        'link_to_view' => 0,
+        'args' => '',
+        'url' => '',
+        'display' => 'block',
+        'override_title' => 0,
+        'override_title_text' => '',
+        'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+        'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = '2700d9cc-dc38-4b22-a5b2-d7913ec871b1';
+    $display->content['new-2700d9cc-dc38-4b22-a5b2-d7913ec871b1'] = $pane;
+    $display->panels['menu'][0] = 'new-2700d9cc-dc38-4b22-a5b2-d7913ec871b1';
+    $pane = new stdClass();
     $pane->pid = 'new-01508884-c06f-4c06-97e5-b531238f421b';
     $pane->panel = 'new-user';
     $pane->type = 'block';
@@ -244,6 +279,7 @@ function bbs_pages_default_page_manager_pages()
     $display->title_pane = 'new-01508884-c06f-4c06-97e5-b531238f421b';
     $handler->conf['display'] = $display;
     $page->default_handlers[$handler->name] = $handler;
+
     $pages['bokmenntir'] = $page;
 
 
