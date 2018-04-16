@@ -205,7 +205,7 @@ function bbs_menu_link__menu_frontpage_menu($vars) {
             break;
 
         case 'contact':
-            $title_prefix = '<i class="icon icon-letter"></i>';
+            $title_prefix = '<div class="bbs-icon" style="background-image: url(/profiles/ding2/themes/bbs/images/icons/mail.svg);"></div>';
             $element['#localized_options']['attributes']['class'][] = 'menu-item menu-item-contact';
             $element['#attributes']['class'][] = 'menu-item menu-item-contact';
 

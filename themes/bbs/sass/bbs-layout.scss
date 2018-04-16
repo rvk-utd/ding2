@@ -101,11 +101,12 @@
   }
 
   .frontpage-teaser {
+    display: flex;
+    height: 100%;
+    width: 100%;
     background-image: url('/profiles/ding2/themes/bbs/images/library-stock.jpg');
     background-size: cover;
     background-repeat: no-repeat;
-    height: 100%;
-    width: 100%;
 
     .teaser-info {
       display: flex;
@@ -207,6 +208,15 @@
 
           &.menu-item {
             background-color: transparent;
+
+            .details {
+              margin-top: -12px;
+            }
+
+            .bbs-icon {
+              height: 30px;
+              width: 25px;
+            }
           }
         }
 
@@ -352,6 +362,13 @@
   .views-row {
     margin-bottom: 0 !important;
   }
+}
+
+.bbs-icon {
+  height: 15px;
+  width: 15px;
+  background-repeat: no-repeat;
+  background-size: 14px;
 }
 
 .bbs-skyblue {

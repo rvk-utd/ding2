@@ -270,6 +270,16 @@ Styles for the header
 
 .logo {
   float: left;
+
+  .logo-container {
+    display: flex;
+    align-items: center;
+
+    .logo-text {
+      height: 40px;
+      padding-left: 40px;
+    }
+  }
 }
 
 body.overlay-is-active {

@@ -1,5 +1,56 @@
 body.node-type-ding-news {
   .topbar {
-    background-color: #225ca4;
+    background-color: #4CB2EA;
+  }
+
+  .ding-news {
+    display: flex;
+    justify-content: center;
+
+    .ding-news-inner {
+      display: flex;
+      width: 100%;
+      max-width: 1400px;
+      padding: 100px 0;
+
+      .ding-news-left {
+        flex-basis: 40%;
+
+        .group-left {
+          max-height: 570px;
+          max-width: 450px;
+        }
+      }
+
+      .ding-news-right {
+        flex-basis: 60%;
+
+        h1 {
+          font-size: 32px;
+          font-weight: 600;
+          color: black;
+          margin-top: 80px;
+        }
+
+        .news-lead {
+          color: #888;
+          padding: 40px 0;
+        }
+
+        .news-body {
+          max-width: 570px;
+          color: #888;
+
+          p {
+            line-height: 28px;
+          }
+        }
+        .section.meta {
+          max-width: 410px;
+          max-height: 136px;
+          background-color: rgba(0, 0, 0, 0.04);
+        }
+      }
+    }
   }
 }

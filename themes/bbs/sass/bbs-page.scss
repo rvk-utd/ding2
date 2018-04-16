@@ -77,6 +77,19 @@
       }
     }
   }
+
+  .logo-wrapper {
+    .content-block {
+      display: flex;
+      justify-content: center;
+      padding-top: 30px;
+      padding-bottom: 30px;
+
+      .content-wrapper {
+        max-width: 1400px;
+      }
+    }
+  }
 }
 
 body.page-node {

@@ -17,6 +17,10 @@ body.menu-is-open {
   transition: 0.3s cubic-bezier(0.4, 0, 1, 1);
   top: -100vh;
   opacity: 0;
+  background-image: url('/profiles/ding2/themes/bbs/images/icons/logo-menu.svg');
+  background-position: bottom right -10px;
+  background-size: 400px auto;
+  background-repeat: no-repeat;
 
   .menu-is-open & {
     top: 70px;
@@ -34,32 +38,59 @@ body.menu-is-open {
     & > .main-menu {
       top: 130px;
       position: absolute;
+
+      li.expanded {
+        background-color: rgba(0, 0, 0, 0.16);
+      }
     }
 
     .sub-menu {
       display: block;
-      top: 0;
       position: absolute;
-      margin-left: 300px;
+      top: 15px;
+      right: -150px;
 
       &.hidden {
         display: none;
       }
 
       li {
+        position: relative;
         font-size: 22px;
-        font-weight: 500;
+        line-height: 30px;
+
+        a.menu-button {
+          padding-left: 40px;
+        }
+
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.16);
+        }
       }
     }
 
     li {
+      width: fit-content;
       margin: 10px;
+      padding: 8px 0 0;
       list-style: none;
       font-size: 38px;
       font-weight: bold;
-      line-height: 70px;
+      line-height: 46px;
+
+      a.menu-button {
+        padding-left: 80px;
+        padding-right: 10px;
+      }
+      a.active {
+        color: white;
+      }
     }
   }
+}
+
+.pane-menu-block-main-menu-second-level {
+  display: none;
 }
 
 body#bbs-yellow {

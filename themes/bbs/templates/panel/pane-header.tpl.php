@@ -23,7 +23,7 @@
    endif; ?>">
       <?php if ($logo): ?>
         <img class="logo-icon" src="<?php print $logo; ?>" />
-        <img class="logo-text" src="profiles/ding2/themes/bbs/images/icons/logotext@2x.png"/>
+        <img class="logo-text" src="/profiles/ding2/themes/bbs/images/icons/logotext@2x.png"/>
       <?php endif; ?>
     </div>
   </a>
