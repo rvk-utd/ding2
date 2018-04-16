@@ -22,6 +22,15 @@
                 evt.preventDefault();
                 body.toggleClass('menu-is-open');
                 topbar_menu.toggleClass('active');
+
+                if (body.hasClass('menu-is-open')) {
+                    // store page color
+                    body.attr('data-color', body.attr('id'));
+                }
+                else {
+                    // set color back to page color
+                    body.attr('id', body.attr('data-color'));
+                }
             });
 
             topbar_link_user.on('click', function (evt) {
