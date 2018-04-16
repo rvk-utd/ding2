@@ -41,7 +41,7 @@
 
             main_menu_button.each(function () {
                 if ($(this).hasClass('active')) {
-                    $(this).addClass('expanded')
+                    $(this).parent().addClass('expanded')
                     $(this).parent().find('.sub-menu').removeClass('hidden');
 
                     var color = $(this).attr('id');
@@ -58,10 +58,10 @@
                 if ($(this).parent().parent().parent().hasClass('sub-menu')) {
                     return;
                 }
-                main_menu_button.removeClass('expanded');
+                main_menu_button.parent().removeClass('expanded');
                 sub_menu.addClass('hidden');
 
-                $(this).addClass('expanded');
+                $(this).parent().addClass('expanded');
                 $(this).parent().find('.sub-menu').removeClass('hidden');
 
                 var color = $(this).attr('id');
