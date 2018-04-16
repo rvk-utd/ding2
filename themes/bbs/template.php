@@ -26,10 +26,12 @@ function bbs_menu_link__main_menu($vars) {
     $element = $vars['element'];
     $color_class = bbs_color_map($element);
 
-    $element['#localized_options']['attributes']['class'][] = 'menu-button';
     $element['#localized_options']['attributes']['id'][] = $color_class;
+    $element['#localized_options']['attributes']['class'][] = 'menu-button';
+
 
     if ($element['#below']) {
+        $element['#below']['#localized_options']['attributes']['class'][] = 'submenu-button';
         $sub_menu = '<div class="sub-menu hidden">' . drupal_render($element['#below']) . '</div>';
         $output = l($element['#title'], $element['#href'],  $element['#localized_options']);
     }

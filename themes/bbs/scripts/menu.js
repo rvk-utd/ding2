@@ -12,6 +12,7 @@
                 topbar_menu = $('.topbar-link-menu-inner'),
                 topbar = $('.topbar'),
                 main_menu_button = $('a.menu-button'),
+                sub_menu_button = $('a.submenu-button'),
                 sub_menu = $('.sub-menu'),
                 top = 80,
                 admin_menu_offset = $('#admin-menu').outerHeight() || 0,
@@ -38,9 +39,25 @@
                 body.removeClass('overlay-is-active');
             });
 
+            main_menu_button.each(function () {
+                if ($(this).hasClass('active')) {
+                    $(this).addClass('expanded')
+                    $(this).parent().find('.sub-menu').removeClass('hidden');
+
+                    var color = $(this).attr('id');
+                    if (color) {
+                        body.attr('id', color);
+                    }
+                    else {
+                        body.attr('id', '');
+                    }
+                }
+            });
 
             main_menu_button.hover(function (evt) {
-                // remove previously expanded
+                if ($(this).parent().parent().parent().hasClass('sub-menu')) {
+                    return;
+                }
                 main_menu_button.removeClass('expanded');
                 sub_menu.addClass('hidden');
 
@@ -54,7 +71,6 @@
                 else {
                     body.attr('id', '');
                 }
-
             });
 
             if (body.hasClass('front')) {
