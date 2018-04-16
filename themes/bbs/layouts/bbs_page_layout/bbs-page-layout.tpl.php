@@ -9,7 +9,7 @@
  * - $css_id: unique id if present.
  */
 ?>
-<div class="bbs-page">
+<div class="bbs-page bbs-layout-content">
     <div class="content-block main-content">
         <?php if (!empty($content['node-content'])): ?>
             <?php print $content['node-content']; ?>
