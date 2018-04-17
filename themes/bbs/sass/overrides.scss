@@ -105,3 +105,26 @@ h2.pane-title {
   padding: 0;
   position: relative;
 }
+
+.social-media {
+  display: flex;
+
+  .bbs-icon {
+    margin-right: 24px;
+    background-size: 30px;
+    height: 30px;
+    width: 30px;
+
+    &.facebook {
+      background-image: url(/profiles/ding2/themes/bbs/images/icons/facebook.svg);
+    }
+
+    &.twitter {
+      background-image: url(/profiles/ding2/themes/bbs/images/icons/twitter.svg);
+    }
+
+    &.instagram {
+      background-image: url(/profiles/ding2/themes/bbs/images/icons/instagram.svg);
+    }
+  }
+}
