@@ -1,5 +1,6 @@
 {
     "require": {
-        "deployer/deployer": "^4.2"
+        "deployer/deployer": "^4.2",
+        "drush/drush": "^7"
     }
 }
