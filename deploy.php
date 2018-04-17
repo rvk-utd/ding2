@@ -10,7 +10,7 @@ set('ssh_type', 'native');
 // This is our workspace for building new releases.
 set('build_path', '{{deploy_path}}/build');
 
-set('drush', '/home/webmaster/.config/composer/vendor/bin/drush');
+set('drush', '{{build_path}}/vendor/bin/drush');
 // The following "binaries" are all symlinks /opt/rh-* where the actual
 // binary can be found.
 set('composer', '/home/webmaster/bin/composer');
@@ -201,6 +201,12 @@ task('drush:site_online', function () {
   run("{{drush}} vset site_offline 0");
 });
 
+desc("Regenerate CSS.");
+task('drush:css_generate', function () {
+  cd('{{release_path}}');
+  run("{{drush}} css-generate");
+});
+
 // TODO: Clean up old DB dumps.
 desc("Dump database.");
 task('drush:db_dump', function () {
@@ -270,6 +276,7 @@ task('deploy', [
   'drush:db_dump',
   'drush:site_offline',
   'drush:updb',
+  'drush:css_generate',
   'drush:ccall',
   'drush:site_online',
   'deploy:symlink',
