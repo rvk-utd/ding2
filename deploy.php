@@ -133,33 +133,35 @@ task('build:prepare', function () {
     cd('{{build_path}}');
   }
   else {
+    // We have an existing workspace we can utilize for faster operations.
+    // Ensure that it is clean and up to date.
     cd('{{build_path}}');
+    run("{{bin/git}} clean -d -f -x");
     run("{{bin/git}} fetch");
   }
 
   run("{{bin/git}} checkout $sha");
 });
 
-task('build:core', function () {
+task('build:site', function () {
   // Drush make doesn't like overwriting an existing directory.
   run("rmdir {{release_path}}");
   run("{{drush}} make {{build_path}}/drupal.make --projects=drupal -y {{release_path}}");
+  run('cp -ar {{build_path}} {{release_path}}/profiles/ding2');
 })
-  ->desc("Build core.");
+  ->desc("Assemble an entire Drupal site from the built profile.");
 
 desc("Build ding2.");
 task('build:ding2', function () {
-  cd('{{deploy_path}}');
-  run('cp -ar {{build_path}} {{release_path}}/profiles/ding2');
-  cd('{{release_path}}/profiles/ding2');
-  writeln("<info>Drush install'ing ding2</info>");
-  run("{{drush}} make ding2.make --no-core -y --contrib-destination=.");
-
-  cd('{{release_path}}/profiles/ding2');
+  cd('{{build_path}}');
   if (test('[ -f composer.json ]')) {
     writeln("<info>Composer install'ing ding2</info>");
     run("{{composer}} install");
   }
+
+  writeln("<info>Drush install'ing ding2</info>");
+  run("{{drush}} make ding2.make --no-core -y --contrib-destination=.");
+
   if (test('[ -f modules/aleph/composer.json ]')) {
     writeln("<info>Composer install'ing Aleph</info>");
     run("{{composer}} --working-dir=modules/aleph install");
@@ -169,7 +171,7 @@ task('build:ding2', function () {
     run("{{composer}} --working-dir=modules/ding_test install");
   }
 
-  cd('{{release_path}}/profiles/ding2/themes/ddbasic');
+  cd('{{build_path}}/themes/ddbasic');
   writeln("<info>NPM install'ing ding2</info>");
   run("{{npm}} install");
   writeln("<info>Compiling css</info>");
@@ -270,8 +272,8 @@ task('deploy', [
   'deploy:lock',
   'deploy:release',
   'build:prepare',
-  'build:core',
   'build:ding2',
+  'build:site',
   'deploy:shared',
   'drush:db_dump',
   'drush:site_offline',
