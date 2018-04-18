@@ -42,8 +42,17 @@ function aleph_debt_list() {
   return $result;
 }
 
-function aleph_debt_payment_received() {
-  return array();
+/**
+ * Mark debts as paid.
+ *
+ * @param float $amount
+ *   The total amount paid.
+ * @param array $debt_ids
+ *   IDs of the paid debts.
+ * @param mixed $order_id
+ *   Order ID of the payment transaction, to be recorded in the backend system.
+ */
+function aleph_debt_payment_received($amount, array $debt_ids = array(), $order_id = NULL) {
 }
 
 function aleph_debt_translate_debt_type() {
