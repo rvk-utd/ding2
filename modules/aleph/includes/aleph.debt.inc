@@ -27,9 +27,7 @@ function aleph_debt_list() {
     watchdog_exception('aleph', $e);
   }
 
-  $id = 0;
   foreach ($debts as $debt) {
-    $id++;
     $data = array(
       'date' => $debt->getDate(),
       'display_name' => $debt->getDebtMaterial()->getTitle(),
@@ -38,7 +36,7 @@ function aleph_debt_list() {
       'invoice_number' => NULL,
       'type' => $debt->getType(),
     );
-    $result[$id] = new DingProviderDebt($id, $data);
+    $result[$debt->getId()] = new DingProviderDebt($debt->getId(), $data);
   }
 
   return $result;

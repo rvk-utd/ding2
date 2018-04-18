@@ -12,12 +12,33 @@ use DateTime;
  * @package Drupal\aleph\Aleph
  */
 class AlephDebt {
+  protected $id;
   protected $type;
   protected $description;
   protected $sum;
   protected $date;
   protected $debtMaterial;
   protected $paid;
+
+  /**
+   * Set the debt id.
+   *
+   * @param string $id
+   *    The debt id.
+   */
+  public function setId($id) {
+    $this->id = $id;
+  }
+
+  /**
+   * Get the debt id.
+   *
+   * @return string
+   *    The id of debt (example: 'Late return').
+   */
+  public function getId() {
+    return $this->id;
+  }
 
   /**
    * Set the debt type.
@@ -158,6 +179,7 @@ class AlephDebt {
         continue;
       }
       $debt = new self();
+      $debt->setId((string) $debt_xml->xpath('z31/z31-id')[0]);
       $debt->setType((string) $debt_xml->xpath('z31/z31-type')[0]);
       $debt->setDescription((string) $debt_xml->xpath('z31/z31-description')[0]);
       $sum = (string) $debt_xml->xpath('z31/z31-sum')[0];
