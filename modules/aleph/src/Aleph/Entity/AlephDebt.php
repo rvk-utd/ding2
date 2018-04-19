@@ -179,7 +179,7 @@ class AlephDebt {
         continue;
       }
       $debt = new self();
-      $debt->setId((string) $debt_xml->xpath('z31/z31-id')[0]);
+      $debt->setId((string) $debt_xml->xpath('z31/z31-sequence')[0]);
       $debt->setType((string) $debt_xml->xpath('z31/z31-type')[0]);
       $debt->setDescription((string) $debt_xml->xpath('z31/z31-description')[0]);
       $sum = (string) $debt_xml->xpath('z31/z31-sum')[0];
