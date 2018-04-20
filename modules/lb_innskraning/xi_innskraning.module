@@ -170,7 +170,7 @@ function _xi_innsrkaning_saml_login() {
   $id = variable_get('xi_innskraning_id', '');
   $sid = sha1(session_id());
   $url .= "?id=$id&authid=$sid";
-  watchdog('xi_innsrkaning', 'Redirect to SAML login url: ' . $url);
+  watchdog('xi_innsrkaning', 'Redirect to SAML login url: @url', array('@url' => $url), WATCHDOG_INFO);
 
   // Prepare the parameters to pass to island.is.
   $parameters['id'] = $id;
@@ -196,7 +196,7 @@ function _xi_innsrkaning_saml_login() {
 function _xi_innsrkaning_saml_endpoint() {
   // Extract token from request.
   if (!array_key_exists('token', $_POST)) {
-    watchdog('xi_innsrkaning', "Post parameter 'token' not found in SAML response.");
+    watchdog('xi_innsrkaning', "Post parameter 'token' not found in SAML response.", array(), WATCHDOG_WARNING);
     drupal_goto('user/login');
     return FALSE;
   }
@@ -214,8 +214,7 @@ function _xi_innsrkaning_saml_endpoint() {
 
   if (!$dom) {
     drupal_set_message(t('Authentication failed'), 'error');
-    watchdog('xi_innsrkaning', 'SAML Response could not be processed');
-    watchdog('xi_innsrkaning', "XML:<br/> $xml");
+    watchdog('xi_innsrkaning', 'SAML Response could not be processed, XML: @xml', array('@xml' => $xml), WATCHDOG_ERROR);
     drupal_goto('user/login');
     return FALSE;
   }
@@ -225,19 +224,21 @@ function _xi_innsrkaning_saml_endpoint() {
   // Retrieve SSN.
   $ssn = _xi_get_attribute_by_name($dom, 'UserSSN');
   // Provide a message.
-  watchdog('xi_innsrkaning', "Attempt to login '$name' with SSN: $ssn");
+  // @TODO: do we really want to log SSN?
+  watchdog('xi_innsrkaning', "Attempt to login %name with SSN %ssn", array('%name' => $name, '%ssn' => $ssn), WATCHDOG_DUBUG);
   // Verify response.
   try {
     _xi_verify($dom);
   }
   catch (Exception $ex) {
     drupal_set_message(t('Authentication failed'), 'error');
-    watchdog('xi_innsrkaning', 'Error verifying token, %exception', array('%exception' => $ex));
-    watchdog('xi_innsrkaning', "XML:<br/> $xml");
-    if ($xml != '') {
-      $file_uri = "private://saml_response/" . $name . "_" . $ssn . "_" . time() . ".xml";
-      file_save_data($xml, $file_uri, FILE_EXISTS_RENAME);
-    }
+    watchdog_exception(
+      'xi_innsrkaning',
+      $ex,
+      'Error verifying token, %type: !message in %function (line %line of %file), XML: @xml',
+      array('@xml' => $xml),
+      WATCHDOG_ERROR
+    );
     drupal_goto('user/login');
   }
 
@@ -303,14 +304,15 @@ function _xi_activate_user_by_ssn($ssn) {
 
   // User not found.
   if (empty($results['user'])) {
-    watchdog('xi_innsrkaning', "Unable to log in user with SSN $ssn.");
+    // @TOOD: do we really want to log SSN?
+    watchdog('xi_innsrkaning', "Unable to log in user with SSN %ssn.", array('%ssn' => $ssn), WATCHDOG_WARNING);
     return FALSE;
   }
 
   // Too many users found.
   $uids = array_keys($results['user']);
   if (count($uids) > 1) {
-    watchdog('xi_innsrkaning', "Multiple users found  SSN $ssn: " . implode(',', $uids));
+    watchdog('xi_innsrkaning', "Multiple users found  SSN %ssns: ", array('%ssns' => implode(',', $uids)), WATCHDOG_WARNING);
     return FALSE;
   }
 
@@ -320,7 +322,12 @@ function _xi_activate_user_by_ssn($ssn) {
 
   // User blocked.
   if (user_is_blocked($username)) {
-    watchdog('xi_innsrkaning', "User $username is blocked and can therefore not be logged in. SSN was $ssn.");
+    watchdog(
+      'xi_innsrkaning',
+      "User %username is blocked and can therefore not be logged in. SSN was %ssn.",
+      array('%username' => $username, '%ssn' => $ssn),
+      WATCHDOG_WARNING
+    );
     return FALSE;
   }
 
