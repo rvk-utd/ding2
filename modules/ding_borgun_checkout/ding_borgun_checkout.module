@@ -72,6 +72,17 @@ function ding_borgun_checkout_libraries_info() {
 }
 
 /**
+ * Implements hook_ding_provider_user().
+ */
+function ding_borgun_checkout_ding_provider_user() {
+  return array(
+    'payment' => array(
+      'required' => TRUE,
+    ),
+  );
+}
+
+/**
  * Implements hook_form_FORM_ID_alter().
  *
  * Rather than implementing a payment provider, we're simply altering the debt
@@ -174,9 +185,16 @@ function ding_borgun_checkout_validate($form, &$form_state) {
   $debt_ids = array_map(function ($debt) {
     return $debt->id;
   }, $debts);
+  $form_state['debt_ids'] = $debt_ids;
   $meta = 'Payment for: ' . implode(', ', $debt_ids);
 
-  if (!_ding_borgun_checkout_capture_token($form_state['values']['BorgunCheckoutToken'], $element['#amount'], $element['#currency_code'], $order_id, $meta)) {
+  $form_state['transaction_id'] = _ding_borgun_checkout_capture_token(
+    $form_state['values']['BorgunCheckoutToken'],
+    $element['#amount'],
+    $element['#currency_code'],
+    $order_id,
+    $meta);
+  if (!$form_state['transaction_id']) {
     form_set_error('', t('Error acquiring payment, please try again later.'));
   }
 }
@@ -185,6 +203,8 @@ function ding_borgun_checkout_validate($form, &$form_state) {
  * Form submit handler.
  */
 function ding_borgun_checkout_submit($form, &$form_state) {
+  $element = $form_state['triggering_element'];
+  ding_provider_invoke('debt', 'payment_received', $element['#amount'], $form_state['debt_ids'], $form_state['transaction_id']);
 }
 
 /**

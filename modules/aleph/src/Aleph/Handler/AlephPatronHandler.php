@@ -67,6 +67,7 @@ class AlephPatronHandler extends AlephHandlerBase {
     }
 
     $response = $this->client->authenticate($bor_id, $verification);
+    error_log($response->asXml());
     // Sub library is hardcoded in order to show correct expiry date.
     // Most users are active in the BBAAA branch.
     $response_sub_library = $this->client->authenticate($bor_id, $verification, 'BBAAA');
@@ -162,6 +163,21 @@ class AlephPatronHandler extends AlephHandlerBase {
     $xml = $this->client->getDebts($this->getPatron());
     $debts = new AlephDebt();
     return $debts::debtsFromCashApi($xml);
+  }
+
+  /**
+   * Create patron payment.
+   *
+   * @param int $amount
+   *   The amount of the payment.
+   * @param string $reference
+   *   Transaction id or other reference to the payment.
+   *
+   * @return bool
+   *   Whether the payments was registered.
+   */
+  public function addPayment($amount, $reference) {
+    return $this->client->addPayment($this->getPatron(), $amount, $reference);
   }
 
   /**

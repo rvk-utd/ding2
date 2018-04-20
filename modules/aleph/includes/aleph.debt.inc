@@ -53,6 +53,16 @@ function aleph_debt_list() {
  *   Order ID of the payment transaction, to be recorded in the backend system.
  */
 function aleph_debt_payment_received($amount, array $debt_ids = array(), $order_id = NULL) {
+  $patron = aleph_get_patron_by_account();
+  $patron_handler = new AlephPatronHandler(aleph_client());
+  $patron_handler->setPatron($patron);
+
+  try {
+    $patron_handler->addPayment($amount, $order_id);
+  }
+  catch (Exception $e) {
+    watchdog_exception('aleph', $e);
+  }
 }
 
 function aleph_debt_translate_debt_type() {

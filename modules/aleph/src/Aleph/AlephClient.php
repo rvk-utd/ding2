@@ -252,6 +252,45 @@ class AlephClient {
   }
 
   /**
+   * Create payment.
+   *
+   * @param \Drupal\aleph\Aleph\Entity\AlephPatron $patron
+   *   The Aleph patron.
+   * @param int $sum
+   *   Amount paid.
+   * @param string $reference
+   *   Identification of the payment.
+   *
+   * @return \SimpleXMLElement|false
+   *   The SimpleXMLElement from the raw XML response.
+   *
+   * @throws AlephClientException
+   */
+  public function addPayment(AlephPatron $patron, $sum, $reference) {
+    $options = array(
+      'query' => array('institution' => 'ICE53'),
+    );
+    $response = FALSE;
+
+    $xml = new \SimpleXMLElement('<pay-cash-parameters></pay-cash-parameters>');
+    $xml->addChild('sum', $sum);
+    $xml->addChild('pay-reference', $reference);
+    $options['body'] = 'post_xml=' . $xml->asXML();
+
+    $response = $this->requestRest(
+      'PUT',
+      'patron/' . $patron->getId() . '/circulationActions/cash',
+      $options
+    );
+
+    if ((string) $response->xpath('reply-code')[0] === '0000') {
+      return TRUE;
+    }
+
+    return FALSE;
+  }
+
+  /**
    * Get patron's loans.
    *
    * @param \Drupal\aleph\Aleph\Entity\AlephPatron $patron
