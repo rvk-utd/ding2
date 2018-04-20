@@ -308,8 +308,8 @@ function _ding_borgun_checkout_capture_token($token, $amount, $currency_code, $o
     switch ($e->getCode()) {
       case 400:
         $error = json_decode((string) $e->getResponse()->getBody());
-        watchdog('ding_borgun_checkout', 'Form error in capture: :error',
-          array(':error' => $error->Message), WATCHDOG_ERROR);
+        watchdog('ding_borgun_checkout', 'Form error in capture: @error',
+          array('@error' => $error->Message), WATCHDOG_ERROR);
         break;
 
       case 401:
@@ -324,14 +324,14 @@ function _ding_borgun_checkout_capture_token($token, $amount, $currency_code, $o
   }
   catch (Exception $e) {
     if ($e instanceof RequestException && $e->getResponse()) {
-      watchdog('ding_borgun_checkout', 'Unrecognized :code response in capture: :response',
+      watchdog('ding_borgun_checkout', 'Unrecognized %code response in capture: @response',
         array(
-          ':code' => $e->getResponse()->getStatusCode(),
-          ':response' => print_r((string) $e->getResponse()->getBody(), TRUE),
+          '%code' => $e->getResponse()->getStatusCode(),
+          '@response' => print_r((string) $e->getResponse()->getBody(), TRUE),
         ), WATCHDOG_ERROR);
     }
-    watchdog('ding_borgun_checkout', 'Error in capture: :message',
-      array(':message' => $e->getMessage), WATCHDOG_ERROR);
+    watchdog('ding_borgun_checkout', 'Error in capture: @message',
+      array('@message' => $e->getMessage), WATCHDOG_ERROR);
   }
 
   if ($response->getStatusCode() == 201) {
@@ -340,14 +340,14 @@ function _ding_borgun_checkout_capture_token($token, $amount, $currency_code, $o
       return $transaction->TransactionId;
     }
     else {
-      watchdog('ding_borgun_checkout', 'Transation rejected: :response',
-        array(':response' => print_r((string) $e->getResponse()->getBody(), TRUE)), WATCHDOG_ERROR);
+      watchdog('ding_borgun_checkout', 'Transation rejected: @response',
+        array('@response' => print_r((string) $e->getResponse()->getBody(), TRUE)), WATCHDOG_ERROR);
       return FALSE;
     }
   }
   else {
-    watchdog('ding_borgun_checkout', 'Unknown success code :code, please contact the developer',
-      array(':code' => $response->getStatusCode()), WATCHDOG_WARNING);
+    watchdog('ding_borgun_checkout', 'Unknown success code %code, please contact the developer',
+      array('%code' => $response->getStatusCode()), WATCHDOG_WARNING);
     return "unknown";
   }
 }
