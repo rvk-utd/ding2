@@ -604,15 +604,15 @@ function _xi_verify_cert($objKeyInfo) {
     throw new Exception("Certificate expired or not valid yet");
   }
 
-  $kennitala = $parsed['subject']['serialNumber'];
+  $serialNumber = $parsed['subject']['serialNumber'];
   $issuer = $parsed['issuer']['CN'];
 
-  if ($kennitala != "6503760649") {
-    throw new Exception("Ekki rétt kennitala í undirritunarskilríki");
+  if ($serialNumber != "6503760649") {
+    throw new Exception("Not the correct serial number in the certificate");
   }
 
   if ($issuer != "Traustur bunadur") {
-    throw new Exception("Ekki réttur útgefandi undirritunarskilríkis");
+    throw new Exception("Not the correct certificate issuer");
   }
   $subjectKey = $caCertParsed['extensions']['subjectKeyIdentifier'];
   $authKey = $parsed['extensions']['authorityKeyIdentifier'];
