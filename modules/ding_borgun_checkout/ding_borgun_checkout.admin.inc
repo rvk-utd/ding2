@@ -64,6 +64,7 @@ function ding_borgun_checkout_settings($form, $form_state) {
     '#title' => t('Next order ID'),
     '#description' => t('Order id used for the next order.'),
     '#default_value' => variable_get('ding_borgun_checkout_order_id_next', '1'),
+    '#element_validate' => array('element_validate_integer_positive'),
   );
 
   $form['#validate'] = array('ding_borgun_checkout_settings_validate');
@@ -79,9 +80,4 @@ function ding_borgun_checkout_settings_validate($form, &$form_state) {
   $prefix = $form_state['values']['ding_borgun_checkout_order_id_prefix'];
   $prefix = preg_replace('/[^A-Z]+/', '', drupal_strtoupper($prefix));
   form_set_value($form['ding_borgun_checkout_order_id_prefix'], $prefix, $form_state);
-
-  // Ensure order id is numeric.
-  $next_id = $form_state['values']['ding_borgun_checkout_order_id_next'];
-  $next_id = preg_replace('/[^0-9]+/', '', $next_id);
-  form_set_value($form['ding_borgun_checkout_order_id_next'], $next_id, $form_state);
 }
