@@ -58,11 +58,13 @@ function aleph_debt_payment_received($amount, array $debt_ids = array(), $order_
   $patron_handler->setPatron($patron);
 
   try {
-    $patron_handler->addPayment($amount, $order_id);
+    return $patron_handler->addPayment($amount, $order_id);
   }
   catch (Exception $e) {
     watchdog_exception('aleph', $e);
   }
+
+  return FALSE;
 }
 
 function aleph_debt_translate_debt_type() {
