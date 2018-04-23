@@ -329,9 +329,11 @@ function _ding_borgun_checkout_capture_token($token, $amount, $currency_code, $o
           '%code' => $e->getResponse()->getStatusCode(),
           '@response' => print_r((string) $e->getResponse()->getBody(), TRUE),
         ), WATCHDOG_ERROR);
+      return FALSE;
     }
     watchdog('ding_borgun_checkout', 'Error in capture: @message',
       array('@message' => $e->getMessage), WATCHDOG_ERROR);
+    return FALSE;
   }
 
   if ($response->getStatusCode() == 201) {
