@@ -16,7 +16,7 @@ function ding_innskraning_permission() {
   return array(
     'administer ding innskraning' => array(
       'title' => t('Administer Ding Innskraning'),
-      'description' => t('Perform administration tasks for Ding Innsrkaning module.'),
+      'description' => t('Perform administration tasks for Ding Innskraning module.'),
     ),
   );
 }
@@ -42,8 +42,8 @@ function ding_innskraning_menu() {
   $items = array();
 
   $items['admin/config/ding/ding-innskraning'] = array(
-    'title' => 'Ding Innsrkaning settings',
-    'description' => 'Settings for Ding Innsrkaning module',
+    'title' => 'Ding Innskraning settings',
+    'description' => 'Settings for Ding Innskraning module',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('ding_innskraning_settings'),
     'access arguments' => array('administer ding innskraning'),
