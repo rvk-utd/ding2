@@ -52,21 +52,14 @@ function ding_innskraning_menu() {
   );
 
   $items['saml/login'] = array(
-    'page callback' => '_ding_innskraning_saml_login',
-    // This endpoint should not be under access control.
-    'access callback' => TRUE,
-    'type' => MENU_CALLBACK,
-  );
-
-  $items['test/saml/consume'] = array(
-    'page callback' => '_ding_innskraning_saml_endpoint',
+    'page callback' => 'ding_innskraning_saml_login',
     // This endpoint should not be under access control.
     'access callback' => TRUE,
     'type' => MENU_CALLBACK,
   );
 
   $items['saml/consume'] = array(
-    'page callback' => '_ding_innskraning_saml_endpoint',
+    'page callback' => 'ding_innskraning_saml_endpoint',
     // This endpoint should not be under access control.
     'access callback' => TRUE,
     'type' => MENU_CALLBACK,
@@ -164,7 +157,7 @@ function _ding_innskraning_signature($samlRequest, $relayState, $signAlgorithm =
 /**
  * Create the login link for https://innskraning.island.is.
  */
-function _ding_innskraning_saml_login() {
+function ding_innskraning_saml_login() {
   include libraries_get_path('xmlseclibs') . '/xmlseclibs.php';
 
   $provider_url = 'https://innskraning.island.is';
@@ -195,7 +188,7 @@ function _ding_innskraning_saml_login() {
 /**
  * Consume authentications from https://innskraning.island.is.
  */
-function _ding_innskraning_saml_endpoint() {
+function ding_innskraning_saml_endpoint() {
   // Extract token from request.
   if (!array_key_exists('token', $_POST)) {
     watchdog('ding_innskraning', "Post parameter 'token' not found in SAML response.", array(), WATCHDOG_WARNING);
