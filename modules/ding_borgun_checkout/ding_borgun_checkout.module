@@ -318,6 +318,12 @@ function _ding_borgun_checkout_capture_token($token, $amount, $currency_code, $o
         break;
 
       default:
+        watchdog('ding_borgun_checkout', 'Unknown client error code %code, please contact the developer, response: @response',
+          array(
+            '%code' => $response->getStatusCode(),
+            '@response' => print_r((string) $e->geetResponse()->getBody(), TRUE),
+          ),
+          WATCHDOG_WARNING);
     }
 
     return FALSE;
