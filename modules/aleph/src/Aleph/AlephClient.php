@@ -28,12 +28,14 @@ class AlephClient {
 
   /**
    * The base URL for the REST service.
+   *
    * @var string
    */
   protected $baseUrlRest;
 
   /**
    * The primary library, ICE01 for example.
+   *
    * @var string
    */
   protected $mainLibrary;
@@ -50,13 +52,11 @@ class AlephClient {
    *
    * @param string $base_url
    *   The base url for the Aleph end-point.
-   * @param $base_url_rest
+   * @param string $base_url_rest
    *    The base url for the Aleph REST end-point.
-   *
-   * @param $main_library
+   * @param string $main_library
    *    The main library. For example ICE01.
-   *
-   * @param $filter_institution
+   * @param string $filter_institution
    *    The institution filter to set. ICE53 for example.
    */
   public function __construct($base_url, $base_url_rest, $main_library, $filter_institution) {
@@ -190,6 +190,7 @@ class AlephClient {
    *    The new pin code.
    *
    * @return bool
+   *   True if the operation succeeded.
    *
    * @throws AlephClientException
    * @throws AlephPatronInvalidPin
@@ -236,10 +237,12 @@ class AlephClient {
   }
 
   /**
+   * Get the items for a Material.
+   *
    * @param \Drupal\aleph\Aleph\Entity\AlephMaterial $material
    *    The Aleph material to get items from.
    *
-   * @return \SimpleXMLElement The SimpleXMLElement response from Aleph.
+   * @return \SimpleXMLElement
    *    The SimpleXMLElement response from Aleph.
    *
    * @throws AlephClientException
@@ -295,7 +298,6 @@ class AlephClient {
    *
    * @param \Drupal\aleph\Aleph\Entity\AlephPatron $patron
    *   The patron to get loans from.
-   *
    * @param string|false $loan_id
    *   The loan ID to get specific loan.
    *
@@ -322,9 +324,10 @@ class AlephClient {
    * Get a patron's reservations.
    *
    * @param \Drupal\aleph\Aleph\Entity\AlephPatron $patron
+   *   Patron to get reservations for.
    *
    * @return \SimpleXMLElement
-   *    The response from Aleph.
+   *   The response from Aleph.
    *
    * @throws AlephClientException
    */
@@ -340,10 +343,8 @@ class AlephClient {
    *
    * @param \Drupal\aleph\Aleph\Entity\AlephPatron $patron
    *   The Aleph patron.
-   *
    * @param \Drupal\aleph\Aleph\Entity\AlephRequest $request
    *   The request information.
-   *
    * @param \Drupal\aleph\Aleph\Entity\AlephHoldGroup[] $holding_groups
    *   The holding groups.
    *
@@ -384,10 +385,15 @@ class AlephClient {
   }
 
   /**
+   * Renew patron loans.
+   *
    * @param \Drupal\aleph\Aleph\Entity\AlephPatron $patron
+   *   The patron.
    * @param array $ids
+   *   Loan ids to renew.
    *
    * @return \SimpleXMLElement
+   *   The response.
    *
    * @throws AlephClientException
    */
@@ -413,14 +419,19 @@ class AlephClient {
   }
 
   /**
-   * @param \Drupal\aleph\Aleph\Entity\AlephPatron  $patron
+   * Delete reservations.
+   *
+   * @param \Drupal\aleph\Aleph\Entity\AlephPatron $patron
+   *   The patron.
    * @param \Drupal\aleph\Aleph\Entity\AlephRequest $request
+   *   The reservation to delete.
    *
    * @return \SimpleXMLElement
+   *   The response.
+   *
    * @throws AlephClientException
    */
-  public function deleteReservation(AlephPatron $patron, AlephRequest
-  $request) {
+  public function deleteReservation(AlephPatron $patron, AlephRequest $request) {
     // ADM library code + the item record key.
     // For example, USM50000238843000320.
     $iid = $request->getInstitutionCode() . $request->getDocNumber() .
@@ -439,6 +450,8 @@ class AlephClient {
    *    The Aleph patron ID.
    *
    * @return \SimpleXMLElement
+   *   The response.
+   *
    * @throws AlephClientException
    */
   public function getPatronBlocks($bor_id) {
