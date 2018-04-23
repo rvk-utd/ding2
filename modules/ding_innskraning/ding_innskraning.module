@@ -113,10 +113,6 @@ function ding_innskraning_saml_endpoint() {
   // Decode the request.
   $xml = base64_decode($token);
 
-  // @TODO: file doesn't exist.
-  // TEST xml
-  //$xml = file_get_contents('/var/www/vhosts/dev/htdocs/sites/all/modules/custom/lb_innskraning/test/SAML_response_signed.xml');
-
   // Load XML document.
   $dom = new DOMDocument();
   $dom->loadXML($xml);
@@ -168,7 +164,7 @@ function ding_innskraning_saml_endpoint() {
     // Go to login page.
     drupal_set_message(
       t('Authentication through @link failed! Authentication through @link only available to registered users.',
-        array('@link' => l('island.is', 'https://island.is'))
+        array('@link' => l(t('island.is'), 'https://island.is'))
       ),
       'error'
     );
@@ -384,7 +380,7 @@ function _ding_innskraning_verify($xmlDoc) {
   libxml_disable_entity_loader($oldEntityLoader);
   if (!$res) {
     $xmlErrors = libxml_get_errors();
-    watchdog('ding_innskraning', 'Error validating the metadata: @vars', array('@vars' => var_export($xmlErrors, true)));
+    watchdog('ding_innskraning', 'Error validating the metadata: @vars', array('@vars' => var_export($xmlErrors, TRUE)));
     throw new Exception('Error validating the metadata');
   }
 
