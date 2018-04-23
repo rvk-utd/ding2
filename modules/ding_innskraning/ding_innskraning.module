@@ -69,92 +69,6 @@ function ding_innskraning_menu() {
 }
 
 /**
- * Create the login request with SAML parameters.
- */
-function _ding_innskraning_login_request($id, $issuer, $destination) {
-  // Add the destination URL for login.
-  $destination = url($destination, array('query' => array('id' => $issuer, 'auth' => $id)));
-  $destination = htmlspecialchars($destination);
-  // Take the name of the site as provider name.
-  $provider = variable_get('site_name', '');
-  // Log the time when request was created.
-  $issueInstant = format_date(time(), 'custom', "Y-m-dTH:i:sZ");
-  $providerNameStr = '';
-  // Consumer URL.
-  $consume_url = url('saml/consume', array('absolute' => TRUE));
-
-  if ($provider != '') {
-    $providerNameStr = <<<PROVIDERNAME
-ProviderName="{$provider}"
-PROVIDERNAME;
-  }
-
-  $request = <<<AUTHNREQUEST
-<samlp:AuthnRequest
-  xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol"
-  xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion"
-  ID="$id"
-  Version="2.0"
-  {$providerNameStr}
-  IssueInstant="$issueInstant"
-  Destination="{$destination}"
-  ProtocolBinding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
-  AssertionConsumerServiceURL="{$consume_url}">
-  <saml:Issuer>{$issuer}</saml:Issuer>
-    <samlp:NameIDPolicy
-        Format="urn:oasis:names:tc:SAML:2.0:nameid-format:transient"
-        AllowCreate="true" />
-    <samlp:RequestedAuthnContext Comparison="exact">
-        <saml:AuthnContextClassRef>urn:oasis:names:tc:SAML:2.0:ac:classes:X509</saml:AuthnContextClassRef>
-    </samlp:RequestedAuthnContext>
-</samlp:AuthnRequest>
-AUTHNREQUEST;
-
-  $deflatedRequest = gzdeflate($request);
-  $base64Request = base64_encode($deflatedRequest);
-
-  return $base64Request;
-}
-
-/**
- * Read the key file to sign the request.
- */
-function _ding_innskraning_get_key($name = FALSE) {
-  $key = NULL;
-  $file_location = DRUPAL_ROOT . '/' . libraries_get_path('xmlseclibs') . '/certs/traustur_bunadur.pem';
-
-  if ($name) {
-    return $file_location;
-  }
-
-  if ($file_location != '') {
-    $key = file_get_contents($file_location);
-  }
-
-  return $key;
-}
-
-/**
- * Sign the SAML request.
- */
-function _ding_innskraning_signature($samlRequest, $relayState, $signAlgorithm = XMLSecurityKey::RSA_SHA1) {
-  $key = _ding_innskraning_get_key();
-  if (!$key) {
-    drupal_set_message(t('No key provided, authentication can not be finished.'), 'info');
-    drupal_goto('user/login');
-  }
-
-  $objKey = new XMLSecurityKey($signAlgorithm, array('type' => 'private'));
-  $objKey->loadKey($key, FALSE);
-
-  $msg = 'SAMLRequest=' . urlencode($samlRequest);
-  $msg .= '&RelayState=' . urlencode($relayState);
-  $msg .= '&SigAlg=' . urlencode($signAlgorithm);
-  $signature = $objKey->signData($msg);
-  return base64_encode($signature);
-}
-
-/**
  * Create the login link for https://innskraning.island.is.
  */
 function ding_innskraning_saml_login() {
@@ -261,6 +175,92 @@ function ding_innskraning_saml_endpoint() {
     );
     drupal_goto('user/login');
   }
+}
+
+/**
+ * Create the login request with SAML parameters.
+ */
+function _ding_innskraning_login_request($id, $issuer, $destination) {
+  // Add the destination URL for login.
+  $destination = url($destination, array('query' => array('id' => $issuer, 'auth' => $id)));
+  $destination = htmlspecialchars($destination);
+  // Take the name of the site as provider name.
+  $provider = variable_get('site_name', '');
+  // Log the time when request was created.
+  $issueInstant = format_date(time(), 'custom', "Y-m-dTH:i:sZ");
+  $providerNameStr = '';
+  // Consumer URL.
+  $consume_url = url('saml/consume', array('absolute' => TRUE));
+
+  if ($provider != '') {
+    $providerNameStr = <<<PROVIDERNAME
+ProviderName="{$provider}"
+PROVIDERNAME;
+  }
+
+  $request = <<<AUTHNREQUEST
+<samlp:AuthnRequest
+  xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol"
+  xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion"
+  ID="$id"
+  Version="2.0"
+  {$providerNameStr}
+  IssueInstant="$issueInstant"
+  Destination="{$destination}"
+  ProtocolBinding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
+  AssertionConsumerServiceURL="{$consume_url}">
+  <saml:Issuer>{$issuer}</saml:Issuer>
+    <samlp:NameIDPolicy
+        Format="urn:oasis:names:tc:SAML:2.0:nameid-format:transient"
+        AllowCreate="true" />
+    <samlp:RequestedAuthnContext Comparison="exact">
+        <saml:AuthnContextClassRef>urn:oasis:names:tc:SAML:2.0:ac:classes:X509</saml:AuthnContextClassRef>
+    </samlp:RequestedAuthnContext>
+</samlp:AuthnRequest>
+AUTHNREQUEST;
+
+  $deflatedRequest = gzdeflate($request);
+  $base64Request = base64_encode($deflatedRequest);
+
+  return $base64Request;
+}
+
+/**
+ * Read the key file to sign the request.
+ */
+function _ding_innskraning_get_key($name = FALSE) {
+  $key = NULL;
+  $file_location = DRUPAL_ROOT . '/' . libraries_get_path('xmlseclibs') . '/certs/traustur_bunadur.pem';
+
+  if ($name) {
+    return $file_location;
+  }
+
+  if ($file_location != '') {
+    $key = file_get_contents($file_location);
+  }
+
+  return $key;
+}
+
+/**
+ * Sign the SAML request.
+ */
+function _ding_innskraning_signature($samlRequest, $relayState, $signAlgorithm = XMLSecurityKey::RSA_SHA1) {
+  $key = _ding_innskraning_get_key();
+  if (!$key) {
+    drupal_set_message(t('No key provided, authentication can not be finished.'), 'info');
+    drupal_goto('user/login');
+  }
+
+  $objKey = new XMLSecurityKey($signAlgorithm, array('type' => 'private'));
+  $objKey->loadKey($key, FALSE);
+
+  $msg = 'SAMLRequest=' . urlencode($samlRequest);
+  $msg .= '&RelayState=' . urlencode($relayState);
+  $msg .= '&SigAlg=' . urlencode($signAlgorithm);
+  $signature = $objKey->signData($msg);
+  return base64_encode($signature);
 }
 
 /**
