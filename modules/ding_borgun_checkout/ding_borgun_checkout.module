@@ -261,7 +261,7 @@ function _ding_borgun_checkout_get_order_id() {
  * @param string $token
  *   Token supplied by Borgun.Checkout.
  * @param int|float $amount
- *   Payment amount.
+ *   Payment amount. Will be rounded down to two decimal places.
  * @param int $currency_code
  *   The ISO 4217 currency code of the payment.
  * @param string $order_id
