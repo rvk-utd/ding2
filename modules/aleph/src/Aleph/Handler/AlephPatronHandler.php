@@ -67,7 +67,6 @@ class AlephPatronHandler extends AlephHandlerBase {
     }
 
     $response = $this->client->authenticate($bor_id, $verification);
-    error_log($response->asXml());
     // Sub library is hardcoded in order to show correct expiry date.
     // Most users are active in the BBAAA branch.
     $response_sub_library = $this->client->authenticate($bor_id, $verification, 'BBAAA');
