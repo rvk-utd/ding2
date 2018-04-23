@@ -18,6 +18,7 @@ function ding_borgun_checkout_settings($form, $form_state) {
       'https://ecommerce.borgun.is' => t('Live'),
     ),
     '#default_value' => variable_get('ding_borgun_checkout_host', 'https://test.borgun.is'),
+    '#required' => TRUE,
   );
 
   $form['ding_borgun_checkout_private_token'] = array(
@@ -25,6 +26,7 @@ function ding_borgun_checkout_settings($form, $form_state) {
     '#title' => t('Private token'),
     '#description' => t('Private token provided by Borgun.'),
     '#default_value' => variable_get('ding_borgun_checkout_private_token', ''),
+    '#required' => TRUE,
   );
 
   $form['ding_borgun_checkout_public_token'] = array(
@@ -32,6 +34,7 @@ function ding_borgun_checkout_settings($form, $form_state) {
     '#title' => t('Public token'),
     '#description' => t('Public token provided by Borgun.'),
     '#default_value' => variable_get('ding_borgun_checkout_public_token', ''),
+    '#required' => TRUE,
   );
 
   $form['ding_borgun_checkout_company_name'] = array(
