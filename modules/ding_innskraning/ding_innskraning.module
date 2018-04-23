@@ -133,8 +133,7 @@ function ding_innskraning_saml_endpoint() {
   // Retrieve SSN.
   $ssn = _ding_innskraning_get_attribute_by_name($dom, 'UserSSN');
   // Provide a message.
-  // @TODO: do we really want to log SSN?
-  watchdog('ding_innskraning', "Attempt to login %name with SSN %ssn", array('%name' => $name, '%ssn' => $ssn), WATCHDOG_DUBUG);
+  watchdog('ding_innskraning', "Attempt to login %name", array('%name' => $name), WATCHDOG_DUBUG);
   // Verify response.
   try {
     _ding_innskraning_verify($dom);
@@ -275,8 +274,8 @@ function _ding_innskraning_get_attribute_by_name($dom, $name) {
     $attributePropName = $attribute->getAttribute('Name');
     if ($attributePropName == $name) {
       $attributeValue = $attribute->getElementsByTagName('AttributeValue')->item(0);
-      $ssn = $attributeValue->nodeValue;
-      return $ssn;
+      $value = $attributeValue->nodeValue;
+      return $value;
     }
   }
 }
@@ -301,7 +300,7 @@ function _ding_innskraning_activate_user_by_ssn($ssn) {
   // User not found.
   if (empty($results['user'])) {
     // @TOOD: do we really want to log SSN?
-    watchdog('ding_innskraning', "Unable to log in user with SSN %ssn.", array('%ssn' => $ssn), WATCHDOG_WARNING);
+    watchdog('ding_innskraning', "Unable to log in user (SSN hidden).", array(), WATCHDOG_WARNING);
     return FALSE;
   }
 
@@ -320,8 +319,8 @@ function _ding_innskraning_activate_user_by_ssn($ssn) {
   if (user_is_blocked($username)) {
     watchdog(
       'ding_innskraning',
-      "User %username is blocked and can therefore not be logged in. SSN was %ssn.",
-      array('%username' => $username, '%ssn' => $ssn),
+      "User %username is blocked and can therefore not be logged in.",
+      array('%username' => $username),
       WATCHDOG_WARNING
     );
     return FALSE;
