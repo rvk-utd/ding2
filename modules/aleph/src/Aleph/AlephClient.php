@@ -34,11 +34,18 @@ class AlephClient {
   protected $baseUrlRest;
 
   /**
-   * The primary library, ICE01 for example.
+   * The catalog library, ICE01 for example.
    *
    * @var string
    */
-  protected $mainLibrary;
+  protected $catalogLibrary;
+
+  /**
+   * The item library, ICE53 for example.
+   *
+   * @var string
+   */
+  protected $itemLibrary;
 
   /**
    * The GuzzleHttp Client.
@@ -54,15 +61,16 @@ class AlephClient {
    *   The base url for the Aleph end-point.
    * @param string $base_url_rest
    *    The base url for the Aleph REST end-point.
-   * @param string $main_library
-   *    The main library. For example ICE01.
-   * @param string $filter_institution
-   *    The institution filter to set. ICE53 for example.
+   * @param string $catalog_library
+   *    The catalog library. For example ICE01.
+   * @param string $item_library
+   *    The item library. ICE53 for example.
    */
-  public function __construct($base_url, $base_url_rest, $main_library, $filter_institution) {
+  public function __construct($base_url, $base_url_rest, $catalog_library, $item_library) {
     $this->baseUrl = $base_url;
     $this->baseUrlRest = $base_url_rest;
-    $this->mainLibrary = $main_library;
+    $this->catalogLibrary = $catalog_library;
+    $this->itemLibrary = $item_library;
     $this->client = new Client();
   }
 
@@ -85,7 +93,7 @@ class AlephClient {
     $options = array(
       'query' => array(
         'op' => $operation,
-        'library' => 'ICE53',
+        'library' => $this->itemLibrary,
       ) + $params,
       'allow_redirects' => FALSE,
     );
@@ -250,7 +258,7 @@ class AlephClient {
   public function getItems(AlephMaterial $material) {
     return $this->requestRest(
       'GET',
-      'record/' . $this->mainLibrary . $material->getId() . '/items?view=full'
+      'record/' . $this->catalogLibrary . $material->getId() . '/items?view=full'
     );
   }
 
@@ -271,7 +279,7 @@ class AlephClient {
    */
   public function addPayment(AlephPatron $patron, $sum, $reference) {
     $options = array(
-      'query' => array('institution' => 'ICE53'),
+      'query' => array('institution' => $this->itemLibrary),
     );
     $response = FALSE;
 
@@ -364,7 +372,7 @@ class AlephClient {
 
     $options['body'] = 'post_xml=' . $xml->asXML();
 
-    $rid = $this->mainLibrary . $request->getDocNumber();
+    $rid = $this->catalogLibrary . $request->getDocNumber();
 
     // Try to make the reservation against each holding group.
     // If the reservation is OK, the reply code is '0000' and we stop.
@@ -478,7 +486,7 @@ class AlephClient {
   public function getHoldingGroups(AlephPatron $patron, AlephMaterial $material) {
     return $this->requestRest(
       'GET',
-      'patron/' . $patron->getId() . '/record/' . $this->mainLibrary .
+      'patron/' . $patron->getId() . '/record/' . $this->catalogLibrary .
       $material->getId() . '/holds?view=full'
     )->xpath('hold/institution/group');
   }
