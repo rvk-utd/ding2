@@ -1,4 +1,0 @@
-name = XI Innskraning
-description = Provides login functionalities to https://innskraning.island.is
-package = 1xINTERNET
-core = 7.x

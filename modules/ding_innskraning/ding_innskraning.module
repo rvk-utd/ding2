@@ -2,7 +2,9 @@
 
 /**
  * @file
- * Provides login functionalities to https://innskraning.island.is.
+ * Provides login via https://innskraning.island.is.
+ *
+ * Forked from xi_innskraning.
  */
 
 /**
@@ -10,11 +12,11 @@
  *
  * Adds permission to allow users to administer SSO login.
  */
-function xi_innskraning_permission() {
+function ding_innskraning_permission() {
   return array(
-    'administer xi innskraning' => array(
-      'title' => t('Administer XI Innskraning'),
-      'description' => t('Perform administration tasks for XI Innsrkaning module.'),
+    'administer ding innskraning' => array(
+      'title' => t('Administer Ding Innskraning'),
+      'description' => t('Perform administration tasks for Ding Innsrkaning module.'),
     ),
   );
 }
@@ -26,7 +28,7 @@ function xi_innskraning_permission() {
  * 7.37 drupal is no more tracking the session for anonymous users, that is why
  * we need to start session on hook_init() and set some variable into it.
  */
-function xi_innskraning_init() {
+function ding_innskraning_init() {
   drupal_session_start();
   $_SESSION['nosave'] = TRUE;
 }
@@ -36,35 +38,35 @@ function xi_innskraning_init() {
  *
  * Provides end point for time tracking.
  */
-function xi_innskraning_menu() {
+function ding_innskraning_menu() {
   $items = array();
 
-  $items['admin/config/system/xi-innskraning'] = array(
-    'title' => 'XI Innsrkaning settings',
-    'description' => 'Settings for XI Innsrkaning module',
+  $items['admin/config/ding/ding-innskraning'] = array(
+    'title' => 'Ding Innsrkaning settings',
+    'description' => 'Settings for Ding Innsrkaning module',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('xi_innskraning_settings'),
-    'access arguments' => array('administer xi innskraning'),
+    'page arguments' => array('ding_innskraning_settings'),
+    'access arguments' => array('administer ding innskraning'),
     'type' => MENU_NORMAL_ITEM,
-    'file' => 'inc/xi_innskraning.admin.inc',
+    'file' => 'inc/ding_innskraning.admin.inc',
   );
 
   $items['saml/login'] = array(
-    'page callback' => '_xi_innsrkaning_saml_login',
+    'page callback' => '_ding_innskraning_saml_login',
     // This endpoint should not be under access control.
     'access callback' => TRUE,
     'type' => MENU_CALLBACK,
   );
 
   $items['test/saml/consume'] = array(
-    'page callback' => '_xi_innsrkaning_saml_endpoint',
+    'page callback' => '_ding_innskraning_saml_endpoint',
     // This endpoint should not be under access control.
     'access callback' => TRUE,
     'type' => MENU_CALLBACK,
   );
 
   $items['saml/consume'] = array(
-    'page callback' => '_xi_innsrkaning_saml_endpoint',
+    'page callback' => '_ding_innskraning_saml_endpoint',
     // This endpoint should not be under access control.
     'access callback' => TRUE,
     'type' => MENU_CALLBACK,
@@ -76,7 +78,7 @@ function xi_innskraning_menu() {
 /**
  * Create the login request with SAML parameters.
  */
-function _xi_innsrkaning_login_request($id, $issuer, $destination) {
+function _ding_innskraning_login_request($id, $issuer, $destination) {
   // Add the destination URL for login.
   $destination = url($destination, array('query' => array('id' => $issuer, 'auth' => $id)));
   $destination = htmlspecialchars($destination);
@@ -124,7 +126,7 @@ AUTHNREQUEST;
 /**
  * Read the key file to sign the request.
  */
-function _xi_innsrkaning_get_key($name = FALSE) {
+function _ding_innskraning_get_key($name = FALSE) {
   $key = NULL;
   $file_location = DRUPAL_ROOT . '/' . libraries_get_path('xmlseclibs') . '/certs/traustur_bunadur.pem';
 
@@ -142,8 +144,8 @@ function _xi_innsrkaning_get_key($name = FALSE) {
 /**
  * Sign the SAML request.
  */
-function _xi_innsrkaning_signature($samlRequest, $relayState, $signAlgorithm = XMLSecurityKey::RSA_SHA1) {
-  $key = _xi_innsrkaning_get_key();
+function _ding_innskraning_signature($samlRequest, $relayState, $signAlgorithm = XMLSecurityKey::RSA_SHA1) {
+  $key = _ding_innskraning_get_key();
   if (!$key) {
     drupal_set_message(t('No key provided, authentication can not be finished.'), 'info');
     drupal_goto('user/login');
@@ -162,26 +164,26 @@ function _xi_innsrkaning_signature($samlRequest, $relayState, $signAlgorithm = X
 /**
  * Create the login link for https://innskraning.island.is.
  */
-function _xi_innsrkaning_saml_login() {
+function _ding_innskraning_saml_login() {
   include libraries_get_path('xmlseclibs') . '/xmlseclibs.php';
 
   $provider_url = 'https://innskraning.island.is';
   $url = $provider_url;
-  $id = variable_get('xi_innskraning_id', '');
+  $id = variable_get('ding_innskraning_id', '');
   $sid = sha1(session_id());
   $url .= "?id=$id&authid=$sid";
-  watchdog('xi_innsrkaning', 'Redirect to SAML login url: @url', array('@url' => $url), WATCHDOG_INFO);
+  watchdog('ding_innskraning', 'Redirect to SAML login url: @url', array('@url' => $url), WATCHDOG_INFO);
 
   // Prepare the parameters to pass to island.is.
   $parameters['id'] = $id;
   $parameters['authid'] = $sid;
   // Create the request body.
-  $samlRequest = _xi_innsrkaning_login_request($sid, $id, $provider_url);
+  $samlRequest = _ding_innskraning_login_request($sid, $id, $provider_url);
   $parameters['SAMLRequest'] = $samlRequest;
   $parameters['RelayState'] = url('<front>', array('absolute' => TRUE));
   // @TODO: why is this commented out.
   // Sign the request.
-  /*$signature = _xi_innsrkaning_signature($samlRequest, $parameters['RelayState']);
+  /*$signature = _ding_innskraning_signature($samlRequest, $parameters['RelayState']);
     $parameters['SigAlg'] = XMLSecurityKey::RSA_SHA1;
     $parameters['Signature'] = $signature;*/
 
@@ -193,10 +195,10 @@ function _xi_innsrkaning_saml_login() {
 /**
  * Consume authentications from https://innskraning.island.is.
  */
-function _xi_innsrkaning_saml_endpoint() {
+function _ding_innskraning_saml_endpoint() {
   // Extract token from request.
   if (!array_key_exists('token', $_POST)) {
-    watchdog('xi_innsrkaning', "Post parameter 'token' not found in SAML response.", array(), WATCHDOG_WARNING);
+    watchdog('ding_innskraning', "Post parameter 'token' not found in SAML response.", array(), WATCHDOG_WARNING);
     drupal_goto('user/login');
     return FALSE;
   }
@@ -214,26 +216,26 @@ function _xi_innsrkaning_saml_endpoint() {
 
   if (!$dom) {
     drupal_set_message(t('Authentication failed'), 'error');
-    watchdog('xi_innsrkaning', 'SAML Response could not be processed, XML: @xml', array('@xml' => $xml), WATCHDOG_ERROR);
+    watchdog('ding_innskraning', 'SAML Response could not be processed, XML: @xml', array('@xml' => $xml), WATCHDOG_ERROR);
     drupal_goto('user/login');
     return FALSE;
   }
 
   // Retrieve name.
-  $name = _xi_get_attribute_by_name($dom, 'Name');
+  $name = _ding_innskraning_get_attribute_by_name($dom, 'Name');
   // Retrieve SSN.
-  $ssn = _xi_get_attribute_by_name($dom, 'UserSSN');
+  $ssn = _ding_innskraning_get_attribute_by_name($dom, 'UserSSN');
   // Provide a message.
   // @TODO: do we really want to log SSN?
-  watchdog('xi_innsrkaning', "Attempt to login %name with SSN %ssn", array('%name' => $name, '%ssn' => $ssn), WATCHDOG_DUBUG);
+  watchdog('ding_innskraning', "Attempt to login %name with SSN %ssn", array('%name' => $name, '%ssn' => $ssn), WATCHDOG_DUBUG);
   // Verify response.
   try {
-    _xi_verify($dom);
+    _ding_innskraning_verify($dom);
   }
   catch (Exception $ex) {
     drupal_set_message(t('Authentication failed'), 'error');
     watchdog_exception(
-      'xi_innsrkaning',
+      'ding_innskraning',
       $ex,
       'Error verifying token, %type: !message in %function (line %line of %file), XML: @xml',
       array('@xml' => $xml),
@@ -249,7 +251,7 @@ function _xi_innsrkaning_saml_endpoint() {
   }
   else {
     // OK, let's log the user in.
-    $login_success = _xi_activate_user_by_ssn($ssn);
+    $login_success = _ding_innskraning_activate_user_by_ssn($ssn);
   }
 
   if ($login_success) {
@@ -271,7 +273,7 @@ function _xi_innsrkaning_saml_endpoint() {
 /**
  * Get attribute by name from XML document.
  */
-function _xi_get_attribute_by_name($dom, $name) {
+function _ding_innskraning_get_attribute_by_name($dom, $name) {
   // Extract SSN with xpath.
   $assertion = $dom->getElementsByTagName('Assertion')->item(0);
   $attributeStatement = $assertion->getElementsByTagName('AttributeStatement')->item(0);
@@ -289,14 +291,14 @@ function _xi_get_attribute_by_name($dom, $name) {
 /**
  * Get user agent.
  */
-function _xi_get_user_agent($dom) {
-  return _xi_get_attribute_by_name($dom, 'UserAgent');
+function _ding_innskraning_get_user_agent($dom) {
+  return _ding_innskraning_get_attribute_by_name($dom, 'UserAgent');
 }
 
 /**
  * Try to login user by SSN number.
  */
-function _xi_activate_user_by_ssn($ssn) {
+function _ding_innskraning_activate_user_by_ssn($ssn) {
   // Find user by SSN.
   $query = new EntityFieldQuery();
   $query->entityCondition('entity_type', 'user')
@@ -306,14 +308,14 @@ function _xi_activate_user_by_ssn($ssn) {
   // User not found.
   if (empty($results['user'])) {
     // @TOOD: do we really want to log SSN?
-    watchdog('xi_innsrkaning', "Unable to log in user with SSN %ssn.", array('%ssn' => $ssn), WATCHDOG_WARNING);
+    watchdog('ding_innskraning', "Unable to log in user with SSN %ssn.", array('%ssn' => $ssn), WATCHDOG_WARNING);
     return FALSE;
   }
 
   // Too many users found.
   $uids = array_keys($results['user']);
   if (count($uids) > 1) {
-    watchdog('xi_innsrkaning', "Multiple users found  SSN %ssns: ", array('%ssns' => implode(',', $uids)), WATCHDOG_WARNING);
+    watchdog('ding_innskraning', "Multiple users found  SSN %ssns: ", array('%ssns' => implode(',', $uids)), WATCHDOG_WARNING);
     return FALSE;
   }
 
@@ -324,7 +326,7 @@ function _xi_activate_user_by_ssn($ssn) {
   // User blocked.
   if (user_is_blocked($username)) {
     watchdog(
-      'xi_innsrkaning',
+      'ding_innskraning',
       "User %username is blocked and can therefore not be logged in. SSN was %ssn.",
       array('%username' => $username, '%ssn' => $ssn),
       WATCHDOG_WARNING
@@ -343,7 +345,7 @@ function _xi_activate_user_by_ssn($ssn) {
 /**
  * Verify the signatures and data from island.is.
  */
-function _xi_verify($xmlDoc) {
+function _ding_innskraning_verify($xmlDoc) {
   global $base_url;
 
   // Load library.
@@ -390,7 +392,7 @@ function _xi_verify($xmlDoc) {
   libxml_disable_entity_loader($oldEntityLoader);
   if (!$res) {
     $xmlErrors = libxml_get_errors();
-    watchdog('xi_innsrkaning', 'Error validating the metadata: @vars', array('@vars' => var_export($xmlErrors, true)));
+    watchdog('ding_innskraning', 'Error validating the metadata: @vars', array('@vars' => var_export($xmlErrors, true)));
     throw new Exception('Error validating the metadata');
   }
 
@@ -401,7 +403,7 @@ function _xi_verify($xmlDoc) {
     throw new Exception("The response was received at $currentURL instead of $destination");
   }
 
-  $user_agent = _xi_get_user_agent($xmlDoc);
+  $user_agent = _ding_innskraning_get_user_agent($xmlDoc);
   if ($user_agent !== $_SERVER['HTTP_USER_AGENT']) {
     throw new Exception('Request was done from another browser');
   }
@@ -435,22 +437,22 @@ function _xi_verify($xmlDoc) {
   }
 
   // @TODO: why is this commented?
-  /*$saml_sid = _xi_get_attribute_by_name($xmlDoc, 'AuthID');
+  /*$saml_sid = _ding_innskraning_get_attribute_by_name($xmlDoc, 'AuthID');
     $sid = sha1(session_id());
 
     if ($saml_sid && $saml_sid != $sid) {
-    watchdog('xi_innsrkaning', t("User with session id @sid is trying to log in with @saml_sid", array('@sid' => $sid, '@saml_sid' => $saml_sid)));
+    watchdog('ding_innskraning', t("User with session id @sid is trying to log in with @saml_sid", array('@sid' => $sid, '@saml_sid' => $saml_sid)));
     throw new Exception("Trying to authenticate the wrong user.");
     }*/
 
-  if (!_xi_verify_date($xmlDoc)) {
+  if (!_ding_innskraning_verify_date($xmlDoc)) {
     throw new Exception("Conditions not valid.");
   }
 
   // @TODO: why is this commented?
-  /*if (!_xi_verify_conditions($xmlDoc, _xi_get_client_ip())){
+  /*if (!_ding_innskraning_verify_conditions($xmlDoc, _ding_innskraning_get_client_ip())){
     throw new Exception("Invalid client ip.");
-  }*/
+    }*/
   $objKey = $objXMLSecDSig->locateKey();
 
   if (!$objKey) {
@@ -460,12 +462,12 @@ function _xi_verify($xmlDoc) {
 
   $objKeyInfo = XMLSecEnc::staticLocateKeyInfo($objKey, $objDSig);
 
-  if (!_xi_verify_cert($objKeyInfo)) {
+  if (!_ding_innskraning_verify_cert($objKeyInfo)) {
     throw new Exception("Certificate not valid");
   }
 
   if (!$objKeyInfo->key && empty($key)) {
-    $key = _xi_innsrkaning_get_key(TRUE);
+    $key = _ding_innskraning_get_key(TRUE);
     $objKey->loadKey($key, TRUE);
   }
 
@@ -480,7 +482,7 @@ function _xi_verify($xmlDoc) {
 /**
  * Find conditions in document.
  */
-function _xi_locate_conditions($doc) {
+function _ding_innskraning_locate_conditions($doc) {
   $xpath = new DOMXPath($doc);
   $xpath->registerNamespace('assertion', 'urn:oasis:names:tc:SAML:2.0:assertion');
   $nodeset = $xpath->query(".//assertion:Assertion/assertion:Conditions", $doc);
@@ -490,7 +492,7 @@ function _xi_locate_conditions($doc) {
 /**
  * Find subject confirmation in document.
  */
-function _xi_locate_subject_confirmation($doc) {
+function _ding_innskraning_locate_subject_confirmation($doc) {
   $xpath = new DOMXPath($doc);
   $xpath->registerNamespace('assertion', 'urn:oasis:names:tc:SAML:2.0:assertion');
   $nodeset = $xpath->query(
@@ -503,8 +505,8 @@ function _xi_locate_subject_confirmation($doc) {
 /**
  * Verify conditions.
  */
-function _xi_verify_conditions($doc, $ip) {
-  $conditions = _xi_locate_subject_confirmation($doc);
+function _ding_innskraning_verify_conditions($doc, $ip) {
+  $conditions = _ding_innskraning_locate_subject_confirmation($doc);
   if (!$conditions) {
     throw new Exception("Unable to locate Conditions");
   }
@@ -543,9 +545,9 @@ function _xi_verify_conditions($doc, $ip) {
 /**
  * Check if the request is still valid.
  */
-function _xi_verify_date($doc) {
+function _ding_innskraning_verify_date($doc) {
   try {
-    $conditions = _xi_locate_conditions($doc);
+    $conditions = _ding_innskraning_locate_conditions($doc);
   }
   catch (Exception $e) {
     throw new Exception("Exception while locating Conditions");
@@ -587,8 +589,8 @@ function _xi_verify_date($doc) {
 /**
  * Check valid response certificate from Island.is.
  */
-function _xi_verify_cert($objKeyInfo) {
-  $caFile = _xi_innsrkaning_get_key();
+function _ding_innskraning_verify_cert($objKeyInfo) {
+  $caFile = _ding_innskraning_get_key();
 
   $caCert = openssl_x509_read($caFile);
   $caCertParsed = openssl_x509_parse($caCert, TRUE);
@@ -630,7 +632,7 @@ function _xi_verify_cert($objKeyInfo) {
 /**
  * Get client IP.
  */
-function _xi_get_client_ip() {
+function _ding_innskraning_get_client_ip() {
   $keys = array(
     'HTTP_CLIENT_IP',
     'HTTP_X_FORWARDED_FOR',
