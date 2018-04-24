@@ -272,7 +272,7 @@ class AlephClient {
    * @param string $reference
    *   Identification of the payment.
    *
-   * @return \SimpleXMLElement|false
+   * @return \SimpleXMLElement
    *   The SimpleXMLElement from the raw XML response.
    *
    * @throws AlephClientException
@@ -288,17 +288,11 @@ class AlephClient {
     $xml->addChild('pay-reference', $reference);
     $options['body'] = 'post_xml=' . $xml->asXML();
 
-    $response = $this->requestRest(
+    return $this->requestRest(
       'PUT',
       'patron/' . $patron->getId() . '/circulationActions/cash',
       $options
     );
-
-    if ((string) $response->xpath('reply-code')[0] === '0000') {
-      return TRUE;
-    }
-
-    return FALSE;
   }
 
   /**

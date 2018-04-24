@@ -176,7 +176,13 @@ class AlephPatronHandler extends AlephHandlerBase {
    *   Whether the payments was registered.
    */
   public function addPayment($amount, $reference) {
-    return $this->client->addPayment($this->getPatron(), $amount, $reference);
+    $response = $this->client->addPayment($this->getPatron(), $amount, $reference);
+
+    if ((string) $response->xpath('reply-code')[0] === '0000') {
+      return TRUE;
+    }
+
+    return FALSE;
   }
 
   /**
