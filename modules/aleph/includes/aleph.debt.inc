@@ -51,6 +51,9 @@ function aleph_debt_list() {
  *   IDs of the paid debts.
  * @param mixed $order_id
  *   Order ID of the payment transaction, to be recorded in the backend system.
+ *
+ * @return bool
+ *   Whether the registration succeeded.
  */
 function aleph_debt_payment_received($amount, array $debt_ids = array(), $order_id = NULL) {
   $patron = aleph_get_patron_by_account();
