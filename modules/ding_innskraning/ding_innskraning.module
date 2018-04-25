@@ -306,7 +306,7 @@ AUTHNREQUEST;
  */
 function _ding_innskraning_get_key($name = FALSE) {
   $key = NULL;
-  $file_location = DRUPAL_ROOT . '/' . libraries_get_path('xmlseclibs') . '/certs/traustur_bunadur.pem';
+  $file_location = drupal_get_path('module', 'ding_innskraning') . '/certs/traustur_bunadur.pem';
 
   if ($name) {
     return $file_location;
