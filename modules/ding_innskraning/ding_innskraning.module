@@ -1,5 +1,8 @@
 <?php
 
+use RobRichards\XMLSecLibs\XMLSecEnc;
+use RobRichards\XMLSecLibs\XMLSecurityDSig;
+
 /**
  * @file
  * Provides login via https://innskraning.island.is.
@@ -57,10 +60,60 @@ function ding_innskraning_menu() {
 }
 
 /**
+ * Implements hook_libraries_info().
+ */
+function ding_innskraning_libraries_info() {
+  $libraries = array();
+
+  $libraries['xmlseclibs'] = array(
+    'name' => 'XML Encryption and Signatures',
+    'vendor url' => 'http://github.com/robrichards/xmlseclibs.git',
+    'download url' => 'http://github.com/robrichards/xmlseclibs.git',
+    'version arguments' => array(
+      'file'    => 'xmlseclibs.php',
+      'pattern' => '/@version\s*(.*)$/',
+      'lines'   => 100,
+    ),
+    'files' => array(
+      'php' => array(
+        'xmlseclibs.php',
+      ),
+    ),
+  );
+
+  $libraries['php-saml'] = array(
+    'name' => 'Simple SAML toolkit for PHP',
+    'vendor url' => 'https://github.com/onelogin/php-saml',
+    'download url' => 'https://github.com/onelogin/php-saml/archive/master.zip',
+    'version arguments' => array(
+      'file'    => 'CHANGELOG',
+      'pattern' => '/v\.([0-9a-zA-Z\.-]+)/',
+    ),
+    'files' => array(
+      'php' => array(
+        'extlib/xmlseclibs/xmlseclibs.php',
+        'lib/Saml2/Auth.php',
+        'lib/Saml2/AuthnRequest.php',
+        'lib/Saml2/Constants.php',
+        'lib/Saml2/Error.php',
+        'lib/Saml2/LogoutRequest.php',
+        'lib/Saml2/LogoutResponse.php',
+        'lib/Saml2/Metadata.php',
+        'lib/Saml2/Response.php',
+        'lib/Saml2/Settings.php',
+        'lib/Saml2/Utils.php',
+      ),
+    ),
+  );
+
+  return $libraries;
+}
+
+/**
  * Create the login link for https://innskraning.island.is.
  */
 function ding_innskraning_saml_login() {
-  include libraries_get_path('xmlseclibs') . '/xmlseclibs.php';
+  libraries_load('xmlseclibs');
 
   $provider_url = 'https://innskraning.island.is';
   $url = $provider_url;
@@ -365,7 +418,7 @@ function _ding_innskraning_verify($xmlDoc) {
   global $base_url;
 
   // Load library.
-  include libraries_get_path('xmlseclibs') . '/xmlseclibs.php';
+  libraries_load('xmlseclibs');
 
   // Check SAML version.
   if ($xmlDoc->documentElement->getAttribute('Version') != '2.0') {
