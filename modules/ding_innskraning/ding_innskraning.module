@@ -125,7 +125,7 @@ function ding_innskraning_saml_endpoint() {
   // Retrieve SSN.
   $ssn = _ding_innskraning_get_attribute_by_name($dom, 'UserSSN');
   // Provide a message.
-  watchdog('ding_innskraning', "Attempt to login %name", array('%name' => $name), WATCHDOG_DUBUG);
+  watchdog('ding_innskraning', "Attempt to login %name", array('%name' => $name), WATCHDOG_DEBUG);
   // Verify response.
   try {
     _ding_innskraning_verify($dom);
