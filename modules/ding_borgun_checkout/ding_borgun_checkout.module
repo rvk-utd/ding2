@@ -1,0 +1,361 @@
+<?php
+
+/**
+ * @file
+ * Pay ding depts using Borgun.Checkout.
+ */
+
+use GuzzleHttp\Client as HttpClient;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\RequestException;
+
+/**
+ * Implements hook_menu().
+ */
+function ding_borgun_checkout_menu() {
+  $items = array();
+
+  $items['admin/config/ding/ding_borgun_checkout'] = array(
+    'title' => 'Ding Borgun.Checkout',
+    'description' => 'Configure paying debts using Borgun.Checkout.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('ding_borgun_checkout_settings'),
+    'access arguments' => array('administer ding provider'),
+    'file' => 'ding_borgun_checkout.admin.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_libraries_info().
+ */
+function ding_borgun_checkout_libraries_info() {
+  return array(
+    'guzzle' => array(
+      'name' => 'Guzzle',
+      'vendor url' => 'https://github.com/guzzle/guzzle',
+      'download url' => 'https://github.com/guzzle/guzzle',
+      'version' => '6.2',
+      'xautoload' => function ($adapter) {
+        $adapter->composerJson('composer.json');
+      },
+    ),
+    'promises' => array(
+      'name' => 'Guzzle promises library',
+      'vendor url' => 'https://github.com/guzzle/promises',
+      'download url' => 'https://github.com/guzzle/promises',
+      'version' => '1.2',
+      'xautoload' => function ($adapter) {
+        $adapter->composerJson('composer.json');
+      },
+    ),
+    'http-message' => array(
+      'name' => 'Common interface for HTTP messages',
+      'vendor url' => 'https://github.com/php-fig/http-message',
+      'download url' => 'https://github.com/php-fig/http-message',
+      'version' => '1.0',
+      'xautoload' => function ($adapter) {
+        $adapter->composerJson('composer.json');
+      },
+    ),
+    'psr7' => array(
+      'name' => 'PSR-7 message implementation',
+      'vendor url' => 'https://github.com/guzzle/psr7',
+      'download url' => 'https://github.com/guzzle/psr7',
+      'version' => '1.3',
+      'xautoload' => function ($adapter) {
+        $adapter->composerJson('composer.json');
+      },
+    ),
+  );
+}
+
+/**
+ * Implements hook_ding_provider_user().
+ */
+function ding_borgun_checkout_ding_provider_user() {
+  return array(
+    'payment' => array(
+      'required' => TRUE,
+    ),
+  );
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Rather than implementing a payment provider, we're simply altering the debt
+ * form. It allows us to provide a better UX (no redirection back and forth
+ * between debts, payment gateway and confirmation pages), is simpler to
+ * implement (Borgun JS provides a token that can be passed to their API in form
+ * validation/submission). Secondly, we don't have to hack in the form to remove
+ * the "pay selected debts" (Aleph only support paying all debts).
+ */
+function ding_borgun_checkout_form_ding_debt_debts_form_alter(&$form, $form_state) {
+  $public_token = variable_get('ding_borgun_checkout_public_token', '');
+  if ($public_token && variable_get('ding_borgun_checkout_private_token', '')) {
+    // Dig the total out of the arguments provided to the form builder.
+    $amount = $form_state['build_info']['args'][2];
+    // Currently hardcoded.
+    $currency = 'ISK';
+    // ISO 4217, should match above.
+    $currency_code = 352;
+
+    // The hidden variable that Borgun.Checkout returns the token in.
+    $form['BorgunCheckoutToken'] = array(
+      '#type' => 'hidden',
+      '#default_value' => '',
+    );
+
+    // Amount and currency is set as data attributes on the button itself.
+    $attributes = array(
+      'data-amount' => $amount,
+      'data-amountcurrencycode' => $currency,
+    );
+
+    // Configuration that's set in Drupal.settings and passed to the Borgun JS.
+    $settings = array(
+      'publictoken' => $public_token,
+      'language' => 'IS',
+    );
+
+    if (variable_get('ding_borgun_checkout_company_name', '')) {
+      $settings['companyname'] = variable_get('ding_borgun_checkout_company_name', '');
+    }
+
+    if (variable_get('ding_borgun_checkout_company_slogan', '')) {
+      $settings['companyslogan'] = variable_get('ding_borgun_checkout_company_slogan', '');
+    }
+
+    $attributes['class'] = array('borgun-checkout');
+
+    $form['pay_all'] = array(
+      '#type' => 'submit',
+      '#value' => t('Pay'),
+      '#validate' => array('ding_borgun_checkout_validate'),
+      '#submit' => array('ding_borgun_checkout_submit'),
+      '#attributes' => $attributes,
+      // Pass info to the validate/submit handlers.
+      '#amount' => $amount,
+      '#currency' => $currency,
+      '#currency_code' => $currency_code,
+      '#attached' => array(
+        'js' => array(
+          // Main Borgun.Checkout script.
+          array(
+            'type' => 'external',
+            'data' => _ding_borgun_checkout_host() .
+            '/resources/js/borguncheckout/borguncheckout.v1.min.js',
+          ),
+          // Icelandic translation.
+          array(
+            'type' => 'external',
+            'data' => _ding_borgun_checkout_host() .
+            '/resources/js/borguncheckout/borguncheckout.v1.lang.is.js',
+          ),
+          array(
+            'type' => 'file',
+            'data' => drupal_get_path('module', 'ding_borgun_checkout') .
+            '/js/ding_borgun_checkout.js',
+          ),
+          array(
+            'type' => 'setting',
+            'data' => array('dingBorgunCheckout' => $settings),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/**
+ * Form validation handler.
+ */
+function ding_borgun_checkout_validate($form, &$form_state) {
+  $element = $form_state['triggering_element'];
+  $debts = $form_state['build_info']['args'][0];
+
+  $order_id = _ding_borgun_checkout_get_order_id();
+  if (!$order_id) {
+    watchdog('ding_borgun_checkout', 'Could not get lock for order id.', array(), WATCHDOG_ERROR);
+    form_set_error('', t('Error acquiring payment, please try again later.'));
+  }
+
+  $debt_ids = array_map(function ($debt) {
+    return $debt->id;
+  }, $debts);
+  $form_state['debt_ids'] = $debt_ids;
+  $meta = 'Payment for: ' . implode(', ', $debt_ids);
+
+  $form_state['transaction_id'] = _ding_borgun_checkout_capture_token(
+    $form_state['values']['BorgunCheckoutToken'],
+    $element['#amount'],
+    $element['#currency_code'],
+    $order_id,
+    $meta);
+  if (!$form_state['transaction_id']) {
+    form_set_error('', t('Error acquiring payment, please try again later.'));
+  }
+}
+
+/**
+ * Form submit handler.
+ */
+function ding_borgun_checkout_submit($form, &$form_state) {
+  $element = $form_state['triggering_element'];
+  ding_provider_invoke('debt', 'payment_received', $element['#amount'], $form_state['debt_ids'], $form_state['transaction_id']);
+}
+
+/**
+ * Get the host to use.
+ *
+ * Returns the proper hostname for test or live environments.
+ *
+ * @return string
+ *   The base url, without trailing slash.
+ */
+function _ding_borgun_checkout_host() {
+  return variable_get('ding_borgun_checkout_host', 'https://test.borgun.is');
+}
+
+/**
+ * Get an order id.
+ *
+ * Returns an unique order id. Borgun order ids needs to be exactly 12
+ * characters and can contain A-Z0-9.
+ *
+ * @return string|null
+ *   The order id, or null if locking failed.
+ */
+function _ding_borgun_checkout_get_order_id() {
+  $lock_id = 'ding_borgun_checkout_order_id';
+  // Use a lock to ensure that there's only one process that increment the order
+  // id at a time.
+  $locked = lock_acquire($lock_id);
+  if (!$locked) {
+    if (!lock_wait($lock_id, 30)) {
+      $locked = lock_acquire($lock_id);
+    }
+  }
+
+  if (!$locked) {
+    return NULL;
+  }
+
+  $counter = variable_get('ding_borgun_checkout_order_id_next', '1');
+  variable_set('ding_borgun_checkout_order_id_next', $counter + 1);
+  lock_release($lock_id);
+  $prefix = variable_get('ding_borgun_checkout_order_id_prefix', '');
+  // Using strlen is safe, we've limited the prefix to A-Z.
+  $padding = 12 - strlen($prefix);
+  return sprintf('%s%0' . $padding . 'd', $prefix, $counter);
+}
+
+/**
+ * Capture single use token.
+ *
+ * Authorizes and captures a payment using a single use token from
+ * Borgun.Checkout.
+ *
+ * @param string $token
+ *   Token supplied by Borgun.Checkout.
+ * @param int|float $amount
+ *   Payment amount. Will be rounded down to two decimal places.
+ * @param int $currency_code
+ *   The ISO 4217 currency code of the payment.
+ * @param string $order_id
+ *   Order ID of payment.
+ * @param string $meta
+ *   Additional information.
+ *
+ * @return string|false
+ *   Transaction id or false on failure.
+ */
+function _ding_borgun_checkout_capture_token($token, $amount, $currency_code, $order_id, $meta) {
+  $body = array(
+    "TransactionType" => "Sale",
+    // Amount with 2 decimal points, as an integer. JPY is an exception, but
+    // we're not supporting that.
+    "Amount" => floor($amount * 100),
+    // ISO 4217 currency code.
+    "Currency" => $currency_code,
+    // ISO 8601.
+    "TransactionDate" => date("c", REQUEST_TIME),
+    "PaymentMethod" => array(
+      "PaymentType" => "TokenSingle",
+      "Token" => $token,
+    ),
+    "OrderId" => $order_id,
+    "Metadata" => array(
+      "Payload" => $meta,
+    ),
+
+  );
+
+  $private_token = variable_get('ding_borgun_checkout_private_token', '');
+
+  $options = array(
+    'auth' => array($private_token, ''),
+    'base_uri' => _ding_borgun_checkout_host() . '/rpg/api/',
+  );
+  $client = new HttpClient($options);
+
+  try {
+    $response = $client->post('payment', array('json' => $body));
+  }
+  catch (ClientException $e) {
+    switch ($e->getCode()) {
+      case 400:
+        $error = json_decode((string) $e->getResponse()->getBody());
+        watchdog('ding_borgun_checkout', 'Form error in capture: @error',
+          array('@error' => $error->Message), WATCHDOG_ERROR);
+        break;
+
+      case 401:
+        watchdog('ding_borgun_checkout', 'Error in capture: Unauthorized',
+          array(), WATCHDOG_ERROR);
+        break;
+
+      default:
+        watchdog('ding_borgun_checkout', 'Unknown client error code %code, please contact the developer, response: @response',
+          array(
+            '%code' => $response->getStatusCode(),
+            '@response' => print_r((string) $e->geetResponse()->getBody(), TRUE),
+          ),
+          WATCHDOG_WARNING);
+    }
+
+    return FALSE;
+  }
+  catch (Exception $e) {
+    if ($e instanceof RequestException && $e->getResponse()) {
+      watchdog('ding_borgun_checkout', 'Unrecognized %code response in capture: @response',
+        array(
+          '%code' => $e->getResponse()->getStatusCode(),
+          '@response' => print_r((string) $e->getResponse()->getBody(), TRUE),
+        ), WATCHDOG_ERROR);
+      return FALSE;
+    }
+    watchdog('ding_borgun_checkout', 'Error in capture: @message',
+      array('@message' => $e->getMessage), WATCHDOG_ERROR);
+    return FALSE;
+  }
+
+  if ($response->getStatusCode() == 201) {
+    $transaction = json_decode((string) $response->getBody());
+    if ($transaction->TransactionStatus == 'Accepted') {
+      return $transaction->TransactionId;
+    }
+    else {
+      watchdog('ding_borgun_checkout', 'Transation rejected: @response',
+        array('@response' => print_r((string) $e->getResponse()->getBody(), TRUE)), WATCHDOG_ERROR);
+      return FALSE;
+    }
+  }
+  else {
+    watchdog('ding_borgun_checkout', 'Unknown success code %code, please contact the developer',
+      array('%code' => $response->getStatusCode()), WATCHDOG_WARNING);
+    return "unknown";
+  }
+}
