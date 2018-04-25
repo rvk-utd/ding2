@@ -505,9 +505,10 @@ function _ding_innskraning_verify($xmlDoc) {
     throw new Exception("Reference Validation Failed");
   }
 
-  // Check token to ensure that the auth request originated from us.
-  $saml_token = _ding_innskraning_get_attribute_by_name($xmlDoc, 'AuthID');
-  $token = $_SESSION['ding_innskraning_token'];
+  // Check token to ensure that the auth request originated from us. And
+  // island.is doesn't keep the casing, so fold to lower case.
+  $saml_token = drupal_strtolower(_ding_innskraning_get_attribute_by_name($xmlDoc, 'AuthID'));
+  $token = drupal_strtolower($_SESSION['ding_innskraning_token']);
   if ($token && $saml_token !== $token) {
     watchdog(
       'ding_innskraning',
