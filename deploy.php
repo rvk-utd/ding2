@@ -7,7 +7,10 @@ require 'recipe/common.php';
 // Configuration.
 set('ssh_type', 'native');
 
-set('drush', '/home/webmaster/.config/composer/vendor/bin/drush');
+// This is our workspace for building new releases.
+set('build_path', '{{deploy_path}}/build');
+
+set('drush', '{{build_path}}/vendor/bin/drush');
 // The following "binaries" are all symlinks /opt/rh-* where the actual
 // binary can be found.
 set('composer', '/home/webmaster/bin/composer');
@@ -100,9 +103,7 @@ server('live', 'live-bbsding.borgarbokasafn.is')
 
 desc("Ensure the profile has been checked out");
 task('build:prepare', function () {
-  $repository = trim(get('repository'));
   $what = get('branch');
-  $git = get('bin/git');
 
   if (input()->hasOption('branch')) {
     $branch = input()->getOption('branch');
@@ -125,42 +126,42 @@ task('build:prepare', function () {
     }
   }
 
-  $sha = runLocally("$git rev-list -1 $what");
+  $sha = runLocally("{{bin/git}} rev-list -1 $what");
 
-  cd('{{deploy_path}}');
-  if (!test('[ -d build ]')) {
-    run("$git clone $repository build");
-    cd('{{deploy_path}}/build');
+  if (!test('[ -d {{build_path}} ]')) {
+    run("{{bin/git}} clone {{repository}} {{build_path}}");
+    cd('{{build_path}}');
   }
   else {
-    cd('{{deploy_path}}/build');
-    run("$git fetch");
+    // We have an existing workspace we can utilize for faster operations.
+    // Ensure that it is clean and up to date.
+    cd('{{build_path}}');
+    run("{{bin/git}} clean -d -f -x");
+    run("{{bin/git}} fetch");
   }
 
-  run("$git checkout $sha");
+  run("{{bin/git}} checkout $sha");
 });
 
-task('build:core', function () {
-  $releasePath = get('release_path');
+task('build:site', function () {
   // Drush make doesn't like overwriting an existing directory.
-  run("rmdir $releasePath");
-  run("{{drush}} make {{deploy_path}}/build/drupal.make --projects=drupal -y $releasePath");
+  run("rmdir {{release_path}}");
+  run("{{drush}} make {{build_path}}/drupal.make --projects=drupal -y {{release_path}}");
+  run('cp -ar {{build_path}} {{release_path}}/profiles/ding2');
 })
-  ->desc("Build core.");
+  ->desc("Assemble an entire Drupal site from the built profile.");
 
 desc("Build ding2.");
 task('build:ding2', function () {
-  cd('{{deploy_path}}');
-  run('cp -ar build {{release_path}}/profiles/ding2');
-  cd('{{release_path}}/profiles/ding2');
-  writeln("<info>Drush install'ing ding2</info>");
-  run("{{drush}} make ding2.make --no-core -y --contrib-destination=.");
-
-  cd('{{release_path}}/profiles/ding2');
+  cd('{{build_path}}');
   if (test('[ -f composer.json ]')) {
     writeln("<info>Composer install'ing ding2</info>");
     run("{{composer}} install");
   }
+
+  writeln("<info>Drush install'ing ding2</info>");
+  run("{{drush}} make ding2.make --no-core -y --contrib-destination=.");
+
   if (test('[ -f modules/aleph/composer.json ]')) {
     writeln("<info>Composer install'ing Aleph</info>");
     run("{{composer}} --working-dir=modules/aleph install");
@@ -170,7 +171,7 @@ task('build:ding2', function () {
     run("{{composer}} --working-dir=modules/ding_test install");
   }
 
-  cd('{{release_path}}/profiles/ding2/themes/ddbasic');
+  cd('{{build_path}}/themes/ddbasic');
   writeln("<info>NPM install'ing ding2</info>");
   run("{{npm}} install");
   writeln("<info>Compiling css</info>");
@@ -200,6 +201,12 @@ desc("Set site online.");
 task('drush:site_online', function () {
   cd('{{release_path}}');
   run("{{drush}} vset site_offline 0");
+});
+
+desc("Regenerate CSS.");
+task('drush:css_generate', function () {
+  cd('{{release_path}}');
+  run("{{drush}} css-generate");
 });
 
 // TODO: Clean up old DB dumps.
@@ -265,12 +272,13 @@ task('deploy', [
   'deploy:lock',
   'deploy:release',
   'build:prepare',
-  'build:core',
   'build:ding2',
+  'build:site',
   'deploy:shared',
   'drush:db_dump',
   'drush:site_offline',
   'drush:updb',
+  'drush:css_generate',
   'drush:ccall',
   'drush:site_online',
   'deploy:symlink',
