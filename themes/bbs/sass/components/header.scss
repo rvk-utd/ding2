@@ -96,6 +96,12 @@ Styles for the header
     background-color: rgba(0, 0, 0, 0.2);
 
     span.details {
+      color: #fff;
+      margin: 25px;
+      width: 100%;
+      display: none;
+      cursor: pointer;
+
      .logged-in & {
        display: block;
      }
@@ -103,6 +109,16 @@ Styles for the header
 
     &::after {
       display: none;
+    }
+    
+    .user-menu {
+      .links {
+        display: none;
+
+        &.open {
+          display: block;
+        }
+      }
     }
   }
 

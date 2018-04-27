@@ -59,12 +59,6 @@ function bbs_menu_link__menu_tabs_menu($vars) {
 
     $element = $vars['element'];
 
-    $sub_menu = '';
-
-    if ($element['#below']) {
-        $sub_menu = drupal_render($element['#below']);
-    }
-
     // Add default class to a tag.
     $element['#localized_options']['attributes']['class'] = array(
         'menu-item',
@@ -150,20 +144,15 @@ function bbs_menu_link__menu_tabs_menu($vars) {
                 }
                 // Add dropdown menu
                 $user_menu = menu_navigation_links('user-menu');
-                $element['#title'] .= '<div class="user-menu">' . theme('links__menu_your_custom_menu_name', array('links' => $user_menu)) . '</div>';
+                $output = '<span class="details">' . $element['#title'] . '</span>' . '<div class="user-menu">';
+                $output .= theme('links__menu_your_custom_menu_name', array('links' => $user_menu)) . '</div>';
+                return '<li' . drupal_attributes($element['#attributes']) . '>' . $output . "</li>\n";
             }
             else {
                 $element['#title'] = t('My Account');
                 $element['#attributes']['class'][] = 'topbar-link-user';
                 $element['#localized_options']['attributes']['class'][] = 'topbar-link-user';
             }
-            break;
-
-        case 'user/logout':
-            $title_prefix = '<i class="icon icon-signout"></i>';
-            $element['#localized_options']['attributes']['class'][] = 'topbar-link-signout';
-            $element['#attributes']['class'][] = 'topbar-link-signout';
-
             break;
 
         case 'libraries':
@@ -173,7 +162,6 @@ function bbs_menu_link__menu_tabs_menu($vars) {
             break;
 
         default:
-            $title_prefix = '<i class="icon icon-align-justify"></i>';
             $element['#localized_options']['attributes']['class'][] = 'topbar-link-menu';
             $element['#attributes']['class'][] = 'topbar-link-menu';
             $output = '<div class="topbar-link-menu-inner">' . '<span></span><span></span><span></span><span></span>' . '</div>';
@@ -181,7 +169,7 @@ function bbs_menu_link__menu_tabs_menu($vars) {
     }
 
     $output = l($title_prefix . '<span class="details">' . $element['#title'] . '</span>' . $title_suffix, $element['#href'], $element['#localized_options']);
-    return '<li' . drupal_attributes($element['#attributes']) . '>' . $output . $sub_menu . "</li>\n";
+    return '<li' . drupal_attributes($element['#attributes']) . '>' . $output . "</li>\n";
 }
 
 function bbs_form_search_block_form_alter(&$form, &$form_state, $form_id) {

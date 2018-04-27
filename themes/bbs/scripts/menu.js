@@ -6,13 +6,12 @@
     Drupal.behaviors.menu = {
         attach: function (context) {
             var topbar_menu_btn = $('li.topbar-link-menu', context),
-                topbar_link_user = $('a.topbar-link-user', context),
+                topbar_link_user = $('.topbar-link-user .details', context),
                 close_user_login = $('.close-user-login', context),
                 body = $('body'),
                 topbar_menu = $('.topbar-link-menu-inner'),
                 topbar = $('.topbar'),
                 main_menu_button = $('a.menu-button'),
-                sub_menu_button = $('a.submenu-button'),
                 sub_menu = $('.sub-menu'),
                 top = 80,
                 admin_menu_offset = $('#admin-menu').outerHeight() || 0,
@@ -34,11 +33,14 @@
             });
 
             topbar_link_user.on('click', function (evt) {
+                evt.preventDefault();
                 if (!body.hasClass('logged-in')) {
-                    evt.preventDefault();
                     body.removeClass('menu-is-open');
                     topbar_menu.removeClass('active');
                     ddbasic.openLogin();
+                }
+                else {
+                    $('ul.links').toggleClass('open');
                 }
             });
 
@@ -50,7 +52,7 @@
 
             main_menu_button.each(function () {
                 if ($(this).hasClass('active')) {
-                    $(this).parent().addClass('expanded')
+                    $(this).parent().addClass('expanded');
                     $(this).parent().find('.sub-menu').removeClass('hidden');
 
                     var color = $(this).attr('id');
@@ -63,7 +65,7 @@
                 }
             });
 
-            main_menu_button.hover(function (evt) {
+            main_menu_button.hover(function () {
                 if ($(this).parent().parent().parent().hasClass('sub-menu')) {
                     return;
                 }
