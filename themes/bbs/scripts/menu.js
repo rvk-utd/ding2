@@ -6,7 +6,8 @@
     Drupal.behaviors.menu = {
         attach: function (context) {
             var topbar_menu_btn = $('li.topbar-link-menu', context),
-                topbar_link_user = $('.topbar-link-user .details', context),
+                topbar_link_user = $('a.topbar-link-user', context),
+                user_menu = $('.topbar-link-user span.details', context),
                 close_user_login = $('.close-user-login', context),
                 body = $('body'),
                 topbar_menu = $('.topbar-link-menu-inner'),
@@ -39,7 +40,10 @@
                     topbar_menu.removeClass('active');
                     ddbasic.openLogin();
                 }
-                else {
+            });
+
+            user_menu.on('click', function(evt) {
+                if (body.hasClass('logged-in')) {
                     $('ul.links').toggleClass('open');
                 }
             });
