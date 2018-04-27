@@ -50,7 +50,7 @@ function bbs_menu_link__main_menu($vars) {
  */
 function bbs_menu_link__menu_tabs_menu($vars) {
     global $user;
-    global $language ;
+    global $language;
 
     // Check if the class array is empty.
     if (empty($vars['element']['#attributes']['class'])) {
@@ -106,8 +106,9 @@ function bbs_menu_link__menu_tabs_menu($vars) {
             $title_suffix = '<i class="icon icon-arrow-down"></i>';
             // If a user is logged in we change the menu item title.
             if (user_is_logged_in()) {
+                $user_name = property_exists($user, display_name) ? $user->display_name : $user->name;
                 $element['#href'] = 'user/me/view';
-                $element['#title'] = $user->name;
+                $element['#title'] = $user_name;
                 $element['#attributes']['class'][] = 'topbar-link-user';
                 $element['#localized_options']['attributes']['class'][] = 'topbar-link-user';
 
