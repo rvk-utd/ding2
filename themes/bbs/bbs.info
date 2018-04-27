@@ -27,6 +27,7 @@ stylesheets[all][] = sass_css/components/messages.css
 ;// Overridden JS from base theme
 scripts[] = scripts/menu.js
 scripts[] = scripts/node/event.js
+scripts[] = scripts/ting-object/ting-object.js
 
 scripts[] = scripts/event-carousel.js
 

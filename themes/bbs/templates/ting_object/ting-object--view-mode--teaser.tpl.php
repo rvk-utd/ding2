@@ -10,7 +10,7 @@
  */
  hide($content['ding_serendipity_info']);
 ?>
-<div class="<?php print $classes; ?> book">
+<div class="book book-teaser">
   <div class="inner">
     <a href="<?php print $ting_object_url_object; ?>">
       <?php print render($content['ting_cover']); ?>
