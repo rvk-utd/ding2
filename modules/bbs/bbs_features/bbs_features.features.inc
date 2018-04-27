@@ -247,6 +247,113 @@ function bbs_features_fe_nodequeue_export_fields() {
     'count' => 0,
   );
 
+  // Exported nodequeues: inspiration_main_content
+  $nodequeues['inspiration_main_content'] = array(
+    'name' => 'inspiration_main_content',
+    'title' => 'Inspiration Main Content',
+    'subqueue_title' => '',
+    'size' => 1,
+    'link' => '',
+    'link_remove' => '',
+    'owner' => 'nodequeue',
+    'show_in_ui' => 1,
+    'show_in_tab' => 1,
+    'show_in_links' => 0,
+    'reference' => 0,
+    'reverse' => 0,
+    'insert_at_front' => 0,
+    'i18n' => 0,
+    'subqueues' => 1,
+    'types' => array(
+      0 => 'ding_event',
+      1 => 'ding_group',
+      2 => 'ding_news',
+      3 => 'ding_page',
+    ),
+    'roles' => array(),
+    'count' => 0,
+  );
+
+  // Exported nodequeues: inspiration_subcontent_lower_lef
+  $nodequeues['inspiration_subcontent_lower_lef'] = array(
+    'name' => 'inspiration_subcontent_lower_lef',
+    'title' => 'Inspiration subcontent lower left',
+    'subqueue_title' => '',
+    'size' => 2,
+    'link' => '',
+    'link_remove' => '',
+    'owner' => 'nodequeue',
+    'show_in_ui' => 1,
+    'show_in_tab' => 1,
+    'show_in_links' => 0,
+    'reference' => 0,
+    'reverse' => 0,
+    'insert_at_front' => 0,
+    'i18n' => 0,
+    'subqueues' => 1,
+    'types' => array(
+      0 => 'ding_event',
+      1 => 'ding_group',
+      2 => 'ding_library',
+      3 => 'ding_news',
+    ),
+    'roles' => array(),
+    'count' => 0,
+  );
+
+  // Exported nodequeues: inspiration_subcontent_lower_rig
+  $nodequeues['inspiration_subcontent_lower_rig'] = array(
+    'name' => 'inspiration_subcontent_lower_rig',
+    'title' => 'Inspiration subcontent lower right',
+    'subqueue_title' => '',
+    'size' => 1,
+    'link' => '',
+    'link_remove' => '',
+    'owner' => 'nodequeue',
+    'show_in_ui' => 1,
+    'show_in_tab' => 1,
+    'show_in_links' => 0,
+    'reference' => 0,
+    'reverse' => 0,
+    'insert_at_front' => 0,
+    'i18n' => 0,
+    'subqueues' => 1,
+    'types' => array(
+      0 => 'ding_event',
+      1 => 'ding_group',
+      2 => 'ding_news',
+      3 => 'ding_page',
+    ),
+    'roles' => array(),
+    'count' => 0,
+  );
+
+  // Exported nodequeues: inspiration_subcontent_upper
+  $nodequeues['inspiration_subcontent_upper'] = array(
+    'name' => 'inspiration_subcontent_upper',
+    'title' => 'Inspiration Subcontent upper',
+    'subqueue_title' => '',
+    'size' => 1,
+    'link' => '',
+    'link_remove' => '',
+    'owner' => 'nodequeue',
+    'show_in_ui' => 1,
+    'show_in_tab' => 1,
+    'show_in_links' => 0,
+    'reference' => 0,
+    'reverse' => 0,
+    'insert_at_front' => 0,
+    'i18n' => 0,
+    'subqueues' => 1,
+    'types' => array(
+      0 => 'ding_event',
+      1 => 'ding_news',
+      2 => 'ding_page',
+    ),
+    'roles' => array(),
+    'count' => 0,
+  );
+
   // Exported nodequeues: literature_main_content
   $nodequeues['literature_main_content'] = array(
     'name' => 'literature_main_content',
@@ -291,6 +398,32 @@ function bbs_features_fe_nodequeue_export_fields() {
     'subqueues' => 1,
     'types' => array(
       0 => 'ding_event',
+      1 => 'ding_news',
+      2 => 'ding_page',
+    ),
+    'roles' => array(),
+    'count' => 0,
+  );
+
+  // Exported nodequeues: we_recommend
+  $nodequeues['we_recommend'] = array(
+    'name' => 'we_recommend',
+    'title' => 'Recommended content',
+    'subqueue_title' => '',
+    'size' => 0,
+    'link' => '',
+    'link_remove' => '',
+    'owner' => 'nodequeue',
+    'show_in_ui' => 1,
+    'show_in_tab' => 1,
+    'show_in_links' => 0,
+    'reference' => 0,
+    'reverse' => 0,
+    'insert_at_front' => 0,
+    'i18n' => 0,
+    'subqueues' => 1,
+    'types' => array(
+      0 => 'ding_group',
       1 => 'ding_news',
       2 => 'ding_page',
     ),
