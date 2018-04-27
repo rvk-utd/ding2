@@ -147,6 +147,9 @@ function bbs_menu_link__menu_tabs_menu($vars) {
                         $element['#title'] .= '<div class="notification-count notification-count-type-' . $notification['type'] . '">' . $notification['count'] . '</div>';
                     }
                 }
+                // Add dropdown menu
+                $user_menu = menu_navigation_links('user-menu');
+                $element['#title'] .= '<div class="user-menu">' . theme('links__menu_your_custom_menu_name', array('links' => $user_menu)) . '</div>';
             }
             else {
                 $element['#title'] = t('My Account');
