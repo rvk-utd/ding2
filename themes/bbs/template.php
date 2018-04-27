@@ -100,7 +100,7 @@ function bbs_menu_link__menu_tabs_menu($vars) {
             $title_suffix = '<i class="icon icon-arrow-down"></i>';
             // If a user is logged in we change the menu item title.
             if (user_is_logged_in()) {
-                $user_name = property_exists($user, display_name) ? $user->display_name : $user->name;
+                $user_name = (!empty($user->data['display_name'])) ? $user->data['display_name'] : $user->name;
                 $element['#href'] = 'user/me/view';
                 $element['#title'] = $user_name;
                 $element['#attributes']['class'][] = 'topbar-link-user';
