@@ -51,4 +51,4 @@ features[views_view][] = literature_sub_content
 features[views_view][] = recommended_content
 features_exclude[dependencies][ctools] = ctools
 features_exclude[dependencies][nodequeue] = nodequeue
-mtime = 1523832387
+mtime = 1523874270
