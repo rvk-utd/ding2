@@ -1,1 +1,25 @@
-/* Empty file */
+@import '../../../../ddbasic/sass/base.scss';
+
+.close-user-login {
+  @include place-icon(close);
+  width: 24px;
+  height: 24px;
+  float: right;
+  margin-bottom: 30px;
+  cursor: pointer;
+  &::after {
+    @include transform(translate(-50%, -50%));
+    @include transition(color $speed $ease);
+    top: 50%;
+    left: 50%;
+  }
+  &:hover {
+    &::after {
+      color: $color-text-link;
+    }
+  }
+
+  @include media($mobile) {
+    display: none;
+  }
+}
