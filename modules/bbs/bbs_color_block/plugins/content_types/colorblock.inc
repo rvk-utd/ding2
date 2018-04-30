@@ -33,16 +33,35 @@ function bbs_color_block_colorblock_content_type_admin_title($subtype, $conf, $c
 function bbs_color_block_colorblock_edit_form($form, &$form_state) {
     $conf = $form_state['conf'];
 
-    $form['nid'] = array(
+    $text = empty($conf['text']) ? 'Lesa meira' : $conf['text'];
+
+
+    $form['title'] = array(
         '#type' => 'textfield',
-        '#title' => t('Node Id'),
-        '#default_value' => $conf['nid'],
+        '#title' => t('Title'),
+        '#default_value' => $conf['title'],
+        '#required' => TRUE,
+    );
+
+    $form['path'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Path to node'),
+        '#default_value' => $conf['path'],
+        '#required' => TRUE,
     );
 
     $form['color'] = array(
         '#type' => 'textfield',
         '#title' => t('Color - Hex'),
         '#default_value' => $conf['color'],
+        '#required' => TRUE,
+    );
+
+    $form['text'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Read more text'),
+        '#description' => t('Default value is "Lesa meira"'),
+        '#default_value' => $text,
     );
 
     return $form;
@@ -52,7 +71,9 @@ function bbs_color_block_colorblock_edit_form($form, &$form_state) {
  * Panel pane configuration form submit handler.
  */
 function bbs_color_block_colorblock_edit_form_submit(&$form, &$form_state) {
-    $form_state['conf']['nid'] = $form_state['values']['nid'];
+    $form_state['conf']['title'] = $form_state['values']['title'];
+    $form_state['conf']['path'] = $form_state['values']['path'];
+    $form_state['conf']['text'] = $form_state['values']['text'];
     $form_state['conf']['color'] = $form_state['values']['color'];
 }
 
@@ -62,18 +83,10 @@ function bbs_color_block_colorblock_edit_form_submit(&$form, &$form_state) {
  */
 function bbs_color_block_pane_colorblock_render($subtype, $conf, $args, $contexts) {
 
-  // Update the strings to allow contexts.
-  if (!empty($contexts)) {
-    $content = $conf['color'];
-  }
 
-  $node = node_load($conf['nid']);
-  $title = $node -> title;
-  $path = 'node/' . $node -> nid;
-  $alias = drupal_get_path_alias($path);
-  $link = l(t('Read More'), $alias, array('attributes' => array('class' => array('underline'))));
+  $link = l($conf['text'], $conf['path'], array('attributes' => array('class' => array('underline'))));
   $block = new stdClass();
-  $block->content = '<div style="background-color:' . $conf['color'] . ';"><div class="text">' . $title . '</div><div class="underline">' . $link . '</div></div>';
+  $block->content = '<div style="background-color:' . $conf['color'] . ';"><div class="text">' . $conf['title'] . '</div><div class="underline">' . $link . '</div></div>';
   return $block;
 }
  
