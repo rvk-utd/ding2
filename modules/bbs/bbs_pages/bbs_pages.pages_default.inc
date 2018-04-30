@@ -1351,7 +1351,7 @@ function bbs_pages_default_page_manager_pages()
         'override_title' => 0,
         'override_title_text' => '',
         'override_title_heading' => 'h2',
-        'title' => 'Nýr á safninu',
+        'title' => 'Nýr á safninu?',
         'path' => '#',
     );
     $pane->cache = array();
