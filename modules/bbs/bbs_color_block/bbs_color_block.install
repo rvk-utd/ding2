@@ -1,0 +1,40 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the bbs_color_block module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function bbs_color_block_install() {
+    @drupal_mkdir('public://bbs_color_block');
+    bbs_color_block_add_shortcut();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function bbs_color_block_uninstall() {
+    @drupal_rmdir('public://bbs_color_block');
+}
+
+/**
+ * Add a shortcut for configuring bbs_color_block.
+ */
+function bbs_color_block_add_shortcut() {
+    if (module_exists('shortcut')) {
+        // Add shortcut to carousel.
+        $shortcut_set = shortcut_set_load(SHORTCUT_DEFAULT_SET_NAME);
+        $shortcut_set->links = array(
+            array(
+                'link_path' => 'admin/config/ting/bbs_color_block',
+                'link_title' => st('Configure carousel'),
+                'weight' => -14,
+            ),
+        );
+
+        shortcut_set_save($shortcut_set);
+    }
+}
