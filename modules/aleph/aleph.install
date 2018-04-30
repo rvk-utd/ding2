@@ -43,7 +43,17 @@ function aleph_requirements($phase) {
 function aleph_uninstall() {
   variable_del('aleph_base_url');
   variable_del('aleph_base_url_rest');
-  variable_del('aleph_main_library');
+  variable_del('aleph_catalog_library');
   variable_del('aleph_enable_reservation_deletion');
   variable_del('aleph_enable_logging');
+}
+
+/**
+ * Rename aleph_main_library to aleph_catalog_library.
+ */
+function aleph_update_7101() {
+  $catalog_library = variable_get('aleph_main_library', NULL);
+  if ($catalog_library) {
+    variable_set('aleph_catalog_library', $catalog_library);
+  }
 }

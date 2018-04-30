@@ -165,6 +165,27 @@ class AlephPatronHandler extends AlephHandlerBase {
   }
 
   /**
+   * Create patron payment.
+   *
+   * @param int $amount
+   *   The amount of the payment.
+   * @param string $reference
+   *   Transaction id or other reference to the payment.
+   *
+   * @return bool
+   *   Whether the payments was registered.
+   */
+  public function addPayment($amount, $reference) {
+    $response = $this->client->addPayment($this->getPatron(), $amount, $reference);
+
+    if ((string) $response->xpath('reply-code')[0] === '0000') {
+      return TRUE;
+    }
+
+    return FALSE;
+  }
+
+  /**
    * Get a patron's reservations.
    *
    * @return AlephReservation[]

@@ -27,9 +27,7 @@ function aleph_debt_list() {
     watchdog_exception('aleph', $e);
   }
 
-  $id = 0;
   foreach ($debts as $debt) {
-    $id++;
     $data = array(
       'date' => $debt->getDate(),
       'display_name' => $debt->getDebtMaterial()->getTitle(),
@@ -38,14 +36,38 @@ function aleph_debt_list() {
       'invoice_number' => NULL,
       'type' => $debt->getType(),
     );
-    $result[$id] = new DingProviderDebt($id, $data);
+    $result[$debt->getId()] = new DingProviderDebt($debt->getId(), $data);
   }
 
   return $result;
 }
 
-function aleph_debt_payment_received() {
-  return array();
+/**
+ * Mark debts as paid.
+ *
+ * @param float $amount
+ *   The total amount paid.
+ * @param array $debt_ids
+ *   IDs of the paid debts.
+ * @param mixed $order_id
+ *   Order ID of the payment transaction, to be recorded in the backend system.
+ *
+ * @return bool
+ *   Whether the registration succeeded.
+ */
+function aleph_debt_payment_received($amount, array $debt_ids = array(), $order_id = NULL) {
+  $patron = aleph_get_patron_by_account();
+  $patron_handler = new AlephPatronHandler(aleph_client());
+  $patron_handler->setPatron($patron);
+
+  try {
+    return $patron_handler->addPayment($amount, $order_id);
+  }
+  catch (Exception $e) {
+    watchdog_exception('aleph', $e);
+  }
+
+  return FALSE;
 }
 
 function aleph_debt_translate_debt_type() {
