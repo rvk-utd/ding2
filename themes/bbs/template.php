@@ -1,19 +1,28 @@
 <?php
 
-function bbs_color_map($element) {
-    $path = $element['#href'];
-    switch ($path) {
-        case '':
-            return 'bbs-red';
+function bbs_color_map($path) {
+    $alias = drupal_get_path_alias($path);
+    $default = 'bbs-red';
+    switch ($alias) {
         case 'fraedsla':
             return 'bbs-limegreen';
         case 'arrangementer':
             return 'bbs-yellow';
         case 'nyheder':
             return 'bbs-skyblue';
-        case 'libraries':
+        case 'biblioteker':
             return 'bbs-seagreen';
     }
+
+    $node = menu_get_object('node', 1, drupal_get_normal_path($path));
+    if (!empty($node)) {
+        switch($node->type) {
+            case 'ding_event':
+                return 'bbs-blue';
+        }
+    }
+    return $default;
+
 }
 /**
  * Implements theme_menu_link().
@@ -24,7 +33,7 @@ function bbs_color_map($element) {
 function bbs_menu_link__main_menu($vars) {
 
     $element = $vars['element'];
-    $color_class = bbs_color_map($element);
+    $color_class = bbs_color_map($element['#href']);
 
     $element['#localized_options']['attributes']['id'][] = $color_class;
     $element['#localized_options']['attributes']['class'][] = 'menu-button';
@@ -205,4 +214,66 @@ function bbs_menu_link__menu_frontpage_menu($vars) {
     $output = l($title_prefix . '<span class="details">' . $element['#title'] . '</span>', $element['#href'], $element['#localized_options']);
     return '<li' . drupal_attributes($element['#attributes']) . '>' . $output . "</li>\n";
 
+}
+
+/**
+ * Implements hook_preprocess_html().
+ */
+function bbs_preprocess_html(&$vars)
+{
+    global $language;
+
+    // Setup iOS logo if it's set.
+    $vars['ios_logo'] = theme_get_setting('iosicon_upload');
+
+    // Set variable for the base path.
+    $vars['base_path'] = base_path();
+
+    // Clean up the lang attributes.
+    $vars['html_attributes'] = 'lang="' . $language->language . '" dir="' . $language->dir . '"';
+
+    // Add additional body classes.
+    $vars['classes_array'] = array_merge($vars['classes_array'], ddbasic_body_class());
+
+    $vars['attributes_array']['data-color'][] = bbs_color_map(current_path());
+
+    // Search form style.
+    switch (variable_get('ting_search_form_style', TING_SEARCH_FORM_STYLE_NORMAL)) {
+        case TING_SEARCH_FORM_STYLE_EXTENDED:
+            $vars['classes_array'][] = 'search-form-extended';
+            $vars['classes_array'][] = 'show-secondary-menu';
+
+            if (menu_get_item()['path'] === 'search/ting/%') {
+                $vars['classes_array'][] = 'extended-search-is-open';
+            }
+            break;
+    }
+
+    switch (variable_get('ting_field_search_search_style')) {
+        case 'extended_with_profiles':
+            $vars['classes_array'][] = 'search-form-extended-with-profiles';
+            break;
+    }
+
+    // If dynamic background.
+    $image_conf = dynamic_background_load_image_configuration($vars);
+
+    if (!empty($image_conf)) {
+        $vars['classes_array'][] = 'has-dynamic-background';
+    }
+
+    // Detect if current page is a panel page and set class accordingly
+    $panel_page = page_manager_get_current_page();
+
+    if (!empty($panel_page)) {
+        $vars['classes_array'][] = 'page-panels';
+    } else {
+        $vars['classes_array'][] = 'page-no-panels';
+    }
+
+    // Include the libraries.
+    libraries_load('jquery.imagesloaded');
+    libraries_load('html5shiv');
+    libraries_load('masonry');
+    libraries_load('slick');
 }
