@@ -284,7 +284,7 @@ function _ding_innskraning_auth_id() {
   // Create a token.
   $token = $_SERVER['HTTP_HOST'];
   $token .= $_SERVER['REQUEST_URI'];
-  $token .= uniqid(rand(), TRUE);
+  $token .= drupal_random_bytes(16);
 
   // GUID is 128-bit hex.
   $hash = strtoupper(md5($token));
