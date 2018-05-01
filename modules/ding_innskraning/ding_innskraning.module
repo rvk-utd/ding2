@@ -110,6 +110,43 @@ function ding_innskraning_libraries_info() {
 }
 
 /**
+ * Alter the login form.
+ *
+ * Add in link for logging in via island.is.
+ *
+ * @param array $form
+ *   The form array to alter.
+ * @param array $form_state
+ *   The state of the form.
+ */
+function ding_innskraning_form_alter(array &$form, array &$form_state, $form_id) {
+  $login_forms = array(
+    'user_login',
+    'user_login_block',
+    'ding_user_authenticate_form',
+  );
+  if (in_array($form_id, $login_forms)) {
+    dpm($form);
+    if (variable_get('ding_innskraning_id', '') && isset($form['user_login_container'])) {
+      $form['user_login_container']['innskraning'] = array(
+        '#attributes' => array(
+          'class' => array(
+            'innskraning-button',
+          ),
+        ),
+        '#type' => 'link',
+        '#href' => url('saml/login'),
+        '#title' => t('Log in via !service',
+                  array(
+                    '!service' => 'Island.is',
+                  )),
+        '#weight' => 100,
+      );
+    }
+  }
+}
+
+/**
  * Implements hook_form_FORM_ID_alter() for profile2_form().
  *
  * Hide the pincode change widget for island.is authenticated users. This
