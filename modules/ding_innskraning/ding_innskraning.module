@@ -174,7 +174,7 @@ function ding_innskraning_saml_login() {
 
   // Start a session to store the token in, so we can check it on return. This
   // guards against attackers redirecting victims to island.is with return urls
-  // that might cause trouble. Currently the damage might be limited (delting
+  // that might cause trouble. Currently the damage might be limited (deleting
   // reservations?), but there might be more damaging things that can be done in
   // the future.
   drupal_session_start();
