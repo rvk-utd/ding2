@@ -120,12 +120,20 @@ function aleph_settings_form() {
     '#default_value' => variable_get('aleph_base_url_rest', ''),
   );
 
-  $form['aleph']['aleph_main_library'] = array(
+  $form['aleph']['aleph_catalog_library'] = array(
     '#type' => 'textfield',
-    '#title' => t('Aleph Main Library'),
-    '#description' => t('The main library. ICE01 for example.'),
+    '#title' => t('Aleph Catalog Library'),
+    '#description' => t('The catalog library. ICE01 for example.'),
     '#required' => TRUE,
-    '#default_value' => variable_get('aleph_main_library', ''),
+    '#default_value' => variable_get('aleph_catalog_library', ''),
+  );
+
+  $form['aleph']['aleph_item_library'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Aleph Item Library'),
+    '#description' => t('The item library. ICE53 for example.'),
+    '#required' => TRUE,
+    '#default_value' => variable_get('aleph_item_library', ''),
   );
 
   $form['aleph']['aleph_allowed_login_branches'] = [
@@ -183,8 +191,8 @@ function aleph_client() {
       $client = new AlephClient(
         variable_get('aleph_base_url', ''),
         variable_get('aleph_base_url_rest', ''),
-        variable_get('aleph_main_library', ''),
-        variable_get('aleph_filter_institution', '')
+        variable_get('aleph_catalog_library', ''),
+        variable_get('aleph_item_library', '')
       );
     }
     catch (Exception $e) {
