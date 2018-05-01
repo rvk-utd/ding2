@@ -178,7 +178,6 @@ class AlephClient {
   public function borInfo(AlephPatron $patron) {
     $response = $this->request('GET', 'bor-info', array(
       'bor_id' => $patron->getId(),
-      'verification' => $patron->getVerification(),
     ));
 
     return $response;

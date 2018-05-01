@@ -207,9 +207,7 @@ function aleph_client() {
 function aleph_get_patron_by_account() {
   $patron_handler = new AlephPatronHandler(aleph_client());
   $credentials = ding_user_get_creds();
-  return $patron_handler->authenticate(
-    $credentials['name'], $credentials['pass'], aleph_get_allowed_login_branches()
-  )->getPatron();
+  return $patron_handler->getPatronByName($credentials['name']);
 }
 
 /**

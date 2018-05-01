@@ -43,6 +43,22 @@ class AlephPatronHandler extends AlephHandlerBase {
   }
 
   /**
+   * Get patron by $ssn.
+   */
+  public function getPatronByName($ssn) {
+    $patron = new AlephPatron();
+    $patron->setId($ssn);
+    $response = $this->client->borInfo($patron);
+
+    $patron->setName((string) $response->xpath('z303/z303-name')[0]);
+    $patron->setEmail((string) $response->xpath('z304/z304-email-address')[0]);
+    $patron->setExpiryDate((string) $response->xpath('z305/z305-expiry-date')[0]);
+    $patron->setPhoneNumber((string) $response->xpath('z304/z304-telephone')[0]);
+
+    return $patron;
+  }
+
+  /**
    * Authenticate user from Aleph.
    *
    * @param string $bor_id
