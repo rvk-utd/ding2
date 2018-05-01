@@ -345,21 +345,17 @@ AUTHNREQUEST;
 }
 
 /**
- * Read the key file to sign the request.
+ * Return path to the cert used to verify reply.
  */
-function _ding_innskraning_get_key($name = FALSE) {
-  $key = NULL;
-  $file_location = drupal_get_path('module', 'ding_innskraning') . '/certs/traustur_bunadur.pem';
+function _ding_innskraning_get_cert_path() {
+  drupal_get_path('module', 'ding_innskraning') . '/certs/traustur_bunadur.pem';
+}
 
-  if ($name) {
-    return $file_location;
-  }
-
-  if ($file_location != '') {
-    $key = file_get_contents($file_location);
-  }
-
-  return $key;
+/**
+ * Read cert to verify the reply.
+ */
+function _ding_innskraning_get_cert() {
+  return file_get_contents(_ding_innskraning_get_cert_path());
 }
 
 /**
@@ -568,16 +564,15 @@ function _ding_innskraning_verify($xmlDoc) {
   if (!$objKey) {
     throw new Exception("Key not found");
   }
-  $key = NULL;
 
   $objKeyInfo = XMLSecEnc::staticLocateKeyInfo($objKey, $objDSig);
 
-  if (!_ding_innskraning_verify_cert($objKeyInfo)) {
+  if (!_ding_innskraning_verify_key($objKeyInfo)) {
     throw new Exception("Certificate not valid");
   }
 
-  if (!$objKeyInfo->key && empty($key)) {
-    $key = _ding_innskraning_get_key(TRUE);
+  if (!$objKeyInfo->key) {
+    $key = _ding_innskraning_get_cert_path(TRUE);
     $objKey->loadKey($key, TRUE);
   }
 
@@ -700,9 +695,9 @@ function _ding_innskraning_verify_date($doc) {
  * Check valid response certificate from Island.is.
  */
 function _ding_innskraning_verify_cert($objKeyInfo) {
-  $caFile = _ding_innskraning_get_key();
+  $caCert = _ding_innskraning_get_cert();
 
-  $caCert = openssl_x509_read($caFile);
+  $caCert = openssl_x509_read($caCert);
   $caCertParsed = openssl_x509_parse($caCert, TRUE);
 
   $cert = $objKeyInfo->getX509Certificate();
