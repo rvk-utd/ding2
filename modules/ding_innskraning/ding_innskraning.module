@@ -306,7 +306,7 @@ function _ding_innskraning_login_request($id, $issuer, $destination) {
   // Take the name of the site as provider name.
   $provider = variable_get('site_name', '');
   // Log the time when request was created.
-  $issueInstant = format_date(time(), 'custom', "Y-m-dTH:i:sZ");
+  $issueInstant = format_date(REQUEST_TIME, 'custom', "Y-m-dTH:i:sZ");
   $providerNameStr = '';
   // Consumer URL.
   $consume_url = url('saml/consume', array('absolute' => TRUE));
