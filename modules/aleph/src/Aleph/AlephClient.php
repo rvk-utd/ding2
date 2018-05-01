@@ -278,7 +278,6 @@ class AlephClient {
     $options = array(
       'query' => array('institution' => $this->itemLibrary),
     );
-    $response = FALSE;
 
     $xml = new \SimpleXMLElement('<pay-cash-parameters></pay-cash-parameters>');
     $xml->addChild('sum', $sum);
@@ -492,7 +491,6 @@ class AlephClient {
 
     return $response;
   }
-
 
   /**
    * Create a patron in Aleph.
