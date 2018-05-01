@@ -282,7 +282,6 @@ task('deploy', [
   'drush:updb',
   'drush:css_generate',
   'drush:ccall',
-  'drush:updb',
   'drush:site_online',
   'deploy:symlink',
   'deploy:unlock',
