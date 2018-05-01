@@ -224,33 +224,28 @@ function ding_innskraning_saml_endpoint() {
 /**
  * Generate a SAML auth id.
  *
- * Creates an id for the authentication request. The id must be unique, and are
- * subject to some constraints.
- *
- * The ID property of the AuthnRequest element is defined in the SAML 2.0 spec
- * as:
- *
- * "The xs:ID simple type is used to declare SAML identifiers for assertions,
- * requests, and responses. Values declared to be of type xs:ID in this
- * specification MUST satisfy the following properties in addition to those
- * imposed by the definition of the xs:ID type itself:
- *
- * Any party that assigns an identifier MUST ensure that there is negligible
- * probability that that party or any other party will accidentally assign the
- * same identifier to a different data object. • Where a data object declares
- * that it has a particular identifier, there MUST be exactly one such
- * declaration."
- *
- * The XML Schema 1.0 spec defines the xsd:ID type as:
- *
- * "The type xsd:ID is used for an attribute that uniquely identifies an element
- * in an XML document. An xsd:ID value must be an NCName. This means that it
- * must start with a letter or underscore, and can only contain letters, digits,
- * underscores, hyphens, and periods."
+ * Creates an id for the authentication request. island.is requires the id to be
+ * formatted as a GUID.
  */
 function _ding_innskraning_auth_id() {
-  // Append a letter to ensure it doesn't start with a number.
-  return 'd' . drupal_get_token();
+  // Implementation created from
+  // https://www.texelate.co.uk/blog/create-a-guid-with-php
+  // Create a token.
+  $token = $_SERVER['HTTP_HOST'];
+  $token .= $_SERVER['REQUEST_URI'];
+  $token .= uniqid(rand(), TRUE);
+
+  // GUID is 128-bit hex.
+  $hash = strtoupper(md5($token));
+
+  // Create formatted GUID.
+  $guid = '';
+
+  // GUID format is XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX for readability.
+  $guid .= substr($hash, 0, 8) . '-' . substr($hash, 8, 4) . '-' . substr($hash, 12, 4) .
+    '-' . substr($hash, 16, 4) . '-' . substr($hash, 20, 12);
+
+  return $guid;
 }
 
 /**
