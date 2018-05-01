@@ -567,7 +567,7 @@ function _ding_innskraning_verify($xmlDoc) {
     throw new Exception("Signature invalid!");
   }
   else {
-    return "Signature valid.";
+    return TRUE;
   }
 }
 
