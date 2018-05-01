@@ -43,11 +43,14 @@ class AlephPatronHandler extends AlephHandlerBase {
   }
 
   /**
-   * Get patron by $ssn.
+   * Get patron by ID.
+   *
+   * @param string $id
+   *   Patron ID, mostly a social security number.
    */
-  public function getPatronByName($ssn) {
+  public function getPatronById($id) {
     $patron = new AlephPatron();
-    $patron->setId($ssn);
+    $patron->setId($id);
     $response = $this->client->borInfo($patron);
 
     $patron->setName((string) $response->xpath('z303/z303-name')[0]);
