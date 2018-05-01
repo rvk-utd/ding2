@@ -360,23 +360,25 @@ function _ding_innskraning_get_cert() {
 
 /**
  * Sign the SAML request.
+ *
+ * @todo This is not actually used, but left as documentation.
  */
-function _ding_innskraning_signature($samlRequest, $relayState, $signAlgorithm = XMLSecurityKey::RSA_SHA1) {
-  $key = _ding_innskraning_get_key();
-  if (!$key) {
-    drupal_set_message(t('No key provided, authentication can not be finished.'), 'info');
-    drupal_goto('user/login');
-  }
+// function _ding_innskraning_signature($samlRequest, $relayState, $signAlgorithm = XMLSecurityKey::RSA_SHA1) {
+//   $key = _ding_innskraning_get_key();
+//   if (!$key) {
+//     drupal_set_message(t('No key provided, authentication can not be finished.'), 'info');
+//     drupal_goto('user/login');
+//   }
 
-  $objKey = new XMLSecurityKey($signAlgorithm, array('type' => 'private'));
-  $objKey->loadKey($key, FALSE);
+//   $objKey = new XMLSecurityKey($signAlgorithm, array('type' => 'private'));
+//   $objKey->loadKey($key, FALSE);
 
-  $msg = 'SAMLRequest=' . urlencode($samlRequest);
-  $msg .= '&RelayState=' . urlencode($relayState);
-  $msg .= '&SigAlg=' . urlencode($signAlgorithm);
-  $signature = $objKey->signData($msg);
-  return base64_encode($signature);
-}
+//   $msg = 'SAMLRequest=' . urlencode($samlRequest);
+//   $msg .= '&RelayState=' . urlencode($relayState);
+//   $msg .= '&SigAlg=' . urlencode($signAlgorithm);
+//   $signature = $objKey->signData($msg);
+//   return base64_encode($signature);
+// }
 
 /**
  * Get attribute by name from XML document.
