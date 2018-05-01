@@ -209,7 +209,6 @@ function ding_innskraning_saml_endpoint() {
   if (!array_key_exists('token', $_POST)) {
     watchdog('ding_innskraning', "Post parameter 'token' not found in SAML response.", array(), WATCHDOG_WARNING);
     drupal_goto('user/login');
-    return FALSE;
   }
   $token = $_POST['token'];
   // Decode the request.
@@ -223,7 +222,6 @@ function ding_innskraning_saml_endpoint() {
     drupal_set_message(t('Authentication failed'), 'error');
     watchdog('ding_innskraning', 'SAML Response could not be processed, XML: @xml', array('@xml' => $xml), WATCHDOG_ERROR);
     drupal_goto('user/login');
-    return FALSE;
   }
 
   // Retrieve name.
