@@ -3,3 +3,4 @@ description = Provides login via https://innskraning.island.is
 package = Ding
 core = 7.x
 dependencies[] = libraries
+dependencies[] = xautoload

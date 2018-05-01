@@ -74,11 +74,9 @@ function ding_innskraning_libraries_info() {
       'pattern' => '/@version\s*(.*)$/',
       'lines'   => 100,
     ),
-    'files' => array(
-      'php' => array(
-        'xmlseclibs.php',
-      ),
-    ),
+    'xautoload' => function ($adapter) {
+      $adapter->composerJson('composer.json');
+    },
   );
 
   $libraries['php-saml'] = array(
@@ -89,21 +87,9 @@ function ding_innskraning_libraries_info() {
       'file'    => 'CHANGELOG',
       'pattern' => '/v\.([0-9a-zA-Z\.-]+)/',
     ),
-    'files' => array(
-      'php' => array(
-        'extlib/xmlseclibs/xmlseclibs.php',
-        'lib/Saml2/Auth.php',
-        'lib/Saml2/AuthnRequest.php',
-        'lib/Saml2/Constants.php',
-        'lib/Saml2/Error.php',
-        'lib/Saml2/LogoutRequest.php',
-        'lib/Saml2/LogoutResponse.php',
-        'lib/Saml2/Metadata.php',
-        'lib/Saml2/Response.php',
-        'lib/Saml2/Settings.php',
-        'lib/Saml2/Utils.php',
-      ),
-    ),
+    'xautoload' => function ($adapter) {
+      $adapter->composerJson('composer.json');
+    },
   );
 
   return $libraries;
