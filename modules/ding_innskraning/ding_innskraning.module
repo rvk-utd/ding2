@@ -112,7 +112,6 @@ function ding_innskraning_form_alter(array &$form, array &$form_state, $form_id)
     'ding_user_authenticate_form',
   );
   if (in_array($form_id, $login_forms)) {
-    dpm($form);
     if (variable_get('ding_innskraning_id', '') && isset($form['user_login_container'])) {
       $form['user_login_container']['innskraning'] = array(
         '#attributes' => array(
