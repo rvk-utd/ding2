@@ -110,6 +110,37 @@ function ding_innskraning_libraries_info() {
 }
 
 /**
+ * Implements hook_form_FORM_ID_alter() for profile2_form().
+ *
+ * Hide the pincode change widget for island.is authenticated users. This
+ * modules weight ensures we get called after
+ * ding_user_form_profile2_form_alter().
+ */
+function ding_innskraning_form_profile2_form_alter(&$form, &$form_state) {
+  if (ding_innskraning_authenticated()) {
+    if (isset($form['pass'])) {
+      $form['pass']['#access'] = FALSE;
+    }
+  }
+}
+
+/**
+ * Whether the current user was authenticated with island.is.
+ */
+function ding_innskraning_authenticated() {
+  try {
+    $creds = ding_user_get_creds();
+    if ($creds && isset($creds['external-auth'])) {
+      return TRUE;
+    }
+  }
+  catch (Exception $e) {
+    // Move along, nothing to see here...
+  }
+  return FALSE;
+}
+
+/**
  * Create the login link for https://innskraning.island.is.
  */
 function ding_innskraning_saml_login() {
