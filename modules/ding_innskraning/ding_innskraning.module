@@ -247,29 +247,15 @@ function ding_innskraning_saml_endpoint() {
   }
 
   // Make sure user is not logged ind.
-  $login_success = FALSE;
   if (user_is_logged_in()) {
     drupal_set_message(t('You cannot login with https://innskraning.island.is while you are logged in. Please log out first'), 'error');
   }
   else {
     // OK, let's log the user in.
-    $login_success = _ding_innskraning_activate_user_by_ssn($ssn);
+    _ding_innskraning_activate_user_by_ssn($ssn);
   }
 
-  if ($login_success) {
-    // Go to frontpage.
-    drupal_goto('<front>');
-  }
-  else {
-    // Go to login page.
-    drupal_set_message(
-      t('Authentication through @link failed! Authentication through @link only available to registered users.',
-        array('@link' => l(t('island.is'), 'https://island.is'))
-      ),
-      'error'
-    );
-    drupal_goto('user/login');
-  }
+  drupal_goto('<front>');
 }
 
 /**
@@ -442,7 +428,6 @@ function _ding_innskraning_activate_user_by_ssn($ssn) {
 
   $form_state['uid'] = $account->uid;
   user_login_submit(array(), $form_state);
-  return TRUE;
 }
 
 /**
