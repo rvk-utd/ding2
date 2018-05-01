@@ -543,7 +543,7 @@ function _ding_innskraning_verify($xmlDoc) {
   }
 
   // @TODO: why is this commented?
-  /*if (!_ding_innskraning_verify_conditions($xmlDoc, _ding_innskraning_get_client_ip())){
+  /*if (!_ding_innskraning_verify_conditions($xmlDoc, ip_address())){
     throw new Exception("Invalid client ip.");
     }*/
   $objKey = $objXMLSecDSig->locateKey();
@@ -719,24 +719,4 @@ function _ding_innskraning_verify_cert($objKeyInfo) {
   }
 
   return TRUE;
-}
-
-/**
- * Get client IP.
- */
-function _ding_innskraning_get_client_ip() {
-  $keys = array(
-    'HTTP_CLIENT_IP',
-    'HTTP_X_FORWARDED_FOR',
-    'HTTP_X_FORWARDED',
-    'HTTP_FORWARDED_FOR',
-    'REMOTE_ADDR',
-  );
-  foreach ($keys as $key) {
-    if (!empty($_SERVER[$key])) {
-      return $_SERVER[$key];
-    }
-  }
-
-  return 'UNKNOWN';
 }
