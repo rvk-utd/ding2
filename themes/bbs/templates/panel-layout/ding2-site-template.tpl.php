@@ -9,8 +9,9 @@
   <?php if (!empty($content['branding']) || !empty($content['header']) || !empty($content['navigation'])): ?>
     <header class="site-header">
       <?php if (!empty($content['branding'])): ?>
+
         <section class="topbar">
-          <div class="topbar-inner-bbs">
+          <div class="topbar-inner-bbs" style="background-color: <?php print bbs_color_map(current_path()); ?>;">
             <?php print render($content['branding']); ?>
           </div>
         </section>
