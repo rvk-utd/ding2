@@ -334,7 +334,7 @@ AUTHNREQUEST;
  * Return path to the cert used to verify reply.
  */
 function _ding_innskraning_get_cert_path() {
-  drupal_get_path('module', 'ding_innskraning') . '/certs/traustur_bunadur.pem';
+  return drupal_get_path('module', 'ding_innskraning') . '/certs/traustur_bunadur.pem';
 }
 
 /**
