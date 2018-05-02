@@ -1,0 +1,722 @@
+<?php
+
+use RobRichards\XMLSecLibs\XMLSecEnc;
+use RobRichards\XMLSecLibs\XMLSecurityDSig;
+
+/**
+ * @file
+ * Provides login via https://innskraning.island.is.
+ *
+ * Forked from xi_innskraning.
+ */
+
+/**
+ * Implements hook_permission().
+ *
+ * Adds permission to allow users to administer SSO login.
+ */
+function ding_innskraning_permission() {
+  return array(
+    'administer ding innskraning' => array(
+      'title' => t('Administer Ding Innskraning'),
+      'description' => t('Perform administration tasks for Ding Innskraning module.'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_menu().
+ *
+ * Provides end point for time tracking.
+ */
+function ding_innskraning_menu() {
+  $items = array();
+
+  $items['admin/config/ding/ding-innskraning'] = array(
+    'title' => 'Ding Innskraning settings',
+    'description' => 'Settings for Ding Innskraning module',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('ding_innskraning_settings'),
+    'access arguments' => array('administer ding innskraning'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'inc/ding_innskraning.admin.inc',
+  );
+
+  $items['saml/login'] = array(
+    'page callback' => 'ding_innskraning_saml_login',
+    // This endpoint should not be under access control.
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+
+  $items['saml/consume'] = array(
+    'page callback' => 'ding_innskraning_saml_endpoint',
+    // This endpoint should not be under access control.
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_libraries_info().
+ */
+function ding_innskraning_libraries_info() {
+  $libraries = array();
+
+  $libraries['xmlseclibs'] = array(
+    'name' => 'XML Encryption and Signatures',
+    'vendor url' => 'http://github.com/robrichards/xmlseclibs.git',
+    'download url' => 'http://github.com/robrichards/xmlseclibs.git',
+    'version arguments' => array(
+      'file'    => 'xmlseclibs.php',
+      'pattern' => '/@version\s*(.*)$/',
+      'lines'   => 100,
+    ),
+    'xautoload' => function ($adapter) {
+      $adapter->composerJson('composer.json');
+    },
+  );
+
+  $libraries['php-saml'] = array(
+    'name' => 'Simple SAML toolkit for PHP',
+    'vendor url' => 'https://github.com/onelogin/php-saml',
+    'download url' => 'https://github.com/onelogin/php-saml/archive/master.zip',
+    'version arguments' => array(
+      'file'    => 'CHANGELOG',
+      'pattern' => '/v\.([0-9a-zA-Z\.-]+)/',
+    ),
+    'xautoload' => function ($adapter) {
+      $adapter->composerJson('composer.json');
+    },
+  );
+
+  return $libraries;
+}
+
+/**
+ * Alter the login form.
+ *
+ * Add in link for logging in via island.is.
+ *
+ * @param array $form
+ *   The form array to alter.
+ * @param array $form_state
+ *   The state of the form.
+ */
+function ding_innskraning_form_alter(array &$form, array &$form_state, $form_id) {
+  $login_forms = array(
+    'user_login',
+    'user_login_block',
+    'ding_user_authenticate_form',
+  );
+  if (in_array($form_id, $login_forms)) {
+    if (variable_get('ding_innskraning_id', '') && isset($form['user_login_container'])) {
+      $form['user_login_container']['innskraning'] = array(
+        '#attributes' => array(
+          'class' => array(
+            'innskraning-button',
+          ),
+        ),
+        '#type' => 'link',
+        '#href' => url('saml/login'),
+        '#title' => t('Log in via !service',
+                  array(
+                    '!service' => 'Island.is',
+                  )),
+        '#weight' => 100,
+      );
+    }
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for profile2_form().
+ *
+ * Hide the pincode change widget for island.is authenticated users. This
+ * modules weight ensures we get called after
+ * ding_user_form_profile2_form_alter().
+ */
+function ding_innskraning_form_profile2_form_alter(&$form, &$form_state) {
+  if (ding_innskraning_authenticated()) {
+    if (isset($form['pass'])) {
+      $form['pass']['#access'] = FALSE;
+    }
+  }
+}
+
+/**
+ * Whether the current user was authenticated with island.is.
+ */
+function ding_innskraning_authenticated() {
+  try {
+    $creds = ding_user_get_creds();
+    if ($creds && isset($creds['external-auth'])) {
+      return TRUE;
+    }
+  }
+  catch (Exception $e) {
+    // Move along, nothing to see here...
+  }
+  return FALSE;
+}
+
+/**
+ * Create the login link for https://innskraning.island.is.
+ */
+function ding_innskraning_saml_login() {
+  libraries_load('xmlseclibs');
+
+  $provider_url = 'https://innskraning.island.is';
+  $url = $provider_url;
+  $id = variable_get('ding_innskraning_id', '');
+
+  // Start a session to store the token in, so we can check it on return. This
+  // guards against attackers redirecting victims to island.is with return urls
+  // that might cause trouble. Currently the damage might be limited (deleting
+  // reservations?), but there might be more damaging things that can be done in
+  // the future.
+  drupal_session_start();
+  $token = _ding_innskraning_auth_id();
+  $_SESSION['ding_innskraning_token'] = $token;
+  $url .= "?id=$id&authid=$token";
+  watchdog('ding_innskraning', 'Redirect to SAML login url: @url', array('@url' => $url), WATCHDOG_INFO);
+
+  // Prepare the parameters to pass to island.is.
+  $parameters['id'] = $id;
+  $parameters['authid'] = $token;
+  // Create the request body.
+  $samlRequest = _ding_innskraning_login_request($token, $id, $provider_url);
+  $parameters['SAMLRequest'] = $samlRequest;
+  $parameters['RelayState'] = url('<front>', array('absolute' => TRUE));
+  // @TODO: why is this commented out.
+  // Sign the request.
+  /*$signature = _ding_innskraning_signature($samlRequest, $parameters['RelayState']);
+    $parameters['SigAlg'] = XMLSecurityKey::RSA_SHA1;
+    $parameters['Signature'] = $signature;*/
+
+  header('Pragma: no-cache');
+  header('Cache-Control: no-cache, must-revalidate');
+  drupal_goto($provider_url, array('query' => $parameters));
+}
+
+/**
+ * Consume authentications from https://innskraning.island.is.
+ */
+function ding_innskraning_saml_endpoint() {
+  // Extract token from request.
+  if (!array_key_exists('token', $_POST)) {
+    watchdog('ding_innskraning', "Post parameter 'token' not found in SAML response.", array(), WATCHDOG_WARNING);
+    drupal_goto('user/login');
+  }
+  $token = $_POST['token'];
+  // Decode the request.
+  $xml = base64_decode($token);
+
+  // Load XML document.
+  $dom = new DOMDocument();
+  $dom->loadXML($xml);
+
+  if (!$dom) {
+    drupal_set_message(t('Authentication failed'), 'error');
+    watchdog('ding_innskraning', 'SAML Response could not be processed, XML: @xml', array('@xml' => $xml), WATCHDOG_ERROR);
+    drupal_goto('user/login');
+  }
+
+  // Retrieve name.
+  $name = _ding_innskraning_get_attribute_by_name($dom, 'Name');
+  // Retrieve SSN.
+  $ssn = _ding_innskraning_get_attribute_by_name($dom, 'UserSSN');
+  // Provide a message.
+  watchdog('ding_innskraning', "Attempt to login %name", array('%name' => $name), WATCHDOG_DEBUG);
+  // Verify response.
+  try {
+    _ding_innskraning_verify($dom);
+  }
+  catch (Exception $ex) {
+    drupal_set_message(t('Authentication failed'), 'error');
+    watchdog_exception(
+      'ding_innskraning',
+      $ex,
+      'Error verifying token, %type: !message in %function (line %line of %file), XML: @xml',
+      array('@xml' => $xml),
+      WATCHDOG_ERROR
+    );
+    drupal_goto('user/login');
+  }
+
+  // Make sure user is not logged ind.
+  if (user_is_logged_in()) {
+    drupal_set_message(t('You cannot login with https://innskraning.island.is while you are logged in. Please log out first'), 'error');
+  }
+  else {
+    // OK, let's log the user in.
+    _ding_innskraning_activate_user_by_ssn($ssn);
+  }
+
+  drupal_goto('<front>');
+}
+
+/**
+ * Generate a SAML auth id.
+ *
+ * Creates an id for the authentication request. island.is requires the id to be
+ * formatted as a GUID.
+ */
+function _ding_innskraning_auth_id() {
+  // Implementation created from
+  // https://www.texelate.co.uk/blog/create-a-guid-with-php
+  // Create a token.
+  $token = $_SERVER['HTTP_HOST'];
+  $token .= $_SERVER['REQUEST_URI'];
+  $token .= drupal_random_bytes(16);
+
+  // GUID is 128-bit hex.
+  $hash = strtoupper(md5($token));
+
+  // GUID format is XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX for readability.
+  $guid = substr($hash, 0, 8) . '-' . substr($hash, 8, 4) . '-' . substr($hash, 12, 4) .
+    '-' . substr($hash, 16, 4) . '-' . substr($hash, 20, 12);
+
+  return $guid;
+}
+
+/**
+ * Create the login request with SAML parameters.
+ */
+function _ding_innskraning_login_request($id, $issuer, $destination) {
+  // Add the destination URL for login.
+  $destination = url($destination, array('query' => array('id' => $issuer, 'auth' => $id)));
+  $destination = htmlspecialchars($destination);
+  // Take the name of the site as provider name.
+  $provider = variable_get('site_name', '');
+  // Log the time when request was created.
+  $issueInstant = format_date(REQUEST_TIME, 'custom', "Y-m-dTH:i:sZ");
+  $providerNameStr = '';
+  // Consumer URL.
+  $consume_url = url('saml/consume', array('absolute' => TRUE));
+
+  if ($provider != '') {
+    $providerNameStr = <<<PROVIDERNAME
+ProviderName="{$provider}"
+PROVIDERNAME;
+  }
+
+  $request = <<<AUTHNREQUEST
+<samlp:AuthnRequest
+  xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol"
+  xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion"
+  ID="$id"
+  Version="2.0"
+  {$providerNameStr}
+  IssueInstant="$issueInstant"
+  Destination="{$destination}"
+  ProtocolBinding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
+  AssertionConsumerServiceURL="{$consume_url}">
+  <saml:Issuer>{$issuer}</saml:Issuer>
+    <samlp:NameIDPolicy
+        Format="urn:oasis:names:tc:SAML:2.0:nameid-format:transient"
+        AllowCreate="true" />
+    <samlp:RequestedAuthnContext Comparison="exact">
+        <saml:AuthnContextClassRef>urn:oasis:names:tc:SAML:2.0:ac:classes:X509</saml:AuthnContextClassRef>
+    </samlp:RequestedAuthnContext>
+</samlp:AuthnRequest>
+AUTHNREQUEST;
+
+  $deflatedRequest = gzdeflate($request);
+  $base64Request = base64_encode($deflatedRequest);
+
+  return $base64Request;
+}
+
+/**
+ * Return path to the cert used to verify reply.
+ */
+function _ding_innskraning_get_cert_path() {
+  drupal_get_path('module', 'ding_innskraning') . '/certs/traustur_bunadur.pem';
+}
+
+/**
+ * Read cert to verify the reply.
+ */
+function _ding_innskraning_get_cert() {
+  return file_get_contents(_ding_innskraning_get_cert_path());
+}
+
+/**
+ * Sign the SAML request.
+ *
+ * @todo This is not actually used, but left as documentation.
+ */
+// function _ding_innskraning_signature($samlRequest, $relayState, $signAlgorithm = XMLSecurityKey::RSA_SHA1) {
+//   $key = _ding_innskraning_get_key();
+//   if (!$key) {
+//     drupal_set_message(t('No key provided, authentication can not be finished.'), 'info');
+//     drupal_goto('user/login');
+//   }
+
+//   $objKey = new XMLSecurityKey($signAlgorithm, array('type' => 'private'));
+//   $objKey->loadKey($key, FALSE);
+
+//   $msg = 'SAMLRequest=' . urlencode($samlRequest);
+//   $msg .= '&RelayState=' . urlencode($relayState);
+//   $msg .= '&SigAlg=' . urlencode($signAlgorithm);
+//   $signature = $objKey->signData($msg);
+//   return base64_encode($signature);
+// }
+
+/**
+ * Get attribute by name from XML document.
+ */
+function _ding_innskraning_get_attribute_by_name($dom, $name) {
+  // Extract value with xpath.
+  $assertion = $dom->getElementsByTagName('Assertion')->item(0);
+  $attributeStatement = $assertion->getElementsByTagName('AttributeStatement')->item(0);
+  $attributes = $attributeStatement->getElementsByTagName('Attribute');
+  foreach ($attributes as $attribute) {
+    $attributePropName = $attribute->getAttribute('Name');
+    if ($attributePropName == $name) {
+      $attributeValue = $attribute->getElementsByTagName('AttributeValue')->item(0);
+      $value = $attributeValue->nodeValue;
+      return $value;
+    }
+  }
+}
+
+/**
+ * Get user agent.
+ */
+function _ding_innskraning_get_user_agent($dom) {
+  return _ding_innskraning_get_attribute_by_name($dom, 'UserAgent');
+}
+
+/**
+ * Try to login user by SSN number.
+ */
+function _ding_innskraning_activate_user_by_ssn($ssn) {
+  $auth_res = array(
+    'success' => TRUE,
+    'creds' => array(
+      'name' => $ssn,
+      // Random password. Shouldn't be used, but we'll make it un-guessable
+      // for good measure, in case someone messes up.
+      'pass' => md5(drupal_random_bytes(32) . 'no_password_for_the_wicked'),
+      // Note that user was logged in externally.
+      'external-auth' => TRUE,
+    ),
+    'user' => array(
+      'mail' => '',
+      'blocked' => FALSE,
+      'data' => array(
+        'display_name' => '',
+      ),
+    ),
+  );
+
+  /*
+   * We call two private ding_user functions to do the heavy lifting. Sadly,
+   * nobody has re-factored ding_user to have a simple login function, so we
+   * have to duplicate its work here.
+   */
+
+  // Create new account in Drupal and if one exists update it.
+  $account = _ding_user_create_account($ssn, $auth_res);
+
+  // Check that a profile exists for the user and if not create one.
+  _ding_user_create_profile2($account);
+
+  $form_state['uid'] = $account->uid;
+  user_login_submit(array(), $form_state);
+}
+
+/**
+ * Verify the signatures and data from island.is.
+ */
+function _ding_innskraning_verify($xmlDoc) {
+  global $base_url;
+
+  // Load library.
+  libraries_load('xmlseclibs');
+
+  // Check SAML version.
+  if ($xmlDoc->documentElement->getAttribute('Version') != '2.0') {
+    throw new Exception('Unsupported SAML version');
+  }
+  // Check ID attribute.
+  if (!$xmlDoc->documentElement->hasAttribute('ID')) {
+    throw new Exception('Missing ID attribute on SAML Response');
+  }
+
+  // Check SAML Response status.
+  $status = $xmlDoc->getElementsByTagName('Status');
+
+  if ($status->length == 0) {
+    throw new Exception('Missing Status on response');
+  }
+
+  $statusCode = $status->item(0)->getElementsByTagName('StatusCode');
+
+  if ($statusCode->length == 0) {
+    throw new Exception('Missing Status Code on response');
+  }
+
+  $code = $statusCode->item(0)->getAttribute('Value');
+
+  if ($code != 'urn:oasis:names:tc:SAML:2.0:status:Success') {
+    throw new Exception('User was not authenticated with Island.is');
+  }
+
+  // Check number of Assertions.
+  $singleAssertion = $xmlDoc->getElementsByTagName('Assertion');
+  if ($singleAssertion->length != 1) {
+    throw new Exception('SAML Response must contain 1 assertion');
+  }
+
+  // Validate XML file structure.
+  $schemaFile = libraries_get_path('php-saml') . '/lib/Saml2/schemas/saml-schema-protocol-2.0.xsd';
+  $oldEntityLoader = libxml_disable_entity_loader(FALSE);
+  $res = $xmlDoc->schemaValidate($schemaFile);
+  libxml_disable_entity_loader($oldEntityLoader);
+  if (!$res) {
+    $xmlErrors = libxml_get_errors();
+    watchdog('ding_innskraning', 'Error validating the metadata: @vars', array('@vars' => var_export($xmlErrors, TRUE)));
+    throw new Exception('Error validating the metadata');
+  }
+
+  // Check destination.
+  $destination = trim($xmlDoc->documentElement->getAttribute('Destination'));
+  $currentURL = $base_url . '/' . request_path();
+  if ($destination !== $currentURL) {
+    throw new Exception("The response was received at $currentURL instead of $destination");
+  }
+
+  $user_agent = _ding_innskraning_get_user_agent($xmlDoc);
+  if ($user_agent !== $_SERVER['HTTP_USER_AGENT']) {
+    throw new Exception('Request was done from another browser');
+  }
+
+  // @TODO: why is this commented?
+  // check the issuer
+  /*$issuer = $xmlDoc->getElementsByTagName('Issuer');
+
+    if ($issuer->length < 1) {
+    throw new Exception('There is no issuer info in the document');
+    } elseif ($issuer->item(0)->textContent != 'Innskraning') {
+    $current_issuer = $issuer->item(0)->textContent;
+    throw new Exception("The issuer is $current_issuer instead of Innskraning");
+    }*/
+
+  // Check the digital signature.
+  $objXMLSecDSig = new XMLSecurityDSig();
+  $objDSig = $objXMLSecDSig->locateSignature($xmlDoc);
+
+  if ($objDSig == NULL) {
+    throw new Exception("Cannot locate Signature Node");
+  }
+  $objXMLSecDSig->canonicalizeSignedInfo();
+  $objXMLSecDSig->idKeys = array('ID');
+  $objXMLSecDSig->idNS = array('wsu' => 'http://docs.oasisopen.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd');
+
+  $retVal = $objXMLSecDSig->validateReference();
+
+  if ($retVal == NULL) {
+    throw new Exception("Reference Validation Failed");
+  }
+
+  // Check token to ensure that the auth request originated from us. And
+  // island.is doesn't keep the casing, so fold to lower case.
+  $saml_token = drupal_strtolower(_ding_innskraning_get_attribute_by_name($xmlDoc, 'AuthID'));
+  $token = drupal_strtolower($_SESSION['ding_innskraning_token']);
+  if ($token && $saml_token !== $token) {
+    watchdog(
+      'ding_innskraning',
+      "Token validation failed, expected @token, got @saml_token.",
+      array('@token' => $token, '@saml_token' => $saml_token),
+      WATCHDOG_WARNING
+    );
+    throw new Exception("Integrity check failed.");
+  }
+
+  if (!_ding_innskraning_verify_date($xmlDoc)) {
+    throw new Exception("Conditions not valid.");
+  }
+
+  // @TODO: why is this commented?
+  /*if (!_ding_innskraning_verify_conditions($xmlDoc, ip_address())){
+    throw new Exception("Invalid client ip.");
+    }*/
+  $objKey = $objXMLSecDSig->locateKey();
+
+  if (!$objKey) {
+    throw new Exception("Key not found");
+  }
+
+  $objKeyInfo = XMLSecEnc::staticLocateKeyInfo($objKey, $objDSig);
+
+  if (!_ding_innskraning_verify_key($objKeyInfo)) {
+    throw new Exception("Certificate not valid");
+  }
+
+  if (!$objKeyInfo->key) {
+    $key = _ding_innskraning_get_cert_path(TRUE);
+    $objKey->loadKey($key, TRUE);
+  }
+
+  if (!$objXMLSecDSig->verify($objKey)) {
+    throw new Exception("Signature invalid!");
+  }
+  else {
+    return TRUE;
+  }
+}
+
+/**
+ * Find conditions in document.
+ */
+function _ding_innskraning_locate_conditions($doc) {
+  $xpath = new DOMXPath($doc);
+  $xpath->registerNamespace('assertion', 'urn:oasis:names:tc:SAML:2.0:assertion');
+  $nodeset = $xpath->query(".//assertion:Assertion/assertion:Conditions", $doc);
+  return $nodeset->item(0);
+}
+
+/**
+ * Find subject confirmation in document.
+ */
+function _ding_innskraning_locate_subject_confirmation($doc) {
+  $xpath = new DOMXPath($doc);
+  $xpath->registerNamespace('assertion', 'urn:oasis:names:tc:SAML:2.0:assertion');
+  $nodeset = $xpath->query(
+    ".//assertion:Assertion/assertion:Subject/assertion:SubjectConfirmation/assertion:SubjectConfirmationData",
+    $doc
+  );
+  return $nodeset->item(0);
+}
+
+/**
+ * Verify conditions.
+ */
+function _ding_innskraning_verify_conditions($doc, $ip) {
+  $conditions = _ding_innskraning_locate_subject_confirmation($doc);
+  if (!$conditions) {
+    throw new Exception("Unable to locate Conditions");
+  }
+
+  try {
+    $address = $conditions->getAttribute('Address');
+    $expirationDate = $conditions->getAttribute('NotOnOrAfter');
+  }
+  catch (Exception $e) {
+    throw new Exception("Exception while locating address");
+  }
+
+  // Check the expiration date.
+  date_default_timezone_set('Atlantic/Reykjavik');
+  $endTime = strtotime($expirationDate);
+  if (!is_int($endTime)) {
+    throw new Exception("Invalid Expiration date.");
+  }
+  $now = (int) date(time());
+
+  if ($now > $endTime) {
+    throw new Exception("Subject confirmation is expired.");
+  }
+
+  if (!strcmp($ip, "::1")) {
+    $ip = "127.0.0.1";
+  }
+
+  if (strcmp($address, $ip)) {
+    throw new Exception("Invalid IP address.");
+  }
+
+  return TRUE;
+}
+
+/**
+ * Check if the request is still valid.
+ */
+function _ding_innskraning_verify_date($doc) {
+  try {
+    $conditions = _ding_innskraning_locate_conditions($doc);
+  }
+  catch (Exception $e) {
+    throw new Exception("Exception while locating Conditions");
+  }
+
+  if (!$conditions) {
+    throw new Exception("Unable to locate Conditions");
+  }
+
+  try {
+    $start = $conditions->getAttribute('NotBefore');
+    $end = $conditions->getAttribute('NotOnOrAfter');
+  }
+  catch (Exception $e) {
+    throw new Exception("Exception while locating start or end");
+  }
+
+  if (!$start || !$end) {
+    throw new Exception("Unable to locate start (NotBefore) or end (NotOnOrAfter)");
+  }
+
+  date_default_timezone_set('Atlantic/Reykjavik');
+  $startTime = strtotime($start);
+  $endTime = strtotime($end);
+  if (!is_int($startTime) || !is_int($endTime)) {
+    throw new Exception("Unable to get time from start (NotBefore) or end (NotOnOrAfter)");
+  }
+  $now = (int) date(time());
+
+  $inSpan = $startTime < $now && $now < $endTime;
+
+  if (!$inSpan) {
+    throw new Exception("Response is not within specified timeframe");
+  }
+
+  return TRUE;
+}
+
+/**
+ * Check valid response certificate from Island.is.
+ */
+function _ding_innskraning_verify_cert($objKeyInfo) {
+  $caCert = _ding_innskraning_get_cert();
+
+  $caCert = openssl_x509_read($caCert);
+  $caCertParsed = openssl_x509_parse($caCert, TRUE);
+
+  $cert = $objKeyInfo->getX509Certificate();
+  $parsed = openssl_x509_parse($cert);
+
+  date_default_timezone_set('Atlantic/Reykjavik');
+  $dateFrom = (int) date($parsed['validFrom_time_t']);
+  $dateTo = (int) date($parsed['validTo_time_t']);
+  $nowTime = (int) date(time());
+  if ($nowTime < $dateFrom || $nowTime > $dateTo) {
+    throw new Exception("Certificate expired or not valid yet");
+  }
+
+  $serialNumber = $parsed['subject']['serialNumber'];
+  $issuer = $parsed['issuer']['CN'];
+
+  if ($serialNumber != "6503760649") {
+    throw new Exception("Not the correct serial number in the certificate");
+  }
+
+  if ($issuer != "Traustur bunadur") {
+    throw new Exception("Not the correct certificate issuer");
+  }
+  $subjectKey = $caCertParsed['extensions']['subjectKeyIdentifier'];
+  $authKey = $parsed['extensions']['authorityKeyIdentifier'];
+  $authKey = str_replace('keyid:', '', $authKey);
+
+  $authKey = trim($authKey);
+
+  if (strcasecmp($subjectKey, $authKey)) {
+    throw new Exception("Not correct CA");
+  }
+
+  return TRUE;
+}
