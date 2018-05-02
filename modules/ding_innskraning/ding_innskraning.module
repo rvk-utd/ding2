@@ -554,7 +554,7 @@ function _ding_innskraning_verify($xmlDoc) {
 
   $objKeyInfo = XMLSecEnc::staticLocateKeyInfo($objKey, $objDSig);
 
-  if (!_ding_innskraning_verify_key($objKeyInfo)) {
+  if (!_ding_innskraning_verify_cert($objKeyInfo)) {
     throw new Exception("Certificate not valid");
   }
 
