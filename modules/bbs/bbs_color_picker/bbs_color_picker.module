@@ -17,7 +17,7 @@ function bbs_color_picker_menu() {
         'title' => 'BBS Colors',
         'page callback' => 'drupal_get_form',
         'page arguments' => array('bbs_color_picker_admin'),
-        'access arguments' => array('administer bbs_color_picker content'),
+        'access arguments' => array('access administration pages'),
         'type' => MENU_NORMAL_ITEM,
     );
 
