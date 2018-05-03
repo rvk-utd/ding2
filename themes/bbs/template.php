@@ -64,13 +64,15 @@ function bbs_menu_link__menu_tabs_menu($vars) {
         $element['#title'] = t($element['#title']);
     }
 
+    $title_suffix = '';
+
     // Add some icons to our top-bar menu. We use system paths to check against.
     switch ($element['#href']) {
         case 'search':
             $element['#attributes']['class'][] = 'topbar-link-search';
             $element['#localized_options']['attributes']['class'][] = 'topbar-link-search';
             $output =  drupal_render(drupal_get_form('search_block_form'));
-            return '<li' . drupal_attributes($element['#attributes']) . '>' . $output . $sub_menu . "</li>\n";
+            return '<li' . drupal_attributes($element['#attributes']) . '>' . $output . "</li>\n";
 
         case 'node':
             // Special placeholder for language switcher.
