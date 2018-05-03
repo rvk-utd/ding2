@@ -11,9 +11,13 @@ Styles for the header
   left: 0;
   right: 0;
 
+  .topbar-inner-bbs {
+    height: 100%;
+    transition: 0.3s cubic-bezier(0.4, 0, 1, 1);
+  }
+
   .menu-is-open & {
     top: 0 !important;
-    transition: 0.3s cubic-bezier(0.4, 0, 1, 1);
   }
 }
 
@@ -110,7 +114,7 @@ Styles for the header
     &::after {
       display: none;
     }
-    
+
     .user-menu {
       .links {
         display: none;

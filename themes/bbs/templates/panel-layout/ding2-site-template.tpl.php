@@ -11,7 +11,7 @@
       <?php if (!empty($content['branding'])): ?>
 
         <section class="topbar">
-          <div class="topbar-inner-bbs" style="background-color: <?php print bbs_color_map(current_path()); ?>;">
+          <div class="topbar-inner-bbs" style="background-color: <?php print bbs_color_value(current_path()); ?>;">
             <?php print render($content['branding']); ?>
           </div>
         </section>

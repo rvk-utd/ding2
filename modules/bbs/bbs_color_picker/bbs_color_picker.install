@@ -1,0 +1,45 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the bbs_color_picker module.
+ */
+
+
+/**
+ * Implements hook_install().
+ */
+function bbs_color_picker_install() {
+    bbs_color_picker_add_shortcut();
+    $colors = array(
+        'DEFAULT' => '#B03033',
+        'libraries' => '#225CA4',
+        'bokmenntir' => '#47A49D',
+        'innblastur' => '#99C355',
+        'fradesla' => '#EB983F',
+        'born-og-fjolskyldur' => '#E36D38',
+        'ding_page' => '#5F338C',
+        'ding_news' => '#4CB2EA',
+        'nyheder' => '#4CB2EA',
+    );
+    variable_set('bbs_colors', $colors);
+}
+
+/**
+ * Add a shortcut for configuring bbs_color_block.
+ */
+function bbs_color_picker_add_shortcut() {
+    if (module_exists('shortcut')) {
+        // Add shortcut to carousel.
+        $shortcut_set = shortcut_set_load(SHORTCUT_DEFAULT_SET_NAME);
+        $shortcut_set->links = array(
+            array(
+                'link_path' => 'admin/settings/bbs_color_picker',
+                'link_title' => st('Configure colors'),
+                'weight' => -14,
+            ),
+        );
+
+        shortcut_set_save($shortcut_set);
+    }
+}

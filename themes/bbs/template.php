@@ -1,41 +1,21 @@
 <?php
 
-function bbs_color_map($path) {
-    $alias = drupal_get_path_alias($path);
-    $default = 'bbs-red';
-    switch ($alias) {
-        case 'fraedsla':
-            return 'bbs-limegreen';
-        case 'arrangementer':
-            return 'bbs-yellow';
-        case 'nyheder':
-            return 'bbs-skyblue';
-        case 'biblioteker':
-            return 'bbs-seagreen';
-    }
 
-    $node = menu_get_object('node', 1, drupal_get_normal_path($path));
-    if (!empty($node)) {
-        switch($node->type) {
-            case 'ding_event':
-                return 'bbs-blue';
-        }
-    }
-    return $default;
-
-}
 /**
  * Implements theme_menu_link().
  *
  * Add specific markup for main menu.
  */
 
+function bbs_color_value($path) {
+    return bbs_color_picker_path_value($path);
+}
+
 function bbs_menu_link__main_menu($vars) {
 
     $element = $vars['element'];
-    $color_class = bbs_color_map($element['#href']);
-
-    $element['#localized_options']['attributes']['id'][] = $color_class;
+    $color_class = bbs_color_value($element['#href']);
+    $element['#localized_options']['attributes']['data-color'] = $color_class;
     $element['#localized_options']['attributes']['class'][] = 'menu-button';
 
 
@@ -235,7 +215,8 @@ function bbs_preprocess_html(&$vars)
     // Add additional body classes.
     $vars['classes_array'] = array_merge($vars['classes_array'], ddbasic_body_class());
 
-    $vars['attributes_array']['data-color'][] = bbs_color_map(current_path());
+    $vars['attributes_array']['data-color'][] = bbs_color_value(current_path());
+
 
     // Search form style.
     switch (variable_get('ting_search_form_style', TING_SEARCH_FORM_STYLE_NORMAL)) {
