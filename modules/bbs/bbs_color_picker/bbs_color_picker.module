@@ -32,43 +32,28 @@ function bbs_color_picker_path_value($path) {
     $colors = variable_get('bbs_colors', array());
 
     // Try getting color value from path
-    $color = $colors[$path];
-    if (empty($color)) {
-        // Try using normal path
-        $normal_path = drupal_get_normal_path($path);
-        $color = $colors[$normal_path];
+    if (array_key_exists($path, $colors)) {
+        return $colors[$path];
     }
-    else {
-        return $color;
+    // Try using normal path
+    $normal_path = drupal_get_normal_path($path);
+    if (array_key_exists($normal_path, $colors)) {
+        return $colors[$normal_path];
     }
-
-    if (empty($color)) {
-        // Try using path alias
-        $alias = drupal_get_path_alias($path);
-        $color = $colors[$alias];
+    // Try using path alias
+    $alias = drupal_get_path_alias($path);
+    if (array_key_exists($alias, $colors)) {
+        return $colors[$alias];
     }
-    else {
-        return $color;
-    }
-
-    if (empty($color)) {
-        // Try using node type
-        $node = menu_get_object('node', 1, drupal_get_normal_path($path));
-        if (!empty($node)) {
-            $type = $node -> type;
-            $color = $colors[$type];
+    // Try using node type
+    $node = menu_get_object('node', 1, drupal_get_normal_path($path));
+    if (!empty($node)) {
+        $type = $node -> type;
+        if (array_key_exists($type, $colors)) {
+            return $colors[$type];
         }
     }
-    else {
-        return $color;
-    }
-
-    if (empty($color)) {
-        // Use default color
-        return $colors['DEFAULT'];
-    }
-    return $color;
-
+    return $colors['DEFAULT'];
 }
 
 
