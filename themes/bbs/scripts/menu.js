@@ -28,6 +28,7 @@
                     var color = body.data('color');
                     $('.topbar-inner-bbs').css('background-color', color);
                     $('.navigation-wrapper').css('background-color', color);
+                    $('.user-menu').css('background-color', color);
                 }
             });
 
@@ -83,6 +84,7 @@
                 if (color) {
                     $('.topbar-inner-bbs').css('background-color', color);
                     $('.navigation-wrapper').css('background-color', color);
+                    $('.user-menu').css('background-color', color);
                 }
             });
 

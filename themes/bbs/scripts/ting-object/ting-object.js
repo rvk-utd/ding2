@@ -4,6 +4,10 @@
   'use strict';
 
   // Shorten ting object teaser titles
+  function ellipse(str, max){
+    return str.length > (max - 3) ? str.substring(0,max-3) + '...' : str;
+  }
+
   Drupal.behaviors.ding_ting_teaser_short_title = {
     attach: function(context, settings) {
       $('.book-teaser > .inner .field-name-ting-title h2').each(function(){
@@ -11,10 +15,6 @@
       });
     }
   };
-
-  function ellipse(str, max){
-    return str.length > (max - 3) ? str.substring(0,max-3) + '...' : str;
-  }
 
   // Ting teaser image proportions.
   function adapt_images(images){

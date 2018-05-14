@@ -42,7 +42,7 @@ Styles for the header
 
     a {
       color: #fff;
-      margin: 25px;
+      padding: 25px;
       width: 100%;
       display: flex;
     }
@@ -97,11 +97,12 @@ Styles for the header
   }
 
   li.topbar-link-user {
+    position: relative;
     background-color: rgba(0, 0, 0, 0.2);
 
     span.details {
       color: #fff;
-      margin: 25px;
+      padding-left: 7px;
       width: 100%;
       display: none;
       cursor: pointer;
@@ -116,11 +117,25 @@ Styles for the header
     }
 
     .user-menu {
+      position: absolute;
+      top: 70px;
+      left: 0;
+      right: 0;
+      background-color: #B03033;
       .links {
         display: none;
 
         &.open {
           display: block;
+        }
+        li {
+          background-color: rgba(0, 0, 0, 0.2);
+          width: 100%;
+          border-top: 1px solid rgba(255, 255, 255, 0.1);
+          height: auto;
+          a {
+            padding: 19px 20px;
+          }
         }
       }
     }
@@ -286,6 +301,15 @@ Styles for the header
 
 .icon-user::after {
   content: "\e90b";
+}
+
+.icon-arrow-down {
+  font-size: 60px;
+  margin-right: -20px;
+
+  &::after {
+    content: "\e900";
+  }
 }
 
 .logo {
