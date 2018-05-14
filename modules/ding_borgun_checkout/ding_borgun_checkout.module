@@ -24,6 +24,13 @@ function ding_borgun_checkout_menu() {
     'file' => 'ding_borgun_checkout.admin.inc',
   );
 
+  $items['membership'] = array(
+    'title' => 'Buy/renew membership',
+    'page callback' => 'ding_borgun_checkout_page',
+    'page arguments' => array(1),
+    'access callback' => TRUE,
+  );
+
   return $items;
 }
 
@@ -358,4 +365,61 @@ function _ding_borgun_checkout_capture_token($token, $amount, $currency_code, $o
       array('%code' => $response->getStatusCode()), WATCHDOG_WARNING);
     return "unknown";
   }
+}
+
+/**
+ * Checkout page for buying and renewing membership.
+ *
+ * @param string $type
+ *   The type (renew or buying).
+ *
+ * @return string
+ *   The page.
+ */
+function ding_borgun_checkout_page($type) {
+  require_once drupal_get_path('module', 'ding_debt') . '/plugins/content_types/debts/debts.inc';
+  $custom_form = array();
+  $type === 'renew' ? $title = t('Renew membership') : $title = t('Buy membership');
+
+  if ($type === 'renew') {
+    $custom_form['renew'] = array(
+      '#prefix' => '<div class="checkout-container checkout-container__renew">',
+      '#markup' => t('Wooops, your membership is expired! <br /> Please renew your membership in order to continue.'),
+      '#suffix' => '</div>',
+    );
+  }
+
+  if ($type === 'buy' || empty($type)) {
+    $custom_form = array(
+      'buy' => array(
+        '#prefix' => '<div class="checkout-container checkout-container__buy">',
+        '#markup' => t("You don't have a valid membership."),
+        '#suffix' => '</div>',
+      ),
+      'telephone' => array(
+        '#title' => t('Telephone'),
+        '#type' => 'textfield',
+        '#required' => FALSE,
+      ),
+      'email' => array(
+        '#title' => t('Email'),
+        '#type' => 'textfield',
+        '#required' => TRUE,
+      ),
+      'pin_code' => array(
+        '#title' => t('Pin code'),
+        '#type' => 'password',
+        '#required' => TRUE,
+      ),
+    );
+  }
+
+  $form = drupal_get_form('ding_debt_debts_form', array(), FALSE, '100');
+  unset($form['pay_selected']);
+
+  $type === 'renew' ? $form['pay_all']['#value'] = t('Renew membership') : $form['pay_all']['#value'] = t('Buy membership');
+  $form['#attached']['css'][] = drupal_get_path('module', 'ding_borgun_checkout') . '/css/ding_borgun_checkout_form.css';
+
+  $form = array_merge($custom_form, $form);
+  return '<h1>' . $title . '</h1>' . drupal_render($form);
 }

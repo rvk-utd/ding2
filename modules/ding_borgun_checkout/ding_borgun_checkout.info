@@ -5,3 +5,4 @@ version = "7.x-1.0"
 configure = admin/config/ding/ding_borgun_checkout
 dependecies[] = ding_provider
 dependecies[] = libraries
+stylesheets[] = css/ding_borgun_checkout_form.css
