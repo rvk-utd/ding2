@@ -135,9 +135,9 @@ function bbs_menu_link__menu_tabs_menu($vars) {
                 }
                 // Add dropdown menu
                 $user_menu = menu_navigation_links('user-menu');
-                $output = '<span class="details">' . $element['#title'] . '</span>' . '<div class="user-menu">';
-                $output .= theme('links__menu_your_custom_menu_name', array('links' => $user_menu)) . '</div>';
-                return '<li' . drupal_attributes($element['#attributes']) . '>' . $output . "</li>\n";
+                $user_menu_html = '<div class="user-menu">' . theme('links__menu_your_custom_menu_name', array('links' => $user_menu)) . '</div>';
+                $output = l($title_prefix . '<span class="details">' . $element['#title'] . '</span>', $element['#href'], $element['#localized_options']);
+                return '<li' . drupal_attributes($element['#attributes']) . '>' . $output . $user_menu_html . "</li>\n";
             }
             else {
                 $element['#title'] = t('My Account');

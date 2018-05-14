@@ -37,14 +37,16 @@
                     body.removeClass('menu-is-open');
                     topbar_menu.removeClass('active');
                     ddbasic.openLogin();
-                }
-            });
-
-            user_menu.on('click', function(evt) {
-                if (body.hasClass('logged-in')) {
+                } else {
                     $('ul.links').toggleClass('open');
                 }
             });
+
+            // user_menu.on('click', function(evt) {
+            //     if (body.hasClass('logged-in')) {
+            //         $('ul.links').toggleClass('open');
+            //     }
+            // });
 
             close_user_login.on('click', function (evt) {
                 evt.preventDefault();
