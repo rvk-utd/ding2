@@ -57,6 +57,8 @@ class AlephPatronHandler extends AlephHandlerBase {
     $patron->setEmail((string) $response->xpath('z304/z304-email-address')[0]);
     $patron->setExpiryDate((string) $response->xpath('z305/z305-expiry-date')[0]);
     $patron->setPhoneNumber((string) $response->xpath('z304/z304-telephone')[0]);
+    $patron->setExpiryDate((string) $response->xpath('z305/z305-expiry-date')[0]);
+    $patron->setStatus((string) $response->xpath('z305/z305-bor-status')[0]);
 
     return $patron;
   }
@@ -100,6 +102,7 @@ class AlephPatronHandler extends AlephHandlerBase {
       $patron->setEmail((string) $response->xpath('z304/z304-email-address')[0]);
       $patron->setExpiryDate((string) $response_sub_library->xpath('z305/z305-expiry-date')[0]);
       $patron->setPhoneNumber((string) $response->xpath('z304/z304-telephone')[0]);
+      $patron->setStatus((string) $response->xpath('z305/z305-bor-status')[0]);
       $this->setPatron($patron);
       $result->setPatron($patron);
     }
