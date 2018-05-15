@@ -5,9 +5,45 @@
  * Pay ding depts using Borgun.Checkout.
  */
 
+use Drupal\aleph\Aleph\Handler\AlephPatronHandler;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
+
+/**
+ * Implements hook_init().
+ */
+function ding_borgun_checkout_init() {
+  if (user_is_logged_in()) {
+    $client = aleph_client();
+    $patron_handler = new AlephPatronHandler($client);
+    $creds = ding_user_get_creds();
+    $patron = $patron_handler->getPatronById($creds['name']);
+    $patron_is_unregistered = $patron->getStatus() === 'Unregistered';
+    global $user;
+    // Allow the user to logout (this means AJAX requests too).
+    $allowed_urls = array(
+      "user/$user->uid/status-debts",
+      'user/logout',
+    );
+    $is_ajax_request = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
+    foreach ($allowed_urls as $allowed_url) {
+      if (strpos(current_path(), $allowed_url) === 0 || $is_ajax_request) {
+        return;
+      }
+    }
+    // Check if the patron is unregistered.
+    if ($patron_is_unregistered && current_path() !== 'membership') {
+      drupal_goto('/membership');
+    }
+    // Check if the patrons account is expired.
+    $current_date_timestamp = new DateTime();
+    $current_date = $current_date_timestamp->format('d/m/Y');
+    if (!$patron_is_unregistered && $patron->getExpiryDate() > $current_date && current_path() !== 'membership/renew') {
+      drupal_goto('/membership/renew');
+    }
+  }
+}
 
 /**
  * Implements hook_menu().
