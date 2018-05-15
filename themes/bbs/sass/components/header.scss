@@ -112,6 +112,14 @@ Styles for the header
      }
     }
 
+    i.icon-arrow-down {
+      display: none;
+
+      .logged-in & {
+        display: block;
+      }
+    }
+
     &::after {
       display: none;
     }

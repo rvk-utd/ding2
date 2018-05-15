@@ -6,6 +6,9 @@
     .navigation-wrapper {
       background-color: #EB983F;
     }
+    .user-menu {
+      background-color: #EB983F;
+    }
   }
 
   .bbs-layout-content {
@@ -28,6 +31,13 @@
     .carousel-list-tabs {
       & .active a {
         color: #EB983F !important;
+      }
+    }
+    .tertiary-content {
+      .slick-arrow {
+        &::after {
+          background-color: #EB983F !important;
+        }
       }
     }
   }
