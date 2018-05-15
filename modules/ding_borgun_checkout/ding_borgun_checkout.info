@@ -3,6 +3,9 @@ description = Enable Borgun.Checkout payment of debts
 core = 7.x
 version = "7.x-1.0"
 configure = admin/config/ding/ding_borgun_checkout
-dependecies[] = ding_provider
-dependecies[] = libraries
+
+dependencies[] = aleph
+dependencies[] = ding_provider
+dependencies[] = libraries
+
 stylesheets[] = css/ding_borgun_checkout_form.css
