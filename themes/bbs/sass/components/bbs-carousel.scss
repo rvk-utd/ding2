@@ -142,28 +142,44 @@
   .ding-carousel-item {
     width: 180px !important;
 
-    a.read-more-button {
-      color: #888;
-      font-weight: 600;
-      font-size: 14px;
+    .book-teaser {
+      .inner {
+        position: relative;
 
-      &::before {
-        background-color: #888;
-      }
-    }
+        a.read-more-button {
+          color: #888;
+          font-weight: 600;
+          font-size: 14px;
 
-    .ding-entity-rating {
-      display: none;
-     }
+          &::before {
+            background-color: #888;
+          }
+        }
 
-     .field-name-ting-type {
-      display: none;
-     }
+        .ding-entity-rating {
+          display: none;
+        }
 
-    .ting-cover {
-      img {
-        height: 230px;
-        width: 100%;
+        .field-name-ting-type {
+          display: none;
+        }
+        .ting-cover {
+          img {
+            height: 230px;
+            width: 100%;
+          }
+        }
+
+        a.reserve-button {
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          color: #B03033;
+
+          &::before {
+            background-color: #B03033;
+          }
+        }
       }
     }
   }

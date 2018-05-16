@@ -18,6 +18,7 @@ stylesheets[all][] = sass_css/bbs-layout.css
 stylesheets[all][] = sass_css/bbs-page.css
 
 ;// Pages
+stylesheets[all][] = sass_css/pages/page-wrapper.css
 stylesheets[all][] = sass_css/pages/literature.css
 stylesheets[all][] = sass_css/pages/libraries.css
 stylesheets[all][] = sass_css/pages/frontpage.css
