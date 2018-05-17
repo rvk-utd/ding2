@@ -114,11 +114,11 @@ class AlephClient {
    * Send a request via the REST service.
    *
    * @param string $method
-   *    The method to use, like post, get, put, etc.
+   *   The method to use, like post, get, put, etc.
    * @param string $url
-   *    The URL the send the request to.
+   *   The URL the send the request to.
    * @param array $options
-   *    The options to send via GuzzleHttp.
+   *   The options to send via GuzzleHttp.
    *
    * @return \SimpleXMLElement
    *    The returned XML from Aleph.
@@ -173,7 +173,7 @@ class AlephClient {
    * Get information about the patron.
    *
    * @param \Drupal\aleph\Aleph\Entity\AlephPatron $patron
-   *    The Aleph Patron.
+   *   The Aleph Patron.
    *
    * @return \SimpleXMLElement
    *    The response from Aleph.
@@ -183,7 +183,6 @@ class AlephClient {
   public function borInfo(AlephPatron $patron) {
     $response = $this->request('GET', 'bor-info', array(
       'bor_id' => $patron->getId(),
-      'verification' => $patron->getVerification(),
     ));
 
     return $response;
@@ -193,12 +192,12 @@ class AlephClient {
    * Change the patrons pin code.
    *
    * @param \Drupal\aleph\Aleph\Entity\AlephPatron $patron
-   *    The Aleph patron.
+   *   The Aleph patron.
    * @param string $new_pin
-   *    The new pin code.
+   *   The new pin code.
    *
    * @return bool
-   *   True if the operation succeeded.
+   *   True if pin code was changed.
    *
    * @throws AlephClientException
    * @throws AlephPatronInvalidPin
@@ -230,7 +229,7 @@ class AlephClient {
    * Get patrons debts.
    *
    * @param \Drupal\aleph\Aleph\Entity\AlephPatron $patron
-   *    The Aleph patron to get debts from.
+   *   The Aleph patron to get debts from.
    *
    * @return \SimpleXMLElement
    *    The SimpleXMLElement response from Aleph.
@@ -281,7 +280,6 @@ class AlephClient {
     $options = array(
       'query' => array('institution' => $this->itemLibrary),
     );
-    $response = FALSE;
 
     $xml = new \SimpleXMLElement('<pay-cash-parameters></pay-cash-parameters>');
     $xml->addChild('sum', $sum);
@@ -329,7 +327,7 @@ class AlephClient {
    *   Patron to get reservations for.
    *
    * @return \SimpleXMLElement
-   *   The response from Aleph.
+   *    The response from Aleph.
    *
    * @throws AlephClientException
    */
@@ -449,7 +447,7 @@ class AlephClient {
    * Get information about the institutions and branches from the patron ID.
    *
    * @param string $bor_id
-   *    The Aleph patron ID.
+   *   The Aleph patron ID.
    *
    * @return \SimpleXMLElement
    *   The response.

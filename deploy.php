@@ -161,6 +161,8 @@ task('build:ding2', function () {
 
   writeln("<info>Drush install'ing ding2</info>");
   run("{{drush}} make ding2.make --no-core -y --contrib-destination=.");
+  writeln("<info>Drush installing innskraning</info>");
+  run("{{drush}} make innskraning.make --no-core -y --contrib-destination=.");
 
   if (test('[ -f modules/aleph/composer.json ]')) {
     writeln("<info>Composer install'ing Aleph</info>");
@@ -178,17 +180,17 @@ task('build:ding2', function () {
   run("node_modules/.bin/gulp uglify sass");
 });
 
+desc("Clear caches.");
+task('drush:ccall', function () {
+  cd('{{release_path}}');
+  run("{{drush}} cc all");
+});
+
 desc("Run database updates.");
 task('drush:updb', function () {
   set('updb_ran', true);
   cd('{{release_path}}');
   run("{{drush}} updb -y");
-});
-
-desc("Clear caches.");
-task('drush:ccall', function () {
-  cd('{{release_path}}');
-  run("{{drush}} cc all");
 });
 
 desc("Set site offline.");

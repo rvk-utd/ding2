@@ -17,7 +17,7 @@ circle-setup:
 	# Do a complete diff in short form as well for good measure. This will
 	# catch changes in excluded files.
 	git diff --stat --exit-code
-	# Built an entire Drupal site with core, contrib and custom
+	# Build an entire Drupal site with core, contrib and custom
 	# code First we build Drupal core only. Instead of using the
 	# profile specified in the make file we use the one we have
 	# just build. This way we do not have to update drupal.make

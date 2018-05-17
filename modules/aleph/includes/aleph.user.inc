@@ -12,7 +12,7 @@ use Drupal\aleph\Aleph\Handler\AlephPatronHandler;
  *
  * {@inheritdoc}
  */
-function aleph_user_authenticate($uid, $pass) {
+function aleph_user_authenticate($name, $pass) {
   $return['success'] = FALSE;
 
   // Setup client and patron handler.
@@ -20,7 +20,7 @@ function aleph_user_authenticate($uid, $pass) {
   $patron_handler = new AlephPatronHandler($client);
 
   // Authenticate user against Aleph.
-  $auth_result = $patron_handler->authenticate($uid, $pass, aleph_get_allowed_login_branches());
+  $auth_result = $patron_handler->authenticate($name, $pass, aleph_get_allowed_login_branches());
 
   // Check if the user is authenticated.
   if ($auth_result->isAuthenticated()) {
@@ -39,7 +39,9 @@ function aleph_user_authenticate($uid, $pass) {
 
   // Set credentials.
   $return['creds'] = array(
-    'name' => $uid,
+    // The user might have logged in using library card number, but we're saving
+    // their real id here, which authenticate did extra work to dig out.
+    'name' => $auth_result->getPatron()->getId(),
     'pass' => $pass,
   );
 
