@@ -1,0 +1,15 @@
+.layout-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  a {
+    color: #B03033;
+  }
+
+  .secondary-content {
+    width: 100%;
+    max-width: 1200px;
+  }
+}

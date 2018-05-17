@@ -1,6 +1,9 @@
 body {
   font-family: 'Cooper Hewitt', sans-serif;
-  padding-top: 0;
+
+  &.page-ding-frontpage {
+    padding-top: 0;
+  }
 }
 
 h1,

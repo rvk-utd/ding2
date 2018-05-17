@@ -1,0 +1,39 @@
+.page-search {
+  a {
+    color: #B03033;
+  }
+
+  .layout-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .secondary-content {
+      width: 100%;
+      max-width: 1200px;
+
+      form {
+        > div {
+          display: flex;
+        }
+
+        .form-type-radio {
+          label::after {
+            color: #B03033;
+          }
+        }
+        .form-type-checkbox {
+          label::before {
+            color: #B03033;
+          }
+        }
+      }
+    }
+
+    .primary-content {
+      width: 100%;
+      max-width: 1200px;
+    }
+  }
+}

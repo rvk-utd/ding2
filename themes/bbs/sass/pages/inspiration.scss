@@ -7,6 +7,9 @@ body.page-innblastur {
     .navigation-wrapper {
       background-color: #99C355;
     }
+    .user-menu {
+      background-color: #99C355;
+    }
   }
 
   .bbs-layout-content {
@@ -29,6 +32,13 @@ body.page-innblastur {
     .carousel-list-tabs {
       & .active a {
         color: #99C355 !important;
+      }
+    }
+    .tertiary-content {
+      .slick-arrow {
+        &::after {
+          background-color: #99C355 !important;
+        }
       }
     }
   }

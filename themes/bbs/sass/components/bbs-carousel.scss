@@ -44,6 +44,9 @@
 
 .slick-arrow {
   position: absolute;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
   border: none;
   top: 140px !important;
   background-color: grey;
@@ -57,16 +60,25 @@
   }
 
   &::after {
-    content: url('../../../images/icons/arrow.png') !important;
+    content: '' !important;
     position: relative !important;
-    background-color: transparent !important;
-    height: auto !important;
-    width: auto !important;
-    font-size: 0 !important;
-
-    .red-background & {
-      content: url('../../../images/icons/arrow-red.svg') !important;
-    }
+    display: block;
+    background-color: white !important;
+    height: 19px !important;
+    width: 14px !important;
+    mask: url('../../../images/icons/arrow.svg') no-repeat 50% 50%;
+    -webkit-mask: url('../../../images/icons/arrow.svg') no-repeat 50% 50%;
+    mask-size: cover;
+    -webkit-mask-size: cover;
+  }
+  &.red-svg::after {
+    background-color: #b03033 !important;
+  }
+  &.blue-svg::after {
+    background-color: #225CA4 !important;
+  }
+  &.oranage-svg::after {
+    background-color: #eb983f !important;
   }
 
   &.slick-next {
@@ -130,28 +142,44 @@
   .ding-carousel-item {
     width: 180px !important;
 
-    a.read-more-button {
-      color: #888;
-      font-weight: 600;
-      font-size: 14px;
+    .book-teaser {
+      .inner {
+        position: relative;
 
-      &::before {
-        background-color: #888;
-      }
-    }
+        a.read-more-button {
+          color: #888;
+          font-weight: 600;
+          font-size: 14px;
 
-    .ding-entity-rating {
-      display: none;
-     }
+          &::before {
+            background-color: #888;
+          }
+        }
 
-     .field-name-ting-type {
-      display: none;
-     }
+        .ding-entity-rating {
+          display: none;
+        }
 
-    .ting-cover {
-      img {
-        height: 230px;
-        width: 100%;
+        .field-name-ting-type {
+          display: none;
+        }
+        .ting-cover {
+          img {
+            height: 230px;
+            width: 100%;
+          }
+        }
+
+        a.reserve-button {
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          color: #B03033;
+
+          &::before {
+            background-color: #B03033;
+          }
+        }
       }
     }
   }

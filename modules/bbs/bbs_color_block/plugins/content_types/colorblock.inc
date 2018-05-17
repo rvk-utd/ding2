@@ -8,10 +8,10 @@
 
 $plugin = array(
   'single' => TRUE,
-  'title' => t('BBS Color Block'), 
+  'title' => t('BBS Color Block'),
   'description' => t('BBS Color Block'),
   'category' => t('BBS'),
-  'edit form' => 'bbs_color_block_colorblock_edit_form', 
+  'edit form' => 'bbs_color_block_colorblock_edit_form',
   'render callback' => 'bbs_color_block_pane_colorblock_render',
   'defaults' => array(
     'text' => '',
@@ -86,7 +86,6 @@ function bbs_color_block_pane_colorblock_render($subtype, $conf, $args, $context
 
   $link = l($conf['text'], $conf['path'], array('attributes' => array('class' => array('underline'))));
   $block = new stdClass();
-  $block->content = '<div style="background-color:' . $conf['color'] . ';"><div class="text">' . $conf['title'] . '</div><div class="underline">' . $link . '</div></div>';
+  $block->content = '<div class="bbs-highlight-block-item" style="background-color:' . $conf['color'] . ';"><div class="text">' . $conf['title'] . '</div><div class="underline">' . $link . '</div></div>';
   return $block;
 }
- 
