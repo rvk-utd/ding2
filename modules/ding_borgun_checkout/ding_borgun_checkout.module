@@ -17,7 +17,12 @@ function ding_borgun_checkout_init() {
   if (user_is_logged_in()) {
     $client = aleph_client();
     $patron_handler = new AlephPatronHandler($client);
-    $creds = ding_user_get_creds();
+    try {
+      $creds = ding_user_get_creds();
+    }
+    catch (DingProviderAuthException $e) {
+      return;
+    }
     $patron = $patron_handler->getPatronById($creds['name']);
     $patron_is_unregistered = $patron->getStatus() === 'Unregistered';
     global $user;
@@ -52,8 +57,8 @@ function ding_borgun_checkout_menu() {
   $items = array();
 
   $items['admin/config/ding/ding_borgun_checkout'] = array(
-    'title' => 'Ding Borgun.Checkout',
-    'description' => 'Configure paying debts using Borgun.Checkout.',
+    'title' => 'Ding Borgun Checkout',
+    'description' => 'Configure paying debts using Borgun Checkout.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('ding_borgun_checkout_settings'),
     'access arguments' => array('administer ding provider'),
@@ -420,16 +425,17 @@ function ding_borgun_checkout_page($type) {
   if ($type === 'renew') {
     $custom_form['renew'] = array(
       '#prefix' => '<div class="checkout-container checkout-container__renew">',
-      '#markup' => t('Wooops, your membership is expired! <br /> Please renew your membership in order to continue.'),
+      '#markup' => variable_get('ding_borgun_checkout_buy_membership_page_text', 'Wooops, your membership is expired! <br /> Please renew your membership in order to continue.'),
       '#suffix' => '</div>',
     );
+    $form = drupal_get_form('ding_debt_debts_form', array(), FALSE, variable_get('ding_borgun_checkout_renew_membership_page_price'));
   }
 
   if ($type === 'buy' || empty($type)) {
     $custom_form = array(
       'buy' => array(
         '#prefix' => '<div class="checkout-container checkout-container__buy">',
-        '#markup' => t("You don't have a valid membership."),
+        '#markup' => variable_get('ding_borgun_checkout_buy_membership_page_text', "You don't have a valid membership."),
         '#suffix' => '</div>',
       ),
       'telephone' => array(
@@ -448,9 +454,9 @@ function ding_borgun_checkout_page($type) {
         '#required' => TRUE,
       ),
     );
+    $form = drupal_get_form('ding_debt_debts_form', array(), FALSE, variable_get('ding_borgun_checkout_buy_membership_page_price'));
   }
 
-  $form = drupal_get_form('ding_debt_debts_form', array(), FALSE, '100');
   unset($form['pay_selected']);
 
   $type === 'renew' ? $form['pay_all']['#value'] = t('Renew membership') : $form['pay_all']['#value'] = t('Buy membership');
