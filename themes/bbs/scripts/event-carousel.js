@@ -42,8 +42,8 @@
     'use strict';
     Drupal.behaviors.bbstingcarousel = {
         attach: function () {
-            var read_more_button = $('.inner .read-more-button');
-            read_more_button.each(function () {
+            var reserve_button = $('.inner .reserve-button');
+            reserve_button.each(function () {
                 $(this).addClass('underline');
             });
         }
