@@ -8,7 +8,9 @@
  */
 
 function bbs_color_value($path) {
-    return bbs_color_picker_path_value($path);
+    if (module_exists('bbs_color_picker')) {
+        return bbs_color_picker_path_value($path);
+    }
 }
 
 function bbs_menu_link__main_menu($vars) {
