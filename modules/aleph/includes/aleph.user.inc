@@ -35,15 +35,16 @@ function aleph_user_authenticate($name, $pass) {
         'display_name' => $patron->getName(),
       ),
     );
-  }
 
-  // Set credentials.
-  $return['creds'] = array(
-    // The user might have logged in using library card number, but we're saving
-    // their real id here, which authenticate did extra work to dig out.
-    'name' => $auth_result->getPatron()->getId(),
-    'pass' => $pass,
-  );
+    // Set credentials.
+    $return['creds'] = array(
+      // The user might have logged in using library card number, but we're
+      // saving their real id here, which authenticate did extra work to dig
+      // out.
+      'name' => $auth_result->getPatron()->getId(),
+      'pass' => $pass,
+    );
+  }
 
   return $return;
 }
