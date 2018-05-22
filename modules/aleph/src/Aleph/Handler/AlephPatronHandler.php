@@ -3,7 +3,6 @@
 namespace Drupal\aleph\Aleph\Handler;
 
 use DateTime;
-use Drupal\aleph\Aleph\Exception\AlephClientException;
 use Drupal\aleph\Aleph\Exception\AlephPatronInvalidPin;
 use Drupal\aleph\Aleph\Entity\AlephDebt;
 use Drupal\aleph\Aleph\Entity\AlephHoldGroup;
