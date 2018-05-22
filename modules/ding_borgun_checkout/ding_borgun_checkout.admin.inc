@@ -105,6 +105,13 @@ function ding_borgun_checkout_settings($form, $form_state) {
     '#default_value' => variable_get('ding_borgun_checkout_buy_membership_page_price'),
   );
 
+  $form['buy_membership_page']['ding_borgun_checkout_buy_membership_page_button'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Button text'),
+    '#description' => t('The text on the payment button'),
+    '#default_value' => variable_get('ding_borgun_checkout_buy_membership_page_button'),
+  );
+
   $form['renew_membership_page'] = array(
     '#type' => 'fieldset',
     '#title' => t('Renew membership page'),
@@ -132,6 +139,13 @@ function ding_borgun_checkout_settings($form, $form_state) {
     '#title' => t('Price'),
     '#description' => t('Price in ISK'),
     '#default_value' => variable_get('ding_borgun_checkout_renew_membership_page_price'),
+  );
+
+  $form['renew_membership_page']['ding_borgun_checkout_renew_membership_page_button'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Button text'),
+    '#description' => t('The text on the payment button'),
+    '#default_value' => variable_get('ding_borgun_checkout_renew_membership_page_button'),
   );
 
   return system_settings_form($form);

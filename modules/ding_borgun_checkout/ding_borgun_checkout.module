@@ -469,7 +469,7 @@ function ding_borgun_checkout_page($type) {
 
   unset($form['pay_selected']);
 
-  $type === 'renew' ? $form['pay_all']['#value'] = t('Renew membership') : $form['pay_all']['#value'] = t('Buy membership');
+  $type === 'renew' ? $form['pay_all']['#value'] = variable_get('ding_borgun_checkout_renew_membership_page_button') : $form['pay_all']['#value'] = variable_get('ding_borgun_checkout_buy_membership_page_button');
   $form['#attached']['css'][] = drupal_get_path('module', 'ding_borgun_checkout') . '/css/ding_borgun_checkout_form.css';
 
   $form = array_merge($custom_form, $form);
