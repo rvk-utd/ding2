@@ -57,7 +57,7 @@ function ding_borgun_checkout_menu() {
   $items = array();
 
   $items['admin/config/ding/ding_borgun_checkout'] = array(
-    'title' => 'Ding Borgun Checkout',
+    'title' => 'Ding Borgun.Checkout',
     'description' => 'Configure paying debts using Borgun Checkout.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('ding_borgun_checkout_settings'),

@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Administrative functions for Ding Borgun Checkout.
+ * Administrative functions for Ding Borgun.Checkout.
  */
 
 /**
