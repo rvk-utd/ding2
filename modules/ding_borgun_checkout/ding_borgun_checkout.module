@@ -425,7 +425,7 @@ function ding_borgun_checkout_page($type) {
   if ($type === 'renew') {
     $custom_form['renew'] = array(
       '#prefix' => '<div class="checkout-container checkout-container__renew">',
-      '#markup' => variable_get('ding_borgun_checkout_buy_membership_page_text', 'Wooops, your membership is expired! <br /> Please renew your membership in order to continue.'),
+      '#markup' => variable_get('ding_borgun_checkout_renew_membership_page_text', 'Wooops, your membership is expired! <br /> Please renew your membership in order to continue.'),
       '#suffix' => '</div>',
     );
     $form = drupal_get_form('ding_debt_debts_form', array(), FALSE, variable_get('ding_borgun_checkout_renew_membership_page_price'));
