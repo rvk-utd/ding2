@@ -83,11 +83,18 @@ function ding_borgun_checkout_settings($form, $form_state) {
     '#collapsed' => FALSE,
   );
 
+  $form['buy_membership_page']['ding_borgun_checkout_buy_membership_page_title'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Page title'),
+    '#description' => t('The title shown on the top of the page'),
+    '#default_value' => variable_get('ding_borgun_checkout_buy_membership_page_title'),
+  );
+
   $form['buy_membership_page']['ding_borgun_checkout_buy_membership_page_text'] = array(
     '#type' => 'text_format',
     '#title' => t('Intro text'),
     '#description' => t('Text shown on the buy membership page'),
-    '#default_value' => variable_get('ding_borgun_checkout_buy_membership_page_text'),
+    '#default_value' => variable_get('ding_borgun_checkout_buy_membership_page_text')['value'],
     '#format' => 'ding_wysiwyg',
   );
 
@@ -105,11 +112,18 @@ function ding_borgun_checkout_settings($form, $form_state) {
     '#collapsed' => FALSE,
   );
 
+  $form['renew_membership_page']['ding_borgun_checkout_renew_membership_page_title'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Page title'),
+    '#description' => t('The title shown on the top of the page'),
+    '#default_value' => variable_get('ding_borgun_checkout_renew_membership_page_title'),
+  );
+
   $form['renew_membership_page']['ding_borgun_checkout_renew_membership_page_text'] = array(
     '#type' => 'text_format',
     '#title' => t('Intro text'),
     '#description' => t('Text shown on the renew membership page'),
-    '#default_value' => variable_get('ding_borgun_checkout_renew_membership_page_text'),
+    '#default_value' => variable_get('ding_borgun_checkout_renew_membership_page_text')['value'],
     '#format' => 'ding_wysiwyg',
   );
 

@@ -421,9 +421,13 @@ function _ding_borgun_checkout_capture_token($token, $amount, $currency_code, $o
 function ding_borgun_checkout_page($type) {
   require_once drupal_get_path('module', 'ding_debt') . '/plugins/content_types/debts/debts.inc';
   $custom_form = array();
-  $type === 'renew' ? $title = t('Renew membership') : $title = t('Buy membership');
 
   if ($type === 'renew') {
+    $custom_form['title'] = array(
+      '#prefix' => '<h1>',
+      '#markup' => variable_get('ding_borgun_checkout_renew_membership_page_title'),
+      '#suffix' => '</h1>',
+    );
     $custom_form['renew'] = array(
       '#prefix' => '<div class="checkout-container checkout-container__renew">',
       '#markup' => variable_get('ding_borgun_checkout_renew_membership_page_text')['value'],
@@ -434,6 +438,11 @@ function ding_borgun_checkout_page($type) {
 
   if ($type === 'buy' || empty($type)) {
     $custom_form = array(
+      'title' => array(
+        '#prefix' => '<h1>',
+        '#markup' => variable_get('ding_borgun_checkout_buy_membership_page_title'),
+        '#suffix' => '</h1>',
+      ),
       'buy' => array(
         '#prefix' => '<div class="checkout-container checkout-container__buy">',
         '#markup' => variable_get('ding_borgun_checkout_buy_membership_page_text')['value'],
@@ -464,5 +473,5 @@ function ding_borgun_checkout_page($type) {
   $form['#attached']['css'][] = drupal_get_path('module', 'ding_borgun_checkout') . '/css/ding_borgun_checkout_form.css';
 
   $form = array_merge($custom_form, $form);
-  return '<h1>' . $title . '</h1>' . drupal_render($form);
+  return drupal_render($form);
 }
