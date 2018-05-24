@@ -11,6 +11,12 @@
 function ding_innskraning_settings() {
   $form = array();
 
+  $form['ding_innskraning_enabled'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Enable ding_innskraning'),
+    '#default_value' => variable_get('ding_innskraning_enabled', TRUE),
+  );
+
   $form['ding_innskraning_id'] = array(
     '#type' => 'textfield',
     '#title' => t('ID'),

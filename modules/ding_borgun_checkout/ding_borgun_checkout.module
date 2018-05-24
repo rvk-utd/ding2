@@ -38,13 +38,13 @@ function ding_borgun_checkout_init() {
       }
     }
     // Check if the patron is unregistered.
-    if ($patron_is_unregistered && current_path() !== 'membership') {
+    if ($patron_is_unregistered && current_path() !== 'membership' && variable_get('ding_borgun_checkout_buy_membership_page_enabled', TRUE)) {
       drupal_goto('/membership');
     }
     // Check if the patrons account is expired.
     $current_date = new DateTime('now');
     $patron_is_expired = $patron->getExpiryDate() < $current_date;
-    if ($patron_is_expired && current_path() !== 'membership/renew') {
+    if ($patron_is_expired && current_path() !== 'membership/renew' && variable_get('ding_borgun_checkout_renew_membership_page_enabled', TRUE)) {
       drupal_goto('/membership/renew');
     }
   }
