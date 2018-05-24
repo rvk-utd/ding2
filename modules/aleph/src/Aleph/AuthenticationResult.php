@@ -18,7 +18,6 @@ class AuthenticationResult {
   protected $client;
   protected $patron;
   protected $verification;
-  protected $allowedBranches;
   protected $activeBranches;
 
   /**
@@ -30,8 +29,6 @@ class AuthenticationResult {
    *    The patron's ID.
    * @param string $verification
    *    The patron's pin.
-   * @param string[] $allowed_branches
-   *    The allowed branches for login.
    * @param string[] $active_branches
    *    The branches where the patron is active.
    */
@@ -39,13 +36,11 @@ class AuthenticationResult {
     AlephClient $client,
     $bor_id,
     $verification,
-    array $allowed_branches,
     array $active_branches
   ) {
     $this->borId = $bor_id;
     $this->client = $client;
     $this->verification = $verification;
-    $this->allowedBranches = array_filter($allowed_branches);
     $this->activeBranches = $active_branches;
   }
 
@@ -53,10 +48,7 @@ class AuthenticationResult {
    * Check the patron is authenticated.
    */
   public function isAuthenticated() {
-    $allowed = !empty(
-      array_intersect($this->activeBranches, $this->allowedBranches)
-    ) || empty($this->allowedBranches);
-    return ($allowed && !$this->getClientError() && !$this->isBlocked());
+    return (!$this->getClientError() && !$this->isBlocked());
   }
 
   /**
