@@ -35,11 +35,13 @@
           .form-type-radio {
             label::after {
               background-color: #B03033;
+              border-radius: 5px;
             }
           }
           .form-type-checkbox {
             label::before {
               background-color: #B03033;
+              border-radius: 5px;
             }
           }
         }

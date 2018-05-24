@@ -1,4 +1,9 @@
 .bbs-layout-content {
+  a {
+    color: white;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  }
+
   .content-wrapper {
     max-width: 1400px;
   }
@@ -298,8 +303,8 @@
   .content-block {
     display: flex;
     justify-content: center;
-    padding-top: 30px;
-    padding-bottom: 30px;
+    padding-top: 140px;
+    padding-bottom: 40px;
   }
 
   .logo-wrapper {
@@ -400,10 +405,6 @@
     justify-content: space-between;
     padding: 50px;
     color: white;
-
-    a {
-      color: white;
-    }
 
     .lead-text {
       padding-bottom: 25px;

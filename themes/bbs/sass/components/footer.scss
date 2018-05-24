@@ -6,6 +6,10 @@
   padding-right: 20px;
   width: 100%;
 
+  a {
+    color: #fff;
+  }
+
   .footer-inner {
     display: flex;
     flex-direction: row;
@@ -45,7 +49,6 @@
         }
 
         a {
-          color: #fff;
           font-weight: 300;
         }
       }
