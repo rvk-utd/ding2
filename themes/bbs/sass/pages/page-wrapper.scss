@@ -5,10 +5,13 @@
   align-items: center;
 
   a {
-    color: #B03033;
+    color: #000;
   }
 
-  .secondary-content {
+  .primary-content,
+  .secondary-content,
+  .tertiary-content,
+  .quaternary-content {
     width: 100%;
     max-width: 1200px;
   }

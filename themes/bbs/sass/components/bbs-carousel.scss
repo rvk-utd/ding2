@@ -49,7 +49,7 @@
   justify-content: center;
   border: none;
   top: 140px !important;
-  background-color: grey;
+  background-color: attr(data-color);
   height: 50px !important;
   width: 50px !important;
   font-size: 0;
@@ -57,6 +57,10 @@
 
   .red-background & {
     background-color: #fff;
+
+    &::after {
+      background-color: attr(data-color) !important;
+    }
   }
 
   &::after {
@@ -183,4 +187,9 @@
       }
     }
   }
+}
+
+.pane-ding-related-content-news-events {
+  max-width: 1200px;
+  margin: auto;
 }

@@ -26,6 +26,8 @@ stylesheets[all][] = sass_css/pages/inspiration.css
 stylesheets[all][] = sass_css/pages/education.css
 stylesheets[all][] = sass_css/pages/ting-object.css
 stylesheets[all][] = sass_css/pages/search.css
+stylesheets[all][] = sass_css/pages/nyheder.css
+stylesheets[all][] = sass_css/pages/contact.css
 
 ;// Components
 stylesheets[all][] = sass_css/components/bbs-carousel.css
