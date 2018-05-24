@@ -85,8 +85,8 @@ function ding_borgun_checkout_settings($form, $form_state) {
 
   $form['buy_membership_page']['ding_borgun_checkout_buy_membership_page_enabled'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Enable/disable buy membership page redirect'),
-    '#default_value' => variable_get('ding_borgun_checkout_buy_membership_page_enabled'),
+    '#title' => t('Enable buy membership page redirect'),
+    '#default_value' => variable_get('ding_borgun_checkout_buy_membership_page_enabled', TRUE),
   );
 
   $form['buy_membership_page']['ding_borgun_checkout_buy_membership_page_title'] = array(
@@ -127,8 +127,8 @@ function ding_borgun_checkout_settings($form, $form_state) {
 
   $form['renew_membership_page']['ding_borgun_checkout_renew_membership_page_enabled'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Enable/disable renew membership page redirect'),
-    '#default_value' => variable_get('ding_borgun_checkout_renew_membership_page_enabled'),
+    '#title' => t('Enable renew membership page redirect'),
+    '#default_value' => variable_get('ding_borgun_checkout_renew_membership_page_enabled', TRUE),
   );
 
   $form['renew_membership_page']['ding_borgun_checkout_renew_membership_page_title'] = array(
