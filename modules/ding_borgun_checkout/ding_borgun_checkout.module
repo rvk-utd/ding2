@@ -5,9 +5,50 @@
  * Pay ding depts using Borgun.Checkout.
  */
 
+use Drupal\aleph\Aleph\Handler\AlephPatronHandler;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
+
+/**
+ * Implements hook_init().
+ */
+function ding_borgun_checkout_init() {
+  if (user_is_logged_in()) {
+    $client = aleph_client();
+    $patron_handler = new AlephPatronHandler($client);
+    try {
+      $creds = ding_user_get_creds();
+    }
+    catch (DingProviderAuthException $e) {
+      return;
+    }
+    $patron = $patron_handler->getPatronById($creds['name']);
+    $patron_is_unregistered = $patron->getStatus() === 'Unregistered';
+    global $user;
+    // Allow the user to logout (this means AJAX requests too).
+    $allowed_urls = array(
+      "user/$user->uid/status-debts",
+      'user/logout',
+    );
+    $is_ajax_request = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
+    foreach ($allowed_urls as $allowed_url) {
+      if (strpos(current_path(), $allowed_url) === 0 || $is_ajax_request) {
+        return;
+      }
+    }
+    // Check if the patron is unregistered.
+    if ($patron_is_unregistered && current_path() !== 'membership' && variable_get('ding_borgun_checkout_buy_membership_page_enabled', TRUE)) {
+      drupal_goto('/membership');
+    }
+    // Check if the patrons account is expired.
+    $current_date = new DateTime('now');
+    $patron_is_expired = $patron->getExpiryDate() < $current_date;
+    if ($patron_is_expired && current_path() !== 'membership/renew' && variable_get('ding_borgun_checkout_renew_membership_page_enabled', TRUE)) {
+      drupal_goto('/membership/renew');
+    }
+  }
+}
 
 /**
  * Implements hook_menu().
@@ -17,11 +58,19 @@ function ding_borgun_checkout_menu() {
 
   $items['admin/config/ding/ding_borgun_checkout'] = array(
     'title' => 'Ding Borgun.Checkout',
-    'description' => 'Configure paying debts using Borgun.Checkout.',
+    'description' => 'Configure paying debts using Borgun Checkout.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('ding_borgun_checkout_settings'),
     'access arguments' => array('administer ding provider'),
     'file' => 'ding_borgun_checkout.admin.inc',
+  );
+
+  $items['membership'] = array(
+    'title' => 'Buy/renew membership',
+    'page callback' => 'ding_borgun_checkout_page',
+    'page arguments' => array(1),
+    // Needs to be available for everyone.
+    'access callback' => TRUE,
   );
 
   return $items;
@@ -358,4 +407,71 @@ function _ding_borgun_checkout_capture_token($token, $amount, $currency_code, $o
       array('%code' => $response->getStatusCode()), WATCHDOG_WARNING);
     return "unknown";
   }
+}
+
+/**
+ * Checkout page for buying and renewing membership.
+ *
+ * @param string $type
+ *   The type (renew or buying).
+ *
+ * @return string
+ *   The page.
+ */
+function ding_borgun_checkout_page($type) {
+  require_once drupal_get_path('module', 'ding_debt') . '/plugins/content_types/debts/debts.inc';
+  $custom_form = array();
+
+  if ($type === 'renew') {
+    $custom_form['title'] = array(
+      '#prefix' => '<h1>',
+      '#markup' => variable_get('ding_borgun_checkout_renew_membership_page_title'),
+      '#suffix' => '</h1>',
+    );
+    $custom_form['renew'] = array(
+      '#prefix' => '<div class="checkout-container checkout-container__renew">',
+      '#markup' => variable_get('ding_borgun_checkout_renew_membership_page_text')['value'],
+      '#suffix' => '</div>',
+    );
+    $form = drupal_get_form('ding_debt_debts_form', array(), FALSE, variable_get('ding_borgun_checkout_renew_membership_page_price'));
+  }
+
+  if ($type === 'buy' || empty($type)) {
+    $custom_form = array(
+      'title' => array(
+        '#prefix' => '<h1>',
+        '#markup' => variable_get('ding_borgun_checkout_buy_membership_page_title'),
+        '#suffix' => '</h1>',
+      ),
+      'buy' => array(
+        '#prefix' => '<div class="checkout-container checkout-container__buy">',
+        '#markup' => variable_get('ding_borgun_checkout_buy_membership_page_text')['value'],
+        '#suffix' => '</div>',
+      ),
+      'telephone' => array(
+        '#title' => t('Telephone'),
+        '#type' => 'textfield',
+        '#required' => FALSE,
+      ),
+      'email' => array(
+        '#title' => t('Email'),
+        '#type' => 'textfield',
+        '#required' => TRUE,
+      ),
+      'pin_code' => array(
+        '#title' => t('Pin code'),
+        '#type' => 'password',
+        '#required' => TRUE,
+      ),
+    );
+    $form = drupal_get_form('ding_debt_debts_form', array(), FALSE, variable_get('ding_borgun_checkout_buy_membership_page_price'));
+  }
+
+  unset($form['pay_selected']);
+
+  $type === 'renew' ? $form['pay_all']['#value'] = variable_get('ding_borgun_checkout_renew_membership_page_button') : $form['pay_all']['#value'] = variable_get('ding_borgun_checkout_buy_membership_page_button');
+  $form['#attached']['css'][] = drupal_get_path('module', 'ding_borgun_checkout') . '/css/ding_borgun_checkout_form.css';
+
+  $form = array_merge($custom_form, $form);
+  return drupal_render($form);
 }

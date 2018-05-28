@@ -3,7 +3,6 @@
 namespace Drupal\aleph\Aleph\Handler;
 
 use DateTime;
-use Drupal\aleph\Aleph\Exception\AlephClientException;
 use Drupal\aleph\Aleph\Exception\AlephPatronInvalidPin;
 use Drupal\aleph\Aleph\Entity\AlephDebt;
 use Drupal\aleph\Aleph\Entity\AlephHoldGroup;
@@ -53,10 +52,33 @@ class AlephPatronHandler extends AlephHandlerBase {
     $patron->setId($id);
     $response = $this->client->borInfo($patron);
 
+    // Temporary workaround.
+    // borInfo should be used, when the expiry date bug is fixed in Aleph.
+    $credentials = ding_user_get_creds();
+
+    if (!empty($credentials['pass'])) {
+      // Sub library is hardcoded in order to show correct expiry date.
+      // Most users are active in the BBAAA branch.
+      $response_sub_library = $this->client->authenticate($id, $credentials['pass'], 'BBAAA');
+    }
+
     $patron->setName((string) $response->xpath('z303/z303-name')[0]);
     $patron->setEmail((string) $response->xpath('z304/z304-email-address')[0]);
     $patron->setExpiryDate((string) $response->xpath('z305/z305-expiry-date')[0]);
     $patron->setPhoneNumber((string) $response->xpath('z304/z304-telephone')[0]);
+    $expiry_date = new DateTime();
+
+    // Temporary workaround.
+    // borInfo should be used, when the expiry date bug is fixed in Aleph.
+    if (!empty($credentials['pass'])) {
+      $expiry_date = $expiry_date::createFromFormat('d/m/Y', (string) $response_sub_library->xpath('z305/z305-expiry-date')[0]);
+    }
+    else {
+      $expiry_date = $expiry_date::createFromFormat('d/m/Y', (string) $response->xpath('z305/z305-expiry-date')[0]);
+    }
+
+    $patron->setExpiryDate($expiry_date);
+    $patron->setStatus((string) $response->xpath('z305/z305-bor-status')[0]);
 
     return $patron;
   }
@@ -98,8 +120,11 @@ class AlephPatronHandler extends AlephHandlerBase {
       $patron->setVerification($verification);
       $patron->setName((string) $response->xpath('z303/z303-name')[0]);
       $patron->setEmail((string) $response->xpath('z304/z304-email-address')[0]);
-      $patron->setExpiryDate((string) $response_sub_library->xpath('z305/z305-expiry-date')[0]);
+      $expiry_date = new DateTime();
+      $expiry_date = $expiry_date::createFromFormat('d/m/Y', (string) $response_sub_library->xpath('z305/z305-expiry-date')[0]);
+      $patron->setExpiryDate($expiry_date);
       $patron->setPhoneNumber((string) $response->xpath('z304/z304-telephone')[0]);
+      $patron->setStatus((string) $response->xpath('z305/z305-bor-status')[0]);
       $this->setPatron($patron);
       $result->setPatron($patron);
     }

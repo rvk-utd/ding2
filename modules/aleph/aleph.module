@@ -271,7 +271,7 @@ function aleph_get_profile_info() {
     $patron = aleph_get_patron_by_account();
     return [
       'email' => $patron->getEmail(),
-      'expiry_date' => $patron->getExpiryDate(),
+      'expiry_date' => $patron->getExpiryDate()->format('d/m/Y'),
       'phone_number' => $patron->getPhoneNumber(),
     ];
   }

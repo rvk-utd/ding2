@@ -22,6 +22,7 @@ class AlephPatron {
   protected $phoneNumber;
   protected $expiryDate;
   protected $libraryCardID;
+  protected $status;
 
   /**
    * Return the patron's name.
@@ -156,5 +157,27 @@ class AlephPatron {
    */
   public function setLibraryCardID($libraryCardID) {
     $this->libraryCardID = $libraryCardID;
+  }
+
+  /**
+   * Set the patron's status.
+   *
+   * For example: "Unregistered".
+   *
+   * @param string $status
+   *   The patron's status.
+   */
+  public function setStatus($status) {
+    $this->status = $status;
+  }
+
+  /**
+   * Get the patron's status.
+   *
+   * @return string
+   *   The patron's status.
+   */
+  public function getStatus() {
+    return $this->status;
   }
 }
