@@ -14,11 +14,13 @@ if ($node->field_bbs_color) {
 
 <div class="library-items" <?php if ($color) {print 'style="background-color: ' . $color . ';"';}?> >
     <?php if ($node->field_ding_library_title_image): ?>
-        <div class="library-image" style="background-image: url('<?php print file_create_url($node->field_ding_library_title_image['und'][0]['uri']); ?>')"></div>
+        <a href="<?php print $node_url; ?>">
+            <div class="library-image" style="background-image: url('<?php print file_create_url($node->field_ding_library_title_image['und'][0]['uri']); ?>')"></div>
+        </a>
     <?php endif; ?>
     <div class="text-wrapper">
         <div class="title">
-            <?php print $title; ?>
+            <a href="<?php print $node_url; ?>"><?php print $title; ?></a>
         </div>
         <div class="info-wrapper">
             <div class="info">
