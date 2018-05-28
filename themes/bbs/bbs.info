@@ -30,6 +30,7 @@ stylesheets[all][] = sass_css/pages/nyheder.css
 stylesheets[all][] = sass_css/pages/contact.css
 
 ;// Components
+stylesheets[all][] = sass_css/components/bbs-colors.css
 stylesheets[all][] = sass_css/components/bbs-carousel.css
 stylesheets[all][] = sass_css/components/messages.css
 
