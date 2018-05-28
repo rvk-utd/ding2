@@ -35,6 +35,27 @@ function bbs_color_picker_install() {
         'bbs-darkblue' => '#225CA4',
     );
     variable_set('bbs_color_options', $bbs_colors);
+    
+    // 
+    $field_name = 'field_bbs_color';
+     if (!field_info_field($field_name)) {
+        $field = array(
+            'field_name' => $field_name,
+            'type' => 'list_text',
+            'cardinality' => 1,
+            'settings' => array('allowed_values' => array_keys($bbs_colors)),
+        );
+        field_create_field($field);
+        $instance = array( 
+            'field_name' => $field_name,
+            'bundle' => 'ding_library',
+            'label' => 'BBS color',
+            'entity_type' => 'node',
+            'allowed_values' => $bbs_colors,
+            'required' => TRUE,
+            );
+        field_create_instance($instance);
+     }
 }
 
 /**

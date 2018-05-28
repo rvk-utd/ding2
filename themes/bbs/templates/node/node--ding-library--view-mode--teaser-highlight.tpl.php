@@ -5,8 +5,14 @@ if ($content['field_ding_library_phone_number']) {
 if ($content['field_ding_library_mail']) {
     $content['field_ding_library_mail']['#label_display'] = 'hidden';
 }
+if ($node->field_bbs_color) {
+    $i = $node->field_bbs_color['und'][0]['value'];
+    $colors = array_values(variable_get('bbs_color_options', Array()));
+    $color = $colors[$i];
+}
 ?>
-<div class="library-items">
+
+<div class="library-items" <?php if ($color) {print 'style="background-color: ' . $color . ';"';}?> >
     <?php if ($node->field_ding_library_title_image): ?>
         <div class="library-image" style="background-image: url('<?php print file_create_url($node->field_ding_library_title_image['und'][0]['uri']); ?>')"></div>
     <?php endif; ?>
