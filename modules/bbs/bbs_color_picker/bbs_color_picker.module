@@ -24,11 +24,29 @@ function bbs_color_picker_menu() {
     return $items;
 }
 
+
+function bbs_color_picker_colors() {
+    $items = array(
+        'bbs-red',
+        'bbs-green',
+    );
+    return $items;
+}
+
+
+function bbs_color_picker_path_value($name) {
+    $colors = variable_get('bbs_color_options', array());
+    if (array_key_exists($name, $colors)) {
+        return $colors[$name];
+    }
+    return '';
+}
+
 /**
  * @param $path - path
  * @return string - the color value
  */
-function bbs_color_picker_path_value($path) {
+function bbs_color_picker_path_name($path) {
     $colors = variable_get('bbs_colors', array());
 
     // Try getting color value from path
@@ -94,7 +112,8 @@ function bbs_color_picker_admin($form, &$form_state) {
 
         $form['colors'][0]['hex'] = array(
             '#title' => t('Hex'),
-            '#type' => 'textfield',
+            '#type' => 'select',
+            '#options' => variable_get('bbs_color_options'),
             '#required' => TRUE,
         );
     }
@@ -114,7 +133,8 @@ function bbs_color_picker_admin($form, &$form_state) {
 
             $form['colors'][$i]['hex'] = array(
                 '#title' => t('Hex'),
-                '#type' => 'textfield',
+                '#type' => 'select',
+                '#options' => variable_get('bbs_color_options'),
                 '#default_value' => $colors[$keys[$i]],
                 '#required' => TRUE,
             );

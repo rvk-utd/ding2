@@ -1,23 +1,34 @@
 <?php
 
+/**
+ * Returns a bbs color value name given a path
+ */
+function bbs_color_name($path) {
+    if (module_exists('bbs_color_picker')) {
+        return bbs_color_picker_path_name($path);
+    }
+}
+
+/**
+ * Returns a bbs color value in hex given a color name
+ */
+function bbs_color_value($name) {
+    if (module_exists('bbs_color_picker')) {
+        return bbs_color_picker_path_value($name);
+    }
+}
 
 /**
  * Implements theme_menu_link().
  *
  * Add specific markup for main menu.
  */
-
-function bbs_color_value($path) {
-    if (module_exists('bbs_color_picker')) {
-        return bbs_color_picker_path_value($path);
-    }
-}
-
 function bbs_menu_link__main_menu($vars) {
 
     $element = $vars['element'];
-    $color_class = bbs_color_value($element['#href']);
-    $element['#localized_options']['attributes']['data-color'] = $color_class;
+    $color_name = bbs_color_name($element['#href']);
+    $color = bbs_color_value($color_name);
+    $element['#localized_options']['attributes']['data-color'] = $color;
     $element['#localized_options']['attributes']['class'][] = 'menu-button';
 
 
@@ -219,7 +230,10 @@ function bbs_preprocess_html(&$vars)
     // Add additional body classes.
     $vars['classes_array'] = array_merge($vars['classes_array'], ddbasic_body_class());
 
-    $vars['attributes_array']['data-color'][] = bbs_color_value(current_path());
+    $color_name = bbs_color_name(current_path());
+    $color = bbs_color_value($color_name);
+    $vars['attributes_array']['id'][] = $color_name;
+    $vars['attributes_array']['data-color'][] = $color;
 
 
     // Search form style.
