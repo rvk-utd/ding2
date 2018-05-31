@@ -8,8 +8,8 @@
 
 $plugin = array(
   'single' => TRUE,
-  'title' => t('BBS Title Block'),
-  'description' => t('BBS Title Block'),
+  'title' => t('BBS Text Block'),
+  'description' => t('BBS Text Block'),
   'category' => t('BBS'),
   'edit form' => 'bbs_text_block_textblock_edit_form',
   'render callback' => 'bbs_text_block_pane_textblock_render',
