@@ -14,7 +14,11 @@
     <div class="border-element">
       <div class="main-content content-block">
         <?php if (!empty($content['bbs-title'])): ?>
-          <?php print $content['bbs-title']; ?>
+          <div class="title-wrapper">
+            <h1>
+              <?php print $content['bbs-title']; ?>
+            </h2>
+          </div>
         <?php endif ?>
         <div class="content-wrapper">
           <div class="row">

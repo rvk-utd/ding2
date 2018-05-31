@@ -43,6 +43,13 @@ function bbs_title_block_titleblock_edit_form($form, &$form_state) {
         '#required' => TRUE,
     );
 
+    $form['class'] = array(
+        '#type' => 'textfield',
+        '#title' => t('CSS Class'),
+        '#default_value' => $conf['class'],
+        '#required' => TRUE,
+    );
+
     return $form;
 }
 
@@ -51,6 +58,7 @@ function bbs_title_block_titleblock_edit_form($form, &$form_state) {
  */
 function bbs_title_block_titleblock_edit_form_submit(&$form, &$form_state) {
     $form_state['conf']['title'] = $form_state['values']['title'];
+    $form_state['conf']['class'] = $form_state['values']['class'];
 }
 
 
@@ -62,6 +70,6 @@ function bbs_title_block_pane_titleblock_render($subtype, $conf, $args, $context
 
   $title = t($conf['title']);
   $block = new stdClass();
-  $block->content = '<h2 class="title">' . $title . '</h2>'; 
+  $block->content = '<div class="' . $conf['class'] . '">' .   $title . '</div>'; 
   return $block;
 }
