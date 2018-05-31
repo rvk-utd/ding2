@@ -1,0 +1,5 @@
+name = BBS Text Block
+core = 7.x
+package = BBS
+dependencies[] = ctools
+depenedencies[] = block
