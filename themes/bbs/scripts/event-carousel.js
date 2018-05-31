@@ -8,8 +8,9 @@
             quicktabs_lists.each(function () {
                 $(this).not('.slick-initialized').slick({
                     'slidesToScroll': 1,
-                    'slidesToShow': 3, 
+                    'slidesToShow': 3,
                     'infinite': false,
+                    'variableWidth': true,
                     'responsive' : [
                         {
                             breakpoint: 750,
@@ -50,8 +51,9 @@
                 }
                 var list = $(this).find('.item-list ul');
                 $(list).not('.slick-initialized').slick({ 
-                    'slidesToShow': slides, 
+                    'slidesToShow': slides,
                     'infinite': false,
+                    'variableWidth': true,
                     responsive: [
                         {
                             breakpoint: 800,
@@ -64,7 +66,7 @@
                             settings: {
                                 'slidesToShow': 2,
                             },
-                        },    
+                        },
                     ]
                 });
             });
