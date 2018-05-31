@@ -405,6 +405,35 @@ function bbs_features_fe_nodequeue_export_fields() {
     'count' => 0,
   );
 
+  // Exported nodequeues: literature_third_content
+  $nodequeues['literature_third_content'] = array(
+    'name' => 'literature_third_content',
+    'title' => 'Literature third content',
+    'subqueue_title' => '',
+    'size' => 1,
+    'link' => '',
+    'link_remove' => '',
+    'owner' => 'nodequeue',
+    'show_in_ui' => 1,
+    'show_in_tab' => 1,
+    'show_in_links' => 0,
+    'reference' => 0,
+    'reverse' => 0,
+    'insert_at_front' => 0,
+    'i18n' => 0,
+    'subqueues' => 1,
+    'types' => array(
+      0 => 'ding_event',
+      1 => 'ding_group',
+      2 => 'ding_library',
+      3 => 'ding_news',
+      4 => 'ding_page',
+      5 => 'panel',
+    ),
+    'roles' => array(),
+    'count' => 0,
+  );
+
   // Exported nodequeues: we_recommend
   $nodequeues['we_recommend'] = array(
     'name' => 'we_recommend',
