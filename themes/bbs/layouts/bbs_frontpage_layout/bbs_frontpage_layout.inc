@@ -6,6 +6,7 @@ $plugin['bbs_frontpage_layout'] = array(
     'admin_css' => 'bbs_frontpage_layout.css',
     'category' => 'Ding2, theme',
     'regions' => array(
+        'bbs-title' => t('Title'),
         'menu' => t('Menu'),
         'new-user' => t('New User'),
         'main-info' => t('Main Info'),

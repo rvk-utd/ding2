@@ -13,10 +13,8 @@
   <div class="border-wrapper">
     <div class="border-element">
       <div class="main-content content-block">
-        <?php if (!empty($content['title'])): ?>
-          <h1>
-            <?php print $content['title']; ?>
-          </h1>
+        <?php if (!empty($content['bbs-title'])): ?>
+          <?php print $content['bbs-title']; ?>
         <?php endif ?>
         <div class="content-wrapper">
           <div class="row">

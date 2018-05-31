@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * @file
+ * BBS Title Block module main file.
+ */
+
+/**
+ * Implements hook_ctools_plugin_directory().
+ */
+function bbs_title_block_ctools_plugin_directory($module, $plugin) {
+    if ($module == 'ctools' || $module == 'panels') {
+        return 'plugins/' . $plugin;
+    }
+}
+

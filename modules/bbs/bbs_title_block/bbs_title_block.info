@@ -1,0 +1,5 @@
+name = BBS Title Block
+core = 7.x
+package = BBS
+dependencies[] = ctools
+depenedencies[] = block
