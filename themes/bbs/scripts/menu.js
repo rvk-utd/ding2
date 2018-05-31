@@ -16,7 +16,7 @@
                 sub_menu = $('.sub-menu'),
                 top = 80,
                 admin_menu_offset = $('#admin-menu').outerHeight() || 0,
-                redBackgroundOffset = $('.red-background').offset();
+                redBackgroundOffset = $('.bbs-color-background').offset();
 
             topbar_menu_btn.on('click', function (evt) {
                 evt.preventDefault();

@@ -27,7 +27,7 @@
             <?php endif ?>
         </div>
     </div>
-    <div class="logo-wrapper red-background">
+    <div class="logo-wrapper bbs-color-background">
     <div class="content-block tertiary-content ">
         <div class="content-wrapper ">
             <?php if (!empty($content['tertiary-content'])): ?>

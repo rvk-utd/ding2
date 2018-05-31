@@ -96,39 +96,3 @@ body.menu-is-open {
 .pane-menu-block-main-menu-second-level {
   display: none;
 }
-
-body#bbs-yellow {
-   .topbar {
-     background-color: $bbs-yellow;
-   }
-   .navigation-wrapper {
-     background-color: $bbs-yellow;
-   }
- }
-
-body#bbs-skyblue {
-  .topbar {
-    background-color: $bbs-skyblue;
-  }
-  .navigation-wrapper {
-    background-color: $bbs-skyblue;
-  }
-}
-
-body#bbs-seagreen {
-  .topbar {
-    background-color: $bbs-seagreen;
-  }
-  .navigation-wrapper {
-    background-color: $bbs-seagreen;
-  }
-}
-
-body#bbs-seagreen {
-  .topbar {
-    background-color: $bbs-limegreen;
-  }
-  .navigation-wrapper {
-    background-color: $bbs-limegreen;
-  }
-}

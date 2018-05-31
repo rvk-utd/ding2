@@ -33,7 +33,7 @@
         color: #b03033 !important;
       }
     }
-    .tertiary-content {
+    .bbs-color-background {
       .slick-arrow {
         &::after {
           background-color: #b03033 !important;
@@ -79,7 +79,7 @@
         color: #47A49D !important;
       }
     }
-    .tertiary-content {
+    .bbs-color-background {
       .slick-arrow {
         &::after {
           background-color: #47A49D !important;
@@ -91,7 +91,7 @@
 
 #bbs-limegreen {
   .site-header {
-    .topbar {
+    .topbar-inner-bbs {
       top: 0;
       background-color: #99C355;
     }
@@ -125,9 +125,11 @@
         color: #99C355 !important;
       }
     }
-    .slick-arrow {
-      &::after {
-        background-color: #99C355 !important;
+    .bbs-color-background {
+      .slick-arrow {
+        &::after {
+          background-color: #99C355 !important;
+        }
       }
     }
   }
@@ -168,7 +170,7 @@
         color: #EB983F !important;
       }
     }
-    .tertiary-content {
+    .bbs-color-background {
       .slick-arrow {
         &::after {
           background-color: #EB983F !important;
@@ -213,7 +215,7 @@
         color: #E36D38 !important;
       }
     }
-    .tertiary-content {
+    .bbs-color-background {
       .slick-arrow {
         &::after {
           background-color: #E36D38 !important;
@@ -258,7 +260,7 @@
         color: #5F338C !important;
       }
     }
-    .tertiary-content {
+    .bbs-color-background {
       .slick-arrow {
         &::after {
           background-color: #5F338C !important;
@@ -303,7 +305,7 @@
         color: #4CB2EA !important;
       }
     }
-    .tertiary-content {
+    .bbs-color-background {
       .slick-arrow {
         &::after {
           background-color: #4CB2EA !important;
@@ -348,7 +350,7 @@
         color: #225CA4 !important;
       }
     }
-    .tertiary-content {
+    .bbs-color-background {
       .slick-arrow {
         &::after {
           background-color: #225CA4 !important;

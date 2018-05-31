@@ -44,12 +44,8 @@
     font-size: 0;
     cursor: pointer;
 
-    .red-background & {
+    .bbs-color-background & {
       background-color: #fff;
-
-      &::after {
-        background-color: attr(data-color) !important;
-      }
     }
 
     &::after {
@@ -63,15 +59,6 @@
       -webkit-mask: url('../../../images/icons/arrow.svg') no-repeat 50% 50%;
       mask-size: cover;
       -webkit-mask-size: cover;
-    }
-    &.red-svg::after {
-      background-color: #b03033 !important;
-    }
-    &.blue-svg::after {
-      background-color: #225CA4 !important;
-    }
-    &.oranage-svg::after {
-      background-color: #eb983f !important;
     }
 
     &.slick-next {
