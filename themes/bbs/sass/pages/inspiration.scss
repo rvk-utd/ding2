@@ -31,11 +31,9 @@ body.page-innblastur {
         color: #99C355 !important;
       }
     }
-    .tertiary-content {
-      .slick-arrow {
-        &::after {
-          background-color: #99C355 !important;
-        }
+    .slick-arrow {
+      &::after {
+        background-color: #99C355 !important;
       }
     }
   }

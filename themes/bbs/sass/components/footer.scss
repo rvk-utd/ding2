@@ -65,4 +65,20 @@
       }
     }
   }
+
+  @media screen and (max-width: 720px) {
+    .footer-inner {
+      flex-direction: column;
+      width: auto;
+
+      .panel-pane {
+        flex: auto;
+        align-items: center;
+
+        &.pane-block-1 {
+          margin-right: 0;
+        }
+      }
+    }
+  }
 }
