@@ -282,7 +282,7 @@ function bbs_preprocess_html(&$vars)
  *
  * Adds wrapper classes to the different groups on the ting object.
  */
-function bbs_process_ting_object(&$vars) {
+/*function bbs_process_ting_object(&$vars) {
     //
     // Add tpl suggestions for node view modes.
     if (isset($vars['elements']['#view_mode'])) {
@@ -517,4 +517,4 @@ function bbs_process_ting_object(&$vars) {
                 break;
         }
     }
-}
+}*/
