@@ -129,20 +129,18 @@ Styles for the header
         left: 0;
         right: 0;
         background-color: #B03033;
-        .links {
-          display: none;
+        display: none;
 
-          &.open {
-            display: block;
-          }
-          li {
-            background-color: rgba(0, 0, 0, 0.2);
-            width: 100%;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            height: auto;
-            a {
-              padding: 19px 20px;
-            }
+        &.open {
+          display: block;
+        }
+        li {
+          background-color: rgba(0, 0, 0, 0.2);
+          width: 100%;
+          border-top: 1px solid rgba(255, 255, 255, 0.1);
+          height: auto;
+          a {
+            padding: 19px 20px;
           }
         }
       }
