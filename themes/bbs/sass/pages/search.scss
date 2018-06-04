@@ -142,9 +142,25 @@ ol.search-results {
         max-width: 1200px;
       }
     }
+
+    .search-result {
+      .inner {
+        display: flex;
+        border-bottom: 1px solid #B03033;
+
+        .ting-cover {
+          width: 180px;
+        }
+
+        .ting-object-right {
+          margin-left: 20px;
+          padding: 20px;
+        }
+      }
+    }
   }
 
-  @media screen and (max-width: 1140px) {
+  @media screen and (max-width: 950px) {
     .left-and-main-content {
       .layout-wrapper {
         flex-direction: column;
