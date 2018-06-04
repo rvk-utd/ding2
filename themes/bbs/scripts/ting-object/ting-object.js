@@ -3,6 +3,17 @@
 (function($) {
   'use strict';
 
+  // Ting search results, filter styling.
+  $(function () {
+    $("<div class='expand-search'>" + Drupal.t('Limit search to') + "</div>").insertAfter($( ".pane-search-result-count"));
+    $('.page-search-ting').find('.mobile-hide').wrapAll("<div class='hide-wrap'></div>");
+
+    $('.expand-search').click(function(){
+        $(this).toggleClass('expanded');
+        $(this).parent().find('.hide-wrap').slideToggle("fast");
+    });
+  });
+
   // Shorten ting object teaser titles
   function ellipse(str, max){
     return str.length > (max - 3) ? str.substring(0,max-3) + '...' : str;
