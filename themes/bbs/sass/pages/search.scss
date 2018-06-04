@@ -103,4 +103,66 @@ ol.search-results {
   select {
     z-index: 0;
   }
+  ul.tabs.primary {
+    display: none;
+  }
+
+  .search-field-in-content--message {
+    background-color: #B03033;
+  }
+
+  .left-and-main-content {
+    display: flex;
+    justify-content: center;
+
+    h1 {
+      color: #B03033;
+    }
+
+    a {
+      color: #B03033;
+    }
+
+    .layout-wrapper {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: flex-start;
+      width: 100%;
+      max-width: 1200px;
+
+      .secondary-content {
+        width: 33%;
+        padding-right: 50px;
+      }
+
+      .primary-content {
+        width: 100%;
+        max-width: 1200px;
+      }
+    }
+  }
+
+  @media screen and (max-width: 720px) {
+    .left-and-main-content {
+      .layout-wrapper {
+        flex-direction: column;
+      }
+    }
+  }
+}
+
+.pane-ting-search-sort-form {
+  float: left;
+  display: block;
+  margin-right: 0;
+  width: 48.10811%;
+}
+
+.pane-search-per-page {
+  float: left;
+  display: block;
+  margin-right: 3.78378%;
+  width: 48.10811%;
+  clear: both;
 }
