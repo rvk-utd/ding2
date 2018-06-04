@@ -147,10 +147,9 @@ function bbs_menu_link__menu_tabs_menu($vars) {
                     }
                 }
                 // Add dropdown menu
-                $user_menu = menu_navigation_links('user-menu');
-                $user_menu_html = '<div class="user-menu">' . theme('links__menu_your_custom_menu_name', array('links' => $user_menu)) . '</div>';
+                $user_menu = '<div class="user-menu"></div>';
                 $output = l($title_prefix . '<span class="details">' . $element['#title'] . '</span>' . $title_suffix, $element['#href'], $element['#localized_options']);
-                return '<li' . drupal_attributes($element['#attributes']) . '>' . $output . $user_menu_html . "</li>\n";
+                return '<li' . drupal_attributes($element['#attributes']) . '>' . $output . $user_menu . "</li>\n";
             }
             else {
                 $element['#title'] = t('My Account');
@@ -282,7 +281,7 @@ function bbs_preprocess_html(&$vars)
  *
  * Adds wrapper classes to the different groups on the ting object.
  */
-function bbs_process_ting_object(&$vars) {
+/*function bbs_process_ting_object(&$vars) {
     //
     // Add tpl suggestions for node view modes.
     if (isset($vars['elements']['#view_mode'])) {
@@ -517,4 +516,4 @@ function bbs_process_ting_object(&$vars) {
                 break;
         }
     }
-}
+}*/

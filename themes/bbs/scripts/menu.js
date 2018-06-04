@@ -7,7 +7,7 @@
         attach: function (context) {
             var topbar_menu_btn = $('li.topbar-link-menu', context),
                 topbar_link_user = $('a.topbar-link-user', context),
-                user_menu = $('.topbar-link-user span.details', context),
+                user_menu = $('.user-menu', context),
                 close_user_login = $('.close-user-login', context),
                 body = $('body'),
                 topbar_menu = $('.topbar-link-menu-inner'),
@@ -28,10 +28,14 @@
                     var color = body.data('color');
                     $('.topbar-inner-bbs').css('background-color', color);
                     $('.navigation-wrapper').css('background-color', color);
-                    $('.user-menu').css('background-color', color);
+                    user_menu.css('background-color', color);
                 }
             });
 
+            // Append user list to user menu
+            $('.mobile-user-menu ul').appendTo(user_menu);
+
+            // Open user menu
             topbar_link_user.on('click', function (evt) {
                 evt.preventDefault();
                 if (!body.hasClass('logged-in')) {
@@ -39,15 +43,9 @@
                     topbar_menu.removeClass('active');
                     ddbasic.openLogin();
                 } else {
-                    $('ul.links').toggleClass('open');
+                    $(user_menu).toggleClass('open');
                 }
             });
-
-            // user_menu.on('click', function(evt) {
-            //     if (body.hasClass('logged-in')) {
-            //         $('ul.links').toggleClass('open');
-            //     }
-            // });
 
             close_user_login.on('click', function (evt) {
                 evt.preventDefault();
