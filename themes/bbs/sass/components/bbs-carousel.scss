@@ -164,15 +164,17 @@
 }
 
 .quicktabs-wrapper {
-  .title-text {
-    position: relative;
-    padding-left: 30px;
+  .icon-calendar {
     &::before {
       content: url('/profiles/ding2/themes/bbs/images/icons/calendar.svg');
       position: absolute;
-      top: 0;
-      left: -6px;
+      top: -8px;
+      left: 0;
     }
+  }
+  .title-text {
+    position: relative;
+    padding-left: 30px;
   }
 }
 
