@@ -16,6 +16,7 @@
 
     .teaser-info {
       min-height: 325px;
+      min-width: 325px;
     }
 
     .book {
@@ -138,6 +139,26 @@
             background-color: #B03033;
           }
         }
+
+        .bbs-color-background & {
+          a.read-more-button {
+            color: white;
+
+            &::before {
+             background-color: white;
+            }
+          }
+          .field-name-ting-author {
+            color: rgba(255, 255, 255, 0.6);
+          }
+          a.reserve-button {
+            color: rgba(255, 255, 255, 0.6);
+
+            &::before {
+              color: rgba(255, 255, 255, 0.6);
+            }
+          }
+        }
       }
     }
   }
@@ -175,6 +196,12 @@
   .title-text {
     position: relative;
     padding-left: 30px;
+    max-width: 300px;
+  }
+
+  .lead {
+    max-width: 290px;
+    margin-bottom: 20px;
   }
 }
 

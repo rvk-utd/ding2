@@ -130,6 +130,7 @@ ol.search-results {
       align-items: flex-start;
       width: 100%;
       max-width: 1200px;
+      padding: 0 20px;
 
       .secondary-content {
         width: 33%;
@@ -143,26 +144,15 @@ ol.search-results {
     }
   }
 
-  @media screen and (max-width: 720px) {
+  @media screen and (max-width: 1140px) {
     .left-and-main-content {
       .layout-wrapper {
         flex-direction: column;
+        .secondary-content {
+          width: 100%;
+          padding: 20px 0;
+        }
       }
     }
   }
-}
-
-.pane-ting-search-sort-form {
-  float: left;
-  display: block;
-  margin-right: 0;
-  width: 48.10811%;
-}
-
-.pane-search-per-page {
-  float: left;
-  display: block;
-  margin-right: 3.78378%;
-  width: 48.10811%;
-  clear: both;
 }
