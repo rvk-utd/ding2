@@ -82,9 +82,7 @@
 
   <div class="bbs-top-page-content">
     <div class="bbs-page-banner-image"
-      <?php if(!empty($node->field_ding_group_title_image)): ?>
-        style="background-image: url(<?php print file_create_url($node->field_ding_group_title_image['und'][0]['uri']); ?>);"
-      <?php endif; ?>/>
+      <?php print render($content['field_ding_group_title_image']); ?>
     </div>
 
     <div class="bbs-page-text-wrapper">

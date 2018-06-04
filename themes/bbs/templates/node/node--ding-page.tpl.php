@@ -88,9 +88,7 @@
 
     <div class="bbs-top-page-content">
       <div class="bbs-page-banner-image"
-        <?php if(!empty($node->field_ding_page_title_image)): ?>
-          style="background-image: url(<?php print file_create_url($node->field_ding_page_title_image['und'][0]['uri']); ?>);"
-        <?php endif; ?>/>
+        <?php print render($content['group_left_col_search']['field_ding_page_title_image']); ?>
       </div>
 
       <div class="bbs-page-text-wrapper">
