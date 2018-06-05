@@ -1,14 +1,30 @@
 .page-user {
-  .layout-wrapper {
-    flex-direction: row;
+  .left-and-main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
 
-    .secondary-content {
-      width: 30%;
-      margin-right: 20px;
+    .layout-wrapper {
+      flex-direction: row;
+      align-items: flex-start;
+      max-width: 1200px;
+
+      .secondary-content {
+        width: auto;
+        margin-right: 100px;
+      }
+
+      .primary-content {
+        width: auto;
+      }
     }
-
-    .priumary-content {
-      width: 70%;
+  }
+  @media screen and (max-width: 720px) {
+    .left-and-main-content {
+      .layout-wrapper {
+        flex-direction: column;
+      }
     }
   }
 }
