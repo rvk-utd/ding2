@@ -18,12 +18,13 @@ stylesheets[all][] = sass_css/bbs-layout.css
 stylesheets[all][] = sass_css/bbs-page.css
 
 ;// Pages
+stylesheets[all][] = sass_css/pages/page-wrapper.css
 stylesheets[all][] = sass_css/pages/libraries.css
 stylesheets[all][] = sass_css/pages/ting-object.css
 stylesheets[all][] = sass_css/pages/search.css
 stylesheets[all][] = sass_css/pages/nyheder.css
 stylesheets[all][] = sass_css/pages/contact.css
-stylesheets[all][] = sass_css/pages/page-wrapper.css
+stylesheets[all][] = sass_css/pages/usercss
 
 ;// Components
 stylesheets[all][] = sass_css/components/bbs-color.css
