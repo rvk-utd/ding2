@@ -54,7 +54,7 @@ function bbs_text_block_textblock_edit_form($form, &$form_state) {
 /**
  * Panel pane configuration form submit handler.
  */
-function bbs_text_block_texteblock_edit_form_submit(&$form, &$form_state) {
+function bbs_text_block_textblock_edit_form_submit(&$form, &$form_state) {
     $form_state['conf']['text'] = $form_state['values']['text'];
     $form_state['conf']['class'] = $form_state['values']['class'];
 }

@@ -48,14 +48,6 @@ function bbs_features_default_fe_block_boxes() {
   $export['education_links_upper'] = $fe_block_boxes;
 
   $fe_block_boxes = new stdClass();
-  $fe_block_boxes->info = 'See all Events';
-  $fe_block_boxes->format = 'ding_wysiwyg';
-  $fe_block_boxes->machine_name = 'see_all_events';
-  $fe_block_boxes->body = '<a href="/events" class="see-all">See all Events</a>';
-
-  $export['see_all_events'] = $fe_block_boxes;
-
-  $fe_block_boxes = new stdClass();
   $fe_block_boxes->info = 'Social media block';
   $fe_block_boxes->format = 'ding_wysiwyg';
   $fe_block_boxes->machine_name = 'social_media_block';

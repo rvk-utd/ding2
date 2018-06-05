@@ -28,11 +28,12 @@
         </div>
     </div>
     <div class="logo-wrapper bbs-color-background">
-    <div class="content-block tertiary-content ">
-        <div class="content-wrapper ">
-            <?php if (!empty($content['tertiary-content'])): ?>
-                <?php print $content['tertiary-content']; ?>
-            <?php endif ?>
+        <div class="content-block tertiary-content ">
+            <div class="content-wrapper ">
+                <?php if (!empty($content['tertiary-content'])): ?>
+                    <?php print $content['tertiary-content']; ?>
+                <?php endif ?>
+            </div>
         </div>
     </div>
     <?php if (!empty($content['quaternary-content'])): ?>
