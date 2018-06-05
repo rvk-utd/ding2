@@ -100,6 +100,7 @@ Styles for the header
       background-color: rgba(0, 0, 0, 0.2);
 
       span.details {
+        position: relative;
         color: #fff;
         padding-left: 7px;
         width: 100%;
@@ -107,8 +108,20 @@ Styles for the header
         cursor: pointer;
 
        .logged-in & {
-         display: block;
-       }
+          display: block;
+
+          .notification-counter {
+            position: absolute;
+            top: -3px;
+            right: -17px;
+            color: black;
+            background-color: white;
+            border-radius: 50%;
+            width: 26px;
+            height: 26px;
+            padding: 4px 8px;
+          }
+        }
       }
 
       i.icon-arrow-down {
@@ -280,7 +293,7 @@ Styles for the header
   span.details {
     font-size: 15px;
     font-weight: 500;
-    line-height: 20px;
+    line-height: 24px;
     display: none;
 
     .menu-is-open & {
