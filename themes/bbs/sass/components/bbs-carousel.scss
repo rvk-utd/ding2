@@ -205,27 +205,40 @@
   }
 }
 
-.carousel-list-tabs {
-  margin-left: 10px;
-  margin-bottom: 10px;
+.carousel-tabs {
+  padding-top: 20px;
 
-  & .active a {
-    font-size: 20px !important;
-    font-weight: 600 !important;
-  }
+  .carousel-list-tabs {
+    margin-left: 10px;
+    margin-bottom: 10px;
 
-  a {
-    color: #888 !important;
-    font-size: 16px !important;
-    font-weight: 500 !important;
-
-    &::after {
-      display: none;
+    & .active a {
+      font-size: 20px !important;
+      font-weight: 600 !important;
     }
-  }
 
-  li {
-    margin-right: 40px;
+    a {
+      color: #888 !important;
+      font-size: 16px !important;
+      font-weight: 500 !important;
+
+      &::after {
+        display: none;
+      }
+    }
+
+    .bbs-color-background & {
+      & .active a {
+        color: white !important;
+      }
+      a {
+        color: white !important;
+      }
+    }
+
+    li {
+      margin-right: 40px;
+    }
   }
 }
 

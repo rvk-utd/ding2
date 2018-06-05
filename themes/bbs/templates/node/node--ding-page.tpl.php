@@ -87,7 +87,7 @@
 <div class="<?php print $classes; ?>"<?php print $attributes; ?>>
 
     <div class="bbs-top-page-content">
-      <div class="bbs-page-banner-image"
+      <div class="bbs-page-banner-image">
         <?php print render($content['group_left_col_search']['field_ding_page_title_image']); ?>
       </div>
 

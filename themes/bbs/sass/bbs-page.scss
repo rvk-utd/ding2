@@ -9,6 +9,15 @@
     .bbs-page-banner-image {
       height: 470px;
       width: 100%;
+
+      .adaptive-image {
+        position: absolute;
+        top: -10px;
+        left: 0;
+        right: 0;
+        width: 100%;
+        max-height: 500px;
+      }
     }
 
     .bbs-page-text-wrapper {
@@ -89,11 +98,6 @@
 
   .logo-wrapper {
     .content-block {
-      display: flex;
-      justify-content: center;
-      padding-top: 30px;
-      padding-bottom: 30px;
-
       .content-wrapper {
         max-width: 1400px;
       }
