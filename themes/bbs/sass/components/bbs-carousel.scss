@@ -16,6 +16,7 @@
 
     .teaser-info {
       min-height: 325px;
+      min-width: 325px;
     }
 
     .book {
@@ -138,6 +139,26 @@
             background-color: #B03033;
           }
         }
+
+        .bbs-color-background & {
+          a.read-more-button {
+            color: white;
+
+            &::before {
+             background-color: white;
+            }
+          }
+          .field-name-ting-author {
+            color: rgba(255, 255, 255, 0.6);
+          }
+          a.reserve-button {
+            color: rgba(255, 255, 255, 0.6);
+
+            &::before {
+              color: rgba(255, 255, 255, 0.6);
+            }
+          }
+        }
       }
     }
   }
@@ -164,39 +185,60 @@
 }
 
 .quicktabs-wrapper {
-  .title-text {
-    position: relative;
-    padding-left: 30px;
+  .icon-calendar {
     &::before {
       content: url('/profiles/ding2/themes/bbs/images/icons/calendar.svg');
       position: absolute;
-      top: 0;
-      left: -6px;
+      top: -8px;
+      left: 0;
     }
+  }
+  .title-text {
+    position: relative;
+    padding-left: 30px;
+    max-width: 300px;
+  }
+
+  .lead {
+    max-width: 290px;
+    margin-bottom: 20px;
   }
 }
 
-.carousel-list-tabs {
-  margin-left: 10px;
-  margin-bottom: 10px;
+.carousel-tabs {
+  padding-top: 20px;
 
-  & .active a {
-    font-size: 20px !important;
-    font-weight: 600 !important;
-  }
+  .carousel-list-tabs {
+    margin-left: 10px;
+    margin-bottom: 10px;
 
-  a {
-    color: #888 !important;
-    font-size: 16px !important;
-    font-weight: 500 !important;
-
-    &::after {
-      display: none;
+    & .active a {
+      font-size: 20px !important;
+      font-weight: 600 !important;
     }
-  }
 
-  li {
-    margin-right: 40px;
+    a {
+      color: #888 !important;
+      font-size: 16px !important;
+      font-weight: 500 !important;
+
+      &::after {
+        display: none;
+      }
+    }
+
+    .bbs-color-background & {
+      & .active a {
+        color: white !important;
+      }
+      a {
+        color: white !important;
+      }
+    }
+
+    li {
+      margin-right: 40px;
+    }
   }
 }
 

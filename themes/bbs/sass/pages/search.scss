@@ -1,4 +1,108 @@
+//
+// Styling of search elements
+
+@import '../base.scss';
+
+// ==========================================================================
+// Search filters
+// ==========================================================================
+.page-search-ting,
+.page-ekurser {
+  .secondary-content {
+    .expand-search {
+      @include button(arrow-down);
+      display: none;
+
+      // Mobile
+      @include media($tablet) {
+        display: block;
+        background: $black;
+        cursor: pointer;
+        &:hover {
+          display: block;
+          background: $black;
+        }
+      }
+      &.expanded {
+        background: $grey;
+        margin-bottom: 15px;
+        color: $charcoal-opacity-dark;
+        &::after {
+          @include arrow-button(arrow-up);
+          color: $charcoal-opacity-dark;
+        }
+      }
+    }
+    .hide-wrap {
+      // Tablet
+      @include media($tablet) {
+        @include transition(
+          max-height $speed ease-out,
+          opacity $speed-fast ease-out
+        );
+        @include span-columns(12);
+        display: none;
+        &.open {
+          @include transition(
+            max-height $speed ease-in,
+            opacity $speed ease-in
+          );
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
+
+// ==========================================================================
+// Search options
+// ==========================================================================
+
+.pane-search-per-page {
+  @include span-columns(4 of 8);
+  clear: both;
+
+  // Tablet
+  @include media($tablet) {
+    @include span-columns(12);
+  }
+}
+
+.pane-ting-search-sort-form {
+  @include span-columns(4 of 8);
+  @include omega();
+
+  // Tablet
+  @include media($tablet) {
+    @include span-columns(12);
+    padding-bottom: 40px;
+  }
+}
+
+// ==========================================================================
+// Search results
+// ==========================================================================
+
+ol.search-results {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  .search-result {
+    float: left;
+    width: 100%;
+    margin-bottom: 10px;
+
+    // Mobile
+    @include media($mobile) {
+      margin: 0;
+    }
+  }
+}
+
 .page-search {
+  select {
+    z-index: 0;
+  }
   ul.tabs.primary {
     display: none;
   }
@@ -26,6 +130,7 @@
       align-items: flex-start;
       width: 100%;
       max-width: 1200px;
+      padding: 0 20px;
 
       .secondary-content {
         width: 33%;
@@ -37,20 +142,33 @@
         max-width: 1200px;
       }
     }
+
+    .search-result {
+      .inner {
+        display: flex;
+        border-bottom: 1px solid #B03033;
+
+        .ting-cover {
+          width: 180px;
+        }
+
+        .ting-object-right {
+          margin-left: 20px;
+          padding: 20px;
+        }
+      }
+    }
   }
-}
 
-.pane-ting-search-sort-form {
-  float: left;
-  display: block;
-  margin-right: 0;
-  width: 48.10811%;
-}
-
-.pane-search-per-page {
-  float: left;
-  display: block;
-  margin-right: 3.78378%;
-  width: 48.10811%;
-  clear: both;
+  @media screen and (max-width: 950px) {
+    .left-and-main-content {
+      .layout-wrapper {
+        flex-direction: column;
+        .secondary-content {
+          width: 100%;
+          padding: 20px 0;
+        }
+      }
+    }
+  }
 }

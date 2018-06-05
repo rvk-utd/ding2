@@ -17,8 +17,7 @@
   .content-block {
     display: flex;
     justify-content: center;
-    padding-top: 40px;
-    padding-bottom: 40px;
+    padding: 100px 0;
   }
 
   .view-content {
@@ -468,22 +467,22 @@
 
     .lead-text {
       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      max-height: 72px;
     }
 
     .title-text {
       font-size: 22px;
       font-weight: bold;
       letter-spacing: -0.3px;
-      line-height: 30px;
+      line-height: 38px;
+      overflow: hidden;
+      max-width: 500px;
+      max-height: 72px;
     }
 
     .date-info {
       padding-bottom: 20px;
-    }
-
-    .field-item {
-      overflow: hidden;
-      max-height: 40px;
     }
   }
 
