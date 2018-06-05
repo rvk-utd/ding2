@@ -1,7 +1,21 @@
 .pane-ting-object {
-  padding: 200px 20px 0;
+  padding: 0 20px;
   max-width: 1200px;
   margin: auto;
+
+  .ting-object-inner-wrapper {
+    display: flex;
+
+    .ting-object-left {
+      padding-right: 20px;
+    }
+  }
+
+  @media screen and (max-width: 720px) {
+    .ting-object-inner-wrapper {
+      flex-direction: column;
+    }
+  }
 }
 
 .pane-serendipity-ting-object {
