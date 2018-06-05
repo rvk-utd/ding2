@@ -13,6 +13,21 @@
       .secondary-content {
         width: auto;
         margin-right: 100px;
+
+        .main-menu-third-level {
+          li {
+            margin-bottom: 10px;
+
+            .menu-item {
+              font-size: 1.2rem;
+              font-weight: 600;
+
+              &.active {
+                color: red;
+              }
+            }
+          }
+        }
       }
 
       .primary-content {

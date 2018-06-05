@@ -24,7 +24,7 @@ stylesheets[all][] = sass_css/pages/ting-object.css
 stylesheets[all][] = sass_css/pages/search.css
 stylesheets[all][] = sass_css/pages/nyheder.css
 stylesheets[all][] = sass_css/pages/contact.css
-stylesheets[all][] = sass_css/pages/usercss
+stylesheets[all][] = sass_css/pages/user.css
 
 ;// Components
 stylesheets[all][] = sass_css/components/bbs-color.css
