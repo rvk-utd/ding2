@@ -33,7 +33,7 @@
             });
 
             // Append user list to user menu
-            $('.mobile-user-menu ul').appendTo(user_menu);
+            $('.mobile-user-menu'.find('ul').appendTo(user_menu);
 
             // Open user menu
             topbar_link_user.on('click', function (evt) {
