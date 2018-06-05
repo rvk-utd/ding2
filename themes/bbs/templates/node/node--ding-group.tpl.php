@@ -81,7 +81,7 @@
 <div class="<?php print $classes; ?>"<?php print $attributes; ?>>
 
   <div class="bbs-top-page-content">
-    <div class="bbs-page-banner-image"
+    <div class="bbs-page-banner-image">
       <?php print render($content['field_ding_group_title_image']); ?>
     </div>
 
