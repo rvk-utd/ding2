@@ -32,9 +32,6 @@
                 }
             });
 
-            // Append user list to user menu
-            $('.mobile-user-menu').find('ul').appendTo(user_menu);
-
             // Open user menu
             topbar_link_user.on('click', function (evt) {
                 evt.preventDefault();
@@ -43,6 +40,10 @@
                     topbar_menu.removeClass('active');
                     ddbasic.openLogin();
                 } else {
+                    if ($.trim($(this).html())) {
+                        // Append user list to user menu
+                        $('.mobile-user-menu').find('ul').appendTo(user_menu);
+                    }
                     $(user_menu).toggleClass('open');
                 }
             });
