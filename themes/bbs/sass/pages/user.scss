@@ -8,7 +8,8 @@
     .layout-wrapper {
       flex-direction: row;
       align-items: flex-start;
-      max-width: 1200px;
+      max-width: 1000px;
+      width: 100%;
 
       .secondary-content {
         width: auto;
@@ -28,10 +29,6 @@
             }
           }
         }
-      }
-
-      .primary-content {
-        width: auto;
       }
     }
   }

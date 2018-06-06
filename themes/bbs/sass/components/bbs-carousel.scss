@@ -105,6 +105,15 @@
       .inner {
         position: relative;
 
+        .field-items {
+          margin: 20px 0;
+
+          h3 {
+            font-size: 18px;
+            margin: 0;
+          }
+        }
+
         a.read-more-button {
           color: #888;
           font-weight: 600;
