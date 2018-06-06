@@ -15,4 +15,10 @@
     width: 100%;
     max-width: 1200px;
   }
+
+  .default-account-panel-layout {
+    .pane-content > form {
+      padding-top: 200px;
+    }
+  }
 }

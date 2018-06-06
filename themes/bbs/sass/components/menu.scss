@@ -11,7 +11,7 @@ body.menu-is-open {
   height: 100vh;
   position: fixed;
   background-color: #b03033;
-  z-index: 3;
+  z-index: 9999;
   left: 0;
   width: 100%;
   transition: 0.3s cubic-bezier(0.4, 0, 1, 1);

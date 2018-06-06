@@ -14,6 +14,7 @@
       align-items: flex-start;
       width: 100%;
       max-width: 1200px;
+      padding-bottom: 100px;
 
       .secondary-content {
         width: 33%;
@@ -24,6 +25,20 @@
             a::after {
               background-color: #4CB2EA;
               border-radius: 5px;
+            }
+          }
+        }
+      }
+
+      .primary-content {
+        .frontpage-teaser {
+          .teaser-info {
+            span.field {
+              .field-item {
+                overflow: hidden;
+                margin-bottom: 20px;
+                height: 40px;
+              }
             }
           }
         }

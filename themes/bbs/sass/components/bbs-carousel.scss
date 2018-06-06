@@ -106,11 +106,13 @@
         position: relative;
 
         .field-items {
-          margin: 20px 0;
+          padding: 20px 0;
 
-          h3 {
+          h2 {
             font-size: 18px;
             margin: 0;
+            overflow: hidden;
+            max-height: 32px;
           }
         }
 
@@ -131,6 +133,7 @@
         .field-name-ting-type {
           display: none;
         }
+
         .ting-cover {
           img {
             height: 230px;
@@ -194,23 +197,28 @@
 }
 
 .quicktabs-wrapper {
-  .icon-calendar {
-    &::before {
-      content: url('/profiles/ding2/themes/bbs/images/icons/calendar.svg');
-      position: absolute;
-      top: -8px;
-      left: 0;
-    }
-  }
-  .title-text {
-    position: relative;
-    padding-left: 30px;
-    max-width: 300px;
-  }
+  .frontpage-teaser {
+    .teaser-info {
+      .icon-calendar {
+        &::before {
+          content: url('/profiles/ding2/themes/bbs/images/icons/calendar.svg');
+          position: absolute;
+          top: -5px;
+          left: 0;
+        }
+      }
 
-  .lead {
-    max-width: 290px;
-    margin-bottom: 20px;
+      .title-text {
+        position: relative;
+        padding-left: 30px;
+        width: 300px;
+      }
+
+      .lead {
+        max-width: 290px;
+        margin-bottom: 20px;
+      }
+    }
   }
 }
 
