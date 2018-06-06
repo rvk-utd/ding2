@@ -105,15 +105,16 @@
       .inner {
         position: relative;
 
-        .field-items {
-          padding: 20px 0;
+        h2 {
+          font-size: 18px;
+          margin: 20px 0 0;
+          overflow: hidden;
+          max-height: 32px;
+        }
 
-          h2 {
-            font-size: 18px;
-            margin: 0;
-            overflow: hidden;
-            max-height: 32px;
-          }
+        .field-name-ting-author {
+          overflow: hidden;
+          max-height: 18px;
         }
 
         a.read-more-button {

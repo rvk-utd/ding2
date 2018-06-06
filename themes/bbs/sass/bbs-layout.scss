@@ -67,7 +67,6 @@
 
           .field-item {
             max-width: 500px;
-            padding-bottom: 20px;
           }
         }
       }
@@ -459,13 +458,14 @@
 
     a {
       color: white;
+      padding-top: 20px;
     }
 
     .lead-text,
     .lead {
       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
       overflow: hidden;
-      max-height: 72px;
+      max-height: 36px;
     }
 
     .title-text {
