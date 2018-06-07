@@ -38,7 +38,7 @@ a {
 
   &.underline {
     font-size: 17px;
-    font-weight: 700;
+    font-weight: 600;
     position: relative;
 
     &::before {
@@ -100,10 +100,6 @@ a {
   }
 }
 
-h2.pane-title {
-  margin-left: 1.5rem;
-}
-
 .user-login-form .submit-button-with-icon .color-and-icon {
   padding: 0;
   position: relative;
@@ -134,12 +130,9 @@ h2.pane-title {
 
 .content-wrapper.js-content-wrapper {
   min-height: 60vh;
-}
-
-.node-ding-event.node-full {
   background-image: none;
 }
 
-.not-front .page-no-panels .content-wrapper {
+.node-ding-event.node-full {
   background-image: none;
 }

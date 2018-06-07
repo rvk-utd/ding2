@@ -449,7 +449,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    justify-content: space-between;
+    justify-content: flex-end;
     padding: 50px;
     color: white;
     width: 100%;
@@ -461,11 +461,15 @@
       padding-top: 20px;
     }
 
-    .lead-text,
     .lead {
-      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-      overflow: hidden;
+      max-width: 450px;
       max-height: 36px;
+      overflow: hidden;
+    }
+    .lead-text {
+      max-width: 300px;
+      max-height: 60px;
+      overflow: hidden;
     }
 
     .title-text {
@@ -480,15 +484,6 @@
 
     .date-info {
       padding-bottom: 20px;
-    }
-  }
-
-  &.event-teaser {
-    .teaser-info {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      align-items: flex-start;
     }
   }
 }
