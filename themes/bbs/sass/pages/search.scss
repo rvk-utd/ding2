@@ -135,6 +135,14 @@ ol.search-results {
       .secondary-content {
         width: 33%;
         padding-right: 50px;
+
+        input[type=radio]:checked + label::after {
+          background-color: #B03033;
+        }
+
+        input[type=checkbox]:checked + label::before {
+          background-color: #B03033;
+        }
       }
 
       .primary-content {
