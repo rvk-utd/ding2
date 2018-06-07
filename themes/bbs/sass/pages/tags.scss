@@ -1,6 +1,6 @@
 .page-taxonomy {
   .content-inner {
-    .panel-page-content {
+    .pane-page-content {
       display: flex;
       flex-wrap: wrap;
       position: relative;
@@ -10,6 +10,11 @@
         position: absolute;
         top: 0;
         left: 10px;
+
+        p {
+          font-size: 40px;
+          font-weight: 300px;
+        }
       }
 
       .frontpage-teaser {
