@@ -13,6 +13,7 @@
                 topbar_menu = $('.topbar-link-menu-inner'),
                 topbar = $('.topbar'),
                 main_menu_button = $('a.menu-button'),
+                main_menu_submenu_button = $('a.menu-button-submenu'),
                 sub_menu = $('.sub-menu'),
                 back_button = sub_menu.find('.back-button'),
                 top = 80,
@@ -80,8 +81,8 @@
                 }
             }
 
-            main_menu_button.on('click', function(evt) {
-                if (window.screen.width < 768) {
+            main_menu_submenu_button.on('click', function(evt) {
+                if ($(window).width() < 768) {
                     evt.preventDefault();
                     $(this).parent().find('.sub-menu').removeClass('hidden');
                     $(".main-menu-wrapper > .main-menu > li > a").addClass('hidden');

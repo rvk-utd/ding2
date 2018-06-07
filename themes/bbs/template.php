@@ -33,6 +33,7 @@ function bbs_menu_link__main_menu($vars) {
 
 
     if ($element['#below']) {
+        $element['#localized_options']['attributes']['class'][] = 'menu-button-submenu';
         $element['#below']['#localized_options']['attributes']['class'][] = 'submenu-button';
         $sub_menu = '<div class="sub-menu hidden"> <div class="back-button">Go Back</div> <div class="header-element">' . l($element['#title'], $element['#href']) .  drupal_render($element['#below']) . '</div>';
         $output = l($element['#title'], $element['#href'],  $element['#localized_options']);
