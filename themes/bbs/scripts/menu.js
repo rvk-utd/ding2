@@ -57,7 +57,7 @@
                 body.removeClass('overlay-is-active');
             });
             
-            if ($(window).width() < menu_breakpoint) {
+            if ($(window).width() > menu_breakpoint) {
                 // Initilize menu
                 var menu_expanded = false;
                 main_menu_button.each(function () {
@@ -98,8 +98,9 @@
                 }
             });
 
-            back_button.on('click', function () {
-                $(this).parent().find('.sub-menu').addClass('hidden');
+            back_button.on('click', function (e) {
+                e.preventDefault();
+                $(this).parent().addClass('hidden');
                 $(".main-menu-wrapper > .main-menu > li > a").removeClass('hidden');
                 var color = $(this).data('color');
             });
