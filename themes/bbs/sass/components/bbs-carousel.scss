@@ -119,11 +119,18 @@
         }
 
         a.read-more-button {
-          color: #888;
+          position: relative;
           font-weight: 600;
           font-size: 14px;
+          color: #888;
 
           &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            height: 3px;
+            width: 100%;
             background-color: #888;
           }
         }
@@ -148,6 +155,7 @@
           bottom: 0;
           right: 0;
           color: #B03033;
+          font-size: 14px;
 
           &::before {
             background-color: #B03033;
@@ -169,7 +177,7 @@
             color: rgba(255, 255, 255, 0.6);
 
             &::before {
-              color: rgba(255, 255, 255, 0.6);
+              background-color: rgba(255, 255, 255, 0.6);
             }
           }
         }
