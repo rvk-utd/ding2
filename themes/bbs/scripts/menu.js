@@ -79,6 +79,14 @@
                 }
             }
 
+            main_menu_button.on('click', function(evt) {
+                if (window.screen.width < 768) {
+                    evt.preventDefault();
+                    $(this).parent().find('.sub-menu').removeClass('hidden');
+                    $(".main-menu-wrapper > .main-menu > li > a").addClass('hidden');
+                }
+            });
+
             // Set up hover 
             main_menu_button.hover(function () {
                 if ($(this).parent().parent().parent().hasClass('sub-menu')) {

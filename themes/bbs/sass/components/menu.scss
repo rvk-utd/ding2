@@ -85,6 +85,10 @@ body.menu-is-open {
       a.menu-button {
         padding-left: 80px;
         padding-right: 10px;
+
+        &.hidden {
+          display: none;
+        }
       }
       a.active {
         color: white;
