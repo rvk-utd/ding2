@@ -14,6 +14,7 @@
                 topbar = $('.topbar'),
                 main_menu_button = $('a.menu-button'),
                 sub_menu = $('.sub-menu'),
+                back_button = sub_menu.find('.back-button'),
                 top = 80,
                 admin_menu_offset = $('#admin-menu').outerHeight() || 0,
                 redBackgroundOffset = $('.bbs-color-background').offset();
@@ -85,6 +86,11 @@
                     $(this).parent().find('.sub-menu').removeClass('hidden');
                     $(".main-menu-wrapper > .main-menu > li > a").addClass('hidden');
                 }
+            });
+
+            back_button.on('click', function () {
+                $(this).parent().find('.sub-menu').addClass('hidden');
+                $(".main-menu-wrapper > .main-menu > li > a").removeClass('hidden');
             });
 
             // Set up hover 
