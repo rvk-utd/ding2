@@ -16,7 +16,7 @@
 
     .teaser-info {
       min-height: 325px;
-      min-width: 325px;
+      min-width: 450px;
     }
 
     .book {
@@ -151,11 +151,9 @@
         }
 
         a.reserve-button {
-          position: absolute;
-          bottom: 0;
-          right: 0;
-          color: #B03033;
           font-size: 14px;
+          color: #B03033;
+          margin-right: 20px;
 
           &::before {
             background-color: #B03033;

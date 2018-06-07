@@ -8,7 +8,7 @@ body.menu-is-open {
 }
 
 .navigation-wrapper {
-  height: 100vh;
+  height: calc(100% - 70px);
   position: fixed;
   background-color: #b03033;
   z-index: 9999;
@@ -29,6 +29,10 @@ body.menu-is-open {
 
   a {
     color: white;
+  }
+
+  @media screen and (max-width: 460px) {
+    overflow: scroll;
   }
 }
 
