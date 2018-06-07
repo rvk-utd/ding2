@@ -61,14 +61,6 @@
                     menu_expanded = true;
                     $(this).parent().addClass('open');
                     $(this).parent().find('.sub-menu').removeClass('hidden');
-
-                    var color = $(this).attr('id');
-                    if (color) {
-                        body.attr('id', color);
-                    }
-                    else {
-                        body.attr('id', '');
-                    }
                 }
             });
             
