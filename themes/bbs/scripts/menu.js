@@ -87,6 +87,12 @@
                     evt.preventDefault();
                     $(this).parent().find('.sub-menu').removeClass('hidden');
                     $(".main-menu-wrapper > .main-menu > li > a").addClass('hidden');
+
+                    if (color) {
+                        $('.topbar-inner-bbs').css('background-color', color);
+                        $('.navigation-wrapper').css('background-color', color);
+                        $('.user-menu').css('background-color', color);
+                    }
                 }
             });
 
@@ -94,11 +100,6 @@
                 $(this).parent().find('.sub-menu').addClass('hidden');
                 $(".main-menu-wrapper > .main-menu > li > a").removeClass('hidden');
                 var color = $(this).data('color');
-                if (color) {
-                    $('.topbar-inner-bbs').css('background-color', color);
-                    $('.navigation-wrapper').css('background-color', color);
-                    $('.user-menu').css('background-color', color);
-                }
             });
 
             // Set up hover 
