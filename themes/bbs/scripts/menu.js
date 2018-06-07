@@ -56,7 +56,7 @@
                 body.removeClass('pane-login-is-open');
                 body.removeClass('overlay-is-active');
             });
-            
+
             if ($(window).width() > menu_breakpoint) {
                 // Initilize menu
                 var menu_expanded = false;
@@ -83,7 +83,7 @@
                     }
                 }
             }
-            
+
             main_menu_submenu_button.on('click', function(evt) {
                 if ($(window).width() < menu_breakpoint) {
                     evt.preventDefault();
@@ -105,7 +105,7 @@
                 var color = $(this).data('color');
             });
 
-            // Set up hover 
+            // Set up hover
             main_menu_button.hover(function () {
                 if ($(window).width() < menu_breakpoint || $(this).parent().parent().parent().hasClass('sub-menu')) {
                     return;
