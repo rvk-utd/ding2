@@ -1,0 +1,42 @@
+.page-user {
+  .left-and-main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+
+    .layout-wrapper {
+      flex-direction: row;
+      align-items: flex-start;
+      max-width: 1000px;
+      width: 100%;
+
+      .secondary-content {
+        width: auto;
+        margin-right: 100px;
+
+        .main-menu-third-level {
+          li {
+            margin-bottom: 10px;
+
+            .menu-item {
+              font-size: 1.2rem;
+              font-weight: 600;
+
+              &.active {
+                color: red;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 720px) {
+    .left-and-main-content {
+      .layout-wrapper {
+        flex-direction: column;
+      }
+    }
+  }
+}

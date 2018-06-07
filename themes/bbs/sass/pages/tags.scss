@@ -1,0 +1,26 @@
+.page-taxonomy {
+  .content-inner {
+    .pane-page-content {
+      display: flex;
+      flex-wrap: wrap;
+      position: relative;
+      padding-top: 70px;
+
+      .term-listing-heading {
+        position: absolute;
+        top: 0;
+        left: 10px;
+
+        p {
+          font-size: 40px;
+          font-weight: 300;
+        }
+      }
+
+      .frontpage-teaser {
+        flex-basis: 33%;
+        margin: 10px;
+      }
+    }
+  }
+}
