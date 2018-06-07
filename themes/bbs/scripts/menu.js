@@ -17,6 +17,7 @@
                 sub_menu = $('.sub-menu'),
                 back_button = sub_menu.find('.back-button'),
                 top = 80,
+                menu_breakpoint = 768,
                 admin_menu_offset = $('#admin-menu').outerHeight() || 0,
                 redBackgroundOffset = $('.bbs-color-background').offset();
 
@@ -82,7 +83,7 @@
             }
 
             main_menu_submenu_button.on('click', function(evt) {
-                if ($(window).width() < 768) {
+                if ($(window).width() < menu_breakpoint) {
                     evt.preventDefault();
                     $(this).parent().find('.sub-menu').removeClass('hidden');
                     $(".main-menu-wrapper > .main-menu > li > a").addClass('hidden');
@@ -92,11 +93,17 @@
             back_button.on('click', function () {
                 $(this).parent().find('.sub-menu').addClass('hidden');
                 $(".main-menu-wrapper > .main-menu > li > a").removeClass('hidden');
+                var color = $(this).data('color');
+                if (color) {
+                    $('.topbar-inner-bbs').css('background-color', color);
+                    $('.navigation-wrapper').css('background-color', color);
+                    $('.user-menu').css('background-color', color);
+                }
             });
 
             // Set up hover 
             main_menu_button.hover(function () {
-                if ($(this).parent().parent().parent().hasClass('sub-menu')) {
+                if ($(window).width() < menu_breakpoint || $(this).parent().parent().parent().hasClass('sub-menu')) {
                     return;
                 }
                 main_menu_button.parent().removeClass('open');
