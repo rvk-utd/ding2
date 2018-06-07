@@ -53,10 +53,13 @@
                 body.removeClass('pane-login-is-open');
                 body.removeClass('overlay-is-active');
             });
-
+            
+            // Initilize menu
+            var menu_expanded = false;
             main_menu_button.each(function () {
-                if ($(this).hasClass('active')) {
-                    $(this).parent().addClass('expanded');
+                if ($(this).hasClass('active') && !menu_expanded) {
+                    menu_expanded = true;
+                    $(this).parent().addClass('open');
                     $(this).parent().find('.sub-menu').removeClass('hidden');
 
                     var color = $(this).attr('id');
@@ -68,15 +71,31 @@
                     }
                 }
             });
+            
+            // Expand first in menu if nothing is expanded
+            if (!menu_expanded) {
+                var first = main_menu_button.first();
 
+                first.parent().addClass('open');
+                first.parent().find('.sub-menu').removeClass('hidden');
+
+                var color = first.data('color');
+                if (color) {
+                    $('.topbar-inner-bbs').css('background-color', color);
+                    $('.navigation-wrapper').css('background-color', color);
+                    $('.user-menu').css('background-color', color);
+                }
+            }
+
+            // Set up hover 
             main_menu_button.hover(function () {
                 if ($(this).parent().parent().parent().hasClass('sub-menu')) {
                     return;
                 }
-                main_menu_button.parent().removeClass('expanded');
+                main_menu_button.parent().removeClass('open');
                 sub_menu.addClass('hidden');
 
-                $(this).parent().addClass('expanded');
+                $(this).parent().addClass('open');
                 $(this).parent().find('.sub-menu').removeClass('hidden');
 
                 var color = $(this).data('color');
