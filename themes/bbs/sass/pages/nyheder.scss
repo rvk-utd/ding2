@@ -46,6 +46,17 @@
       }
     }
   }
+  @media screen and (max-width: 960px) {
+    .left-and-main-content {
+      .layout-wrapper {
+        flex-direction: column;
+
+        .secondary-content {
+          width: 100%;
+        }
+      }
+    }
+  }
 }
 
 ul.pager {

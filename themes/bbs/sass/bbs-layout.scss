@@ -35,6 +35,13 @@
     .bottom-row {
       display: flex;
 
+      ul {
+        li {
+          width: 100%;
+          margin: 0;
+        }
+      }
+
       .left-side {
         flex-basis: 30%;
         padding: 10px;
@@ -69,30 +76,6 @@
 
           .field-item {
             max-width: 500px;
-          }
-        }
-
-        .secondary-info {
-          ul {
-            display: flex;
-            margin: 0 !important;
-
-            li {
-              margin: 0 !important;
-              width: 100%;
-
-              &:nth-of-type(1) {
-                .frontpage-teaser {
-                  margin-right: 10px;
-                }
-              }
-
-              &:nth-of-type(2) {
-                .frontpage-teaser {
-                  margin-left: 10px;
-                }
-              }
-            }
           }
         }
       }
