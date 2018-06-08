@@ -38,7 +38,11 @@
       ul {
         li {
           width: 100%;
-          margin: 0;
+          margin: 0 20px 0 0;
+
+          &:last-of-type {
+            margin: 0;
+          }
         }
       }
 
@@ -240,26 +244,6 @@
         width: 100%;
       }
 
-      .views-row {
-        display: flex;
-        width: 100%;
-        margin-right: 20px;
-
-        &:last-of-type {
-          margin: 0;
-        }
-        .views-column {
-          width: 50%;
-
-          &.views-column-1 {
-            padding-right: 10px;
-          }
-
-          &.views-column-2 {
-            padding-left: 10px;
-          }
-        }
-      }
       .frontpage-teaser {
         height: 260px;
       }

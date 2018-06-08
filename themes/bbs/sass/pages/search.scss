@@ -119,10 +119,6 @@ ol.search-results {
       color: #B03033;
     }
 
-    a {
-      color: #B03033;
-    }
-
     .layout-wrapper {
       display: flex;
       flex-direction: row;
@@ -148,6 +144,14 @@ ol.search-results {
       .primary-content {
         width: 100%;
         max-width: 1200px;
+
+        a {
+          color: #B03033;
+
+          &:hover {
+            color: #B03033;
+          }
+        }
       }
     }
 
