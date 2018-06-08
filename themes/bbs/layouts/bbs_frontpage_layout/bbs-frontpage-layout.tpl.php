@@ -17,7 +17,7 @@
           <?php print $content['bbs-title']; ?>
         <?php endif ?>
         <div class="content-wrapper">
-          <div class="row">
+          <div class="top-row">
             <div class="left-side">
               <?php if (!empty($content['menu'])): ?>
                 <div class="menu-wrapper">
@@ -33,7 +33,7 @@
               <?php endif ?>
             </div>
           </div>
-          <div class="row">
+          <div class="bottom-row">
             <div class="left-side">
               <?php if (!empty($content['new-user'])): ?>
                 <div class="new-user">

@@ -31,7 +31,8 @@
     margin-right: auto;
     max-width: 1400px;
 
-    .row {
+    .top-row,
+    .bottom-row {
       display: flex;
 
       .left-side {
@@ -44,6 +45,7 @@
         flex: 70%;
         padding: 10px;
         color: white;
+        min-width: 380px;
 
         h2 {
           &.pane-title {
@@ -405,7 +407,8 @@
 
   @media screen and (max-width: 1140px) {
     .main-content {
-      .row {
+      .top-row,
+      .bottom-row {
         flex-direction: column;
       }
     }
@@ -420,7 +423,8 @@
       }
     }
     .main-content {
-      .row {
+      .top-row,
+      .bottom-row {
         .secondary-info {
           .item-list {
             ul {
@@ -446,6 +450,10 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+
+  .bottom-row & {
+    width: -webkit-fill-available;
+  }
 
   .teaser-info {
     display: flex;
