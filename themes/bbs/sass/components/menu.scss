@@ -11,7 +11,7 @@ body.menu-is-open {
   height: 100%;
   position: fixed;
   background-color: #b03033;
-  z-index: 9999;
+  z-index: 999;
   left: 0;
   width: 100%;
   transition: 0.3s cubic-bezier(0.4, 0, 1, 1);
@@ -36,11 +36,13 @@ body.menu-is-open {
     margin: auto;
 
     .main-menu-wrapper {
+      position: relative;
       color: #fff;
 
       & > .main-menu {
         position: absolute;
         top: 130px;
+        left: 0;
 
         li.open {
           background-color: rgba(0, 0, 0, 0.16);
@@ -51,7 +53,7 @@ body.menu-is-open {
         display: block;
         position: absolute;
         top: 15px;
-        right: -290px;
+        right: -350px;
 
         &.hidden {
           display: none;
@@ -73,9 +75,12 @@ body.menu-is-open {
 
         .back-button {
           display: none;
+          position: absolute;
+          top: -120px;
+          left: -60px;
           font-size: 16px;
-          padding-left: 20px;
           line-height: 30px;
+          padding-left: 20px;
           cursor: pointer;
 
           &::before {
@@ -90,6 +95,7 @@ body.menu-is-open {
 
         .header-element {
           display: none;
+          margin: 0 0 30px 30px;
         }
       }
 
@@ -119,7 +125,11 @@ body.menu-is-open {
   @media screen and (max-width: 720px) {
     .navigation-inner {
       .main-menu-wrapper {
+        & > .main-menu {
+          left: 55px;
+        }
         .sub-menu {
+          left: 45px;
 
           .back-button {
             display: block;
