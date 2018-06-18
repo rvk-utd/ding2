@@ -5,35 +5,31 @@
  * BBS Color Block module main file.
  */
 
-
 /**
- * @return array
+ * Implements hook_menu().
+ *
+ * Provides an admin page
  */
 function bbs_color_picker_menu() {
 
     $items = array();
 
     $items['admin/settings/bbs_color_picker'] = array(
-        'title' => 'BBS Colors',
-        'page callback' => 'drupal_get_form',
-        'page arguments' => array('bbs_color_picker_admin'),
-        'access arguments' => array('access administration pages'),
-        'type' => MENU_NORMAL_ITEM,
+      'title' => 'BBS Colors',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('bbs_color_picker_admin'),
+      'access arguments' => array('access administration pages'),
+      'type' => MENU_NORMAL_ITEM,
     );
 
     return $items;
 }
 
 
-function bbs_color_picker_colors() {
-    $items = array(
-        'bbs-red',
-        'bbs-green',
-    );
-    return $items;
-}
-
-
+/**
+ * @param $name - color name
+ * @return string - the color value in hex
+ */
 function bbs_color_picker_path_value($name) {
     $colors = variable_get('bbs_color_options', array());
     if (array_key_exists($name, $colors)) {
@@ -44,7 +40,7 @@ function bbs_color_picker_path_value($name) {
 
 /**
  * @param $path - path
- * @return string - the color value
+ * @return string - the name of the color used for the given path
  */
 function bbs_color_picker_path_name($path) {
     $colors = variable_get('bbs_colors', array());
@@ -68,7 +64,7 @@ function bbs_color_picker_path_name($path) {
     if (!empty($node)) {
         $type = $node -> type;
         if (array_key_exists($type, $colors)) {
-            return $colors[$type];
+          return $colors[$type];
         }
     }
     return $colors['DEFAULT'];
@@ -77,18 +73,14 @@ function bbs_color_picker_path_name($path) {
 
 function bbs_color_picker_admin($form, &$form_state) {
 
-    // Add Farbtastic color picker
-   // drupal_add_css('misc/farbtastic/farbtastic.css');
-   // drupal_add_js('misc/farbtastic/farbtastic.js');
     $form['#tree'] = TRUE;
 
-
     $form['colors'] = array(
-        '#type' => 'fieldset',
-        '#title' => 'Content types',
-        '#theme' => array(''),
-        '#prefix' => '<div id="content_types">',
-        '#suffix' => '</div>',
+      '#type' => 'fieldset',
+      '#title' => 'Content types',
+      '#theme' => array(''),
+      '#prefix' => '<div id="content_types">',
+      '#suffix' => '</div>',
     );
 
     $colors = variable_get('bbs_colors', array());
@@ -100,62 +92,62 @@ function bbs_color_picker_admin($form, &$form_state) {
 
     if (empty($colors)) {
         $form['colors'][0] = array(
-            '#title' => t('Page / Content type'),
-            '#type' => 'fieldset',
+          '#title' => t('Page / Content type'),
+          '#type' => 'fieldset',
         );
 
         $form['colors'][0]['name'] = array(
-            '#title' => t('Name'),
-            '#type' => 'textfield',
-            '#required' => TRUE,
+          '#title' => t('Name'),
+          '#type' => 'textfield',
+          '#required' => TRUE,
         );
 
         $form['colors'][0]['hex'] = array(
-            '#title' => t('Hex'),
-            '#type' => 'select',
-            '#options' => variable_get('bbs_color_options'),
-            '#required' => TRUE,
+          '#title' => t('Hex'),
+          '#type' => 'select',
+          '#options' => variable_get('bbs_color_options'),
+          '#required' => TRUE,
         );
     }
     else {
         $keys = array_keys($colors);
         for ($i = 0; $i < $form_state['colors_num']; $i++) {
             $form['colors'][$i] = array(
-                '#title' => t('Page / Content type'),
-                '#type' => 'fieldset',
+              '#title' => t('Page / Content type'),
+              '#type' => 'fieldset',
             );
             $form['colors'][$i]['name'] = array(
-                '#title' => t('Name'),
-                '#type' => 'textfield',
-                '#default_value' => [$keys[$i]],
-                '#required' => TRUE,
+              '#title' => t('Name'),
+              '#type' => 'textfield',
+              '#default_value' => [$keys[$i]],
+              '#required' => TRUE,
             );
 
             $form['colors'][$i]['hex'] = array(
-                '#title' => t('Hex'),
-                '#type' => 'select',
-                '#options' => variable_get('bbs_color_options'),
-                '#default_value' => $colors[$keys[$i]],
-                '#required' => TRUE,
+              '#title' => t('Hex'),
+              '#type' => 'select',
+              '#options' => variable_get('bbs_color_options'),
+              '#default_value' => $colors[$keys[$i]],
+              '#required' => TRUE,
             );
         }
     }
 
-    $form['colors']['add'] = array (
-        '#type' => 'submit',
-        '#value' => t('Add another'),
-        '#name' => 'add_query',
-        '#submit' => array('bbs_color_picker_add_one',),
-        '#ajax' => array(
-            'callback' => 'bbs_color_picker_admin_form_ajaxify',
-            'wrapper' => 'content_types',
-        ),
+    $form['colors']['add'] = array(
+      '#type' => 'submit',
+      '#value' => t('Add another'),
+      '#name' => 'add_query',
+      '#submit' => array('bbs_color_picker_add_one',),
+      '#ajax' => array(
+        'callback' => 'bbs_color_picker_admin_form_ajaxify',
+        'wrapper' => 'content_types',
+      ),
     );
 
     $form['submit'] = array(
-        '#type' => 'submit',
-        '#value' => t('Save'),
-        '#submit' => array('bbs_color_picker_admin_form_save'),
+      '#type' => 'submit',
+      '#value' => t('Save'),
+      '#submit' => array('bbs_color_picker_admin_form_save')
     );
 
     return $form;
