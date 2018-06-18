@@ -46,6 +46,14 @@
         }
       }
 
+      .views-row {
+        margin: 0 20px 0 0;
+
+        &:last-of-type {
+          margin: 0;
+        }
+      }
+
       .left-side {
         flex-basis: 30%;
         padding: 10px;
@@ -321,6 +329,10 @@
       font-size: 22px;
       font-weight: 700;
       color: white;
+    }
+
+    .underline {
+      text-align: right;
     }
   }
 

@@ -134,6 +134,16 @@ Styles for the header
             padding: 0 6px;
             font-size: 0.8rem;
             font-weight: 800;
+
+            &.notification-count-type-overdue {
+              background-color: darkorange;
+            }
+            &.notification-count-type-debts {
+              background-color: red;
+            }
+            &.notification-count-type-ready {
+              background-color: navy;
+            }
           }
         }
       }
@@ -168,6 +178,29 @@ Styles for the header
           height: auto;
           a {
             padding: 19px 20px;
+          }
+          .menu-item {
+            position: relative;
+
+            .menu-item-count {
+              position: absolute;
+              top: 20px;
+              right: 20px;
+              background-color: #b03033;
+              border-radius: 25%;
+              width: 19px;
+              height: 19px;
+              padding: 1px 6px;
+              font-size: 0.8rem;
+              font-weight: 800;
+
+              &.menu-item-count-success {
+                background-color: navy;
+              }
+              &.menu-item-count-warning {
+                background-color: red;
+              }
+            }
           }
         }
       }
