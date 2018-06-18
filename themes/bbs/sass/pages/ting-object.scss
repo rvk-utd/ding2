@@ -20,8 +20,12 @@
       .required-fields {
         .field-name-ding-entity-buttons {
           position: absolute;
-          right: 225px;
+          right: 10%;
           top: 0;
+
+          .field-label {
+            display: none
+          }
 
           .field-item.even {
             display: flex;
@@ -35,6 +39,7 @@
               padding: 10px 15px;
               background-color: #B03033;
               width: fit-content;
+              margin: 0;
               margin-left: 30px;
               border-radius: 0;
             }
