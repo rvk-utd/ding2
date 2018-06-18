@@ -90,7 +90,7 @@
 <div class="frontpage-teaser">
 <?php endif; ?>
     <div class="teaser-info">
-        <h3 class="title-text"><?php print $title; ?></h3>
+        <h3 class="title-text"><?php print l($title, $node_url); ?></h3>
         <span class="lead-text">
             <?php print render($content['field_ding_page_lead']); ?>
         </span>

@@ -84,7 +84,7 @@
 
 <div class="frontpage-teaser event-teaser" <?php if(!empty($background_image)){?>style="background-image: url(<?php print $background_image; ?>)"<?php } ?>>
     <div class="teaser-info">
-        <h3 class="title-text"><?php print $title; ?></h3>
+        <h3 class="title-text"><?php print l($title, $node_url); ?></h3>
         <span class="lead"><?php print render($content['field_ding_group_lead']); ?></span>
         <a class="underline" href="<?php print $node_url; ?>"><?php print t('Learn More'); ?></a>
     </div>
