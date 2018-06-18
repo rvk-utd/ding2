@@ -17,6 +17,13 @@ dependencies[] = translation
 
 ; BBS modules
 dependencies[] = quicktabs
+dependencies[] = bbs_color_block
+dependencies[] = bbs_color_picker
+dependencies[] = bbs_features
+dependencies[] = bbs_frontpage
+dependencies[] = bbs_pages
+dependencies[] = bbs_text_block
+dependencies[] = bbs_title_block
 
 ; If this module is not enabled OG will not work correctly.
 dependencies[] = field_ui
