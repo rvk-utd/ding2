@@ -15,6 +15,33 @@
         }
       }
     }
+
+    .ting-object-right {
+      .required-fields {
+        .field-name-ding-entity-buttons {
+          position: absolute;
+          right: 225px;
+          top: 0;
+
+          .field-item.even {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .action-button,
+            .trigger {
+              font-weight: 600;
+              color: #fff;
+              padding: 10px 15px;
+              background-color: #B03033;
+              width: fit-content;
+              margin-left: 30px;
+              border-radius: 0;
+            }
+          }
+        }
+      }
+    }
   }
 
   @media screen and (max-width: 720px) {

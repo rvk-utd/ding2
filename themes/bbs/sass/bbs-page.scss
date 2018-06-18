@@ -42,6 +42,7 @@
       p {
         color: #888;
         max-width: 600px;
+        text-align: left;
       }
 
       .field-item {
@@ -105,12 +106,26 @@
   }
 
   @media screen and (max-width: 1140px) {
-    h2 {
-      line-height: 40px;
+    .bbs-page-text-wrapper {
+      h2 {
+        line-height: 40px;
+      }
+      .field {
+        width: 100%;
+        .field-item {
+          width: 100%;
+          margin: auto;
+          p {
+            text-align: center;
+          }
+        }
+      }
     }
     .sidebar {
       position: relative;
       margin: auto;
+      top: auto;
+      right: auto;
 
       .panel-pane {
         h2.sub-menu-title {
