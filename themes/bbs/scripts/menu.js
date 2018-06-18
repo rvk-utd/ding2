@@ -19,7 +19,7 @@
                 top = 80,
                 menu_breakpoint = 768,
                 admin_menu_offset = $('#admin-menu').outerHeight() || 0,
-                redBackgroundOffset = $('.bbs-color-background').offset();
+                bbs_background_offset = $('.bbs-color-background').offset();
 
             topbar_menu_btn.on('click', function (evt) {
                 evt.preventDefault();
@@ -138,7 +138,7 @@
                         topbar.css('top', top - yOffset + admin_menu_offset);
                     }
 
-                    if (yOffset >= redBackgroundOffset.top) {
+                    if (bbs_background_offset && yOffset >= bbs_background_offset.top) {
                         topbar.addClass('opaque');
                     }
                     else {
