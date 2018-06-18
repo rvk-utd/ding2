@@ -267,14 +267,25 @@
   }
 }
 
-.see-all {
+.panel-pane {
+  .view {
+    &.view-carousel {
+      position: relative;
+    }
+  }
+}
+
+.see-all,
+.more-link {
   font-weight: 600;
   color: #fff;
   padding: 10px 15px;
   background-color: #B03033;
   width: fit-content;
+  min-width: auto;
   margin-bottom: 80px;
   margin-left: 30px;
+  float: none;
 }
 
 .pane-ding-related-content-news-events {
