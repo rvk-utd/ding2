@@ -330,6 +330,7 @@
     }
 
     .front & {
+      width: auto;
       z-index: -5;
       margin: 30px 30px 50px;
 
@@ -384,6 +385,7 @@
   @media screen and (max-width: 760px) {
     .border-wrapper {
       .front & {
+        margin: 15px;
         .border-element {
           padding: 10px;
         }
@@ -392,6 +394,10 @@
     .main-content {
       .top-row,
       .bottom-row {
+        .left-side,
+        .right-side {
+          min-width: auto;
+        }
         .secondary-info {
           .item-list {
             ul {
@@ -399,6 +405,10 @@
 
               .frontpage-teaser {
                 margin: 0 0 20px;
+
+                .teaser-info {
+                  padding: 30px 35px;
+                }
               }
             }
           }

@@ -32,7 +32,8 @@ body.menu-is-open {
   }
 
   @media screen and (max-width: 460px) {
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
   }
 
   .navigation-inner {
