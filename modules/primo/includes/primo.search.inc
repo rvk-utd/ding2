@@ -313,11 +313,11 @@ function primo_search_prepare_reference_query($query_string) {
   if (strpos($query_string, $source_id) !== FALSE) {
     // The wildcard "*" is not mentioned in the Primo documentation, however
     // it is necessary in order to get all ID's.
-    $query->setRawQuery('rid,contains,' . $query_string . '*');
+    $query = $query->withRawQuery('rid,contains,' . $query_string . '*');
   }
   // Do a fuzzy search.
   else {
-    $query->setRawQuery('swtitle,begins_with,' . $query_string);
+    $query = $query->withRawQuery('swtitle,begins_with,' . $query_string);
   }
 
   return $query;

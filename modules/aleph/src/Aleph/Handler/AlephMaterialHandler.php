@@ -41,6 +41,7 @@ class AlephMaterialHandler extends AlephHandlerBase {
       return AlephMaterial::materialFromItem($aleph_item);
     }, $aleph_items);
 
+    // Filter items, so we only get items from the allowed branches.
     return array_filter($items, function(AlephMaterial $material) {
       return array_key_exists($material->getSubLibraryCode(), aleph_get_branches());
     });
