@@ -3,6 +3,16 @@ description = BBS subtheme for ding2
 core = 7.x
 base theme = ddbasic
 
+;// BBS modules
+dependencies[] = quicktabs
+dependencies[] = bbs_color_block
+dependencies[] = bbs_color_picker
+dependencies[] = bbs_features
+dependencies[] = bbs_frontpage
+dependencies[] = bbs_pages
+dependencies[] = bbs_text_block
+dependencies[] = bbs_title_block
+
 ;// Overridden CSS from base theme
 stylesheets[all][] = sass_css/components/menu.css
 stylesheets[all][] = sass_css/components/header.css
