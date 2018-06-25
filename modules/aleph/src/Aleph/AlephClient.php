@@ -366,8 +366,7 @@ class AlephClient {
 
     $rid = $this->catalogLibrary . $request->getDocNumber();
 
-    // Try to make the reservation against each holding group.
-    // If the reservation is OK, the reply code is '0000' and we stop.
+    // Try to make the reservation against the selected group.
     foreach ($holding_groups as $holding_group) {
       $response = $this->requestRest(
         'PUT',
@@ -376,6 +375,7 @@ class AlephClient {
         $options
       );
 
+      // If the reservation is OK, the reply code is '0000' and we stop.
       if ((string) $response->xpath('reply-code')[0] === '0000') {
         return $response;
       }
