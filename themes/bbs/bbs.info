@@ -36,6 +36,7 @@ stylesheets[all][] = sass_css/components/messages.css
 scripts[] = scripts/menu.js
 scripts[] = scripts/node/event.js
 scripts[] = scripts/ting-object/ting-object.js
+scripts[] = scripts/ddbasic.common.js
 
 scripts[] = scripts/event-carousel.js
 
