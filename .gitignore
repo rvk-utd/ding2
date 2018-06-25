@@ -6,7 +6,7 @@ tests/behat/.idea/
 .docker-sync
 vendor
 /themes/ddbasic/scripts/min
-
+/themes/ddbasic/sass_css_verbose_output
 
 # Ignore Mac files
 .DS_STORE
