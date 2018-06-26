@@ -98,6 +98,11 @@
           <div class="news-body">
               <?php print render($content['group_right']['field_ding_news_body']); ?>
           </div>
+          <?php if(!empty($content['group_right']['field_ding_news_files'])): ?>
+            <div class="files">
+                <?php print render($content['group_right']['field_ding_news_files']); ?>
+            </div>
+          <?php endif; ?>
           <div class="section meta">
               <div class="author"><?php print t("By"); ?> <?php print $name; ?></div>
               <div class="created"><?php print $news_submitted ?></div>
@@ -110,5 +115,10 @@
               </div>
           </div>
       </div>
+      <?php if(!empty($content['field_ding_news_news_materials'])): ?>
+        <div class="ding-materials">
+            <?php print render($content['field_ding_news_materials']); ?>
+        </div>
+      <?php endif; ?>
   </div>
 </div>
