@@ -5,6 +5,9 @@ body {
   &.page-ding-frontpage {
     padding-top: 0;
   }
+  &.has-second-level-menu {
+    padding-top: 148px;
+  }
 }
 
 h1,
@@ -61,6 +64,19 @@ a {
   &:hover {
     color: white;
   }
+}
+
+.see-all,
+.more-link {
+  font-weight: 600;
+  color: #fff;
+  padding: 10px 15px;
+  background-color: #B03033;
+  width: fit-content;
+  min-width: auto;
+  margin-bottom: 80px;
+  margin-left: 30px;
+  float: none;
 }
 
 .main-info {

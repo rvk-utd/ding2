@@ -17,6 +17,7 @@
     }
 
     .ting-object-right {
+      position: relative;
       .required-fields {
         .field-name-ding-entity-buttons {
           position: absolute;
@@ -24,7 +25,7 @@
           top: 0;
 
           .field-label {
-            display: none
+            display: none;
           }
 
           .field-item.even {
@@ -57,7 +58,15 @@
 }
 
 .pane-serendipity-ting-object {
-  padding: 0 20px 100px;
+  padding: 100px 20px;
   max-width: 1200px;
   margin: auto;
+
+  .field-label {
+    display: none;
+  }
+
+  .field-item {
+    padding-top: 15px;
+  }
 }
