@@ -73,7 +73,8 @@ function aleph_reservation_options($account, $default_value = '') {
  *   The interest period and default pick-up branch from the provider profile.
  */
 function aleph_reservation_default_options($account) {
-  // Returns empty array in order to ask every time.
+  // We don't have any defaults.
+  // The user is required to choose on each reservation.
   return array(
     'aleph_preferred_branch' => NULL,
     'interest_period' => NULL,
@@ -200,6 +201,8 @@ function aleph_reservation_list($account, $requested_type = NULL) {
  *   Drupal user account object.
  * @param string $id
  *   ID of reservation.
+ * @param array $options
+ *   Options array.
  *
  * @return array
  *   Reservation information.
