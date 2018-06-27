@@ -64,17 +64,6 @@ function aleph_reservation_options($account, $default_value = '') {
 }
 
 /**
- * Implements provider reservation, options_submit.
- *
- * @param object $account
- *   The user to get update preferred branch for.
- * @param array $values
- *   Form values.
- */
-function aleph_reservation_options_submit($account, array $values) {
-}
-
-/**
  * Implements provider reservation, default_options.
  *
  * @param object $account
