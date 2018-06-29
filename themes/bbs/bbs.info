@@ -37,6 +37,11 @@ stylesheets[all][] = sass_css/pages/contact.css
 stylesheets[all][] = sass_css/pages/user.css
 stylesheets[all][] = sass_css/pages/tags.css
 
+;// Styling from ddbasic
+stylesheets[all][] = sass_css/ding/search.css
+stylesheets[all][] = sass_css/ding/panel.css
+stylesheets[all][] = sass_css/ding/field.css
+
 ;// Components
 stylesheets[all][] = sass_css/components/bbs-color.css
 stylesheets[all][] = sass_css/components/bbs-carousel.css
