@@ -60,11 +60,11 @@ class AlephClient {
    * @param string $base_url
    *   The base url for the Aleph end-point.
    * @param string $base_url_rest
-   *    The base url for the Aleph REST end-point.
+   *   The base url for the Aleph REST end-point.
    * @param string $catalog_library
-   *    The catalog library. For example ICE01.
+   *   The catalog library. For example ICE01.
    * @param string $item_library
-   *    The item library. ICE53 for example.
+   *   The item library. ICE53 for example.
    */
   public function __construct($base_url, $base_url_rest, $catalog_library, $item_library) {
     $this->baseUrl = $base_url;
@@ -121,7 +121,7 @@ class AlephClient {
    *   The options to send via GuzzleHttp.
    *
    * @return \SimpleXMLElement
-   *    The returned XML from Aleph.
+   *   The returned XML from Aleph.
    *
    * @throws AlephClientException
    */
@@ -176,7 +176,7 @@ class AlephClient {
    *   The Aleph Patron.
    *
    * @return \SimpleXMLElement
-   *    The response from Aleph.
+   *   The response from Aleph.
    *
    * @throws AlephClientException
    */
@@ -232,7 +232,7 @@ class AlephClient {
    *   The Aleph patron to get debts from.
    *
    * @return \SimpleXMLElement
-   *    The SimpleXMLElement response from Aleph.
+   *   The SimpleXMLElement response from Aleph.
    *
    * @throws AlephClientException
    */
@@ -247,10 +247,10 @@ class AlephClient {
    * Get the items for a Material.
    *
    * @param \Drupal\aleph\Aleph\Entity\AlephMaterial $material
-   *    The Aleph material to get items from.
+   *   The Aleph material to get items from.
    *
    * @return \SimpleXMLElement
-   *    The SimpleXMLElement response from Aleph.
+   *   The SimpleXMLElement response from Aleph.
    *
    * @throws AlephClientException
    */
@@ -327,7 +327,7 @@ class AlephClient {
    *   Patron to get reservations for.
    *
    * @return \SimpleXMLElement
-   *    The response from Aleph.
+   *   The response from Aleph.
    *
    * @throws AlephClientException
    */

@@ -28,7 +28,7 @@ class AlephPatron {
    * Return the patron's name.
    *
    * @return string
-   *    The patron's name.
+   *   The patron's name.
    */
   public function getName() {
     return $this->name;
@@ -38,7 +38,7 @@ class AlephPatron {
    * Set the patron's name.
    *
    * @param string $name
-   *    The patron's name.
+   *   The patron's name.
    */
   public function setName($name) {
     $this->name = $name;
@@ -48,7 +48,7 @@ class AlephPatron {
    * Returns the patron's ID.
    *
    * @return string
-   *    The bor_id.
+   *   The bor_id.
    */
   public function getId() {
     return $this->borId;
@@ -58,7 +58,7 @@ class AlephPatron {
    * Set the patron's ID.
    *
    * @param string $bor_id
-   *    The patron's ID.
+   *   The patron's ID.
    */
   public function setId($bor_id) {
     $this->borId = $bor_id;
@@ -68,7 +68,7 @@ class AlephPatron {
    * Get the verification code.
    *
    * @return string
-   *    The pin/verification code.
+   *   The pin/verification code.
    */
   public function getVerification() {
     return $this->verification;
@@ -78,7 +78,7 @@ class AlephPatron {
    * Set verification for patron.
    *
    * @param string $verification
-   *    The patron's pin code.
+   *   The patron's pin code.
    */
   public function setVerification($verification) {
     $this->verification = $verification;
@@ -88,7 +88,7 @@ class AlephPatron {
    * Set the patrons email.
    *
    * @param string $email
-   *    Patrons email address.
+   *   Patrons email address.
    */
   public function setEmail($email) {
     $this->email = $email;
@@ -98,6 +98,7 @@ class AlephPatron {
    * Get the patrons email.
    *
    * @return string
+   *   The patron's email.
    */
   public function getEmail() {
     return $this->email;
@@ -107,7 +108,7 @@ class AlephPatron {
    * Get the patrons phone number.
    *
    * @return string
-   *    The patrons phone number.
+   *   The patrons phone number.
    */
   public function getPhoneNumber() {
     return $this->phoneNumber;
@@ -117,7 +118,7 @@ class AlephPatron {
    * Set the patron phone number.
    *
    * @param string $phoneNumber
-   *    The patrons phone number.
+   *   The patrons phone number.
    */
   public function setPhoneNumber($phoneNumber) {
     $this->phoneNumber = $phoneNumber;
@@ -127,6 +128,7 @@ class AlephPatron {
    * Get the user expiry date.
    *
    * @return string
+   *   The patron's expiry date.
    */
   public function getExpiryDate() {
     return $this->expiryDate;
@@ -136,7 +138,7 @@ class AlephPatron {
    * Set the expiry date.
    *
    * @param string $expiryDate
-   *    Patron expiry date in Aleph.
+   *   Patron expiry date in Aleph.
    */
   public function setExpiryDate($expiryDate) {
     $this->expiryDate = $expiryDate;
@@ -180,4 +182,5 @@ class AlephPatron {
   public function getStatus() {
     return $this->status;
   }
+
 }
