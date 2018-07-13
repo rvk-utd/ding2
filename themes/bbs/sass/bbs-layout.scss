@@ -47,10 +47,21 @@
       }
 
       .views-row {
+        display: flex;
+        flex: 1;
         margin: 0 20px 0 0;
 
         &:last-of-type {
           margin: 0;
+        }
+
+        .views-column {
+          flex: 1;
+          margin: 0 20px 0 0;
+
+          &:last-of-type {
+            margin: 0;
+          }
         }
       }
 

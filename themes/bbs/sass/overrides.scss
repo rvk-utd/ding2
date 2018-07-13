@@ -5,7 +5,11 @@ body {
   &.page-ding-frontpage {
     padding-top: 0;
   }
-  &.has-second-level-menu {
+  &.page-node {
+    padding-top: 80px;
+  }
+  &.has-second-level-menu,
+  &.node-type-ding-library {
     padding-top: 148px;
   }
 }
@@ -77,6 +81,14 @@ a {
   margin-bottom: 80px;
   margin-left: 30px;
   float: none;
+}
+
+.panel-pane {
+  .see-all,
+  .more-link {
+    min-width: auto;
+    float: none;
+  }
 }
 
 .main-info {
