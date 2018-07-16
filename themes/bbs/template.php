@@ -281,7 +281,7 @@ function bbs_preprocess_html(&$vars)
 /**
  * Implements theme_menu_tree().
  */
-function bbs_menu_tree__menu_tabs_menu($vars) {
+function bbs_menu_tree__menu_bbs_topbar_menu($vars) {
     return '<ul class="topbar-menu">' . $vars['tree'] . '</ul>';
   }
 
