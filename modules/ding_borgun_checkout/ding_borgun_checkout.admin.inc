@@ -76,6 +76,20 @@ function ding_borgun_checkout_settings($form, $form_state) {
 
   $form['env']['#validate'] = array('ding_borgun_checkout_settings_validate');
 
+  $form['allowed_paths'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Allowed pages'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  );
+
+  $form['allowed_paths']['ding_borgun_checkout_allowed_paths'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Allowed pages'),
+    '#description' => t('List of pages allowed to redirect to payment page'),
+    '#default_value' => variable_get('ding_borgun_checkout_allowed_paths'),
+  );
+
   $form['buy_membership_page'] = array(
     '#type' => 'fieldset',
     '#title' => t('Buy membership page'),

@@ -43,6 +43,8 @@ projects[ctools][version] = "1.9"
 projects[ctools][patch][] = "https://www.drupal.org/files/issues/ctools-readd_access_callback_params-2209775-24.patch"
 ; Fix PHP7 errors - PHP 4 style constructors - https://www.drupal.org/node/2528736
 projects[ctools][patch][] = "https://www.drupal.org/files/issues/deprecating_php4_style-2528736-23.patch"
+; PHP7 - Uniform Variable Syntax updates are causing exported pages to not have names.
+projects[ctools][patch][] = "https://www.drupal.org/files/issues/ctools-uniform-variable-syntax-2635876-6.patch"
 
 projects[date][subdir] = "contrib"
 projects[date][version] = "2.8"
@@ -116,6 +118,8 @@ projects[fences][patch][0] = "http://drupal.org/files/field_for_wrapper_css_clas
 
 projects[field_group][subdir] = "contrib"
 projects[field_group][version] = "1.5"
+; PHP7 - Uniform Variable Syntax updates are causing exported field_groups to not have names.
+projects[field_group][patch][] = "https://www.drupal.org/files/issues/php7_uniform_variable-2649648-5.patch"
 
 projects[file_entity][subdir] = "contrib"
 projects[file_entity][version] = "2.0-beta3"
@@ -464,7 +468,7 @@ projects[wysiwyg][download][revision] = "7981731f4f3db2f932419499d2ec13a073e9b88
 
 projects[ask_vopros][type] = "module"
 projects[ask_vopros][subdir] = "contrib"
-projects[ask_vopros][download][type] = "get"
+projects[ask_vopros][download][type] = "git"
 projects[ask_vopros][download][url] = "https://github.com/vopros-dk/ask_vopros.git"
 projects[ask_vopros][download][tag] = "1.5"
 
@@ -475,7 +479,7 @@ projects[xautoload][version] = "5.7"
 libraries[bpi-client][destination] = "modules/bpi/lib"
 libraries[bpi-client][download][type] = "git"
 libraries[bpi-client][download][url] = "http://github.com/ding2/bpi-client.git"
-libraries[bpi-client][download][tag] = "7.x-4.3.0-rc4"
+libraries[bpi-client][download][tag] = "7.x-4.3.4"
 
 libraries[ckeditor][download][type] = "get"
 libraries[ckeditor][download][url] = http://download.cksource.com/CKEditor/CKEditor/CKEditor%204.4.7/ckeditor_4.4.7_full.zip
@@ -545,7 +549,7 @@ libraries[psr7][destination] = "libraries"
 libraries[ting-client][download][type] = "git"
 libraries[ting-client][download][url] = "http://github.com/ding2/ting-client.git"
 libraries[ting-client][destination] = "modules/opensearch/lib"
-libraries[ting-client][download][tag] = "7.x-4.3.0-rc4"
+libraries[ting-client][download][tag] = "7.x-4.3.4"
 
 libraries[zen-grids][download][type] = "git"
 libraries[zen-grids][download][url] = "https://github.com/JohnAlbin/zen-grids.git"

@@ -64,32 +64,6 @@ function aleph_reservation_options($account, $default_value = '') {
 }
 
 /**
- * Implements provider reservation, options_submit.
- *
- * @param object $account
- *   The user to get update preferred branch for.
- * @param array $values
- *   Form values.
- */
-function aleph_reservation_options_submit($account, array $values) {
-  // Load profile2 profile.
-  $profile = ding_user_provider_profile($account);
-
-  // Use a metadata wrapper to access the data.
-  $wrapper = entity_metadata_wrapper('profile2', $profile);
-
-  // Get values.
-  $preferred_branch = $wrapper->field_aleph_preferred_branch->value();
-
-  // If default branch was not found in the profile, update the profile with the
-  // one selected.
-  if (!$preferred_branch) {
-    $wrapper->field_aleph_preferred_branch->set($values['aleph_preferred_branch']);
-    $profile->save();
-  }
-}
-
-/**
  * Implements provider reservation, default_options.
  *
  * @param object $account
@@ -99,8 +73,12 @@ function aleph_reservation_options_submit($account, array $values) {
  *   The interest period and default pick-up branch from the provider profile.
  */
 function aleph_reservation_default_options($account) {
-  // Returns empty array in order to ask every time.
-  return array();
+  // We don't have any defaults.
+  // The user is required to choose on each reservation.
+  return array(
+    'aleph_preferred_branch' => NULL,
+    'interest_period' => NULL,
+  );
 }
 
 /**
@@ -223,6 +201,8 @@ function aleph_reservation_list($account, $requested_type = NULL) {
  *   Drupal user account object.
  * @param string $id
  *   ID of reservation.
+ * @param array $options
+ *   Options array.
  *
  * @return array
  *   Reservation information.
@@ -236,7 +216,7 @@ function aleph_reservation_list($account, $requested_type = NULL) {
  * @throws Exception
  *   New DateInterval throws a generic exception.
  */
-function aleph_reservation_create($account, $id) {
+function aleph_reservation_create($account, $id, $options) {
   $client = aleph_client();
   $patron_handler = new AlephPatronHandler($client);
   $patron_handler->setPatron(aleph_get_patron_by_account());
@@ -260,17 +240,16 @@ function aleph_reservation_create($account, $id) {
   $interest_period = aleph_reservation_default_interest_period();
 
   $end_request_date = new DateTime();
-  $end_request_date->add(new DateInterval('P' . $interest_period . 'D'));
+  $end_request_date->add(new DateInterval('P' . $options['interest_period'] . 'D'));
 
   // Build the reservation object.
-  $defaults = aleph_reservation_default_options($account);
   $reservation = new AlephReservation();
   $request = new AlephRequest();
   $material = new AlephMaterial();
   $material->setId($id);
   $request->setRequestDate(new DateTime());
   $request->setEndRequestDate($end_request_date);
-  $request->setPickupLocation($defaults['aleph_preferred_branch']);
+  $request->setPickupLocation($options['aleph_preferred_branch']);
   $request->setDocNumber($id);
   $reservation->setRequest($request);
 
