@@ -2,4 +2,4 @@ name = BBS Color Block
 core = 7.x
 package = BBS
 dependencies[] = ctools
-depenedencies[] = block
+dependencies[] = block
