@@ -52,7 +52,7 @@ function bbs_menu_link__main_menu($vars) {
  *
  * Add specific markup for top-bar menu.
  */
-function bbs_menu_link__menu_tabs_menu($vars) {
+function bbs_menu_link__menu-bbs-topbar-menu($vars) {
     global $user;
     global $language;
 

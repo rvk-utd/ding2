@@ -16,6 +16,12 @@ function bbs_features_menu_default_menu_custom() {
     'title' => 'Main menu',
     'description' => 'The <em>Main</em> menu is used on many sites to show the major sections of the site, often in a top navigation bar.',
   );
+  // Exported menu: menu-bbs-topbar-menu.
+  $menus['menu-bbs-topbar-menu'] = array(
+    'menu_name' => 'menu-bbs-topbar-menu',
+    'title' => 'BBS topbar menu',
+    'description' => '',
+  );
   // Exported menu: menu-footer-menu-1.
   $menus['menu-footer-menu-1'] = array(
     'menu_name' => 'menu-footer-menu-1',
@@ -42,6 +48,7 @@ function bbs_features_menu_default_menu_custom() {
   );
   // Translatables
   // Included for use with string extractors like potx.
+  t('BBS topbar menu');
   t('Gott að vita');
   t('Main menu');
   t('Tengdar síður');
