@@ -1,0 +1,29 @@
+.layout-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+
+  a {
+    color: #000;
+  }
+
+  .primary-content,
+  .secondary-content,
+  .tertiary-content,
+  .quaternary-content {
+    width: 100%;
+    max-width: 1200px;
+
+    h2.pane-title {
+      margin-left: 1.5rem;
+    }
+  }
+
+  .default-account-panel-layout {
+    .pane-content > form {
+      padding-top: 200px;
+    }
+  }
+}

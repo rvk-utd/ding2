@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="17px" height="17px" viewBox="0 0 17 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>icon/search</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icon/search">
+            <g>
+                <rect id="bounds" x="0" y="0" width="17" height="17"></rect>
+                <path d="M6.6,12.95 C3.09299184,12.95 0.25,10.1070082 0.25,6.6 C0.25,3.09299184 3.09299184,0.25 6.6,0.25 C10.1070082,0.25 12.95,3.09299184 12.95,6.6 C12.95,10.1070082 10.1070082,12.95 6.6,12.95 Z M6.6,11.45 C9.27858104,11.45 11.45,9.27858104 11.45,6.6 C11.45,3.92141896 9.27858104,1.75 6.6,1.75 C3.92141896,1.75 1.75,3.92141896 1.75,6.6 C1.75,9.27858104 3.92141896,11.45 6.6,11.45 Z" id="Oval" fill="#FFFFFF" fill-rule="nonzero"></path>
+                <path d="M14.5969968,14.4696699 L10.8636634,10.7363366 C10.5707702,10.4434434 10.0958965,10.4434434 9.80300325,10.7363366 C9.51011003,11.0292298 9.51011003,11.5041035 9.80300325,11.7969968 L13.5363366,15.5303301 C13.8292298,15.8232233 14.3041035,15.8232233 14.5969968,15.5303301 C14.88989,15.2374369 14.88989,14.7625631 14.5969968,14.4696699 Z" id="Line" fill="#FFFFFF" fill-rule="nonzero"></path>
+            </g>
+        </g>
+    </g>
+</svg>

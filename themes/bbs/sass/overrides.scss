@@ -1,0 +1,166 @@
+body {
+  font-family: 'Cooper Hewitt', sans-serif;
+
+  &.page-bbs-frontpage,
+  &.page-ding-frontpage {
+    padding-top: 0;
+  }
+  &.page-node {
+    padding-top: 80px;
+  }
+  &.has-second-level-menu,
+  &.node-type-ding-library {
+    padding-top: 148px;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Cooper Hewitt', sans-serif;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+ul {
+  margin: 0;
+
+  li {
+    margin: 0;
+    list-style: none;
+  }
+
+  &.menu {
+    li {
+      margin: 0;
+      list-style: none;
+    }
+  }
+}
+
+a {
+  color: black;
+
+  &.underline {
+    font-size: 17px;
+    font-weight: 600;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      height: 3px;
+      width: 100%;
+      background-color: white;
+    }
+
+    &:hover {
+      &::before {
+        height: 3px;
+      }
+    }
+  }
+
+  &:hover {
+    color: white;
+  }
+}
+
+.see-all,
+.more-link {
+  font-weight: 600;
+  color: #fff;
+  padding: 10px 15px;
+  background-color: #B03033;
+  width: fit-content;
+  min-width: auto;
+  margin-bottom: 80px;
+  margin-left: 30px;
+  float: none;
+}
+
+.panel-pane {
+  .see-all,
+  .more-link {
+    min-width: auto;
+    float: none;
+  }
+}
+
+.main-info {
+  width: 100%;
+  height: 100%;
+
+  [class^="panels-ipe"] {
+    height: 100%;
+  }
+
+  .panel-pane {
+    height: 100%;
+
+    .view {
+      height: 100%;
+
+      .item-list {
+        height: 100%;
+
+        ul {
+          height: 100%;
+
+          .views-row {
+            height: 100%;
+          }
+
+          .frontpage-teaser {
+            height: 100%;
+
+            .teaser-info {
+              height: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.user-login-form .submit-button-with-icon .color-and-icon {
+  padding: 0;
+  position: relative;
+}
+
+.social-media {
+  display: flex;
+
+  .bbs-icon {
+    margin-right: 24px;
+    background-size: 30px;
+    height: 30px;
+    width: 30px;
+
+    &.facebook {
+      background-image: url(/profiles/ding2/themes/bbs/images/icons/facebook.svg);
+    }
+
+    &.twitter {
+      background-image: url(/profiles/ding2/themes/bbs/images/icons/twitter.svg);
+    }
+
+    &.instagram {
+      background-image: url(/profiles/ding2/themes/bbs/images/icons/instagram.svg);
+    }
+  }
+}
+
+.content-wrapper.js-content-wrapper {
+  min-height: 60vh;
+  background-image: none;
+}
+
+.node-ding-event.node-full {
+  background-image: none;
+}

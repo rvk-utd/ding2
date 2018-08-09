@@ -1,0 +1,118 @@
+@import '../base.scss';
+
+.page-nyheder,
+.page-bibliotek,
+.page-arrangementer,
+.page-list,
+.node-type-ding-library {
+  .left-and-main-content {
+    display: flex;
+    justify-content: center;
+
+    .layout-wrapper {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: flex-start;
+      width: 100%;
+      max-width: 1200px;
+      padding-bottom: 100px;
+
+      .secondary-content {
+        width: 33%;
+        padding-right: 50px;
+
+        ul {
+          li {
+            a::after {
+              background-color: #888;
+              border-radius: 5px;
+            }
+          }
+        }
+      }
+
+      .primary-content {
+        .frontpage-teaser {
+          .teaser-info {
+            span.field {
+              .field-item {
+                overflow: hidden;
+                margin-bottom: 20px;
+                height: 40px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 960px) {
+    .left-and-main-content {
+      .layout-wrapper {
+        flex-direction: column;
+
+        .secondary-content {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+ul.pager {
+  float: left;
+  width: 100%;
+  padding: 0;
+  margin-top: 30px;
+  text-align: center;
+  li {
+    display: inline-block;
+    padding: 0;
+    margin: 17px 5px;
+    a {
+      color: $charcoal;
+    }
+    &.pager-current {
+      color: $color-text-link;
+      font-weight: $weight-normal;
+    }
+    &.pager-previous,
+    &.pager-next {
+      margin: 0;
+      text-indent: -9999px;
+      a {
+        position: relative;
+        display: block;
+      }
+    }
+    &.pager-previous {
+      float: left;
+      a {
+        @include arrow-button(arrow-left);
+        &::after {
+          top: 0;
+          left: 0;
+          text-indent: 0;
+        }
+      }
+    }
+    &.pager-next {
+      float: right;
+      a {
+        @include arrow-button(arrow-right);
+        &::after {
+          top: 0;
+          right: 0;
+          text-indent: 0;
+        }
+      }
+    }
+    // Mobile
+    @include media($mobile) {
+      &.pager-first {
+        display: none;
+      }
+    }
+  }
+}

@@ -328,6 +328,6 @@ function ding_page_default_page_manager_handlers() {
   $display->title_pane = 'new-33f78b6a-3147-455f-b437-70261fe3426c';
   $handler->conf['display'] = $display;
   $export['node_view_panel_context_4'] = $handler;
-
+  
   return $export;
 }

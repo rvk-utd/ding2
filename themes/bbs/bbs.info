@@ -1,0 +1,58 @@
+name = BBS Subtheme
+description = BBS subtheme for ding2
+core = 7.x
+base theme = ddbasic
+
+;// BBS modules
+dependencies[] = quicktabs
+dependencies[] = bbs_color_block
+dependencies[] = bbs_color_picker
+dependencies[] = bbs_features
+dependencies[] = bbs_frontpage
+dependencies[] = bbs_pages
+dependencies[] = bbs_text_block
+dependencies[] = bbs_title_block
+
+;// Overridden CSS from base theme
+stylesheets[all][] = sass_css/components/menu.css
+stylesheets[all][] = sass_css/components/header.css
+stylesheets[all][] = sass_css/class.css
+stylesheets[all][] = sass_css/components/footer.css
+stylesheets[all][] = sass_css/components/node/news.css
+stylesheets[all][] = sass_css/components/form/form-user-login.css
+
+;// New CSS stylesheets
+stylesheets[all][] = sass_css/fonts.css
+stylesheets[all][] = sass_css/overrides.css
+stylesheets[all][] = sass_css/bbs-layout.css
+stylesheets[all][] = sass_css/bbs-page.css
+
+;// Pages
+stylesheets[all][] = sass_css/pages/page-wrapper.css
+stylesheets[all][] = sass_css/pages/libraries.css
+stylesheets[all][] = sass_css/pages/ting-object.css
+stylesheets[all][] = sass_css/pages/search.css
+stylesheets[all][] = sass_css/pages/nyheder.css
+stylesheets[all][] = sass_css/pages/contact.css
+stylesheets[all][] = sass_css/pages/user.css
+stylesheets[all][] = sass_css/pages/tags.css
+
+;// Styling from ddbasic
+stylesheets[all][] = sass_css/ding/search.css
+stylesheets[all][] = sass_css/ding/panel.css
+stylesheets[all][] = sass_css/ding/field.css
+
+;// Components
+stylesheets[all][] = sass_css/components/bbs-color.css
+stylesheets[all][] = sass_css/components/bbs-carousel.css
+stylesheets[all][] = sass_css/components/messages.css
+
+;// Overridden JS from base theme
+scripts[] = scripts/menu.js
+scripts[] = scripts/node/event.js
+scripts[] = scripts/ting-object/ting-object.js
+scripts[] = scripts/ddbasic.common.js
+
+scripts[] = scripts/event-carousel.js
+
+plugins[panels][layouts] = layouts

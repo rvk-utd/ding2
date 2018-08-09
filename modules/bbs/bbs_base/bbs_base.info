@@ -1,0 +1,11 @@
+name = BBS Base Module
+core = 7.x
+package = BBS
+dependencies[] = fe_nodequeue
+dependencies[] = bbs_color_block
+dependencies[] = bbs_color_picker
+dependencies[] = bbs_features
+dependencies[] = bbs_frontpage
+dependencies[] = bbs_pages
+dependencies[] = bbs_text_block
+dependencies[] = bbs_title_block

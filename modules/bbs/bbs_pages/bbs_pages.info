@@ -1,0 +1,6 @@
+name = BBS Pages
+core = 7.x
+package = BBS
+dependencies[] = ctools
+dependencies[] = fe_nodequeue
+dependencies[] = page_manager

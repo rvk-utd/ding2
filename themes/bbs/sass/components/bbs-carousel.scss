@@ -1,0 +1,281 @@
+
+.slick-slider {
+  li.slick-slide {
+    margin-bottom: 40px !important;
+  }
+  .views-row {
+    background-image: url('/profiles/ding2/themes/bbs/images/library-stock.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  .frontpage-teaser {
+    display: flex;
+    align-items: flex-end;
+    min-height: 325px;
+
+    .teaser-info {
+      min-height: 325px;
+      min-width: 450px;
+    }
+
+    .book {
+      h2 {
+        font-size: 18px;
+        margin: 0;
+        padding-top: 28px;
+      }
+      .field-name-ting-author {
+        margin-top: 4px;
+        margin-bottom: 25px;
+      }
+    }
+  }
+
+  .slick-arrow {
+    position: absolute;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    top: 140px !important;
+    background-color: attr(data-color);
+    height: 50px !important;
+    width: 50px !important;
+    font-size: 0;
+    cursor: pointer;
+
+    .bbs-color-background & {
+      background-color: #fff;
+    }
+
+    &::after {
+      content: '' !important;
+      position: relative !important;
+      display: block;
+      background-color: white !important;
+      height: 19px !important;
+      width: 14px !important;
+      mask: url('../../../images/icons/arrow.svg') no-repeat 50% 50%;
+      -webkit-mask: url('../../../images/icons/arrow.svg') no-repeat 50% 50%;
+      mask-size: cover;
+      -webkit-mask-size: cover;
+    }
+
+    &.slick-next {
+      right: -65px;
+    }
+
+    &.slick-prev {
+      left: -95px !important;
+      -webkit-transform: rotate(180deg);
+      -moz-transform: rotate(180deg);
+      -o-transform: rotate(180deg);
+      -ms-transform: rotate(180deg);
+      transform: rotate(180deg);
+    }
+
+    &.slick-disabled {
+      display: none !important;
+    }
+  }
+
+  @media screen and (max-width: 1620px) {
+    max-width: 1200px;
+  }
+  @media screen and (max-width: 1420px) {
+    max-width: 1000px;
+  }
+  @media screen and (max-width: 1220px) {
+    max-width: 800px;
+  }
+  @media screen and (max-width: 1020px) {
+    max-width: 600px;
+  }
+  @media screen and (max-width: 820px) {
+    max-width: 400px;
+  }
+}
+
+.ding-carousel {
+  .ding-carousel-item {
+    width: 180px !important;
+
+    .book-teaser {
+      .inner {
+        position: relative;
+
+        h2 {
+          font-size: 18px;
+          margin: 20px 0 0;
+          overflow: hidden;
+          max-height: 32px;
+        }
+
+        .field-name-ting-author {
+          overflow: hidden;
+          max-height: 18px;
+          padding-bottom: 50px;
+        }
+
+        a.read-more-button {
+          position: relative;
+          font-weight: 600;
+          font-size: 14px;
+          color: #888;
+
+          &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            height: 3px;
+            width: 100%;
+            background-color: #888;
+          }
+        }
+
+        .ding-entity-rating {
+          display: none;
+        }
+
+        .field-name-ting-type {
+          display: none;
+        }
+
+        .ting-cover {
+          img {
+            height: 230px;
+            width: 100%;
+          }
+        }
+
+        a.reserve-button {
+          font-size: 14px;
+          color: #B03033;
+          margin-right: 20px;
+
+          &::before {
+            background-color: #B03033;
+          }
+        }
+
+        .bbs-color-background & {
+          a.read-more-button {
+            color: white;
+
+            &::before {
+             background-color: white;
+            }
+          }
+          .field-name-ting-author {
+            color: rgba(255, 255, 255, 0.6);
+          }
+          a.reserve-button {
+            color: rgba(255, 255, 255, 0.6);
+
+            &::before {
+              background-color: rgba(255, 255, 255, 0.6);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.quicktabs-tabs {
+  margin-left: 1.5rem;
+  margin-bottom: 50px;
+
+  & .active a {
+    font-size: 20px !important;
+    font-weight: 600 !important;
+  }
+
+  a {
+    color: #888 !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+  }
+
+  li {
+    margin-right: 40px !important;
+  }
+}
+
+.quicktabs-wrapper {
+  .frontpage-teaser {
+    .teaser-info {
+      .icon-calendar {
+        &::before {
+          content: url('/profiles/ding2/themes/bbs/images/icons/calendar.svg');
+          position: absolute;
+          top: -5px;
+          left: 0;
+        }
+      }
+
+      .title-text {
+        position: relative;
+        padding-left: 30px;
+        width: 300px;
+      }
+
+      .lead {
+        max-width: 290px;
+        margin-bottom: 20px;
+      }
+    }
+  }
+}
+
+.carousel-tabs {
+  padding-top: 20px;
+
+  .carousel-list-tabs {
+    margin-left: 10px;
+    margin-bottom: 10px;
+
+    & .active a {
+      font-size: 20px !important;
+      font-weight: 600 !important;
+    }
+
+    a {
+      color: #888 !important;
+      font-size: 16px !important;
+      font-weight: 500 !important;
+
+      &::after {
+        display: none;
+      }
+    }
+
+    .bbs-color-background & {
+      & .active a {
+        color: white !important;
+      }
+      a {
+        color: white !important;
+      }
+    }
+
+    li {
+      margin-right: 40px;
+    }
+  }
+}
+
+.panel-pane {
+  .view {
+    &.view-carousel {
+      position: relative;
+    }
+  }
+}
+
+.pane-ding-related-content-news-events {
+  max-width: 1200px;
+  margin: auto;
+}

@@ -1,0 +1,158 @@
+/**
+Styles for the overlay menu
+ */
+@import '../_variables.scss';
+
+body.menu-is-open {
+  overflow: hidden;
+}
+
+.navigation-wrapper {
+  height: calc(100% - 70px);
+  position: fixed;
+  background-color: #b03033;
+  z-index: 999;
+  left: 0;
+  width: 100%;
+  transition: 0.3s cubic-bezier(0.4, 0, 1, 1);
+  top: -100vh;
+  opacity: 0;
+  background-image: url('/profiles/ding2/themes/bbs/images/icons/logo-menu.svg');
+  background-position: bottom right -10px;
+  background-size: 400px auto;
+  background-repeat: no-repeat;
+
+  .menu-is-open & {
+    top: 70px;
+    opacity: 1;
+  }
+
+  a {
+    color: white;
+  }
+
+  @media screen and (max-width: 460px) {
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+
+  .navigation-inner {
+    width: 900px;
+    margin: auto;
+
+    .main-menu-wrapper {
+      position: relative;
+      color: #fff;
+
+      & > .main-menu {
+        position: absolute;
+        top: 130px;
+        left: 0;
+
+        li.open {
+          background-color: rgba(0, 0, 0, 0.16);
+        }
+      }
+
+      .sub-menu {
+        display: block;
+        position: absolute;
+        top: 15px;
+        right: -350px;
+
+        &.hidden {
+          display: none;
+        }
+
+        li {
+          position: relative;
+          font-size: 22px;
+          line-height: 30px;
+
+          a.menu-button {
+            padding-left: 40px;
+          }
+
+          &:hover {
+            background-color: rgba(0, 0, 0, 0.16);
+          }
+        }
+
+        .back-button {
+          display: none;
+          position: absolute;
+          top: -120px;
+          left: -60px;
+          font-size: 16px;
+          line-height: 30px;
+          padding-left: 20px;
+          cursor: pointer;
+
+          &::before {
+            content: url('/profiles/ding2/themes/bbs/images/icons/arrow.svg');
+            display: none;
+            transform: rotate(180deg);
+            position: absolute;
+            top: -8px;
+            left: 0;
+          }
+        }
+
+        .header-element {
+          display: none;
+          margin: 0 0 30px 30px;
+        }
+      }
+
+      li {
+        width: fit-content;
+        margin: 10px;
+        padding: 8px 0 0;
+        list-style: none;
+        font-size: 38px;
+        font-weight: bold;
+        line-height: 46px;
+
+        a.menu-button {
+          padding-left: 80px;
+          padding-right: 10px;
+
+          &.hidden {
+            display: none;
+          }
+        }
+        a.active {
+          color: white;
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 720px) {
+    .navigation-inner {
+      .main-menu-wrapper {
+        & > .main-menu {
+          left: 55px;
+        }
+        .sub-menu {
+          left: 45px;
+
+          .back-button {
+            display: block;
+
+            &::before {
+              display: block;
+            }
+          }
+
+          .header-element {
+            display: block;
+          }
+        }
+      }
+    }
+  }
+}
+
+.pane-menu-block-main-menu-second-level {
+  display: none;
+}

@@ -1,0 +1,76 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the bbs_color_picker module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function bbs_color_picker_install() {
+    bbs_color_picker_add_shortcut();
+    $colors = array(
+      'DEFAULT' => 'bbs-red',
+      'libraries' => 'bbs-darkblue',
+      'bokmenntir' => 'bbs-seagreen',
+      'innblastur' => 'bbs-limegreen',
+      'fradesla' => 'bbs-orange',
+      'born-og-fjolskyldur' => 'bbs-darkorange',
+      'ding_page' => 'bbs-purple',
+      'ding_news' => 'bbs-lightblue',
+      'nyheder' => 'bbs-lightblue',
+    );
+    variable_set('bbs_colors', $colors);
+
+    $bbs_colors = array(
+      'bbs-red' => '#b03033',
+      'bbs-seagreen' => '#47A49D',
+      'bbs-limegreen' => '#99C355',
+      'bbs-orange' => '#EB983F',
+      'bbs-darkorange' => '#E36D38',
+      'bbs-purple' => '#5F338C',
+      'bbs-lightblue' => '#4CB2EA',
+      'bbs-darkblue' => '#225CA4',
+    );
+    variable_set('bbs_color_options', $bbs_colors);
+    
+    $field_name = 'field_bbs_color';
+     if (!field_info_field($field_name)) {
+        $field = array(
+          'field_name' => $field_name,
+          'type' => 'list_text',
+          'cardinality' => 1,
+          'settings' => array('allowed_values' => array_keys($bbs_colors)),
+        );
+        field_create_field($field);
+        $instance = array( 
+          'field_name' => $field_name,
+          'bundle' => 'ding_library',
+          'label' => 'BBS color',
+          'entity_type' => 'node',
+          'allowed_values' => $bbs_colors,
+          'required' => TRUE,
+        );
+        field_create_instance($instance);
+     }
+}
+
+/**
+ * Add a shortcut for configuring bbs_color_block.
+ */
+function bbs_color_picker_add_shortcut() {
+    if (module_exists('shortcut')) {
+        // Add shortcut to carousel.
+        $shortcut_set = shortcut_set_load(SHORTCUT_DEFAULT_SET_NAME);
+        $shortcut_set->links = array(
+          array(
+            'link_path' => 'admin/settings/bbs_color_picker',
+            'link_title' => st('Configure colors'),
+            'weight' => -14,
+          ),
+        );
+
+        shortcut_set_save($shortcut_set);
+    }
+}

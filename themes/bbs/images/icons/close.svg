@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="17px" height="17px" viewBox="0 0 17 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>icon/close</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icon/close">
+            <g>
+                <rect id="bounds" x="0" y="0" width="17" height="17"></rect>
+                <path d="M3.53033009,14.3238467 L14.3238467,3.53033009 C14.6167399,3.23743687 14.6167399,2.76256313 14.3238467,2.46966991 C14.0309534,2.1767767 13.5560797,2.1767767 13.2631865,2.46966991 L2.46966991,13.2631865 C2.1767767,13.5560797 2.1767767,14.0309534 2.46966991,14.3238467 C2.76256313,14.6167399 3.23743687,14.6167399 3.53033009,14.3238467 Z" id="Line-3" fill="#FFFFFF" fill-rule="nonzero"></path>
+                <path d="M2.46966991,3.53033009 L13.2631865,14.3238467 C13.5560797,14.6167399 14.0309534,14.6167399 14.3238467,14.3238467 C14.6167399,14.0309534 14.6167399,13.5560797 14.3238467,13.2631865 L3.53033009,2.46966991 C3.23743687,2.1767767 2.76256313,2.1767767 2.46966991,2.46966991 C2.1767767,2.76256313 2.1767767,3.23743687 2.46966991,3.53033009 Z" id="Line-3-Copy" fill="#FFFFFF" fill-rule="nonzero"></path>
+            </g>
+        </g>
+    </g>
+</svg>

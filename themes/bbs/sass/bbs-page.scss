@@ -1,0 +1,141 @@
+.bbs-page {
+  position: relative;
+
+  .bbs-top-page-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .bbs-page-banner-image {
+      height: 470px;
+      width: 100%;
+
+      .adaptive-image {
+        position: absolute;
+        top: -10px;
+        left: 0;
+        right: 0;
+        width: 100%;
+        max-height: 500px;
+      }
+    }
+
+    .bbs-page-text-wrapper {
+      padding: 0 20px;
+      width: 100%;
+      max-width: 1000px;
+
+      .field-name-field-ding-page-body {
+        width: 100%;
+      }
+
+      h2.page-title {
+        font-size: 38px;
+        font-weight: 700;
+        margin-bottom: 50px;
+      }
+
+      a {
+        color: black;
+      }
+
+      p {
+        color: #888;
+        max-width: 600px;
+        text-align: left;
+      }
+
+      .field-item {
+        color: #888;
+        max-width: 600px;
+        padding-bottom: 25px;
+      }
+    }
+  }
+
+  .sidebar {
+    position: absolute;
+    right: 18%;
+    top: 600px;
+    width: 400px;
+    background-color: #5F338C;
+
+    .panel-pane {
+      position: relative;
+      margin: 0;
+
+      h2.sub-menu-title {
+        position: absolute;
+        top: -60px;
+        left: 20px;
+
+        a {
+          font-size: 22px;
+          font-weight: 600;
+          color: black;
+        }
+      }
+
+      ul {
+        padding: 40px 30px;
+
+        li {
+          list-style: none;
+          margin-bottom: 30px;
+
+          &:last-of-type {
+            margin: 0;
+          }
+
+          a {
+            font-size: 18px;
+            font-weight: 500;
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+
+  .logo-wrapper {
+    .content-block {
+      .content-wrapper {
+        max-width: 1400px;
+      }
+    }
+  }
+
+  @media screen and (max-width: 1140px) {
+    .bbs-page-text-wrapper {
+      h2 {
+        line-height: 40px;
+      }
+      .field {
+        width: 100%;
+        .field-item {
+          width: 100%;
+          margin: auto;
+          p {
+            text-align: center;
+          }
+        }
+      }
+    }
+    .sidebar {
+      position: relative;
+      margin: auto;
+      top: auto;
+      right: auto;
+
+      .panel-pane {
+        h2.sub-menu-title {
+          position: relative;
+
+          &::after {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}

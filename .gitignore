@@ -1,6 +1,5 @@
 /modules/contrib
 /libraries
-themes/ddbasic/node_modules
 config.php
 tests/behat/.idea/
 .gitignore
@@ -8,3 +7,16 @@ tests/behat/.idea/
 vendor
 /themes/ddbasic/scripts/min
 /themes/ddbasic/sass_css_verbose_output
+
+# Ignore Mac files
+.DS_STORE
+
+# Ignore node_modules
+node_modules
+
+# Ignore compiled css
+sass_css
+sass_css_verbose_output
+
+# Ignore minified js
+/themes/bbs/scripts/min/

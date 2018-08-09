@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * @file
+ * BBS Color Block module main file.
+ */
+
+/**
+ * Implements hook_ctools_plugin_directory().
+ */
+function bbs_color_block_ctools_plugin_directory($module, $plugin) {
+    if ($module == 'ctools' || $module == 'panels') {
+        return 'plugins/' . $plugin;
+    }
+}
+

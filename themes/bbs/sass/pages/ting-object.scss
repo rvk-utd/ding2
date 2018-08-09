@@ -1,0 +1,72 @@
+.pane-ting-object {
+  padding: 0 20px;
+  max-width: 1200px;
+  margin: auto;
+
+  .ting-object-inner-wrapper {
+    display: flex;
+
+    .ting-object-left {
+      padding-right: 20px;
+
+      .ting-cover {
+        img {
+          max-width: 250px;
+        }
+      }
+    }
+
+    .ting-object-right {
+      position: relative;
+      .required-fields {
+        .field-name-ding-entity-buttons {
+          position: absolute;
+          right: 10%;
+          top: 0;
+
+          .field-label {
+            display: none;
+          }
+
+          .field-item.even {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .action-button,
+            .trigger {
+              font-weight: 600;
+              color: #fff;
+              padding: 10px 15px;
+              background-color: #B03033;
+              width: fit-content;
+              margin: 0;
+              margin-left: 30px;
+              border-radius: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 720px) {
+    .ting-object-inner-wrapper {
+      flex-direction: column;
+    }
+  }
+}
+
+.pane-serendipity-ting-object {
+  padding: 100px 20px;
+  max-width: 1200px;
+  margin: auto;
+
+  .field-label {
+    display: none;
+  }
+
+  .field-item {
+    padding-top: 15px;
+  }
+}
