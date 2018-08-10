@@ -31,7 +31,6 @@ class AlephPatronHandler extends AlephHandlerBase {
    *
    * @param \Drupal\aleph\Aleph\AlephClient $client
    *   The Aleph client.
-   *
    * @param \Drupal\aleph\Aleph\Entity\AlephPatron $patron
    *   The Aleph patron.
    */
@@ -374,6 +373,17 @@ class AlephPatronHandler extends AlephHandlerBase {
   public function getActiveBranches($bor_id) {
     $branches = $this->client->getPatronBlocks($bor_id)->xpath('blocks_messages/institution/sublibrary/@code');
     return array_map('strval', $branches);
+  }
+
+  /**
+   * Set the patron's expiry date.
+   *
+   * @param \DateTime $expiryDate
+   *   The new expiry date of the patron.
+   */
+  public function setExpiryDate(\DateTime $expiryDate) {
+    $response = $this->client->setExpiryDate($this->patron, $expiryDate);
+    return (string) $response->xpath('reply-code')[0] === '0000';
   }
 
   /**

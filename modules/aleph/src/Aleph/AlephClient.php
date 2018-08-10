@@ -7,13 +7,15 @@ namespace Drupal\aleph\Aleph;
  * Provides a client for the Aleph library information webservice.
  */
 
-use Drupal\aleph\Aleph\Entity\AlephMaterial;
+use DateTime;
+use SimpleXMLElement;
+use GuzzleHttp\Client;
 use Drupal\aleph\Aleph\Entity\AlephPatron;
 use Drupal\aleph\Aleph\Entity\AlephRequest;
+use Drupal\aleph\Aleph\Entity\AlephMaterial;
 use Drupal\aleph\Aleph\Entity\AlephRequestResponse;
 use Drupal\aleph\Aleph\Exception\AlephClientException;
 use Drupal\aleph\Aleph\Exception\AlephPatronInvalidPin;
-use GuzzleHttp\Client;
 
 /**
  * Implements the AlephClient class.
@@ -500,6 +502,35 @@ class AlephClient {
     ));
 
     return $response;
+  }
+
+  /**
+   * Set the patron expiry date.
+   *
+   * @param \Drupal\aleph\Aleph\Entity\AlephPatron $patron
+   *   The Patron.
+   * @param \DateTime $expiryDate
+   *   The expiry date.
+   *
+   * @return \SimpleXMLElement
+   *   A SimpleXMLElement object.
+   */
+  public function setExpiryDate(AlephPatron $patron, DateTime $expiryDate) {
+    $aleph_path = drupal_get_path('module', 'aleph');
+    $xml = simplexml_load_file($aleph_path . '/xml/update-bor.xml');
+    $patronRecord = $xml->xpath('patron-record')[0];
+
+    $z303 = $patronRecord->xpath('z303')[0];
+    $z303->addChild('match-id', $patron->getId());
+    $z303->addChild('z303-id', $patron->getId());
+
+    $z305 = $patronRecord->addChild('z305');
+    $z305->addChild('z305-expiry-date', $expiryDate->format('d/m/Y'));
+    return $this->request('GET', 'update-bor', array(
+      'library' => $this->itemLibrary,
+      'update_flag' => 'Y',
+      'xml_full_req' => $xml->asXML(),
+    ));
   }
 
 }
