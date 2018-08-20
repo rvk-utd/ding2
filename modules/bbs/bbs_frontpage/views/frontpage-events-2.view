@@ -49,19 +49,19 @@ $handler->display->display_options['filters']['type']['id'] = 'type';
 $handler->display->display_options['filters']['type']['table'] = 'node';
 $handler->display->display_options['filters']['type']['field'] = 'type';
 $handler->display->display_options['filters']['type']['value'] = array(
-'ding_event' => 'ding_event',
+    'ding_event' => 'ding_event',
 );
 
 /* Display: Block */
 $handler = $view->new_display('block', 'Block', 'block');
 $translatables['frontpage_events_2'] = array(
-t('Master'),
-t('frontpage-events-2'),
-t('more'),
-t('Apply'),
-t('Reset'),
-t('Sort by'),
-t('Asc'),
-t('Desc'),
-t('Block'),
+    t('Master'),
+    t('frontpage-events-2'),
+    t('more'),
+    t('Apply'),
+    t('Reset'),
+    t('Sort by'),
+    t('Asc'),
+    t('Desc'),
+    t('Block'),
 );
