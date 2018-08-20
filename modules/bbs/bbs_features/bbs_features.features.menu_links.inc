@@ -91,26 +91,6 @@ function bbs_features_menu_default_menu_links() {
     'weight' => 0,
     'customized' => 1,
   );
-  // Exported menu link: menu-bbs-topbar-menu_opening-hours:libraries
-  $menu_links['menu-bbs-topbar-menu_opening-hours:libraries'] = array(
-    'menu_name' => 'menu-bbs-topbar-menu',
-    'link_path' => 'libraries',
-    'router_path' => 'libraries',
-    'link_title' => 'Opening hours',
-    'options' => array(
-      'attributes' => array(
-        'title' => '',
-      ),
-      'identifier' => 'menu-bbs-topbar-menu_opening-hours:libraries',
-    ),
-    'module' => 'menu',
-    'hidden' => 0,
-    'external' => 0,
-    'has_children' => 0,
-    'expanded' => 0,
-    'weight' => -48,
-    'customized' => 1,
-  );
   // Exported menu link: menu-bbs-topbar-menu_search:search
   $menu_links['menu-bbs-topbar-menu_search:search'] = array(
     'menu_name' => 'menu-bbs-topbar-menu',
