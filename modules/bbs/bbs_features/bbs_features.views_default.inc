@@ -179,7 +179,7 @@ function bbs_features_views_default_views() {
   $handler->display->display_options['footer']['area_text_custom']['id'] = 'area_text_custom';
   $handler->display->display_options['footer']['area_text_custom']['table'] = 'views';
   $handler->display->display_options['footer']['area_text_custom']['field'] = 'area_text_custom';
-  $handler->display->display_options['footer']['area_text_custom']['content'] = '<a class="see-all" href="events">See all events</a>';
+  $handler->display->display_options['footer']['area_text_custom']['content'] = '<a class="see-all" href="/vidburdir">See all events</a>';
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
@@ -255,7 +255,7 @@ function bbs_features_views_default_views() {
     t('Sort by'),
     t('Asc'),
     t('Desc'),
-    t('<a class="see-all" href="events">See all events</a>'),
+    t('<a class="see-all" href="/vidburdir">Sjá alla viðburði</a>'),
     t('Frontpage events'),
     t('more'),
     t('Education page events'),
