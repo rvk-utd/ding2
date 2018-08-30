@@ -2108,7 +2108,7 @@ function bbs_pages_default_page_manager_handlers() {
     $pane->pid = 'new-d2079d72-5d09-4d06-a9bf-f2d6e026822a';
     $pane->panel = 'secondary-content';
     $pane->type = 'views_panes';
-    $pane->subtype = 'ding_news-ding_news_groups_list';
+    $pane->subtype = 'bbs_news-ding_news_groups_list';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -2776,10 +2776,10 @@ function bbs_pages_default_page_manager_handlers() {
     $display->content['new-e23a1825-b3fe-44d8-99b3-f09c54ee49ad'] = $pane;
     $display->panels['quaternary-content'][0] = 'new-e23a1825-b3fe-44d8-99b3-f09c54ee49ad';
     $pane = new stdClass();
-    $pane->pid = 'new-671d191b-72c1-4b1b-ac7f-5adc54942efd';
+    $pane->pid = 'new-0f81815f-2a48-4644-a745-54a3985f042e';
     $pane->panel = 'quaternary-content';
     $pane->type = 'views_panes';
-    $pane->subtype = 'ding_news-ding_news_list';
+    $pane->subtype = 'bbs_news-ding_news_list';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -2795,9 +2795,9 @@ function bbs_pages_default_page_manager_handlers() {
     $pane->extras = array();
     $pane->position = 1;
     $pane->locks = array();
-    $pane->uuid = '671d191b-72c1-4b1b-ac7f-5adc54942efd';
-    $display->content['new-671d191b-72c1-4b1b-ac7f-5adc54942efd'] = $pane;
-    $display->panels['quaternary-content'][1] = 'new-671d191b-72c1-4b1b-ac7f-5adc54942efd';
+    $pane->uuid = '0f81815f-2a48-4644-a745-54a3985f042e';
+    $display->content['new-0f81815f-2a48-4644-a745-54a3985f042e'] = $pane;
+    $display->panels['quaternary-content'][1] = 'new-0f81815f-2a48-4644-a745-54a3985f042e';
     $pane = new stdClass();
     $pane->pid = 'new-4d598221-801a-4dfa-a39c-9352e84760be';
     $pane->panel = 'tertiary-content';
