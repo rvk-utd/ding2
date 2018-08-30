@@ -3526,7 +3526,7 @@ function bbs_features_views_default_views() {
     );
 
     $export['bbs_news'] = $view;
-    
+
     // BBS Libraries
     $view = new view();
     $view->name = 'bbs_libraries';
