@@ -2116,7 +2116,7 @@ function bbs_pages_default_page_manager_handlers() {
             0 => 'argument_entity_id:node_1',
         ),
         'override_title' => 1,
-        'override_title_text' => 'Tengar fréttir',
+        'override_title_text' => 'Tengdar fréttir',
         'override_title_heading' => 'h2',
     );
     $pane->cache = array();
