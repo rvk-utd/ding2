@@ -3262,7 +3262,6 @@ function bbs_pages_default_page_manager_handlers() {
     $display->title_pane = '0';
     $handler->conf['display'] = $display;
 
-
     $export['node_view___panel_context_8'] = $handler;
 
     // BBS Libraries
