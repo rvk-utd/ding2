@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Primo\BriefSearch;
 
 use GuzzleHttp\ClientInterface;
@@ -8,7 +7,7 @@ use GuzzleHttp\Exception\RequestException;
 use Primo\Exception\TransferException;
 
 /**
- * Client for the Primo Brief Search webservice
+ * Client for the Primo Brief Search webservice.
  *
  * @see https://developers.exlibrisgroup.com/primo/apis/webservices/xservices/search/briefsearch
  */
@@ -89,7 +88,7 @@ class Client {
    * @throws \Primo\Exception\TransferException
    *   Thrown if an error occurs during retrieval.
    */
-  public function documents($recordIds) {
+  public function documents(array $recordIds) {
     $result = $this->search(['query' => 'rid,contains,' . implode($recordIds, ' OR ')], 1, count($recordIds));
     return $result->getDocuments();
   }
@@ -117,7 +116,8 @@ class Client {
       return stripos(implode('', $contentType), 'image') === 0;
     }
     catch (RequestException $e) {
-      if ($e->getResponse()->getStatusCode() != 404) {
+      // Log failures, apart from 404.
+      if (!$e->hasResponse() || $e->getResponse()->getStatusCode() != 404) {
         watchdog_exception('primo', $e);
       }
       return FALSE;
