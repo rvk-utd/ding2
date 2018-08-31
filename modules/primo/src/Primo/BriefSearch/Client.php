@@ -116,7 +116,8 @@ class Client {
       return stripos(implode('', $contentType), 'image') === 0;
     }
     catch (RequestException $e) {
-      if ($e->getResponse()->getStatusCode() != 404) {
+      // Log failures, apart from 404.
+      if (!$e->hasResponse() || $e->getResponse()->getStatusCode() != 404) {
         watchdog_exception('primo', $e);
       }
       return FALSE;
