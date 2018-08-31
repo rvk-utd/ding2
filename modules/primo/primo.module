@@ -125,7 +125,7 @@ function primo_client() {
   return new Client(
     new GuzzleClient([
       'handler' => $handler,
-      'base_uri' => variable_get('primo_base_url')
+      'base_uri' => variable_get('primo_base_url'),
     ]),
     variable_get('primo_institution_code'),
     ip_address(),
@@ -140,7 +140,7 @@ function primo_ting_covers($entities) {
   // A map from entity ids to urls for corresponding covers.
   $covers = array();
 
-  $ids = array_map(function(TingEntity $entity) {
+  $ids = array_map(function (TingEntity $entity) {
     return $entity->ding_entity_id;
   }, $entities);
 
@@ -148,14 +148,14 @@ function primo_ting_covers($entities) {
     $client = primo_client();
     $documents = $client->documents($ids);
 
-    $thumbnail_urls = array_map(function(Document $document) {
+    $thumbnail_urls = array_map(function (Document $document) {
       return $document->getThumbnailUrls();
     }, $documents);
 
     array_walk(
       $thumbnail_urls,
-      function(array &$thumbnail_urls, $record_id) {
-        $thumbnail_urls = array_filter($thumbnail_urls, function ($url) use ($record_id) {
+      function (array &$thumbnail_urls, $record_id) {
+        $thumbnail_urls = array_filter($thumbnail_urls, function ($url) {
           // Primo may return thumbnail urls to resources which are in fact not
           // images. In fact some are not working at all. Request each of them
           // to remove irrelevant ones. Use HEAD as we only care about status
@@ -289,7 +289,7 @@ function primo_module_implements_alter(&$implementations, $hook) {
 function _primo_cache_get($id, $type = PRIMO_CACHE_TING_OBJECT) {
   $cid = $type . ':' . $id;
 
-  if ($ttl = variable_get('primo_cache_lifetime', PRIMO_DEFAULT_CACHE_LIFETIME)) {
+  if (variable_get('primo_cache_lifetime', PRIMO_DEFAULT_CACHE_LIFETIME)) {
     $cache = cache_get($cid, 'cache_primo');
     if ($cache && ($cache->expire > REQUEST_TIME)) {
       // Return the cache entry if it has not been expired.
