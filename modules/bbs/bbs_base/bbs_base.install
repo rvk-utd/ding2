@@ -30,3 +30,10 @@ function bbs_base_set_theme() {
   }
   variable_set('default_theme', 'bbs');
 }
+
+/**
+ * Enable bbs_search_carousel.
+ */
+function bbs_base_update_7101() {
+  module_enable(array('bbs_search_carousel'));
+}
