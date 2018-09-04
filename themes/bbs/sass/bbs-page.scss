@@ -4,7 +4,6 @@
   .bbs-top-page-content {
     display: flex;
     flex-direction: column;
-    align-items: center;
 
     .bbs-page-banner-image {
       height: 470px;
@@ -55,10 +54,10 @@
 
   .sidebar {
     position: absolute;
-    right: 18%;
+    right: 10%;
     top: 600px;
     width: 400px;
-    background-color: #5F338C;
+    background-color: #D1D1D1;
 
     .panel-pane {
       position: relative;
@@ -68,6 +67,7 @@
         position: absolute;
         top: -60px;
         left: 20px;
+        border: none;
 
         a {
           font-size: 22px;
@@ -91,6 +91,12 @@
             font-size: 18px;
             font-weight: 500;
             text-decoration: underline;
+            color: #fff;
+
+            &.active {
+              font-weight: bold;
+              font-size: 1.3em;
+            }
           }
         }
       }
