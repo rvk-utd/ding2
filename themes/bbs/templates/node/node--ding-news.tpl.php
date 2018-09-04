@@ -85,12 +85,12 @@
  * @see template_process()
  */
 ?>
-<div class="ding-news">
-  <div class="ding-news-inner">
-      <div class="ding-news-left">
+<div class="bbs-news">
+  <div class="bbs-news-inner">
+      <div class="bbs-news-left">
           <?php print render($content['group_left']); ?>
       </div>
-      <div class="ding-news-right">
+      <div class="bbs-news-right">
           <h1><?php print $title; ?></h1>
           <div class="news-lead">
               <?php print render($content['group_right']['field_ding_news_lead']); ?>

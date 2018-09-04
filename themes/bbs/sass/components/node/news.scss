@@ -3,33 +3,34 @@ body.node-type-ding-news {
     background-color: #4CB2EA;
   }
 
-  .ding-news {
+  .bbs-news {
     display: flex;
     justify-content: center;
 
-    .ding-news-inner {
+    .bbs-news-inner {
       display: flex;
       width: 100%;
       max-width: 1400px;
-      padding: 100px 0;
+      padding: 50px 10px 0;
 
-      .ding-news-left {
+      .bbs-news-left {
         flex-basis: 40%;
+        margin-right: 20px;
 
-        .group-left {
-          max-height: 570px;
-          max-width: 450px;
+        .field-item {
+          padding-bottom: 20px;
         }
       }
 
-      .ding-news-right {
+      .bbs-news-right {
         flex-basis: 60%;
+        margin-left: 20px;
 
         h1 {
           font-size: 32px;
-          font-weight: 600;
-          color: black;
-          margin-top: 80px;
+          font-weight: 500;
+          color: #262627;
+          margin-bottom: 10px;
         }
 
         .news-lead {
@@ -43,12 +44,53 @@ body.node-type-ding-news {
 
           p {
             line-height: 28px;
+            margin: 0;
           }
         }
         .section.meta {
+          margin-top: 20px;
+          padding: 20px;
           max-width: 410px;
-          max-height: 136px;
           background-color: rgba(0, 0, 0, 0.04);
+
+          .author,
+          .category,
+          .tags {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+            font-weight: 600;
+
+            a {
+              font-size: 14px;
+              font-weight: 500;
+              color: inherit;
+              margin-left: 5px;
+
+              &:hover {
+                color: inherit;
+                text-decoration: underline;
+              }
+            }
+
+            .field-items,
+            .field {
+              display: flex;
+            }
+          }
+
+          .field-label-hidden {
+            a {
+              font-size: 14px;
+              font-weight: 500;
+              color: inherit;
+
+              &:hover {
+                color: inherit;
+                text-decoration: underline;
+              }
+            }
+          }
         }
       }
     }
