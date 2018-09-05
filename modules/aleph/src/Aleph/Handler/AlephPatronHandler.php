@@ -300,17 +300,15 @@ class AlephPatronHandler extends AlephHandlerBase {
    *
    * @param AlephPatron $patron
    *   The Aleph patron object.
-   *
    * @param AlephReservation $reservation
    *   The Aleph reservation object.
-   *
    * @param AlephHoldGroup[] $holding_groups
    *   The holding groups.
    *
    * @return AlephRequestResponse
    *   The AlephRequestResponse object.
    */
-  public function createReservation($patron, $reservation, $holding_groups) {
+  public function createReservation(AlephPatron $patron, AlephReservation $reservation, array $holding_groups) {
     $response = $this->client->createReservation(
       $patron, $reservation->getRequest(), $holding_groups
     );
@@ -328,9 +326,9 @@ class AlephPatronHandler extends AlephHandlerBase {
    * @return AlephRequestResponse
    *   The AlephRequestResponse object.
    */
-  public function deleteReservation($patron, $reservation) {
+  public function deleteReservation(AlephPatron $patron, AlephReservation $reservation) {
     $response = $this->client->deleteReservation($patron,
-      $reservation->getRequest());
+                $reservation->getRequest());
 
     return AlephRequestResponse::createRequestResponseFromXML($response);
   }
@@ -342,21 +340,20 @@ class AlephPatronHandler extends AlephHandlerBase {
    *
    * @param AlephPatron $patron
    *   The AlephPatron object.
-   *
    * @param AlephMaterial $material
    *   The AlephMaterial object.
    *
    * @return AlephHoldGroup[]
    *   Array of Aleph hold groups.
    */
-  public function getHoldingGroups($patron, $material) {
+  public function getHoldingGroups(AlephPatron $patron, AlephMaterial $material) {
     $xml_groups = $this->client->getHoldingGroups($patron, $material);
-    $groups = array_map(function(\SimpleXMLElement $group) {
+    $groups = array_map(function (\SimpleXMLElement $group) {
       return AlephHoldGroup::createHoldGroupFromXML($group);
     }, $xml_groups);
 
     $allowed_branches = aleph_get_branches();
-    return array_filter($groups, function(AlephHoldGroup $group) use ($allowed_branches) {
+    return array_filter($groups, function (AlephHoldGroup $group) use ($allowed_branches) {
       return array_key_exists($group->getSubLibraryCode(), $allowed_branches);
     });
   }
