@@ -176,16 +176,22 @@ class AlephClient {
    *
    * @param \Drupal\aleph\Aleph\Entity\AlephPatron $patron
    *   The Aleph Patron.
+   * @param bool $extended
+   *   Return Z304 and Z308 records too.
    *
    * @return \SimpleXMLElement
    *   The response from Aleph.
    *
    * @throws AlephClientException
    */
-  public function borInfo(AlephPatron $patron) {
-    $response = $this->request('GET', 'bor-info', array(
+  public function borInfo(AlephPatron $patron, $extended = FALSE) {
+    $args = array(
       'bor_id' => $patron->getId(),
-    ));
+    );
+    if ($extended) {
+      $args['format'] = 1;
+    }
+    $response = $this->request('GET', 'bor-info', $args);
 
     return $response;
   }
