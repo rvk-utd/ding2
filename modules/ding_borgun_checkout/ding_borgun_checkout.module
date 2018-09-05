@@ -395,14 +395,10 @@ function ding_borgun_checkout_renew_form($form, &$form_state) {
  * Submit handler for the renew form.
  */
 function ding_borgun_checkout_renew_form_submit($form, &$form_state) {
-  $creds = ding_user_get_creds();
-
   $client = aleph_client();
   $patron_handler = new AlephPatronHandler($client);
-  $auth_result = $patron_handler->authenticate($creds['name'], $creds['pass']);
-  $patron = $auth_result->getPatron();
-
-  $patron_handler = new AlephPatronHandler($client, $patron);
+  $patron = $patron_handler->getPatronById();
+  $patron_handler->setPatron($patron);
 
   // Register renewal by setting expiry date to a year from now.
   $today = new DateTime();
