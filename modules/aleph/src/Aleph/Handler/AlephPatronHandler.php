@@ -357,7 +357,11 @@ class AlephPatronHandler extends AlephHandlerBase {
    */
   public function setExpiryDate(\DateTime $expiryDate) {
     $response = $this->client->setExpiryDate($this->patron, $expiryDate);
-    return (string) $response->xpath('reply-code')[0] === '0000';
+    $success = (string) $response->xpath('reply-code')[0] === '0000';
+    if ($success) {
+      $this->patron->setExpiryDate($expiryDate);
+    }
+    return $success;
   }
 
   /**
