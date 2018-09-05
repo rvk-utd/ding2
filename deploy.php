@@ -161,8 +161,8 @@ task('build:ding2', function () {
 
   writeln("<info>Drush install'ing ding2</info>");
   run("{{drush}} make ding2.make --no-core -y --contrib-destination=.");
-  writeln("<info>Drush installing innskraning</info>");
-  run("{{drush}} make innskraning.make --no-core -y --contrib-destination=.");
+  writeln("<info>Drush installing additional contrib modules for BBS</info>");
+  run("{{drush}} make bbs.make --no-core -y --contrib-destination=.");
 
   if (test('[ -f modules/aleph/composer.json ]')) {
     writeln("<info>Composer install'ing Aleph</info>");
