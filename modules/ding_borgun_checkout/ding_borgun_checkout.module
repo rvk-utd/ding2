@@ -348,19 +348,30 @@ function ding_borgun_checkout_membership_form($form, &$form_state) {
     '#suffix' => '</div>',
   );
 
-  $form['mail'] = array(
-
-  );
-
   $form += _ding_borgun_checkout_button(
     variable_get('ding_borgun_checkout_buy_membership_page_button'),
     variable_get('ding_borgun_checkout_buy_membership_page_price'),
     ''
   );
 
-  $form['#submit'][] = 'ding_borgun_checkout_renew_form_submit';
+  $form['#submit'][] = 'ding_borgun_checkout_membership_form_submit';
 
   return $form;
+}
+
+/**
+ * Submit handler for the membership form.
+ */
+function ding_borgun_checkout_membership_form_submit($form, &$form_state) {
+  $client = aleph_client();
+  $patron_handler = new AlephPatronHandler($client);
+  $patron = $patron_handler->getPatronById();
+  $patron_handler->setPatron($patron);
+
+  // Set the expiry date to a year from now.
+  $today = new DateTime();
+  $expiry_date = $today->add(new DateInterval('P1Y'));
+  $patron_handler->setMember($expiry_date);
 }
 
 /**

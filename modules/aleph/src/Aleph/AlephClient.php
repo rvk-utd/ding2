@@ -531,12 +531,54 @@ class AlephClient {
     $z303->addChild('z303-id', $patron->getId());
 
     $z305 = $patronRecord->addChild('z305');
-    $z305->addChild('z305-expiry-date', $expiryDate->format('d/m/Y'));
-    return $this->request('GET', 'update-bor', array(
+    // Tell Aleph that we want to update the record.
+    $z305->addChild('record-action', $expiryDate->format('U'));
+    $z305->addChild('z305-id', $patron->getId());
+    // The sub library where memberships are actually registered.
+    $z305->addChild('z305-sub-library', 'BBAAA');
+    $z305->addChild('z305-expiry-date', $expiryDate->format('Ymd'));
+    $parameters = array(
       'library' => $this->itemLibrary,
       'update_flag' => 'Y',
       'xml_full_req' => $xml->asXML(),
-    ));
+    );
+    return $this->request('GET', 'update-bor', $parameters);
+  }
+
+  /**
+   * Register patron as a new member.
+   *
+   * @param \Drupal\aleph\Aleph\Entity\AlephPatron $patron
+   *   The Patron.
+   * @param \DateTime $expiryDate
+   *   The expiry date.
+   *
+   * @return \SimpleXMLElement
+   *   A SimpleXMLElement object.
+   */
+  public function setMember(AlephPatron $patron, DateTime $expiryDate) {
+    $aleph_path = drupal_get_path('module', 'aleph');
+    $xml = simplexml_load_file($aleph_path . '/xml/update-bor.xml');
+    $patronRecord = $xml->xpath('patron-record')[0];
+
+    $z303 = $patronRecord->xpath('z303')[0];
+    $z303->addChild('match-id', $patron->getId());
+    $z303->addChild('z303-id', $patron->getId());
+
+    $z305 = $patronRecord->addChild('z305');
+    // Tell Aleph that we want to update or insert a new record.
+    $z305->addChild('record-action', $expiryDate->format('A'));
+    $z305->addChild('z305-id', $patron->getId());
+    // The sub library where memberships are actually registered.
+    $z305->addChild('z305-sub-library', 'BBAAA');
+    $z305->addChild('z305-expiry-date', $expiryDate->format('Ymd'));
+    $parameters = array(
+      'library' => $this->itemLibrary,
+      'update_flag' => 'Y',
+      'xml_full_req' => $xml->asXML(),
+    );
+    return $this->request('GET', 'update-bor', $parameters);
+
   }
 
 }

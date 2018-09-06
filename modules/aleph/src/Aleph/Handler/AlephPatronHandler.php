@@ -357,11 +357,34 @@ class AlephPatronHandler extends AlephHandlerBase {
    */
   public function setExpiryDate(\DateTime $expiryDate) {
     $response = $this->client->setExpiryDate($this->patron, $expiryDate);
-    $success = (string) $response->xpath('reply-code')[0] === '0000';
+    $success = $this->isUpdateBorSuccess($response);
     if ($success) {
       $this->patron->setExpiryDate($expiryDate);
     }
     return $success;
+  }
+
+  /**
+   * Set the patron to be a member.
+   *
+   * @param \DateTime $expiryDate
+   *   The expiry date of the membership.
+   */
+  public function setMember(\DateTime $expiryDate) {
+    $response = $this->client->setMember($this->patron, $expiryDate);
+    $success = $this->isUpdateBorSuccess($response);
+    if ($success) {
+      $this->patron->setExpiryDate($expiryDate);
+    }
+    return $success;
+  }
+
+  /**
+   * Check if update-bor coll was successful.
+   */
+  protected function isUpdateBorSuccess($response) {
+    // Oh yes, the update-bor call reports success with an error message.
+    return preg_match('/Succeeded/', (string) $response->xpath('error')[0]);
   }
 
   /**
