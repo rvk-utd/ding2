@@ -168,18 +168,9 @@ task('build:ding2', function () {
     writeln("<info>Composer install'ing Aleph</info>");
     run("{{composer}} --working-dir=modules/aleph install");
   }
-
   if (test('[ -f modules/ding_test/composer.json ]')) {
     writeln("<info>Composer install'ing Ding Test</info>");
     run("{{composer}} --working-dir=modules/ding_test install");
-  }
-
-  if (test('[ -d {{build_path}}/themes/bbs ]')) {
-    cd('{{build_path}}/themes/bbs');
-    writeln("<info>NPM install for BBS theme</info>");
-    run("{{npm}} install");
-    writeln("<info>Compiling css for BBS theme</info>");
-    run("node_modules/.bin/gulp uglify sass");
   }
 
   cd('{{build_path}}/themes/ddbasic');
