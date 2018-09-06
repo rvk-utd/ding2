@@ -71,7 +71,7 @@ a {
 }
 
 .see-all,
-.more-link {
+.more-link a {
   font-weight: 600;
   color: #fff;
   padding: 10px 15px;
@@ -85,7 +85,7 @@ a {
 
 .panel-pane {
   .see-all,
-  .more-link {
+  .more-link a {
     min-width: auto;
     float: none;
   }
