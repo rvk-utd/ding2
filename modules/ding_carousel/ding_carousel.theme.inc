@@ -54,6 +54,11 @@ function template_preprocess_ding_carousel(&$vars) {
     'outerEdgeLimit' => TRUE,
   );
 
+  if ($carousel['#slick_settings']) {
+      // Override Slick settings
+      $vars['slick_settings'] = array_merge($vars['slick_settings'], $carousel['#slick_settings']);
+  }
+
   if (isset($carousel['#hidden']) && $carousel['#hidden']) {
     $vars['classes_array'][] = 'hidden';
   }
