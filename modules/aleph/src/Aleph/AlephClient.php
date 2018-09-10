@@ -341,12 +341,16 @@ class AlephClient {
   /**
    * Create a reservation.
    *
+   * As Aleph reservations aren't on the material level, but on the item level,
+   * this tries to reserve individual items until it succeeds. It gives
+   * preference to items located at the pickup branch.
+   *
    * @param \Drupal\aleph\Aleph\Entity\AlephPatron $patron
-   *   The Aleph patron.
+   *   The patron to reserve for.
    * @param \Drupal\aleph\Aleph\Entity\AlephRequest $request
-   *   The request information.
+   *   The reserve request information.
    * @param \Drupal\aleph\Aleph\Entity\AlephHoldGroup[] $holding_groups
-   *   The holding groups.
+   *   The holding groups for the material.
    *
    * @return \SimpleXMLElement|false
    *   The SimpleXMLElement from the raw XML response.
@@ -366,8 +370,20 @@ class AlephClient {
 
     $rid = $this->catalogLibrary . $request->getDocNumber();
 
-    // Try to make the reservation against the selected group.
+    // Sort holdings into "preferred" (same sub-library as pickup library) and
+    // the rest.
+    $groups = array(array(), array());
     foreach ($holding_groups as $holding_group) {
+      $is_preferred = (int) $holding_group->getSubLibraryCode() == $request->getRequest()->getSubLibraryCode();
+      $groups[$is_preferred] = $holding_group;
+    }
+    // Flatten the array. This moves the items in the pickup library to the
+    // start of of the list, so we can just iterate over it and return when one
+    // succeeds.
+    $groups = array_merge($groups[1], $groups[0]);
+
+    // Try to make the reservation against the selected group.
+    foreach ($groups as $holding_group) {
       $response = $this->requestRest(
         'PUT',
         'patron/' . $patron->getId() . '/record/' . $rid . '/holds/' .

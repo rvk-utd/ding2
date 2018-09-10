@@ -263,7 +263,7 @@ function aleph_reservation_create($account, $id, $options) {
   // Try to make the reservation.
   $response = NULL;
   try {
-    $response = $patron_handler->createReservation($patron, $reservation, $holding_groups);
+    $response = $patron_handler->createReservation($patron, $request, $holding_groups);
     if ($response->success()) {
       return array(
         'branch' => $request->getPickupLocation(),
