@@ -37,3 +37,14 @@ function bbs_base_set_theme() {
 function bbs_base_update_7101() {
   module_enable(array('bbs_search_carousel'));
 }
+
+/**
+ * Enable Borgun and disable ding_dibs.
+ */
+function bbs_base_update_7102() {
+  module_enable(['ding_borgun_checkout']);
+
+  $modules = array('ding_dibs', 'dibs', 'htmlmail');
+  module_disable($modules, TRUE);
+  drupal_uninstall_modules($modules, TRUE);
+}
