@@ -9,18 +9,31 @@
  * Implements hook_install().
  */
 function bbs_base_install() {
-    bbs_base_set_theme();
-    bbs_base_set_frontpage();
+  bbs_base_set_theme();
+  bbs_base_set_frontpage();
 }
 
+/**
+ * Set site frontpage.
+ */
 function bbs_base_set_frontpage() {
   variable_set('site_frontpage', 'bbs_frontpage');
 }
 
+/**
+ * Set site theme.
+ */
 function bbs_base_set_theme() {
   $themes = list_themes();
   if ($themes['bbs']->status == 0) {
-      theme_enable(array('bbs')); 
+    theme_enable(array('bbs'));
   }
   variable_set('default_theme', 'bbs');
+}
+
+/**
+ * Enable bbs_search_carousel.
+ */
+function bbs_base_update_7101() {
+  module_enable(array('bbs_search_carousel'));
 }
