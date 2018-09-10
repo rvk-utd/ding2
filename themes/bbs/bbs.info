@@ -36,6 +36,7 @@ stylesheets[all][] = sass_css/pages/nyheder.css
 stylesheets[all][] = sass_css/pages/contact.css
 stylesheets[all][] = sass_css/pages/user.css
 stylesheets[all][] = sass_css/pages/tags.css
+stylesheets[all][] = sass_css/pages/library.css
 
 ;// Styling from ddbasic
 stylesheets[all][] = sass_css/ding/search.css
