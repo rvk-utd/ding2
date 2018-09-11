@@ -374,8 +374,8 @@ class AlephClient {
     // the rest.
     $groups = array(array(), array());
     foreach ($holding_groups as $holding_group) {
-      $is_preferred = (int) $holding_group->getSubLibraryCode() == $request->getRequest()->getSubLibraryCode();
-      $groups[$is_preferred] = $holding_group;
+      $is_preferred = (int) $holding_group->getSubLibraryCode() == $request->getSubLibraryCode();
+      $groups[$is_preferred][] = $holding_group;
     }
     // Flatten the array. This moves the items in the pickup library to the
     // start of of the list, so we can just iterate over it and return when one
@@ -397,7 +397,7 @@ class AlephClient {
       }
     }
 
-    return $response;
+    return FALSE;
   }
 
   /**
