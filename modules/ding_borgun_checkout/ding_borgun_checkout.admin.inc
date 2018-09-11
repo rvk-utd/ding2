@@ -133,6 +133,13 @@ function ding_borgun_checkout_settings($form, $form_state) {
     '#default_value' => variable_get('ding_borgun_checkout_buy_membership_page_button'),
   );
 
+  $form['buy_membership_page']['ding_borgun_checkout_buy_membership_confirmation'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Confirmation message'),
+    '#description' => t('Message displayed to user on membership completion.'),
+    '#default_value' => variable_get('ding_borgun_checkout_buy_membership_confirmation', t("Congratulations, you're now a member.")),
+  );
+
   $form['renew_membership_page'] = array(
     '#type' => 'fieldset',
     '#title' => t('Renew membership page'),
@@ -174,6 +181,13 @@ function ding_borgun_checkout_settings($form, $form_state) {
     '#title' => t('Button text'),
     '#description' => t('The text on the payment button'),
     '#default_value' => variable_get('ding_borgun_checkout_renew_membership_page_button'),
+  );
+
+  $form['renew_membership_page']['ding_borgun_checkout_renew_membership_confirmation'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Confirmation message'),
+    '#description' => t('Message displayed to user on membership completion.'),
+    '#default_value' => variable_get('ding_borgun_checkout_renew_membership_confirmation', t("Congratulations, you've renewed your membership.")),
   );
 
   return system_settings_form($form);

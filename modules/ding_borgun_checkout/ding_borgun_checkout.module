@@ -372,6 +372,8 @@ function ding_borgun_checkout_membership_form_submit($form, &$form_state) {
   $today = new DateTime();
   $expiry_date = $today->add(new DateInterval('P1Y'));
   $patron_handler->setMember($expiry_date);
+
+  drupal_set_message(variable_get('ding_borgun_checkout_buy_membership_confirmation', t("Congratulations, you're now a member.")));
 }
 
 /**
@@ -415,6 +417,8 @@ function ding_borgun_checkout_renew_form_submit($form, &$form_state) {
   $today = new DateTime();
   $expiry_date = $today->add(new DateInterval('P1Y'));
   $patron_handler->setExpiryDate($expiry_date);
+
+  drupal_set_message(variable_get('ding_borgun_checkout_renew_membership_confirmation', t("Congratulations, you've renewed your membership.")));
 }
 
 /**
