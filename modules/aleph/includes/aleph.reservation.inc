@@ -263,15 +263,18 @@ function aleph_reservation_create($account, $id, $options) {
   // Try to make the reservation.
   $response = NULL;
   try {
-    $response = $patron_handler->createReservation($patron, $request, $holding_groups);
-    if ($response->success()) {
+    $response = $patron_handler->createReservation($patron, $reservation, $holding_groups);
+    if ($response && $response->success()) {
       return array(
         'branch' => $request->getPickupLocation(),
         // Queue number not supported by Aleph.
         'queue_number' => NULL,
       );
     }
-    throw new DingProviderUserException(t($response->getReplyText()));
+    if ($response) {
+      throw new DingProviderUserException(t($response->getReplyText()));
+    }
+    throw new DingProviderUserException(t('We are unable to create a reservation in the library system. Please contact the library.'));
   }
   catch (AlephClientException $e) {
     watchdog_exception('aleph', $e);
