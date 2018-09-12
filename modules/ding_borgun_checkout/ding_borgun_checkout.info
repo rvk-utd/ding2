@@ -8,4 +8,4 @@ dependencies[] = aleph
 dependencies[] = ding_provider
 dependencies[] = libraries
 
-stylesheets[] = css/ding_borgun_checkout_form.css
+stylesheets[all][] = css/ding_borgun_checkout_form.css

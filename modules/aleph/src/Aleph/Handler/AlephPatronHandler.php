@@ -31,7 +31,6 @@ class AlephPatronHandler extends AlephHandlerBase {
    *
    * @param \Drupal\aleph\Aleph\AlephClient $client
    *   The Aleph client.
-   *
    * @param \Drupal\aleph\Aleph\Entity\AlephPatron $patron
    *   The Aleph patron.
    */
@@ -52,33 +51,13 @@ class AlephPatronHandler extends AlephHandlerBase {
     $patron->setId($id);
     $response = $this->client->borInfo($patron);
 
-    // Temporary workaround.
-    // borInfo should be used, when the expiry date bug is fixed in Aleph.
-    $credentials = ding_user_get_creds();
-
-    if (!empty($credentials['pass'])) {
-      // Sub library is hardcoded in order to show correct expiry date.
-      // Most users are active in the BBAAA branch.
-      $response_sub_library = $this->client->authenticate($id, $credentials['pass'], 'BBAAA');
-    }
-
     $patron->setName((string) $response->xpath('z303/z303-name')[0]);
     $patron->setEmail((string) $response->xpath('z304/z304-email-address')[0]);
     $patron->setExpiryDate((string) $response->xpath('z305/z305-expiry-date')[0]);
     $patron->setPhoneNumber((string) $response->xpath('z304/z304-telephone')[0]);
-    $expiry_date = new DateTime();
-
-    // Temporary workaround.
-    // borInfo should be used, when the expiry date bug is fixed in Aleph.
-    if (!empty($credentials['pass'])) {
-      $expiry_date = $expiry_date::createFromFormat('d/m/Y', (string) $response_sub_library->xpath('z305/z305-expiry-date')[0]);
-    }
-    else {
-      $expiry_date = $expiry_date::createFromFormat('d/m/Y', (string) $response->xpath('z305/z305-expiry-date')[0]);
-    }
-
-    $patron->setExpiryDate($expiry_date);
     $patron->setStatus((string) $response->xpath('z305/z305-bor-status')[0]);
+
+    $patron->setExpiryDate($this->getExpiryDate($patron->getId()));
 
     return $patron;
   }
@@ -106,9 +85,6 @@ class AlephPatronHandler extends AlephHandlerBase {
     }
 
     $response = $this->client->authenticate($bor_id, $verification);
-    // Sub library is hardcoded in order to show correct expiry date.
-    // Most users are active in the BBAAA branch.
-    $response_sub_library = $this->client->authenticate($bor_id, $verification, 'BBAAA');
 
     $result = new AuthenticationResult(
       $this->client, $bor_id, $verification, $allowed_login_branches,
@@ -120,11 +96,11 @@ class AlephPatronHandler extends AlephHandlerBase {
       $patron->setVerification($verification);
       $patron->setName((string) $response->xpath('z303/z303-name')[0]);
       $patron->setEmail((string) $response->xpath('z304/z304-email-address')[0]);
-      $expiry_date = new DateTime();
-      $expiry_date = $expiry_date::createFromFormat('d/m/Y', (string) $response_sub_library->xpath('z305/z305-expiry-date')[0]);
-      $patron->setExpiryDate($expiry_date);
       $patron->setPhoneNumber((string) $response->xpath('z304/z304-telephone')[0]);
       $patron->setStatus((string) $response->xpath('z305/z305-bor-status')[0]);
+
+      $patron->setExpiryDate($this->getExpiryDate($bor_id, $verification));
+
       $this->setPatron($patron);
       $result->setPatron($patron);
     }
@@ -301,17 +277,15 @@ class AlephPatronHandler extends AlephHandlerBase {
    *
    * @param AlephPatron $patron
    *   The Aleph patron object.
-   *
    * @param AlephReservation $reservation
    *   The Aleph reservation object.
-   *
    * @param AlephHoldGroup[] $holding_groups
    *   The holding groups.
    *
    * @return AlephRequestResponse
    *   The AlephRequestResponse object.
    */
-  public function createReservation($patron, $reservation, $holding_groups) {
+  public function createReservation(AlephPatron $patron, AlephReservation $reservation, array $holding_groups) {
     $response = $this->client->createReservation(
       $patron, $reservation->getRequest(), $holding_groups
     );
@@ -329,9 +303,9 @@ class AlephPatronHandler extends AlephHandlerBase {
    * @return AlephRequestResponse
    *   The AlephRequestResponse object.
    */
-  public function deleteReservation($patron, $reservation) {
+  public function deleteReservation(AlephPatron $patron, AlephReservation $reservation) {
     $response = $this->client->deleteReservation($patron,
-      $reservation->getRequest());
+                $reservation->getRequest());
 
     return AlephRequestResponse::createRequestResponseFromXML($response);
   }
@@ -343,21 +317,20 @@ class AlephPatronHandler extends AlephHandlerBase {
    *
    * @param AlephPatron $patron
    *   The AlephPatron object.
-   *
    * @param AlephMaterial $material
    *   The AlephMaterial object.
    *
    * @return AlephHoldGroup[]
    *   Array of Aleph hold groups.
    */
-  public function getHoldingGroups($patron, $material) {
+  public function getHoldingGroups(AlephPatron $patron, AlephMaterial $material) {
     $xml_groups = $this->client->getHoldingGroups($patron, $material);
-    $groups = array_map(function(\SimpleXMLElement $group) {
+    $groups = array_map(function (\SimpleXMLElement $group) {
       return AlephHoldGroup::createHoldGroupFromXML($group);
     }, $xml_groups);
 
     $allowed_branches = aleph_get_branches();
-    return array_filter($groups, function(AlephHoldGroup $group) use ($allowed_branches) {
+    return array_filter($groups, function (AlephHoldGroup $group) use ($allowed_branches) {
       return array_key_exists($group->getSubLibraryCode(), $allowed_branches);
     });
   }
@@ -377,10 +350,92 @@ class AlephPatronHandler extends AlephHandlerBase {
   }
 
   /**
+   * Set the patron's expiry date.
+   *
+   * @param \DateTime $expiryDate
+   *   The new expiry date of the patron.
+   */
+  public function setExpiryDate(\DateTime $expiryDate) {
+    $response = $this->client->setExpiryDate($this->patron, $expiryDate);
+    $success = $this->isUpdateBorSuccess($response);
+    if ($success) {
+      $this->patron->setExpiryDate($expiryDate);
+    }
+    return $success;
+  }
+
+  /**
+   * Set the patron to be a member.
+   *
+   * @param \DateTime $expiryDate
+   *   The expiry date of the membership.
+   */
+  public function setMember(\DateTime $expiryDate) {
+    $response = $this->client->setMember($this->patron, $expiryDate);
+    $success = $this->isUpdateBorSuccess($response);
+    if ($success) {
+      $this->patron->setExpiryDate($expiryDate);
+    }
+    return $success;
+  }
+
+  /**
+   * Check if update-bor coll was successful.
+   */
+  protected function isUpdateBorSuccess($response) {
+    // Oh yes, the update-bor call reports success with an error message.
+    return preg_match('/Succeeded/', (string) $response->xpath('error')[0]);
+  }
+
+  /**
    * {@inheritdoc}
    */
   protected function getIdentity() {
     return 'AlephPatronHandler';
+  }
+
+  /**
+   * Get expiry date for patron.
+   *
+   * The important expiry date isn't registered on the user in the item library,
+   * but rather on the record in the sub-library.
+   *
+   * Sadly, the only way to get the data from the sub-library, is the bor_auth
+   * method, which means we'll need their pincode.
+   *
+   * So, if a pincode is provided to this function, use that, else check if
+   * they're logged in via SSO, in which case we fetch the pincode from the
+   * bor_info service, or fall back to using the password from ding_get_creds()
+   * (which should work for non-SSO users).
+   *
+   * @param string $bor_id
+   *   The ID of the patron.
+   * @param string $verification
+   *   Pincode of patron, if known.
+   *
+   * @return DateTime
+   *   The patron expiry date.
+   */
+  protected function getExpiryDate($bor_id, $verification = NULL) {
+    if (empty($verification)) {
+      if (function_exists('ding_innskraning_authenticated') && ding_innskraning_authenticated()) {
+        // Users logged in via SSO has a random password. Get the right one by
+        // asking bor_info.
+        $patron = new AlephPatron();
+        $patron->setId($bor_id);
+        $response = $this->client->borInfo($patron, TRUE);
+        $verification = $response->xpath('z308/z308-verification')[0];
+      }
+      else {
+        // Use the pincode the user used for login.
+        $creds = ding_get_creds();
+        $verification = $creds['pass'];
+      }
+    }
+
+    $response = $this->client->authenticate($bor_id, $verification, 'BBAAA');
+    $expiry_date = DateTime::createFromFormat('d/m/Y', (string) $response->xpath('z305/z305-expiry-date')[0]);
+    return $expiry_date;
   }
 
 }

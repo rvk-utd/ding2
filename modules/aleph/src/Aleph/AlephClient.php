@@ -7,13 +7,15 @@ namespace Drupal\aleph\Aleph;
  * Provides a client for the Aleph library information webservice.
  */
 
-use Drupal\aleph\Aleph\Entity\AlephMaterial;
+use DateTime;
+use SimpleXMLElement;
+use GuzzleHttp\Client;
 use Drupal\aleph\Aleph\Entity\AlephPatron;
 use Drupal\aleph\Aleph\Entity\AlephRequest;
+use Drupal\aleph\Aleph\Entity\AlephMaterial;
 use Drupal\aleph\Aleph\Entity\AlephRequestResponse;
 use Drupal\aleph\Aleph\Exception\AlephClientException;
 use Drupal\aleph\Aleph\Exception\AlephPatronInvalidPin;
-use GuzzleHttp\Client;
 
 /**
  * Implements the AlephClient class.
@@ -174,16 +176,22 @@ class AlephClient {
    *
    * @param \Drupal\aleph\Aleph\Entity\AlephPatron $patron
    *   The Aleph Patron.
+   * @param bool $extended
+   *   Return Z304 and Z308 records too.
    *
    * @return \SimpleXMLElement
    *   The response from Aleph.
    *
    * @throws AlephClientException
    */
-  public function borInfo(AlephPatron $patron) {
-    $response = $this->request('GET', 'bor-info', array(
+  public function borInfo(AlephPatron $patron, $extended = FALSE) {
+    $args = array(
       'bor_id' => $patron->getId(),
-    ));
+    );
+    if ($extended) {
+      $args['format'] = 1;
+    }
+    $response = $this->request('GET', 'bor-info', $args);
 
     return $response;
   }
@@ -516,6 +524,109 @@ class AlephClient {
     ));
 
     return $response;
+  }
+
+  /**
+   * Set the patron expiry date.
+   *
+   * @param \Drupal\aleph\Aleph\Entity\AlephPatron $patron
+   *   The Patron.
+   * @param \DateTime $expiryDate
+   *   The expiry date.
+   *
+   * @return \SimpleXMLElement
+   *   A SimpleXMLElement object.
+   */
+  public function setExpiryDate(AlephPatron $patron, DateTime $expiryDate) {
+    $aleph_path = drupal_get_path('module', 'aleph');
+    $xml = simplexml_load_file($aleph_path . '/xml/update-bor.xml');
+    $patronRecord = $xml->xpath('patron-record')[0];
+
+    $z303 = $patronRecord->xpath('z303')[0];
+    $z303->addChild('match-id', $patron->getId());
+    $z303->addChild('z303-id', $patron->getId());
+
+    $z305 = $patronRecord->addChild('z305');
+    // Tell Aleph that we want to update the record.
+    $z305->addChild('record-action', $expiryDate->format('U'));
+    $z305->addChild('z305-id', $patron->getId());
+    // The sub library where memberships are actually registered.
+    $z305->addChild('z305-sub-library', 'BBAAA');
+    $z305->addChild('z305-expiry-date', $expiryDate->format('Ymd'));
+    $parameters = array(
+      'library' => $this->itemLibrary,
+      'update_flag' => 'Y',
+      'xml_full_req' => $xml->asXML(),
+    );
+    return $this->request('GET', 'update-bor', $parameters);
+  }
+
+  /**
+   * Register patron as a new member.
+   *
+   * @param \Drupal\aleph\Aleph\Entity\AlephPatron $patron
+   *   The Patron.
+   * @param \DateTime $expiryDate
+   *   The expiry date.
+   *
+   * @return \SimpleXMLElement
+   *   A SimpleXMLElement object.
+   */
+  public function setMember(AlephPatron $patron, DateTime $expiryDate) {
+    $current_date = new DateTime('now');
+
+    $aleph_path = drupal_get_path('module', 'aleph');
+    $xml = simplexml_load_file($aleph_path . '/xml/update-bor.xml');
+    $patronRecord = $xml->xpath('patron-record')[0];
+
+    $z303 = $patronRecord->xpath('z303')[0];
+    $z303->addChild('match-id', $patron->getId());
+    $z303->addChild('z303-id', $patron->getId());
+
+    $z305 = $patronRecord->addChild('z305');
+    // Tell Aleph that we want to insert a new record.
+    $z305->addChild('record-action', $expiryDate->format('A'));
+    $z305->addChild('z305-id', $patron->getId());
+    // The sub library where memberships are actually registered.
+    $z305->addChild('z305-sub-library', 'BBAAA');
+    // Data needed for creation.
+    $z305->addChild('z305-open-date', $current_date->format('Ymd'));
+    $z305->addChild('z305-update-date', $current_date->format('Ymd'));
+    $z305->addChild('z305-bor-status', '01');
+    $z305->addChild('z305-registration-date', '00000000');
+    $z305->addChild('z305-expiry-date', $expiryDate->format('Ymd'));
+    $z305->addChild('z305-note', '');
+    $z305->addChild('z305-loan-permission', 'Y');
+    $z305->addChild('z305-photo-permission', 'Y');
+    $z305->addChild('z305-over-permission', 'Y');
+    $z305->addChild('z305-loan-check', 'Y');
+    $z305->addChild('z305-hold-permission', 'Y');
+    $z305->addChild('z305-renew-permission', 'Y');
+    $z305->addChild('z305-rr-permission', 'Y');
+    $z305->addChild('z305-cash-limit', '2000.00');
+    $z305->addChild('z305-sum', '0.00');
+    $z305->addChild('z305-delinq-1', '00');
+    $z305->addChild('z305-delinq-n-1', '');
+    $z305->addChild('z305-delinq-1-update-date', $current_date->format('Ymd'));
+    $z305->addChild('z305-delinq-1-cat-name', 'BBSUTLOF1');
+    $z305->addChild('z305-delinq-2', '00');
+    $z305->addChild('z305-delinq-n-2', '');
+    $z305->addChild('z305-delinq-2-update-date', $current_date->format('Ymd'));
+    $z305->addChild('z305-delinq-2-cat-name', 'BBSUTLOF1');
+    $z305->addChild('z305-delinq-3', '00');
+    $z305->addChild('z305-delinq-n-3', '');
+    $z305->addChild('z305-delinq-3-update-date', $current_date->format('Ymd'));
+    $z305->addChild('z305-delinq-3-cat-name', 'BBSUTLOF1');
+    $z305->addChild('z305-hold-on-shelf', 'Y');
+    $z305->addChild('z305-upd-time-stamp', $current_date->format('Ymd'));
+
+    $parameters = array(
+      'library' => $this->itemLibrary,
+      'update_flag' => 'Y',
+      'xml_full_req' => $xml->asXML(),
+    );
+    return $this->request('GET', 'update-bor', $parameters);
+
   }
 
 }
