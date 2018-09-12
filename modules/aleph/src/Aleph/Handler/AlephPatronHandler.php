@@ -428,7 +428,7 @@ class AlephPatronHandler extends AlephHandlerBase {
       }
       else {
         // Use the pincode the user used for login.
-        $creds = ding_get_creds();
+        $creds = ding_user_get_creds();
         $verification = $creds['pass'];
       }
     }
