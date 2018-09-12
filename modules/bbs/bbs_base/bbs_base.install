@@ -48,3 +48,10 @@ function bbs_base_update_7102() {
   module_disable($modules, TRUE);
   drupal_uninstall_modules($modules, TRUE);
 }
+
+/**
+ * Enable ding_innskraning.
+ */
+function bbs_base_update_7103() {
+  module_enable(['ding_innskraning']);
+}
