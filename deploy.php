@@ -175,11 +175,11 @@ task('build:ding2', function () {
   }
 
 	if (test('[ -d {{build_path}}/themes/bbs ]')) {
-	    cd('{{build_path}}/themes/bbs');
-	    writeln("<info>NPM install for BBS theme</info>");
-	    run("{{npm}} install");
-	    writeln("<info>Compiling css for BBS theme</info>");
-	    run("node_modules/.bin/gulp uglify sass");
+    cd('{{build_path}}/themes/bbs');
+    writeln("<info>NPM install for BBS theme</info>");
+    run("{{npm}} install");
+    writeln("<info>Compiling css for BBS theme</info>");
+    run("node_modules/.bin/gulp uglify sass");
 	}
 
   cd('{{build_path}}/themes/ddbasic');
