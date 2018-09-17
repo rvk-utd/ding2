@@ -174,13 +174,13 @@ task('build:ding2', function () {
     run("{{composer}} --working-dir=modules/ding_test install");
   }
 
-    if (test('[ -d {{build_path}}/themes/bbs ]')) {
-        cd('{{build_path}}/themes/bbs');
-        writeln("<info>NPM install for BBS theme</info>");
-        run("{{npm}} install");
-        writeln("<info>Compiling css for BBS theme</info>");
-        run("node_modules/.bin/gulp uglify sass");
-    }
+	if (test('[ -d {{build_path}}/themes/bbs ]')) {
+	    cd('{{build_path}}/themes/bbs');
+	    writeln("<info>NPM install for BBS theme</info>");
+	    run("{{npm}} install");
+	    writeln("<info>Compiling css for BBS theme</info>");
+	    run("node_modules/.bin/gulp uglify sass");
+	}
 
   cd('{{build_path}}/themes/ddbasic');
   writeln("<info>NPM install'ing ding2</info>");
