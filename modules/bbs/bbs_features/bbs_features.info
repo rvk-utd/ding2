@@ -68,6 +68,7 @@ features[views_view][] = literature_main_content
 features[views_view][] = literature_sub_content
 features[views_view][] = literature_third_content
 features[views_view][] = recommended_content
+features[views_view][] = bbs_libraries
 features_exclude[dependencies][ctools] = ctools
 features_exclude[dependencies][nodequeue] = nodequeue
 features_exclude[dependencies][views] = views

@@ -3964,7 +3964,7 @@ function bbs_features_views_default_views() {
         t('Geocode'),
     );
 
-    $export['bbs_librariesss'] = $view;
+    $export['bbs_libraries'] = $view;
 
     return $export;
 }
