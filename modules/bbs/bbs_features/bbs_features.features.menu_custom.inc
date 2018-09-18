@@ -56,6 +56,5 @@ function bbs_features_menu_default_menu_custom() {
   t('Um Borgarbókasafnið');
   t('Velkomin/n á vefsíðu Borgarbókasafnsins');
 
-
   return $menus;
 }
