@@ -2131,18 +2131,18 @@ function bbs_pages_default_page_manager_handlers() {
     $display->content['new-d2079d72-5d09-4d06-a9bf-f2d6e026822a'] = $pane;
     $display->panels['secondary-content'][0] = 'new-d2079d72-5d09-4d06-a9bf-f2d6e026822a';
     $pane = new stdClass();
-    $pane->pid = 'new-79778e71-4159-4b31-8327-b9ff68642862';
+    $pane->pid = 'new-eab77176-5051-4515-8ab6-f6c1bd0b6045';
     $pane->panel = 'secondary-content';
     $pane->type = 'views_panes';
-    $pane->subtype = 'bbs_events-ding_event_groups_list';
+    $pane->subtype = 'bbs_events-panel_pane_1';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
         'context' => array(
             0 => 'argument_entity_id:node_1',
         ),
-        'override_title' => 1,
-        'override_title_text' => 'Viðburðir framundan',
+        'override_title' => 0,
+        'override_title_text' => '',
         'override_title_heading' => 'h2',
     );
     $pane->cache = array();
@@ -2153,9 +2153,9 @@ function bbs_pages_default_page_manager_handlers() {
     $pane->extras = array();
     $pane->position = 1;
     $pane->locks = array();
-    $pane->uuid = '79778e71-4159-4b31-8327-b9ff68642862';
-    $display->content['new-79778e71-4159-4b31-8327-b9ff68642862'] = $pane;
-    $display->panels['secondary-content'][1] = 'new-79778e71-4159-4b31-8327-b9ff68642862';
+    $pane->uuid = 'eab77176-5051-4515-8ab6-f6c1bd0b6045';
+    $display->content['new-eab77176-5051-4515-8ab6-f6c1bd0b6045'] = $pane;
+    $display->panels['secondary-content'][1] = 'new-eab77176-5051-4515-8ab6-f6c1bd0b6045';
     $pane = new stdClass();
     $pane->pid = 'new-85ad4a2e-7b74-457d-b402-4f71156657e9';
     $pane->panel = 'sidebar';
