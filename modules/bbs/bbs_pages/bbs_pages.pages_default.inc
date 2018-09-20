@@ -1855,7 +1855,8 @@ function bbs_pages_default_page_manager_pages()
 /**
  * Implements hook_default_page_manager_handlers().
  */
-function bbs_pages_default_page_manager_handlers() {
+function bbs_pages_default_page_manager_handlers()
+{
     $export = array();
 
     $handler = new stdClass();
@@ -2661,7 +2662,6 @@ function bbs_pages_default_page_manager_handlers() {
     $export['site_template__bbs-site-template'] = $handler;
 
     // BBS NEWS
-
     $handler = new stdClass();
     $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
     $handler->api_version = 1;
@@ -2776,7 +2776,7 @@ function bbs_pages_default_page_manager_handlers() {
     $display->content['new-e23a1825-b3fe-44d8-99b3-f09c54ee49ad'] = $pane;
     $display->panels['quaternary-content'][0] = 'new-e23a1825-b3fe-44d8-99b3-f09c54ee49ad';
     $pane = new stdClass();
-    $pane->pid = 'new-b8cd77ef-3133-4d61-9d56-539e4145c0f8';
+    $pane->pid = 'new-81e8a040-d7e6-46d4-816e-f25fa4c1abf4';
     $pane->panel = 'quaternary-content';
     $pane->type = 'views_panes';
     $pane->subtype = 'ding_related_content-news_events';
@@ -2795,9 +2795,9 @@ function bbs_pages_default_page_manager_handlers() {
     $pane->extras = array();
     $pane->position = 1;
     $pane->locks = array();
-    $pane->uuid = 'b8cd77ef-3133-4d61-9d56-539e4145c0f8';
-    $display->content['new-b8cd77ef-3133-4d61-9d56-539e4145c0f8'] = $pane;
-    $display->panels['quaternary-content'][1] = 'new-b8cd77ef-3133-4d61-9d56-539e4145c0f8';
+    $pane->uuid = '81e8a040-d7e6-46d4-816e-f25fa4c1abf4';
+    $display->content['new-81e8a040-d7e6-46d4-816e-f25fa4c1abf4'] = $pane;
+    $display->panels['quaternary-content'][1] = 'new-81e8a040-d7e6-46d4-816e-f25fa4c1abf4';
     $pane = new stdClass();
     $pane->pid = 'new-4d598221-801a-4dfa-a39c-9352e84760be';
     $pane->panel = 'tertiary-content';
@@ -3412,6 +3412,275 @@ function bbs_pages_default_page_manager_handlers() {
     $handler->conf['display'] = $display;
 
     $export['page_ding_libraries__bbs-libraries'] = $handler;
+
+    // BBS Event
+    $handler = new stdClass();
+    $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
+    $handler->api_version = 1;
+    $handler->name = 'node_view__bbs-event';
+    $handler->task = 'node_view';
+    $handler->subtask = '';
+    $handler->handler = 'panel_context';
+    $handler->weight = -17;
+    $handler->conf = array(
+        'title' => 'BBS Event',
+        'no_blocks' => 0,
+        'pipeline' => 'standard',
+        'css_id' => '',
+        'css' => '',
+        'contexts' => array(
+            0 => array(
+                'identifier' => 'User',
+                'keyword' => 'user',
+                'name' => 'user',
+                'type' => 'current',
+                'uid' => NULL,
+                'id' => 1,
+            ),
+        ),
+        'relationships' => array(
+            0 => array(
+                'identifier' => 'OG group from event',
+                'keyword' => 'group',
+                'name' => 'og_group_from_node',
+                'context' => 'argument_entity_id:node_1',
+                'id' => 1,
+            ),
+            1 => array(
+                'identifier' => 'Library',
+                'keyword' => 'library',
+                'name' => 'og_node_from_group',
+                'context' => 'relationship_og_group_from_node_1',
+                'id' => 1,
+            ),
+            2 => array(
+                'identifier' => 'Multiple terms from node',
+                'keyword' => 'terms',
+                'name' => 'terms_from_node',
+                'context' => 'argument_entity_id:node_1',
+                'vid' => array(
+                    3 => '3',
+                    4 => '4',
+                    1 => '1',
+                    2 => '2',
+                ),
+                'concatenator' => ',',
+                'id' => 1,
+            ),
+            3 => array(
+                'identifier' => 'Category term',
+                'keyword' => 'taxonomy_term',
+                'name' => 'entity_from_field:field_ding_event_category-node-taxonomy_term',
+                'delta' => 0,
+                'context' => 'argument_entity_id:node_1',
+                'id' => 1,
+            ),
+        ),
+        'access' => array(
+            'plugins' => array(
+                0 => array(
+                    'name' => 'node_type',
+                    'settings' => array(
+                        'type' => array(
+                            'ding_event' => 'ding_event',
+                        ),
+                    ),
+                    'context' => 'argument_entity_id:node_1',
+                    'not' => FALSE,
+                ),
+            ),
+            'logic' => 'and',
+        ),
+        'panels_breadcrumbs_state' => 1,
+        'panels_breadcrumbs_titles' => 'Events
+%node:title',
+        'panels_breadcrumbs_paths' => 'events
+<none>',
+        'metatag_panels' => array(
+            'enabled' => 1,
+            'metatags' => array(
+                'title' => array(
+                    'value' => '[node:title] | [current-page:pager][site:name]',
+                ),
+                'description' => array(
+                    'value' => '[node:field_ding_event_lead] - [node:og_group_ref] - [node:field-ding-event-date:value] - [node:field_ding_event_price] kr.',
+                ),
+                'image_src' => array(
+                    'value' => '[node:field_ding_event_title_image]',
+                ),
+            ),
+        ),
+        'name' => 'bbs-event',
+        'body_classes_to_remove' => '',
+        'body_classes_to_add' => '',
+    );
+    $display = new panels_display();
+    $display->layout = 'ding2_site_template';
+    $display->layout_settings = array();
+    $display->panel_settings = array(
+        'style_settings' => array(
+            'default' => NULL,
+            'left' => NULL,
+            'middle' => NULL,
+            'right' => NULL,
+            'top' => NULL,
+            'bottom' => NULL,
+            'grid_10_center' => NULL,
+            'grid_3_left' => NULL,
+            'grid_3_right' => NULL,
+            'left_sidebar' => NULL,
+            'main_content' => NULL,
+            'right_sidebar' => NULL,
+            'attachment_4_1' => NULL,
+            'attachment_4_2' => NULL,
+            'attachment_4_3' => NULL,
+            'attachment_4_4' => NULL,
+            'attachment_3_1' => NULL,
+            'attachment_3_2' => NULL,
+            'attachment_3_3' => NULL,
+            'attachment_2_1' => NULL,
+            'attachment_2_2' => NULL,
+            'attachment_1_1' => NULL,
+            'branding' => NULL,
+            'header' => NULL,
+            'navigation' => NULL,
+            'content' => NULL,
+            'footer' => NULL,
+        ),
+    );
+    $display->cache = array();
+    $display->title = '%node:title';
+    $display->uuid = '45175b89-df7a-48fe-8118-cb87907dc9df';
+    $display->content = array();
+    $display->panels = array();
+    $pane = new stdClass();
+    $pane->pid = 'new-a6229377-5925-4728-a26a-48d1d33263ee';
+    $pane->panel = 'content';
+    $pane->type = 'node_content';
+    $pane->subtype = 'node_content';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+        'links' => 1,
+        'no_extras' => 0,
+        'override_title' => 0,
+        'override_title_text' => '',
+        'identifier' => '',
+        'link' => 0,
+        'leave_node_title' => 1,
+        'build_mode' => 'full',
+        'context' => 'argument_entity_id:node_1',
+    );
+    $pane->cache = array(
+        'method' => '0',
+        'settings' => array(),
+    );
+    $pane->style = array(
+        'settings' => NULL,
+        'style' => 'naked',
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = '';
+    $pane->uuid = 'a6229377-5925-4728-a26a-48d1d33263ee';
+    $display->content['new-a6229377-5925-4728-a26a-48d1d33263ee'] = $pane;
+    $display->panels['content'][0] = 'new-a6229377-5925-4728-a26a-48d1d33263ee';
+    $pane = new stdClass();
+    $pane->pid = 'new-a4e41bd1-00ba-4f94-afa8-3e20064bb082';
+    $pane->panel = 'content';
+    $pane->type = 'entity_field';
+    $pane->subtype = 'node:field_ding_event_materials';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+        'label' => 'title',
+        'formatter' => 'ding_carousel',
+        'delta_limit' => '0',
+        'delta_offset' => '0',
+        'delta_reversed' => 0,
+        'formatter_settings' => array(
+            'view_mode' => 'teaser',
+        ),
+        'context' => 'argument_entity_id:node_1',
+        'override_title' => 0,
+        'override_title_text' => '',
+        'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+        'settings' => NULL,
+    );
+    $pane->css = array(
+        'css_id' => '',
+        'css_class' => 'grid-small no-gradient',
+    );
+    $pane->extras = array();
+    $pane->position = 1;
+    $pane->locks = array();
+    $pane->uuid = 'a4e41bd1-00ba-4f94-afa8-3e20064bb082';
+    $display->content['new-a4e41bd1-00ba-4f94-afa8-3e20064bb082'] = $pane;
+    $display->panels['content'][1] = 'new-a4e41bd1-00ba-4f94-afa8-3e20064bb082';
+    $pane = new stdClass();
+    $pane->pid = 'new-f5e3797c-577f-4522-a7e3-d3024f3fe922';
+    $pane->panel = 'content';
+    $pane->type = 'campaign';
+    $pane->subtype = 'campaign';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+        'ding_campaign_count' => 3,
+        'ding_campaign_offset' => 0,
+        'ding_campaign_style' => 'ding_campaign_full_width',
+        'context' => array(
+            0 => 'argument_entity_id:node_1',
+            1 => 'argument_entity_id:node_1',
+            2 => 'empty',
+            3 => 'relationship_terms_from_node_1',
+        ),
+        'override_title' => 0,
+        'override_title_text' => '',
+        'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+        'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 2;
+    $pane->locks = array();
+    $pane->uuid = 'f5e3797c-577f-4522-a7e3-d3024f3fe922';
+    $display->content['new-f5e3797c-577f-4522-a7e3-d3024f3fe922'] = $pane;
+    $display->panels['content'][2] = 'new-f5e3797c-577f-4522-a7e3-d3024f3fe922';
+    $pane = new stdClass();
+    $pane->pid = 'new-6b2fe6a2-f7aa-442d-af70-786a4eb9e426';
+    $pane->panel = 'content';
+    $pane->type = 'views_panes';
+    $pane->subtype = 'ding_related_content-news_events';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+        'override_title' => 0,
+        'override_title_text' => '',
+        'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+        'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 3;
+    $pane->locks = array();
+    $pane->uuid = '6b2fe6a2-f7aa-442d-af70-786a4eb9e426';
+    $display->content['new-6b2fe6a2-f7aa-442d-af70-786a4eb9e426'] = $pane;
+    $display->panels['content'][3] = 'new-6b2fe6a2-f7aa-442d-af70-786a4eb9e426';
+    $display->hide_title = PANELS_TITLE_PANE;
+    $display->title_pane = '0';
+    $handler->conf['display'] = $display;
+
+    $export['node_view__bbs-event'] = $handler;
 
     return $export;
 }
