@@ -1,3 +1,14 @@
+.book {
+  h2 {
+    font-size: 18px;
+    margin: 0;
+    padding-top: 28px;
+  }
+  .field-name-ting-author {
+    margin-top: 4px;
+    margin-bottom: 25px;
+  }
+}
 
 .slick-slider {
   li.slick-slide {
@@ -17,18 +28,6 @@
     .teaser-info {
       min-height: 325px;
       min-width: 450px;
-    }
-
-    .book {
-      h2 {
-        font-size: 18px;
-        margin: 0;
-        padding-top: 28px;
-      }
-      .field-name-ting-author {
-        margin-top: 4px;
-        margin-bottom: 25px;
-      }
     }
   }
 
@@ -97,8 +96,8 @@
   }
 }
 
-.ding-carousel {
-  .ding-carousel-item {
+.ding-carousel, .field-items {
+  .ding-carousel-item, .field-item {
     width: 180px !important;
 
     .book-teaser {
