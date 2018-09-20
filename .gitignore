@@ -20,3 +20,6 @@ sass_css_verbose_output
 
 # Ignore minified js
 /themes/bbs/scripts/min/
+
+# Ignore idea files
+.idea/
