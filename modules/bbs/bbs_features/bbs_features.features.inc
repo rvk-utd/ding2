@@ -40,8 +40,8 @@ function bbs_features_fe_nodequeue_export_fields() {
     'show_in_links' => 0,
     'reference' => 0,
     'reverse' => 0,
-    'insert_at_front' => 0,
     'i18n' => 0,
+    'insert_at_front' => 0,
     'subqueues' => 1,
     'types' => array(
       0 => 'ding_event',
@@ -67,8 +67,8 @@ function bbs_features_fe_nodequeue_export_fields() {
     'show_in_links' => 0,
     'reference' => 0,
     'reverse' => 0,
-    'insert_at_front' => 0,
     'i18n' => 0,
+    'insert_at_front' => 0,
     'subqueues' => 1,
     'types' => array(
       0 => 'ding_event',
@@ -95,8 +95,8 @@ function bbs_features_fe_nodequeue_export_fields() {
     'show_in_links' => 0,
     'reference' => 0,
     'reverse' => 0,
-    'insert_at_front' => 0,
     'i18n' => 0,
+    'insert_at_front' => 0,
     'subqueues' => 1,
     'types' => array(
       0 => 'ding_event',
@@ -123,8 +123,8 @@ function bbs_features_fe_nodequeue_export_fields() {
     'show_in_links' => 0,
     'reference' => 0,
     'reverse' => 0,
-    'insert_at_front' => 0,
     'i18n' => 0,
+    'insert_at_front' => 0,
     'subqueues' => 1,
     'types' => array(
       0 => 'ding_event',
@@ -151,8 +151,8 @@ function bbs_features_fe_nodequeue_export_fields() {
     'show_in_links' => 0,
     'reference' => 0,
     'reverse' => 0,
-    'insert_at_front' => 0,
     'i18n' => 0,
+    'insert_at_front' => 0,
     'subqueues' => 1,
     'types' => array(
       0 => 'ding_event',
@@ -179,8 +179,8 @@ function bbs_features_fe_nodequeue_export_fields() {
     'show_in_links' => 0,
     'reference' => 0,
     'reverse' => 0,
-    'insert_at_front' => 0,
     'i18n' => 0,
+    'insert_at_front' => 0,
     'subqueues' => 1,
     'types' => array(
       0 => 'ding_event',
@@ -207,8 +207,8 @@ function bbs_features_fe_nodequeue_export_fields() {
     'show_in_links' => 1,
     'reference' => 0,
     'reverse' => 0,
-    'insert_at_front' => 0,
     'i18n' => 1,
+    'insert_at_front' => 0,
     'subqueues' => 1,
     'types' => array(
       0 => 'ding_event',
@@ -235,8 +235,8 @@ function bbs_features_fe_nodequeue_export_fields() {
     'show_in_links' => 1,
     'reference' => 0,
     'reverse' => 0,
-    'insert_at_front' => 0,
     'i18n' => 1,
+    'insert_at_front' => 0,
     'subqueues' => 1,
     'types' => array(
       0 => 'ding_event',
@@ -261,8 +261,8 @@ function bbs_features_fe_nodequeue_export_fields() {
     'show_in_links' => 0,
     'reference' => 0,
     'reverse' => 0,
-    'insert_at_front' => 0,
     'i18n' => 0,
+    'insert_at_front' => 0,
     'subqueues' => 1,
     'types' => array(
       0 => 'ding_event',
@@ -288,8 +288,8 @@ function bbs_features_fe_nodequeue_export_fields() {
     'show_in_links' => 0,
     'reference' => 0,
     'reverse' => 0,
-    'insert_at_front' => 0,
     'i18n' => 0,
+    'insert_at_front' => 0,
     'subqueues' => 1,
     'types' => array(
       0 => 'ding_event',
@@ -315,8 +315,8 @@ function bbs_features_fe_nodequeue_export_fields() {
     'show_in_links' => 0,
     'reference' => 0,
     'reverse' => 0,
-    'insert_at_front' => 0,
     'i18n' => 0,
+    'insert_at_front' => 0,
     'subqueues' => 1,
     'types' => array(
       0 => 'ding_event',
@@ -342,8 +342,8 @@ function bbs_features_fe_nodequeue_export_fields() {
     'show_in_links' => 0,
     'reference' => 0,
     'reverse' => 0,
-    'insert_at_front' => 0,
     'i18n' => 0,
+    'insert_at_front' => 0,
     'subqueues' => 1,
     'types' => array(
       0 => 'ding_event',
@@ -368,8 +368,8 @@ function bbs_features_fe_nodequeue_export_fields() {
     'show_in_links' => 0,
     'reference' => 0,
     'reverse' => 0,
-    'insert_at_front' => 0,
     'i18n' => 0,
+    'insert_at_front' => 0,
     'subqueues' => 1,
     'types' => array(
       0 => 'ding_event',
@@ -393,8 +393,8 @@ function bbs_features_fe_nodequeue_export_fields() {
     'show_in_links' => 0,
     'reference' => 0,
     'reverse' => 0,
-    'insert_at_front' => 0,
     'i18n' => 0,
+    'insert_at_front' => 0,
     'subqueues' => 1,
     'types' => array(
       0 => 'ding_event',
@@ -419,8 +419,8 @@ function bbs_features_fe_nodequeue_export_fields() {
     'show_in_links' => 0,
     'reference' => 0,
     'reverse' => 0,
-    'insert_at_front' => 0,
     'i18n' => 0,
+    'insert_at_front' => 0,
     'subqueues' => 1,
     'types' => array(
       0 => 'ding_event',
@@ -448,8 +448,8 @@ function bbs_features_fe_nodequeue_export_fields() {
     'show_in_links' => 0,
     'reference' => 0,
     'reverse' => 0,
-    'insert_at_front' => 0,
     'i18n' => 0,
+    'insert_at_front' => 0,
     'subqueues' => 1,
     'types' => array(
       0 => 'ding_group',

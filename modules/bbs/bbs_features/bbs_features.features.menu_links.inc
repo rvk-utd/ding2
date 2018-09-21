@@ -10,7 +10,7 @@
 function bbs_features_menu_default_menu_links() {
   $menu_links = array();
 
-  // Exported menu link: menu-bbs-topbar-menu_languages:node
+  // Exported menu link: menu-bbs-topbar-menu_languages:node.
   $menu_links['menu-bbs-topbar-menu_languages:node'] = array(
     'menu_name' => 'menu-bbs-topbar-menu',
     'link_path' => 'node',
@@ -30,7 +30,7 @@ function bbs_features_menu_default_menu_links() {
     'weight' => -49,
     'customized' => 1,
   );
-  // Exported menu link: menu-bbs-topbar-menu_login:user
+  // Exported menu link: menu-bbs-topbar-menu_login:user.
   $menu_links['menu-bbs-topbar-menu_login:user'] = array(
     'menu_name' => 'menu-bbs-topbar-menu',
     'link_path' => 'user',
@@ -50,7 +50,7 @@ function bbs_features_menu_default_menu_links() {
     'weight' => 0,
     'customized' => 1,
   );
-  // Exported menu link: menu-bbs-topbar-menu_logout:user/logout
+  // Exported menu link: menu-bbs-topbar-menu_logout:user/logout.
   $menu_links['menu-bbs-topbar-menu_logout:user/logout'] = array(
     'menu_name' => 'menu-bbs-topbar-menu',
     'link_path' => 'user/logout',
@@ -71,7 +71,7 @@ function bbs_features_menu_default_menu_links() {
     'customized' => 1,
     'parent_identifier' => 'menu-bbs-topbar-menu_login:user',
   );
-  // Exported menu link: menu-bbs-topbar-menu_menu:<front>
+  // Exported menu link: menu-bbs-topbar-menu_menu:<front>.
   $menu_links['menu-bbs-topbar-menu_menu:<front>'] = array(
     'menu_name' => 'menu-bbs-topbar-menu',
     'link_path' => '<front>',
@@ -91,7 +91,7 @@ function bbs_features_menu_default_menu_links() {
     'weight' => 0,
     'customized' => 1,
   );
-  // Exported menu link: menu-bbs-topbar-menu_search:search
+  // Exported menu link: menu-bbs-topbar-menu_search:search.
   $menu_links['menu-bbs-topbar-menu_search:search'] = array(
     'menu_name' => 'menu-bbs-topbar-menu',
     'link_path' => 'search',
@@ -111,7 +111,7 @@ function bbs_features_menu_default_menu_links() {
     'weight' => -50,
     'customized' => 1,
   );
-  // Exported menu link: menu-frontpage-menu_hafa-samband:contact
+  // Exported menu link: menu-frontpage-menu_hafa-samband:contact.
   $menu_links['menu-frontpage-menu_hafa-samband:contact'] = array(
     'menu_name' => 'menu-frontpage-menu',
     'link_path' => 'contact',
@@ -131,7 +131,7 @@ function bbs_features_menu_default_menu_links() {
     'weight' => 0,
     'customized' => 1,
   );
-  // Exported menu link: menu-frontpage-menu_opening-hours:libraries
+  // Exported menu link: menu-frontpage-menu_opening-hours:libraries.
   $menu_links['menu-frontpage-menu_opening-hours:libraries'] = array(
     'menu_name' => 'menu-frontpage-menu',
     'link_path' => 'libraries',
@@ -151,7 +151,7 @@ function bbs_features_menu_default_menu_links() {
     'weight' => -49,
     'customized' => 1,
   );
-  // Exported menu link: menu-frontpage-menu_search:search
+  // Exported menu link: menu-frontpage-menu_search:search.
   $menu_links['menu-frontpage-menu_search:search'] = array(
     'menu_name' => 'menu-frontpage-menu',
     'link_path' => 'search',
@@ -171,6 +171,7 @@ function bbs_features_menu_default_menu_links() {
     'weight' => -50,
     'customized' => 1,
   );
+
   // Translatables
   // Included for use with string extractors like potx.
   t('Hafa samband');
@@ -180,7 +181,6 @@ function bbs_features_menu_default_menu_links() {
   t('Menu');
   t('Opening hours');
   t('Search');
-
 
   return $menu_links;
 }

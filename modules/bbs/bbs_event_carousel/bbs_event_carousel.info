@@ -1,5 +1,0 @@
-name = BBS Event Carousel
-description = Show Events in a carousel
-package = BBS
-core = "7.x"
-dependencies[] = ding_carousel
