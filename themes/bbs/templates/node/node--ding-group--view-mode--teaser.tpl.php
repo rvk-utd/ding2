@@ -82,7 +82,7 @@
  */
 ?>
 
-<div class="frontpage-teaser event-teaser" <?php if(!empty($background_image)){?>style="background-image: url(<?php print $background_image; ?>)"<?php } ?>>
+<div class="frontpage-teaser event-teaser" <?php if($node->field_ding_group_list_image){?>style="background-image: url(<?php print file_create_url($node->field_ding_group_list_image['und'][0]['uri']); ?>)"<?php } ?>>
     <div class="teaser-info">
         <h3 class="title-text"><?php print l($title, $node_url); ?></h3>
         <span class="lead"><?php print render($content['field_ding_group_lead']); ?></span>
