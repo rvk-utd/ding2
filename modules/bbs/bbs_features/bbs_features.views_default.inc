@@ -165,7 +165,7 @@ function bbs_features_views_default_views() {
   $handler->display->display_options['css_class'] = 'view-carousel';
   $handler->display->display_options['use_more'] = TRUE;
   $handler->display->display_options['use_more_always'] = TRUE;
-  $handler->display->display_options['use_more_text'] = 'Sjá alla viðburði';
+  $handler->display->display_options['use_more_text'] = 'See all events';
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
@@ -175,11 +175,6 @@ function bbs_features_views_default_views() {
   $handler->display->display_options['style_plugin'] = 'list';
   $handler->display->display_options['row_plugin'] = 'node';
   $handler->display->display_options['row_options']['links'] = FALSE;
-  /* Footer: Global: Unfiltered text */
-  $handler->display->display_options['footer']['area_text_custom']['id'] = 'area_text_custom';
-  $handler->display->display_options['footer']['area_text_custom']['table'] = 'views';
-  $handler->display->display_options['footer']['area_text_custom']['field'] = 'area_text_custom';
-  $handler->display->display_options['footer']['area_text_custom']['content'] = '<a class="see-all" href="/vidburdir">See all events</a>';
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
@@ -340,8 +335,6 @@ function bbs_features_views_default_views() {
   $handler = $view->new_display('panel_pane', 'Group event list', 'panel_pane_1');
   $handler->display->display_options['defaults']['title'] = FALSE;
   $handler->display->display_options['title'] = 'Tengdir viðburðir';
-  $handler->display->display_options['defaults']['use_more'] = FALSE;
-  $handler->display->display_options['use_more'] = TRUE;
   $handler->display->display_options['defaults']['link_display'] = FALSE;
   $handler->display->display_options['link_display'] = 'custom_url';
   $handler->display->display_options['link_url'] = 'arrangementer';
@@ -464,13 +457,12 @@ function bbs_features_views_default_views() {
   $translatables['bbs_events'] = array(
     t('Master'),
     t('Viðburðir framundan'),
-    t('Sjá alla viðburði'),
+    t('See all events'),
     t('Apply'),
     t('Reset'),
     t('Sort by'),
     t('Asc'),
     t('Desc'),
-    t('<a class="see-all" href="/vidburdir">See all events</a>'),
     t('Frontpage events'),
     t('more'),
     t('Education page events'),
