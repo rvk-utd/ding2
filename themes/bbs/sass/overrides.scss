@@ -72,24 +72,37 @@ a {
   }
 }
 
-.see-all,
-.more-link {
+.see-all {
   font-weight: 600;
   color: #fff;
   padding: 10px 15px;
   background-color: #B03033;
   width: fit-content;
   min-width: auto;
-  margin-bottom: 80px;
-  margin-left: 30px;
   float: none;
+  margin-left: 30px;
+}
+
+.more-link {
+  float: none;
+  min-width: auto;
+  text-align: left;
+
+  a {
+    font-weight: 600;
+    color: #fff;
+    padding: 10px 15px;
+    background-color: #B03033;
+    width: fit-content;
+    margin-left: 30px;
+  }
 }
 
 .panel-pane {
   .see-all,
   .more-link {
     min-width: auto;
-    float: left;
+    float: none;
   }
 }
 
