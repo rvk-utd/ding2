@@ -100,84 +100,84 @@
 .ding-carousel {
   .ding-carousel-item {
     width: 180px !important;
+  }
+}
 
-    .book-teaser {
-      .inner {
-        position: relative;
+.book-teaser {
+  .inner {
+    position: relative;
 
-        h2 {
-          font-size: 18px;
-          margin: 20px 0 0;
-          overflow: hidden;
-          max-height: 32px;
+    h2 {
+      font-size: 18px;
+      margin: 20px 0 0;
+      overflow: hidden;
+      max-height: 32px;
+    }
+
+    .field-name-ting-author {
+      overflow: hidden;
+      max-height: 18px;
+      padding-bottom: 50px;
+    }
+
+    a.read-more-button {
+      position: relative;
+      font-weight: 600;
+      font-size: 14px;
+      color: #888;
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -5px;
+        height: 3px;
+        width: 100%;
+        background-color: #888;
+      }
+    }
+
+    .ding-entity-rating {
+      display: none;
+    }
+
+    .field-name-ting-type {
+      display: none;
+    }
+
+    .ting-cover {
+      img {
+        height: 230px;
+        width: 100%;
+      }
+    }
+
+    a.reserve-button {
+      font-size: 14px;
+      color: #B03033;
+      margin-right: 20px;
+
+      &::before {
+        background-color: #B03033;
+      }
+    }
+
+    .bbs-color-background & {
+      a.read-more-button {
+        color: white;
+
+        &::before {
+          background-color: white;
         }
+      }
+      .field-name-ting-author {
+        color: rgba(255, 255, 255, 0.6);
+      }
+      a.reserve-button {
+        color: rgba(255, 255, 255, 0.6);
 
-        .field-name-ting-author {
-          overflow: hidden;
-          max-height: 18px;
-          padding-bottom: 50px;
-        }
-
-        a.read-more-button {
-          position: relative;
-          font-weight: 600;
-          font-size: 14px;
-          color: #888;
-
-          &::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -5px;
-            height: 3px;
-            width: 100%;
-            background-color: #888;
-          }
-        }
-
-        .ding-entity-rating {
-          display: none;
-        }
-
-        .field-name-ting-type {
-          display: none;
-        }
-
-        .ting-cover {
-          img {
-            height: 230px;
-            width: 100%;
-          }
-        }
-
-        a.reserve-button {
-          font-size: 14px;
-          color: #B03033;
-          margin-right: 20px;
-
-          &::before {
-            background-color: #B03033;
-          }
-        }
-
-        .bbs-color-background & {
-          a.read-more-button {
-            color: white;
-
-            &::before {
-             background-color: white;
-            }
-          }
-          .field-name-ting-author {
-            color: rgba(255, 255, 255, 0.6);
-          }
-          a.reserve-button {
-            color: rgba(255, 255, 255, 0.6);
-
-            &::before {
-              background-color: rgba(255, 255, 255, 0.6);
-            }
-          }
+        &::before {
+          background-color: rgba(255, 255, 255, 0.6);
         }
       }
     }

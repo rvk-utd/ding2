@@ -115,10 +115,10 @@
               </div>
           </div>
       </div>
-      <?php if(!empty($content['field_ding_news_materials'])): ?>
-        <div class="ding-materials">
-            <?php print render($content['field_ding_news_materials']); ?>
-        </div>
-      <?php endif; ?>
   </div>
 </div>
+<?php if(!empty($content['field_ding_news_materials'])): ?>
+    <div class="ding-materials">
+        <?php print render($content['field_ding_news_materials']); ?>
+    </div>
+<?php endif; ?>
