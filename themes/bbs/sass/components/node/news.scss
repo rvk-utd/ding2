@@ -96,24 +96,21 @@ body.node-type-ding-news {
       }
     }
   }
+}
 
-  .ding-materials {
-    .field-name-field-ding-news-materials {
+.field-name-field-ding-news-materials, .field-name-field-ding-event-materials {
 
-      & > .field-label {
-        display: none;
-      }
-
-      & > .field-items {
-        display: flex;
-        flex-wrap: wrap;
-
-        .field-item {
-          width: 180px;
-          margin-right: 50px;
-        }
-      }
-    }
+  & > .field-label {
+    display: none;
   }
 
+  & > .field-items {
+    display: flex;
+    flex-wrap: wrap;
+
+    .field-item {
+      width: 180px;
+      margin-right: 50px;
+    }
+  }
 }
