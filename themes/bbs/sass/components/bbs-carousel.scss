@@ -150,12 +150,20 @@
           }
         }
 
-        a.reserve-button {
+        a.reserve-button, a.button-see-online {
           font-size: 14px;
           color: #B03033;
           margin-right: 20px;
+          font-weight: 600;
+          position: relative;
 
           &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            height: 3px;
+            width: 100%;
             background-color: #B03033;
           }
         }

@@ -74,15 +74,3 @@
         }
     };
 })(this, jQuery);
-
-(function (scope, $) {
-    'use strict';
-    Drupal.behaviors.bbstingcarousel = {
-        attach: function () {
-            var reserve_button = $('.inner .reserve-button');
-            reserve_button.each(function () {
-                $(this).addClass('underline');
-            });
-        }
-    };
-})(this, jQuery);
