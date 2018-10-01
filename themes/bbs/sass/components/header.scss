@@ -1,6 +1,7 @@
 /*
 Styles for the header
  */
+@import '../_variables.scss';
 
 .topbar {
   top: 80px;
@@ -49,6 +50,7 @@ Styles for the header
       padding: 25px;
       width: 100%;
       display: flex;
+      justify-content: center;
     }
 
     &:nth-of-type(1) {
@@ -117,10 +119,9 @@ Styles for the header
         color: #fff;
         padding-left: 7px;
         width: 100%;
-        display: none;
         cursor: pointer;
 
-       .logged-in & {
+        .logged-in & {
           display: block;
 
           .notification-count {
@@ -209,6 +210,7 @@ Styles for the header
     &.topbar-language {
       .long-name {
         display: none;
+
         .menu-is-open & {
           display: block;
         }
@@ -254,7 +256,8 @@ Styles for the header
 
     &.topbar-link-menu {
       width: 100px;
-      padding: 27px;
+      padding: 27px 0;
+      justify-content: center;
 
       .topbar-link-menu-inner {
         position: relative;
@@ -339,18 +342,53 @@ Styles for the header
     font-size: 15px;
     font-weight: 500;
     line-height: 24px;
-    display: none;
+  }
 
-    .menu-is-open & {
-      display: block;
+  @media screen and (max-width: $break-large) {
+    span.details {
+      display: none;
     }
   }
 
-  @media screen and (max-width: 820px) {
+  @media screen and (max-width: $break-medium) {
     li {
-      &.topbar-link-search,
-      &.topbar-link-opening-hours,
+      &.topbar-link-search {
+        display: none;
+      }
+
       &.topbar-language {
+        background-color: rgba(0, 0, 0, .08);
+      }
+
+      &.topbar-link-opening-hours {
+        background-color: rgba(0, 0, 0, .12);
+      }
+
+      &.topbar-link-user {
+        position: unset;
+        background-color: rgba(0, 0, 0, 0.16);
+
+        .user-menu {
+          li {
+            background-color: rgba(0, 0, 0, 0.16);
+          }
+        }
+      }
+
+      &.topbar-link-menu {
+        background-color: rgba(0, 0, 0, 0.20);
+      }
+
+      a {
+        padding: 25px 15px;
+      }
+    }
+  }
+
+  @media screen and (max-width: $break-small) {
+    li {
+      &.topbar-language,
+      &.topbar-link-opening-hours {
         display: none;
       }
 

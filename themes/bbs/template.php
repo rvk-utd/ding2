@@ -160,6 +160,7 @@ function bbs_menu_link__menu_bbs_topbar_menu($vars) {
             }
             break;
 
+        case 'libraries':
         case 'bokasofn':
             $title_prefix = '<i class="icon icon-clock"></i>';
             $element['#localized_options']['attributes']['class'][] = 'topbar-link-opening-hours';
