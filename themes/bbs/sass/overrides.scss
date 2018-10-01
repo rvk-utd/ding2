@@ -43,7 +43,7 @@ ul {
 }
 
 a {
-  color: black;
+  color: #B03033;
 
   &.underline {
     font-size: 17px;
@@ -65,10 +65,6 @@ a {
         height: 3px;
       }
     }
-  }
-
-  &:hover {
-    color: white;
   }
 }
 

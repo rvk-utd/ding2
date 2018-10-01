@@ -4,11 +4,6 @@
     font-weight: 700;
   }
 
-  a {
-    color: white;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  }
-
   .content-wrapper {
     max-width: 1400px;
   }
@@ -185,6 +180,7 @@
         a {
           display: flex;
           align-items: center;
+          color: white;
 
           .icon {
             font-size: 40px;
@@ -332,6 +328,10 @@
     background-color: #b03033;
     padding: 0 40px;
     height: 120px;
+
+    a {
+      color: white;
+    }
 
     p {
       margin: 0;

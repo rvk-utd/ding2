@@ -1,5 +1,23 @@
+@import './base';
+
 .bbs-page {
   position: relative;
+
+  .social-share-container {
+    width: 100%;
+    float: left;
+    padding-bottom: 10px;
+    border-bottom: 1px solid $grey-medium;
+    margin-bottom: 30px;
+    .label {
+      @include font('base-bold');
+    }
+    a {
+      display: block;
+      float: left;
+      margin-right: 16px;
+    }
+  }
 
   .bbs-top-page-content {
     display: flex;
@@ -111,7 +129,7 @@
     }
   }
 
-  @media screen and (max-width: 1140px) {
+  @media screen and (max-width: $break-large) {
     .bbs-page-text-wrapper {
       h2 {
         line-height: 40px;

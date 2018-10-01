@@ -1,33 +1,35 @@
+@import '../base.scss';
+
 #bbs-red {
   .site-header {
     .topbar {
-      background-color: #b03033;
+      background-color: $bbs-red;
     }
     .navigation-wrapper {
-      background-color: #b03033;
+      background-color: $bbs-red;
     }
     .user-menu {
-      background-color: #b03033;
+      background-color: $bbs-red;
     }
   }
 
   .bbs-layout-content {
     .logo-wrapper {
-      background-color: #b03033;
+      background-color: $bbs-red;
     }
     .secondary-content {
       .slick-arrow {
-        background-color: #b03033;
+        background-color: $bbs-red;
       }
     }
     .quicktabs-tabs {
       & .active a {
-        color: #b03033 !important;
+        color: $bbs-red !important;
       }
     }
     .carousel-list-tabs {
       & .active a {
-        color: #b03033 !important;
+        color: $bbs-red !important;
       }
     }
     .bbs-color-background {
@@ -38,19 +40,25 @@
       }
       .slick-arrow {
         &::after {
-          background-color: #b03033 !important;
+          background-color: $bbs-red !important;
         }
       }
     }
     .see-all,
     .more-link a {
-      background-color: #B03033;
+      background-color: $bbs-red;
     }
   }
   .bbs-page {
-    .sidebar {
-      background-color: #B03033;
+    .main-content a {
+      color: $bbs-red;
     }
+    .sidebar {
+      background-color: $bbs-red;
+    }
+  }
+  .field-name-field-ding-event-date {
+    color: $bbs-red;
   }
 }
 
@@ -58,33 +66,33 @@
   .site-header {
     .topbar {
       top: 0;
-      background-color: #47A49D;
+      background-color: $bbs-seagreen;
     }
     .navigation-wrapper {
-      background-color: #47A49D;
+      background-color: $bbs-seagreen;
     }
     .user-menu {
-      background-color: #47A49D;
+      background-color: $bbs-seagreen;
     }
   }
 
   .bbs-layout-content {
     .logo-wrapper {
-      background-color: #47A49D;
+      background-color: $bbs-seagreen;
     }
     .secondary-content {
       .slick-arrow {
-        background-color: #47A49D;
+        background-color: $bbs-seagreen;
       }
     }
     .quicktabs-tabs {
       & .active a {
-        color: #47A49D !important;
+        color: $bbs-seagreen !important;
       }
     }
     .carousel-list-tabs {
       & .active a {
-        color: #47A49D !important;
+        color: $bbs-seagreen !important;
       }
     }
     .bbs-color-background {
@@ -95,19 +103,25 @@
       }
       .slick-arrow {
         &::after {
-          background-color: #47A49D !important;
+          background-color: $bbs-seagreen !important;
         }
       }
     }
     .see-all,
     .more-link a {
-      background-color: #47A49D;
+      background-color: $bbs-seagreen;
     }
   }
   .bbs-page {
-    .sidebar {
-      background-color: #47A49D;
+    .main-content a {
+      color: $bbs-seagreen;
     }
+    .sidebar {
+      background-color: $bbs-seagreen;
+    }
+  }
+  .field-name-field-ding-event-date {
+    color: $bbs-seagreen;
   }
 }
 
@@ -115,33 +129,33 @@
   .site-header {
     .topbar-inner-bbs {
       top: 0;
-      background-color: #99C355;
+      background-color: $bbs-limegreen;
     }
     .navigation-wrapper {
-      background-color: #99C355;
+      background-color: $bbs-limegreen;
     }
     .user-menu {
-      background-color: #99C355;
+      background-color: $bbs-limegreen;
     }
   }
 
   .bbs-layout-content {
     .logo-wrapper {
-      background-color: #99C355;
+      background-color: $bbs-limegreen;
     }
     .secondary-content {
       .slick-arrow {
-        background-color: #99C355;
+        background-color: $bbs-limegreen;
       }
     }
     .quicktabs-tabs {
       & .active a {
-        color: #99C355 !important;
+        color: $bbs-limegreen !important;
       }
     }
     .carousel-list-tabs {
       & .active a {
-        color: #99C355 !important;
+        color: $bbs-limegreen !important;
       }
     }
     .bbs-color-background {
@@ -152,52 +166,58 @@
       }
       .slick-arrow {
         &::after {
-          background-color: #99C355 !important;
+          background-color: $bbs-limegreen !important;
         }
       }
     }
     .see-all,
     .more-link a {
-      background-color: #99C355;
+      background-color: $bbs-limegreen;
     }
   }
   .bbs-page {
-    .sidebar {
-      background-color: #99C355;
+    .main-content a {
+      color: $bbs-limegreen;
     }
+    .sidebar {
+      background-color: $bbs-limegreen;
+    }
+  }
+  .field-name-field-ding-event-date {
+    color: $bbs-limegreen;
   }
 }
 
 #bbs-orange {
   .site-header {
     .topbar {
-      background-color: #EB983F;
+      background-color: $bbs-orange;
     }
     .navigation-wrapper {
-      background-color: #EB983F;
+      background-color: $bbs-orange;
     }
     .user-menu {
-      background-color: #EB983F;
+      background-color: $bbs-orange;
     }
   }
 
   .bbs-layout-content {
     .logo-wrapper {
-      background-color: #EB983F;
+      background-color: $bbs-orange;
     }
     .secondary-content {
       .slick-arrow {
-        background-color: #EB983F;
+        background-color: $bbs-orange;
       }
     }
     .quicktabs-tabs {
       & .active a {
-        color: #EB983F !important;
+        color: $bbs-orange !important;
       }
     }
     .carousel-list-tabs {
       & .active a {
-        color: #EB983F !important;
+        color: $bbs-orange !important;
       }
     }
     .bbs-color-background {
@@ -208,52 +228,58 @@
       }
       .slick-arrow {
         &::after {
-          background-color: #EB983F !important;
+          background-color: $bbs-orange !important;
         }
       }
     }
     .see-all,
     .more-link a {
-      background-color: #EB983F;
+      background-color: $bbs-orange;
     }
   }
   .bbs-page {
-    .sidebar {
-      background-color: #EB983F;
+    .main-content a {
+      color: $bbs-orange;
     }
+    .sidebar {
+      background-color: $bbs-orange;
+    }
+  }
+  .field-name-field-ding-event-date {
+    color: $bbs-orange;
   }
 }
 
 #bbs-darkorange {
   .site-header {
     .topbar {
-      background-color: #E36D38;
+      background-color: $bbs-dark-orange;
     }
     .navigation-wrapper {
-      background-color: #E36D38;
+      background-color: $bbs-dark-orange;
     }
     .user-menu {
-      background-color: #E36D38;
+      background-color: $bbs-dark-orange;
     }
   }
 
   .bbs-layout-content {
     .logo-wrapper {
-      background-color: #E36D38;
+      background-color: $bbs-dark-orange;
     }
     .secondary-content {
       .slick-arrow {
-        background-color: #E36D38;
+        background-color: $bbs-dark-orange;
       }
     }
     .quicktabs-tabs {
       & .active a {
-        color: #E36D38 !important;
+        color: $bbs-dark-orange !important;
       }
     }
     .carousel-list-tabs {
       & .active a {
-        color: #E36D38 !important;
+        color: $bbs-dark-orange !important;
       }
     }
     .bbs-color-background {
@@ -264,52 +290,58 @@
       }
       .slick-arrow {
         &::after {
-          background-color: #E36D38 !important;
+          background-color: $bbs-dark-orange !important;
         }
       }
     }
     .see-all,
     .more-link a {
-      background-color: #E36D38;
+      background-color: $bbs-dark-orange;
     }
   }
   .bbs-page {
-    .sidebar {
-      background-color: #E36D38;
+    .main-content a {
+      color: $bbs-dark-orange;
     }
+    .sidebar {
+      background-color: $bbs-dark-orange;
+    }
+  }
+  .field-name-field-ding-event-date {
+    color: $bbs-dark-orange;
   }
 }
 
 #bbs-purple {
   .site-header {
     .topbar {
-      background-color: #5F338C;
+      background-color: $bbs-purple;
     }
     .navigation-wrapper {
-      background-color: #5F338C;
+      background-color: $bbs-purple;
     }
     .user-menu {
-      background-color: #5F338C;
+      background-color: $bbs-purple;
     }
   }
 
   .bbs-layout-content {
     .logo-wrapper {
-      background-color: #5F338C;
+      background-color: $bbs-purple;
     }
     .secondary-content {
       .slick-arrow {
-        background-color: #5F338C;
+        background-color: $bbs-purple;
       }
     }
     .quicktabs-tabs {
       & .active a {
-        color: #5F338C !important;
+        color: $bbs-purple !important;
       }
     }
     .carousel-list-tabs {
       & .active a {
-        color: #5F338C !important;
+        color: $bbs-purple !important;
       }
     }
     .bbs-color-background {
@@ -320,52 +352,58 @@
       }
       .slick-arrow {
         &::after {
-          background-color: #5F338C !important;
+          background-color: $bbs-purple !important;
         }
       }
     }
     .see-all,
     .more-link a {
-      background-color: #5F338C;
+      background-color: $bbs-purple;
     }
   }
   .bbs-page {
-    .sidebar {
-      background-color: #5F338C;
+    .main-content a {
+      color: $bbs-purple;
     }
+    .sidebar {
+      background-color: $bbs-purple;
+    }
+  }
+  .field-name-field-ding-event-date {
+    color: $bbs-purple;
   }
 }
 
 #bbs-lightblue {
   .site-header {
     .topbar {
-      background-color: #4CB2EA;
+      background-color: $bbs-skyblue;
     }
     .navigation-wrapper {
-      background-color: #4CB2EA;
+      background-color: $bbs-skyblue;
     }
     .user-menu {
-      background-color: #4CB2EA;
+      background-color: $bbs-skyblue;
     }
   }
 
   .bbs-layout-content {
     .logo-wrapper {
-      background-color: #4CB2EA;
+      background-color: $bbs-skyblue;
     }
     .secondary-content {
       .slick-arrow {
-        background-color: #4CB2EA;
+        background-color: $bbs-skyblue;
       }
     }
     .quicktabs-tabs {
       & .active a {
-        color: #4CB2EA !important;
+        color: $bbs-skyblue !important;
       }
     }
     .carousel-list-tabs {
       & .active a {
-        color: #4CB2EA !important;
+        color: $bbs-skyblue !important;
       }
     }
     .bbs-color-background {
@@ -376,52 +414,58 @@
       }
       .slick-arrow {
         &::after {
-          background-color: #4CB2EA !important;
+          background-color: $bbs-skyblue !important;
         }
       }
     }
     .see-all,
     .more-link a {
-      background-color: #4CB2EA;
+      background-color: $bbs-skyblue;
     }
   }
   .bbs-page {
-    .sidebar {
-      background-color: #4CB2EA;
+    .main-content a {
+      color: $bbs-skyblue;
     }
+    .sidebar {
+      background-color: $bbs-skyblue;
+    }
+  }
+  .field-name-field-ding-event-date {
+    color: $bbs-skyblue;
   }
 }
 
 #bbs-darkblue {
   .site-header {
     .topbar {
-      background-color: #225CA4;
+      background-color: $bbs-dark-blue;
     }
     .navigation-wrapper {
-      background-color: #225CA4;
+      background-color: $bbs-dark-blue;
     }
     .user-menu {
-      background-color: #225CA4;
+      background-color: $bbs-dark-blue;
     }
   }
 
   .bbs-layout-content {
     .logo-wrapper {
-      background-color: #225CA4;
+      background-color: $bbs-dark-blue;
     }
     .secondary-content {
       .slick-arrow {
-        background-color: #225CA4;
+        background-color: $bbs-dark-blue;
       }
     }
     .quicktabs-tabs {
       & .active a {
-        color: #225CA4 !important;
+        color: $bbs-dark-blue !important;
       }
     }
     .carousel-list-tabs {
       & .active a {
-        color: #225CA4 !important;
+        color: $bbs-dark-blue !important;
       }
     }
     .bbs-color-background {
@@ -432,18 +476,24 @@
       }
       .slick-arrow {
         &::after {
-          background-color: #225CA4 !important;
+          background-color: $bbs-dark-blue !important;
         }
       }
     }
     .see-all,
     .more-link a {
-      background-color: #225CA4;
+      background-color: $bbs-dark-blue;
     }
   }
   .bbs-page {
-    .sidebar {
-      background-color: #225CA4;
+    .main-content a {
+      color: $bbs-dark-blue;
     }
+    .sidebar {
+      background-color: $bbs-dark-blue;
+    }
+  }
+  .field-name-field-ding-event-date {
+    color: $bbs-dark-blue;
   }
 }

@@ -4,7 +4,27 @@
 // ==========================================================================
 // Color
 // ==========================================================================
+$bbs-red: #B03033;
+$bbs-orange: #EB983F;
+$bbs-purple: #5F338C;
+$bbs-skyblue: #4CB2EA;
+$bbs-seagreen: #47A49D;
+$bbs-limegreen: #99C355;
+$bbs-dark-blue: #225CA4;
+$bbs-dark-orange: #E36D38;
 
+
+// BBS colors
+$color-primary: #B03033;
+$color-secondary: #EB983F;
+
+$color-text: #262627;
+$color-text-link: #B03033;
+$color-text-link-on-dark: #B03033;
+$color-text-on-primary: #fffff1;
+$color-text-on-secondary: #fffff2;
+
+// Ding colors
 $black: #000;
 $black-overlay: rgba(0, 0, 0, 0.8);
 $black-overlay-dark: rgba(0, 0, 0, 0.9);
@@ -31,20 +51,14 @@ $red-text: $red;
 $yellow: #ffca5f;
 $yellow-text: darken($yellow, 15);
 
-// The color-module is dependent on the following five variables and their specific values. Therefore they may not be altered.
-
-$color-primary: #4d898e;
-$color-secondary: #f66d70;
-
-$color-text: #262627;
-$color-text-link: #4d898f;
-$color-text-link-on-dark: #4d898d;
-$color-text-on-primary: #fffff1;
-$color-text-on-secondary: #fffff2;
-
 // ==========================================================================
 // Distance
 // ==========================================================================
+$header-height: 70px;
+$content-width: 1200px;
+
+
+// Ding distances
 $header-height: 148px;
 $topbar-height: 64px;
 $second-level-menu-height: 61px;
@@ -56,6 +70,13 @@ $toolbar-height: 65px;
 $admin-menu-height: 29px;
 
 $dynamic-background-width: 1250px;
+
+// ==========================================================================
+// Breakpoints
+// ==========================================================================
+$break-small: 490px;
+$break-medium: 720px;
+$break-large: 1140px;
 
 // ==========================================================================
 // Misc
