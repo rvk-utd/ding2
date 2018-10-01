@@ -1,0 +1,70 @@
+@import '../base';
+
+// ==========================================================================
+// Search overlay
+// ==========================================================================
+
+.search-overlay--wrapper {
+  position: fixed;
+  z-index: $z-overlay;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: $charcoal-opacity-dark;
+  .search-overlay--inner {
+    @include transform(translate(-167px, -105px));
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    padding: 30px 100px 20px;
+    background-color: $color-primary;
+    text-align: center;
+
+    // Mobile
+    @include media($mobile) {
+      @include transform(translate(-122px, -105px));
+      padding: 30px 80px 20px;
+    }
+  }
+  .icon-spinner {
+    position: relative;
+    display: block;
+    width: 84px;
+    height: 84px;
+    margin: 0 auto 20px;
+    &::after {
+      @include animation(spin 1s linear infinite);
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('../../../ddbasic/images/spinner.png');
+      background-size: 100% auto;
+    }
+
+    // Hidpi
+    @include hidpi() {
+      &::after {
+        background-image: url('../../../ddbasic/images/spinner@x2.png');
+        background-size: 100% auto;
+      }
+    }
+  }
+  .search-overlay--text {
+    color: $white;
+    margin-bottom: 15px;
+  }
+  .cancel {
+    margin-bottom: 0;
+    a {
+      color: $white;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

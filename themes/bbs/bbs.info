@@ -16,7 +16,6 @@ dependencies[] = bbs_title_block
 ;// Overridden CSS from base theme
 stylesheets[all][] = sass_css/components/menu.css
 stylesheets[all][] = sass_css/components/header.css
-stylesheets[all][] = sass_css/class.css
 stylesheets[all][] = sass_css/components/footer.css
 stylesheets[all][] = sass_css/components/node/news.css
 stylesheets[all][] = sass_css/components/form/form-user-login.css
@@ -47,6 +46,7 @@ stylesheets[all][] = sass_css/ding/field.css
 stylesheets[all][] = sass_css/components/bbs-color.css
 stylesheets[all][] = sass_css/components/bbs-carousel.css
 stylesheets[all][] = sass_css/components/messages.css
+stylesheets[all][] = sass_css/components/class.css
 
 ;// Overridden JS from base theme
 scripts[] = scripts/menu.js
