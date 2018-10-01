@@ -41,14 +41,14 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-image: url('../../../ddbasic/images/spinner.png');
+      background-image: url('/profiles/ding2/themes/ddbasic/images/spinner.png');
       background-size: 100% auto;
     }
 
     // Hidpi
     @include hidpi() {
       &::after {
-        background-image: url('../../../ddbasic/images/spinner@x2.png');
+        background-image: url('/profiles/ding2/themes/ddbasic/images/spinner@x2.png');
         background-size: 100% auto;
       }
     }
