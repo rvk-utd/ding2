@@ -8,6 +8,9 @@ body.menu-is-open {
 }
 
 .navigation-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
   height: calc(100% - 70px);
   position: fixed;
   background-color: #b03033;
@@ -31,34 +34,51 @@ body.menu-is-open {
     color: white;
   }
 
-  @media screen and (max-width: 460px) {
-    overflow-y: scroll;
-    overflow-x: hidden;
-  }
-
   .navigation-inner {
-    width: 900px;
-    margin: auto;
+    width: 100%;
+    max-width: 900px;
+    padding-top: 120px;
+
+    .secondary-menu-wrapper {
+      display: none;
+    }
 
     .main-menu-wrapper {
       position: relative;
       color: #fff;
 
       & > .main-menu {
-        position: absolute;
-        top: 130px;
-        left: 0;
-
-        li.open {
+        li.open > a {
           background-color: rgba(0, 0, 0, 0.16);
+        }
+      }
+
+      li {
+        width: 100%;
+        max-width: 550px;
+        list-style: none;
+        font-size: 38px;
+        font-weight: bold;
+        line-height: 40px;
+
+        a.menu-button {
+          display: inline-block;
+          padding: 16px 20px 10px 80px;
+
+          &.hidden {
+            display: none;
+          }
+        }
+        a.active {
+          color: white;
         }
       }
 
       .sub-menu {
         display: block;
         position: absolute;
-        top: 15px;
-        right: -350px;
+        top: 0;
+        left: 550px;
 
         &.hidden {
           display: none;
@@ -67,10 +87,11 @@ body.menu-is-open {
         li {
           position: relative;
           font-size: 22px;
-          line-height: 30px;
+          line-height: 42px;
 
           a.menu-button {
-            padding-left: 40px;
+            padding: 5px 40px 5px 10px;
+            line-height: 26px
           }
 
           &:hover {
@@ -81,8 +102,8 @@ body.menu-is-open {
         .back-button {
           display: none;
           position: absolute;
-          top: -120px;
-          left: -60px;
+          top: -40px;
+          left: 0;
           font-size: 16px;
           line-height: 30px;
           padding-left: 20px;
@@ -100,41 +121,28 @@ body.menu-is-open {
 
         .header-element {
           display: none;
-          margin: 0 0 30px 30px;
-        }
-      }
-
-      li {
-        width: fit-content;
-        margin: 10px;
-        padding: 8px 0 0;
-        list-style: none;
-        font-size: 38px;
-        font-weight: bold;
-        line-height: 46px;
-
-        a.menu-button {
-          padding-left: 80px;
-          padding-right: 10px;
-
-          &.hidden {
-            display: none;
-          }
-        }
-        a.active {
-          color: white;
+          margin: 10px;
         }
       }
     }
   }
-  @media screen and (max-width: 720px) {
+  @media screen and (max-width: $break-medium) {
     .navigation-inner {
+      padding-top: 50px;
+
       .main-menu-wrapper {
-        & > .main-menu {
-          left: 55px;
+        li {
+          font-size: 30px;
         }
         .sub-menu {
-          left: 45px;
+          top: 35px;
+          left: 20vw;
+
+          li {
+            a.menu-button {
+              padding-left: 10px;
+            }
+          }
 
           .back-button {
             display: block;
@@ -147,6 +155,31 @@ body.menu-is-open {
           .header-element {
             display: block;
           }
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: $break-small) {
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    .navigation-inner {
+      padding-top: 15px;
+
+      .main-menu-wrapper {
+        padding: 0 10px;
+        li {
+          margin: 10px;
+          font-size: 30px;
+          a.menu-button {
+            padding: 0;
+          }
+        }
+
+        .sub-menu {
+          top: 35px;
+          left: 5vw;
         }
       }
     }
