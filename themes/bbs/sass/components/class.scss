@@ -68,3 +68,82 @@
     }
   }
 }
+
+// ==========================================================================
+// Webform
+// ==========================================================================
+
+.node-type-webform {
+  .content-inner {
+    display: flex;
+    justify-content: center;
+
+    .panel-pane {
+      max-width: $content-width;
+      padding: 75px 20px;
+
+      .pane-title {
+       text-align: center;
+      }
+      .field-item {
+        max-width: 800px;
+        padding-bottom: 60px;
+      }
+    }
+  }
+
+ .webform-client-form > div {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+
+   .webform-component {
+     margin: 15px;
+   }
+ }
+}
+
+// ==========================================================================
+// Collapsible field groups
+// ==========================================================================
+
+.field-group-format.collapsible {
+  position: relative;
+  width: 100%;
+  padding: 28px 0 26px;
+  border-top: 1px solid $charcoal-opacity-light;
+  > h2 {
+    @include font('base');
+    margin-bottom: 0;
+    .field-group-format-toggler a {
+      @include arrow-button(arrow-up);
+      &::after {
+        right: 0;
+        top: 10px;
+        background-color: $grey-dark;
+        color: $white-opacity-dark;
+      }
+    }
+  }
+  .field-group-format-wrapper {
+    width: 100% !important; // field_group module uses toggle to show and hide content. We use !important here to avoid the width to animate
+    margin-top: 40px;
+  }
+  &.collapsed {
+    > h2 {
+      .field-group-format-toggler a {
+        &::after {
+          content: "\e901";
+          background-color: $grey;
+          color: $charcoal-opacity-dark;
+        }
+        &:hover {
+          &::after {
+            background-color: $grey-dark;
+            color: $white-opacity-dark;
+          }
+        }
+      }
+    }
+  }
+}
