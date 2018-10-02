@@ -86,39 +86,39 @@
  */
 ?>
 <div class="bbs-news">
-    <div class="bbs-news-inner">
-        <div class="bbs-news-left">
-            <?php print render($content['group_left']); ?>
-        </div>
-        <div class="bbs-news-right">
-            <h1><?php print $title; ?></h1>
-            <div class="news-lead">
-                <?php print render($content['group_right']['field_ding_news_lead']); ?>
+  <div class="bbs-news-inner">
+      <div class="bbs-news-left">
+          <?php print render($content['group_left']); ?>
+      </div>
+      <div class="bbs-news-right">
+          <h1><?php print $title; ?></h1>
+          <div class="news-lead">
+              <?php print render($content['group_right']['field_ding_news_lead']); ?>
+          </div>
+          <div class="news-body">
+              <?php print render($content['group_right']['field_ding_news_body']); ?>
+          </div>
+          <?php if(!empty($content['group_right']['field_ding_news_files'])): ?>
+            <div class="files">
+                <?php print render($content['group_right']['field_ding_news_files']); ?>
             </div>
-            <div class="news-body">
-                <?php print render($content['group_right']['field_ding_news_body']); ?>
-            </div>
-            <?php if (!empty($content['group_right']['field_ding_news_files'])): ?>
-                <div class="files">
-                    <?php print render($content['group_right']['field_ding_news_files']); ?>
-                </div>
-            <?php endif; ?>
-            <div class="section meta">
-                <div class="author"><?php print t("By"); ?><?php print $name; ?></div>
-                <div class="created"><?php print $news_submitted ?></div>
-                <?php print render($content['group_right']['og_group_ref']); ?>
-                <div class="category">
-                    <?php print t('Category') . render($content['group_right']['field_ding_news_category']); ?>
-                </div>
-                <div class="tags">
-                    <?php print render($content['group_right']['field_ding_news_tags']); ?>
-                </div>
-            </div>
-        </div>
-    </div>
-    <?php if (!empty($content['field_ding_news_materials'])): ?>
-        <div class="bbs-materials">
-            <?php print render($content['field_ding_news_materials']); ?>
-        </div>
-    <?php endif; ?>
+          <?php endif; ?>
+          <div class="section meta">
+              <div class="author"><?php print t("By"); ?> <?php print $name; ?></div>
+              <div class="created"><?php print $news_submitted ?></div>
+              <?php print render($content['group_right']['og_group_ref']); ?>
+              <div class="category">
+                  <?php print t('Category') . render($content['group_right']['field_ding_news_category']); ?>
+              </div>
+              <div class="tags">
+                  <?php print render($content['group_right']['field_ding_news_tags']); ?>
+              </div>
+          </div>
+      </div>
+  </div>
 </div>
+<?php if(!empty($content['field_ding_news_materials'])): ?>
+    <div class="ding-materials">
+        <?php print render($content['field_ding_news_materials']); ?>
+    </div>
+<?php endif; ?>

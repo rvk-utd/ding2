@@ -6,6 +6,7 @@ body.node-type-ding-news {
   .bbs-news {
     display: flex;
     justify-content: center;
+    margin-bottom: 50px;
 
     .bbs-news-inner {
       display: flex;
@@ -93,6 +94,23 @@ body.node-type-ding-news {
           }
         }
       }
+    }
+  }
+}
+
+.field-name-field-ding-news-materials, .field-name-field-ding-event-materials {
+
+  & > .field-label {
+    display: none;
+  }
+
+  & > .field-items {
+    display: flex;
+    flex-wrap: wrap;
+
+    .field-item {
+      width: 180px;
+      margin-right: 50px;
     }
   }
 }
