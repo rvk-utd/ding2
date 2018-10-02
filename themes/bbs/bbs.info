@@ -55,5 +55,6 @@ scripts[] = scripts/ting-object/ting-object.js
 scripts[] = scripts/ddbasic.common.js
 
 scripts[] = scripts/event-carousel.js
+scripts[] = scripts/bbs-page.js
 
 plugins[panels][layouts] = layouts
