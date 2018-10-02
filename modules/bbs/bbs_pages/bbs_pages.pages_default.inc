@@ -1859,6 +1859,7 @@ function bbs_pages_default_page_manager_handlers()
 {
     $export = array();
 
+    // BBS PAGE
     $handler = new stdClass();
     $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
     $handler->api_version = 1;
@@ -1868,7 +1869,7 @@ function bbs_pages_default_page_manager_handlers()
     $handler->handler = 'panel_context';
     $handler->weight = -20;
     $handler->conf = array(
-        'title' => 'BBS Side',
+        'title' => 'BBS Page',
         'no_blocks' => 0,
         'pipeline' => 'standard',
         'body_classes_to_remove' => '',
@@ -1937,6 +1938,31 @@ function bbs_pages_default_page_manager_handlers()
     $pane->uuid = '0687b1bf-15d2-4ec6-a250-5c7081d81078';
     $display->content['new-0687b1bf-15d2-4ec6-a250-5c7081d81078'] = $pane;
     $display->panels['node-content'][0] = 'new-0687b1bf-15d2-4ec6-a250-5c7081d81078';
+    $pane = new stdClass();
+    $pane->pid = 'new-b130e6d7-4d0a-4b3f-a27f-f0026451e226';
+    $pane->panel = 'node-content';
+    $pane->type = 'entity_field_extra';
+    $pane->subtype = 'node:webform';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+        'view_mode' => 'full',
+        'context' => 'argument_entity_id:node_1',
+        'override_title' => 0,
+        'override_title_text' => '',
+        'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+        'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 1;
+    $pane->locks = array();
+    $pane->uuid = 'b130e6d7-4d0a-4b3f-a27f-f0026451e226';
+    $display->content['new-b130e6d7-4d0a-4b3f-a27f-f0026451e226'] = $pane;
+    $display->panels['node-content'][1] = 'new-b130e6d7-4d0a-4b3f-a27f-f0026451e226';
     $pane = new stdClass();
     $pane->pid = 'new-eab72e20-d854-43dc-9499-f268178fe452';
     $pane->panel = 'sidebar';
@@ -2704,6 +2730,31 @@ function bbs_pages_default_page_manager_handlers()
     $pane->uuid = '79979906-2e2c-4bd6-92b6-5c4e62c706f5';
     $display->content['new-79979906-2e2c-4bd6-92b6-5c4e62c706f5'] = $pane;
     $display->panels['node-content'][0] = 'new-79979906-2e2c-4bd6-92b6-5c4e62c706f5';
+    $pane = new stdClass();
+    $pane->pid = 'new-1458d710-4c96-4a07-9a6b-74ce28aa051e';
+    $pane->panel = 'node-content';
+    $pane->type = 'entity_field_extra';
+    $pane->subtype = 'node:webform';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+        'view_mode' => 'full',
+        'context' => 'argument_entity_id:node_1',
+        'override_title' => 0,
+        'override_title_text' => '',
+        'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+        'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 1;
+    $pane->locks = array();
+    $pane->uuid = '1458d710-4c96-4a07-9a6b-74ce28aa051e';
+    $display->content['new-1458d710-4c96-4a07-9a6b-74ce28aa051e'] = $pane;
+    $display->panels['node-content'][1] = 'new-1458d710-4c96-4a07-9a6b-74ce28aa051e';
     $pane = new stdClass();
     $pane->pid = 'new-e23a1825-b3fe-44d8-99b3-f09c54ee49ad';
     $pane->panel = 'quaternary-content';
@@ -3551,6 +3602,31 @@ function bbs_pages_default_page_manager_handlers()
     $display->content['new-a6229377-5925-4728-a26a-48d1d33263ee'] = $pane;
     $display->panels['node-content'][0] = 'new-a6229377-5925-4728-a26a-48d1d33263ee';
     $pane = new stdClass();
+    $pane->pid = 'new-a4ffc7f7-fb83-4a7f-b2bf-8b2088590651';
+    $pane->panel = 'node-content';
+    $pane->type = 'entity_field_extra';
+    $pane->subtype = 'node:webform';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+        'view_mode' => 'full',
+        'context' => 'argument_entity_id:node_1',
+        'override_title' => 0,
+        'override_title_text' => '',
+        'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+        'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 1;
+    $pane->locks = array();
+    $pane->uuid = 'a4ffc7f7-fb83-4a7f-b2bf-8b2088590651';
+    $display->content['new-a4ffc7f7-fb83-4a7f-b2bf-8b2088590651'] = $pane;
+    $display->panels['node-content'][1] = 'new-a4ffc7f7-fb83-4a7f-b2bf-8b2088590651';
+    $pane = new stdClass();
     $pane->pid = 'new-a4e41bd1-00ba-4f94-afa8-3e20064bb082';
     $pane->panel = 'node-content';
     $pane->type = 'entity_field';
@@ -3580,11 +3656,11 @@ function bbs_pages_default_page_manager_handlers()
         'css_class' => 'grid-small no-gradient',
     );
     $pane->extras = array();
-    $pane->position = 1;
+    $pane->position = 2;
     $pane->locks = array();
     $pane->uuid = 'a4e41bd1-00ba-4f94-afa8-3e20064bb082';
     $display->content['new-a4e41bd1-00ba-4f94-afa8-3e20064bb082'] = $pane;
-    $display->panels['node-content'][1] = 'new-a4e41bd1-00ba-4f94-afa8-3e20064bb082';
+    $display->panels['node-content'][2] = 'new-a4e41bd1-00ba-4f94-afa8-3e20064bb082';
     $pane = new stdClass();
     $pane->pid = 'new-8ed73b26-bef7-4741-89e1-18fa837776ee';
     $pane->panel = 'secondary-content';
