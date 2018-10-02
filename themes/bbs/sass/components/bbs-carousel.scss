@@ -112,7 +112,7 @@
       position: relative;
       font-weight: 600;
       font-size: 14px;
-      color: #888;
+      color: #888!important;
 
       &::before {
         content: '';
@@ -144,7 +144,7 @@
 
     a.reserve-button, a.button-see-online {
       font-size: 14px;
-      color: #B03033;
+      color: #B03033!important;
       position: absolute;
       bottom: 3px;
       right: 10px;
