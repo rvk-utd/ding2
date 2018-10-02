@@ -44,7 +44,7 @@
             views.each(function () {
                 var slides = 3;
                 if ($(this).hasClass('view-library-content-roll')) {
-                    slides = 4;
+                    slides = 3;
                 }
                 else if ($(this).hasClass('view-recommended-content')) {
                     slides = 2;
