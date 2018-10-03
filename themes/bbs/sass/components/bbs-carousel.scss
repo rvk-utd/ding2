@@ -12,10 +12,10 @@
     display: flex;
     align-items: flex-end;
     min-height: 325px;
+    width: 450px;
 
     .teaser-info {
       min-height: 325px;
-      min-width: 450px;
     }
   }
 
@@ -69,18 +69,58 @@
 
   @media screen and (max-width: 1620px) {
     max-width: 1200px;
+
+    .frontpage-teaser {
+      width: 385px;
+
+      .teaser-info {
+        width: 385px;
+      }
+    }
   }
   @media screen and (max-width: 1420px) {
-    max-width: 1000px;
+    max-width: 1050px;
+
+    .frontpage-teaser {
+      width: 336px;
+    }
   }
-  @media screen and (max-width: 1220px) {
+  @media screen and (max-width: 1220px) { // 2 slides
     max-width: 800px;
+
+    .frontpage-teaser {
+      width: 385px;
+    }
   }
-  @media screen and (max-width: 1020px) {
+  @media screen and (max-width: 1020px) { // 1 slide
     max-width: 600px;
+
+    .frontpage-teaser {
+      width: 580px;
+    }
   }
   @media screen and (max-width: 820px) {
-    max-width: 400px;
+    max-width: 370px;
+
+    .slick-prev {
+      left: -66px!important
+    }
+
+    .frontpage-teaser {
+      max-width: 370px;
+    }
+  }
+  @media screen and (max-width: 550px) {
+    max-width: 92vw;
+
+    .frontpage-teaser {
+      max-width: 85vw;
+      min-height: 285px;
+    }
+
+    .slick-arrow {
+      display: none!important;
+    }
   }
 }
 
@@ -218,7 +258,7 @@
       .title-text {
         position: relative;
         padding-left: 30px;
-        width: 300px;
+        width: 96%;
       }
 
       .lead {
