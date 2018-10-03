@@ -12,7 +12,7 @@
     display: flex;
     align-items: flex-end;
     min-height: 325px;
-    width: 450px;
+    width: 385px;
 
     .teaser-info {
       min-height: 325px;
@@ -67,17 +67,6 @@
     }
   }
 
-  @media screen and (max-width: 1620px) {
-    max-width: 1200px;
-
-    .frontpage-teaser {
-      width: 385px;
-
-      .teaser-info {
-        width: 385px;
-      }
-    }
-  }
   @media screen and (max-width: 1420px) {
     max-width: 1050px;
 
@@ -203,7 +192,7 @@
 
     .bbs-color-background & {
       a.read-more-button {
-        color: white;
+        color: white!important;
 
         &::before {
           background-color: white;
@@ -213,7 +202,7 @@
         color: rgba(255, 255, 255, 0.6);
       }
       a.reserve-button {
-        color: rgba(255, 255, 255, 0.6);
+        color: rgba(255, 255, 255, 0.6)!important;
 
         &::before {
           background-color: rgba(255, 255, 255, 0.6);
