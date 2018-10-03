@@ -24,12 +24,9 @@
     flex-direction: column;
 
     .bbs-page-banner-image {
-      height: 470px;
       width: 100%;
 
       .adaptive-image {
-        position: absolute;
-        top: -10px;
         left: 0;
         right: 0;
         width: 100%;
@@ -73,7 +70,7 @@
   .sidebar {
     position: absolute;
     right: 10%;
-    top: 600px;
+    top: 380px;
     width: 400px;
     background-color: #D1D1D1;
 
