@@ -13,13 +13,13 @@
                     'variableWidth': true,
                     'responsive' : [
                         {
-                            breakpoint: 750,
+                            breakpoint: 1020,
                             settings: {
                                 'slidesToShow': 1,
                             },
                         },
                         {
-                            breakpoint: 1024,
+                            breakpoint: 1220,
                             settings: {
                                 'slidesToShow': 2,
                             },
@@ -50,23 +50,23 @@
                     slides = 2;
                 }
                 var list = $(this).find('.item-list ul');
-                $(list).not('.slick-initialized').slick({ 
+                $(list).not('.slick-initialized').slick({
                     'slidesToShow': slides,
                     'infinite': false,
                     'variableWidth': true,
                     responsive: [
-                        {
-                            breakpoint: 800,
-                            settings: {
-                                'slidesToShow': 1,
-                            },
+                      {
+                        breakpoint: 1020,
+                        settings: {
+                            'slidesToShow': 1,
                         },
-                        {
-                            breakpoint: 1024,
-                            settings: {
-                                'slidesToShow': 2,
-                            },
-                        },
+                      },
+                      {
+                          breakpoint: 1220,
+                          settings: {
+                              'slidesToShow': 2,
+                          },
+                      },
                     ]
                 });
             });
