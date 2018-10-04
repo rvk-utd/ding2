@@ -12,6 +12,7 @@ $bbs-seagreen: #47A49D;
 $bbs-limegreen: #99C355;
 $bbs-dark-blue: #225CA4;
 $bbs-dark-orange: #E36D38;
+$bbs-black: #232323;
 
 
 // BBS colors
@@ -23,6 +24,14 @@ $color-text-link: #B03033;
 $color-text-link-on-dark: #B03033;
 $color-text-on-primary: #fffff1;
 $color-text-on-secondary: #fffff2;
+
+// Shaders
+$shader-xs: rgba(0, 0, 0, 0.08);
+$shader-s: rgba(0, 0, 0, 0.12);
+$shader-m: rgba(0, 0, 0, 0.16);
+$shader-l: rgba(0, 0, 0, 0.2);
+$shader-xl: rgba(0, 0, 0, 0.24);
+$shader-xxl: rgba(0, 0, 0, 0.28);
 
 // Ding colors
 $black: #000;

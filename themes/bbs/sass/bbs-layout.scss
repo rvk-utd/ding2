@@ -396,7 +396,20 @@
     }
   }
 
-  @media screen and (max-width: 1140px) {
+  @media screen and (max-width: 1260px) {
+    .main-content {
+      .top-row,
+      .bottom-row {
+        .right-side {
+          .teaser-info {
+            padding: 60px 40px;
+          }
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 1120px) {
     .main-content {
       .top-row,
       .bottom-row {
@@ -417,6 +430,7 @@
     .main-content {
       .top-row,
       .bottom-row {
+        flex-direction: column;
         .left-side,
         .right-side {
           min-width: auto;

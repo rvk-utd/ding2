@@ -27,7 +27,7 @@
       width: 100%;
 
       .banner-image {
-        max-height: 500px;
+        max-height: 300px;
         margin: auto;
         margin-bottom: 30px;
       }
@@ -120,7 +120,7 @@
   .logo-wrapper {
     .content-block {
       .content-wrapper {
-        max-width: 1400px;
+        max-width: $content-width;
       }
     }
   }
@@ -135,9 +135,6 @@
         .field-item {
           width: 100%;
           margin: auto;
-          p {
-            text-align: center;
-          }
         }
       }
     }
