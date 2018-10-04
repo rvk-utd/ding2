@@ -2,7 +2,7 @@
 
 /**
  * @file
- * DDBasic's theme implementation to display group nodes.
+ * BBS theme's implementation to display a node of the type library.
  *
  * Available variables:
  * - $title: the (sanitized) title of the node.
@@ -16,8 +16,8 @@
  * - $name: Themed username of node author output from theme_username().
  * - $node_url: Direct url of the current node.
  * - $display_submitted: Whether submission information should be displayed.
- * - $submitted: Submission information created from $date (NOTE: modified for
- *   ddbasic during ddbasic_preprocess_node in templates.php)
+ * - $submitted: Submission information created from $name and $date during
+ *   template_preprocess_node().
  * - $classes: String of classes that can be used to style contextually through
  *   CSS. It can be manipulated through the variable $classes_array from
  *   preprocess functions. The default values can be one or more of the
@@ -69,7 +69,7 @@
  * Field variables: for each field instance attached to the node a corresponding
  * variable is defined, e.g. $node->body becomes $body. When needing to access
  * a field's raw values, developers/themers are strongly encouraged to use these
- * variables. Otherwise they will have to explicitly specify the desired field
+ * variables. Otherwise they w ill have to explicitly specify the desired field
  * language, e.g. $node->body['en'], thus overriding any language negotiation
  * rule that was previously applied.
  *
@@ -77,19 +77,18 @@
  * @see template_preprocess_node()
  * @see template_process()
  */
-$img_url = $node->field_ding_group_title_image['und'][0]['uri'];
+$img_url = $node->field_ding_library_title_image['und'][0]['uri'];
 ?>
 <div class="<?php print $classes; ?>"<?php print $attributes; ?>>
+    <div class="bbs-top-page-content">
+        <div class="bbs-page-banner-image">
+          <img class="banner-image" src="<?php print file_create_url($img_url); ?>"/>
+        </div>
 
-  <div class="bbs-top-page-content">
-    <div class="bbs-page-banner-image">
-      <img class="banner-image" src="<?php print file_create_url($img_url); ?>"/>
+        <div class="bbs-page-text-wrapper">
+            <h2 class="page-title"><?php print $title; ?></h2>
+            <?php print render($content['field_ding_library_lead']) ?>
+            <?php print render($content['field_ding_library_body']) ?>
+        </div>
     </div>
-
-    <div class="bbs-page-text-wrapper">
-      <h2 class="page-title"><?php print $title; ?></h2>
-      <?php print render($content['field_ding_group_body']) ?>
-    </div>
-  </div>
-
 </div>

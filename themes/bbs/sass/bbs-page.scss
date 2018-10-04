@@ -26,11 +26,10 @@
     .bbs-page-banner-image {
       width: 100%;
 
-      .adaptive-image {
-        left: 0;
-        right: 0;
-        width: 100%;
-        max-height: 500px;
+      .banner-image {
+        max-height: 300px;
+        margin: auto;
+        margin-bottom: 30px;
       }
     }
 
@@ -70,7 +69,7 @@
   .sidebar {
     position: absolute;
     right: 10%;
-    top: 380px;
+    top: 420px;
     width: 400px;
     background-color: #D1D1D1;
 
@@ -121,7 +120,7 @@
   .logo-wrapper {
     .content-block {
       .content-wrapper {
-        max-width: 1400px;
+        max-width: $content-width;
       }
     }
   }
@@ -136,9 +135,6 @@
         .field-item {
           width: 100%;
           margin: auto;
-          p {
-            text-align: center;
-          }
         }
       }
     }

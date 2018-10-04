@@ -1,3 +1,5 @@
+@import '../../base';
+
 body.node-type-ding-news {
   .topbar {
     background-color: #4CB2EA;
@@ -11,7 +13,7 @@ body.node-type-ding-news {
     .bbs-news-inner {
       display: flex;
       width: 100%;
-      max-width: 1400px;
+      max-width: $content-width;
       padding: 50px 10px 0;
 
       .bbs-news-left {
@@ -112,5 +114,12 @@ body.node-type-ding-news {
       width: 180px;
       margin-right: 50px;
     }
+  }
+}
+
+.pane-ding-news-ding-news-list {
+  .view-content {
+    display: flex;
+    flex-wrap: wrap;
   }
 }
