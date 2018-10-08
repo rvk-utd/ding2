@@ -1,48 +1,98 @@
+@import '../base';
+
 .pane-ting-object {
   padding: 0 20px;
   max-width: 1200px;
   margin: auto;
 
-  .ting-object-inner-wrapper {
-    display: flex;
+  .ting-object {
+    &.view-mode-full {
+      .field-name-ting-title h2 {
+        margin-bottom: 5px;
+      }
+      .field-name-ting-abstract {
+        margin: 30px 0;
+        padding-bottom: 30px;
+        border-bottom: 1px solid $charcoal-opacity-light;
+      }
+      .field-name-ting-subjects {
+        margin-bottom: 30px;
 
-    .ting-object-left {
-      padding-right: 20px;
-
-      .ting-cover {
-        img {
-          max-width: 250px;
+        @include media($mobile) {
+          margin-bottom: 0;
+        }
+        strong {
+          font-weight: 600;
+        }
+      }
+      .group-holdings-available {
+        clear: both;
+        padding: 28px 0 26px;
+        border-top: 1px solid $charcoal-opacity-light;
+      }
+      .group-material-details {
+        clear: both;
+        .field-group-format-wrapper {
+          margin-top: 20px;
+          > .field {
+            .field-label {
+              width: 100px;
+              float: left;
+            }
+            > .field-items {
+              padding-left: 100px;
+              .ting-material-detail {
+                display: block;
+              }
+            }
+          }
         }
       }
     }
 
-    .ting-object-right {
-      position: relative;
-      .group-ting-object-right-a {
-        .field-name-ding-entity-buttons {
-          position: absolute;
-          right: 10%;
-          top: 0;
+    .ting-object-inner-wrapper {
+      display: flex;
 
-          .field-label {
-            display: none;
+      .ting-object-left {
+        padding-right: 20px;
+
+        .ting-cover {
+          img {
+            max-width: 250px;
           }
+        }
+      }
 
-          .field-item.even {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+      .ting-object-right {
+        position: relative;
+        width: 100%;
 
-            .action-button,
-            .trigger {
-              font-weight: 600;
-              color: #fff;
-              padding: 10px 15px;
-              background-color: #B03033;
-              width: fit-content;
-              margin: 0;
-              margin-left: 30px;
-              border-radius: 0;
+        .group-ting-object-right-a {
+          .field-name-ding-entity-buttons {
+            position: absolute;
+            right: 10%;
+            top: 0;
+
+            .field-label {
+              display: none;
+            }
+
+            .field-item.even {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+
+              .action-button,
+              .trigger {
+                font-weight: 600;
+                color: #fff;
+                padding: 10px 15px;
+                background-color: #B03033;
+                width: fit-content;
+                margin: 0;
+                margin-left: 30px;
+                border-radius: 0;
+              }
             }
           }
         }
@@ -50,9 +100,12 @@
     }
   }
 
+
   @media screen and (max-width: 720px) {
-    .ting-object-inner-wrapper {
-      flex-direction: column;
+    .ting-object {
+      .ting-object-inner-wrapper {
+        flex-direction: column;
+      }
     }
   }
 }

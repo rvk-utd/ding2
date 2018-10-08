@@ -12,6 +12,7 @@ body.node-type-ding-news {
 
     .bbs-news-inner {
       display: flex;
+      flex-direction: row;
       width: 100%;
       max-width: $content-width;
       padding: 50px 10px 0;
@@ -47,7 +48,7 @@ body.node-type-ding-news {
 
           p {
             line-height: 28px;
-            margin: 0;
+            margin: 0 0 15px;
           }
         }
         .section.meta {
@@ -94,6 +95,16 @@ body.node-type-ding-news {
               }
             }
           }
+        }
+      }
+    }
+  }
+  @media screen and (max-width: $break-medium){
+    .bbs-news {
+      .bbs-news-inner {
+        flex-direction: column;
+        .bbs-news-left {
+          margin-right: 0;
         }
       }
     }

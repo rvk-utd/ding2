@@ -80,15 +80,15 @@
 $img_url = $node->field_ding_library_title_image['und'][0]['uri'];
 ?>
 <div class="<?php print $classes; ?>"<?php print $attributes; ?>>
-    <div class="bbs-top-page-content">
-        <div class="bbs-page-banner-image">
-          <img class="banner-image" src="<?php print file_create_url($img_url); ?>"/>
-        </div>
-
-        <div class="bbs-page-text-wrapper">
-            <h2 class="page-title"><?php print $title; ?></h2>
-            <?php print render($content['field_ding_library_lead']) ?>
-            <?php print render($content['field_ding_library_body']) ?>
-        </div>
+  <div class="bbs-top-page-content">
+    <div class="bbs-page-banner-image">
+      <img class="banner-image" src="<?php print file_create_url($img_url); ?>"/>
     </div>
+
+    <div class="bbs-page-text-wrapper">
+      <h2 class="page-title"><?php print $title; ?></h2>
+      <?php print render($content['field_ding_library_lead']) ?>
+      <?php print render($content['field_ding_library_body']) ?>
+    </div>
+  </div>
 </div>

@@ -80,7 +80,6 @@
 $img_url = $node->field_ding_group_title_image['und'][0]['uri'];
 ?>
 <div class="<?php print $classes; ?>"<?php print $attributes; ?>>
-
   <div class="bbs-top-page-content">
     <div class="bbs-page-banner-image">
       <img class="banner-image" src="<?php print file_create_url($img_url); ?>"/>
@@ -91,5 +90,4 @@ $img_url = $node->field_ding_group_title_image['und'][0]['uri'];
       <?php print render($content['field_ding_group_body']) ?>
     </div>
   </div>
-
 </div>
