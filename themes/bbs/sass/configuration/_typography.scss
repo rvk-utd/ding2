@@ -2,12 +2,12 @@
 // Font settings and mixin
 
 // Font
-$font-family: 'FaktPro-Normal', sans-serif;
-$font-family-light: 'FaktPro-Light', sans-serif;
-$font-family-bold: 'FaktPro-SemiBold', sans-serif;
+$font-family: 'Cooper Hewitt', sans-serif;
 
 // Font-weight
+$weight-light: 300;
 $weight-normal: 400;
+$weight-bold: 600;
 
 // Font
 //
@@ -34,11 +34,13 @@ $weight-normal: 400;
   }
 
   @if $name == 'base-bold' {
-    font-family: $font-family-bold;
+    font-family: $font-family;
+    font-weight: $weight-bold;
   }
 
   @if $name == 'display-large-bold' {
-    font-family: $font-family-bold;
+    font-family: $font-family;
+    font-weight: $weight-bold;
     font-size: 40px;
     line-height: 44px;
     // Mobile
@@ -49,7 +51,8 @@ $weight-normal: 400;
   }
 
   @if $name == 'display-large' {
-    font-family: $font-family-light;
+    font-family: $font-family;
+    font-weight: $weight-light;
     font-size: 40px;
     line-height: 44px;
     // Mobile
@@ -60,7 +63,8 @@ $weight-normal: 400;
   }
 
   @if $name == 'display' {
-    font-family: $font-family-bold;
+    font-family: $font-family;
+    font-weight: $weight-bold;
     font-size: 30px;
     line-height: 34px;
     // Mobile
@@ -71,7 +75,8 @@ $weight-normal: 400;
   }
 
   @if $name == 'display-small' {
-    font-family: $font-family-bold;
+    font-family: $font-family;
+    font-weight: $weight-bold;
     font-size: 18px;
     line-height: 24px;
   }

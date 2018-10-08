@@ -9,6 +9,10 @@
     &.view-mode-full {
       .field-name-ting-title h2 {
         margin-bottom: 5px;
+
+        span.js-toggle-info-container {
+          display: none;
+        }
       }
       .field-name-ting-abstract {
         margin: 30px 0;
@@ -22,7 +26,11 @@
           margin-bottom: 0;
         }
         strong {
+          display: block;
           font-weight: 600;
+        }
+        .subject {
+          margin-right: 15px;
         }
       }
       .group-holdings-available {

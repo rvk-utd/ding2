@@ -20,6 +20,7 @@ stylesheets[all][] = sass_css/components/footer.css
 stylesheets[all][] = sass_css/components/node/news.css
 stylesheets[all][] = sass_css/components/form/form-user-login.css
 stylesheets[all][] = sass_css/p2/p2-rating.css
+stylesheets[all][] = sass_css/components/node/event.css
 
 ;// New CSS stylesheets
 stylesheets[all][] = sass_css/fonts.css
