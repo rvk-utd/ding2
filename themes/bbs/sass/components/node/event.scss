@@ -246,6 +246,8 @@
         }
       }
       > .right {
+        display: flex!important;
+        flex-direction: column;
         @include span-columns(5);
 
         // Tablet
@@ -257,8 +259,6 @@
         @include media($mobile) {
           @include span-columns(12);
         }
-        display: flex;
-        flex-direction: column;
       }
     }
 
@@ -389,7 +389,7 @@
 
     .field-name-field-ding-event-lead,
     .field-name-field-ding-event-body p {
-      margin: 20px 0;
+      margin: 8px 0;
     }
   }
   .field-group-format.group-right {

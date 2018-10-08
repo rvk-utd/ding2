@@ -38,8 +38,9 @@ body.node-type-ding-news {
         }
 
         .news-lead {
+          font-weight: 600;
           color: #888;
-          padding: 40px 0;
+          padding: 20px 0;
         }
 
         .news-body {
@@ -111,6 +112,10 @@ body.node-type-ding-news {
   }
 }
 
+.ding-material {
+
+}
+
 .field-name-field-ding-news-materials, .field-name-field-ding-event-materials {
 
   & > .field-label {
@@ -120,6 +125,7 @@ body.node-type-ding-news {
   & > .field-items {
     display: flex;
     flex-wrap: wrap;
+    padding: 0 20px;
 
     .field-item {
       width: 180px;
