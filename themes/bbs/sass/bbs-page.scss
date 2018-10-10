@@ -27,9 +27,8 @@
       width: 100%;
 
       .banner-image {
-        height: 300px;
+        max-height: 300px;
         margin: auto;
-        margin-bottom: 30px;
       }
     }
 
@@ -37,6 +36,7 @@
       padding: 0 20px;
       width: 100%;
       max-width: 1000px;
+      margin-top: 40px;
 
       .field-name-field-ding-page-body {
         width: 100%;
@@ -151,6 +151,9 @@
       .panel-pane {
         h2.sub-menu-title {
           position: relative;
+          height: 0;
+          margin: 0;
+          padding: 0;
 
           &::after {
             display: none;

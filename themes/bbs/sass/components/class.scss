@@ -76,7 +76,8 @@
 .node-type-webform {
   .content-inner {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 
     .panel-pane {
       max-width: $content-width;
