@@ -8,10 +8,10 @@ projects[addressfield][subdir] = "contrib"
 projects[addressfield][version] = "1.0-beta5"
 
 projects[admin_menu][subdir] = "contrib"
-projects[admin_menu][version] = "3.0-rc5"
+projects[admin_menu][version] = "3.0-rc6"
 
 projects[admin_views][subdir] = "contrib"
-projects[admin_views][version] = "1.7"
+projects[admin_views][version] = "1.8"
 
 projects[antibot][subdir] = "contrib"
 projects[antibot][version] = "1.2"
@@ -49,7 +49,7 @@ projects[customerror][patch][] = "https://www.drupal.org/files/issues/customerro
 projects[customerror][patch][] = "patches/customerror-disable_auto_redirect.ding2.patch"
 
 projects[date][subdir] = "contrib"
-projects[date][version] = "2.8"
+projects[date][version] = "2.11"
 
 projects[dibs][subdir] = "contrib"
 projects[dibs][version] = "1.0"
@@ -79,9 +79,13 @@ projects[entity][subdir] = "contrib"
 projects[entity][version] = "1.10"
 
 projects[entitycache][subdir] = "contrib"
-projects[entitycache][version] = "1.2"
+projects[entitycache][version] = "1.5"
 ; https://drupal.org/node/2146543, profile 2 blank fields.
-projects[entitycache][patch][0] = "http://drupal.org/files/issues/2146543-ensure-entity-inserts-clears-caches.1.patch"
+projects[entitycache][patch][] = "http://drupal.org/files/issues/2146543-ensure-entity-inserts-clears-caches.1.patch"
+; Avoid notice "array_flip(): Can only flip STRING and INTEGER values"
+projects[entitycache][patch][] = "https://www.drupal.org/files/issues/2020-03-12/2516094-1-entitycache_fix_arry_flip.patch"
+; Fix upgrade path from version 1.2
+projects[entitycache][patch][] = "https://git.drupalcode.org/project/entitycache/-/commit/b9b9865.patch"
 
 projects[entityreference][subdir] = "contrib"
 projects[entityreference][version] = "1.5"
@@ -100,7 +104,7 @@ projects[expire][subdir] = "contrib"
 projects[expire][version] = "2.0-rc4"
 
 projects[features][subdir] = "contrib"
-projects[features][version] = "2.10"
+projects[features][version] = "2.11"
 
 projects[features_extra][subdir] = "contrib"
 projects[features_extra][version] = "1.0-beta1"
@@ -126,6 +130,9 @@ projects[file_entity][version] = "2.0-beta3"
 ; is thrown. It might have to do with auto loading not being supported.
 projects[flag][subdir] = "contrib"
 projects[flag][version] = "2.2"
+; Prevent PHP notices when using 7.4. It can be removed when upgrade to Flag 3.x
+; or newer.
+projects[flag][patch][] = "patches/flag-fix-entities-no-base-table-notice-1862710-2.x.patch"
 
 projects[fontyourface][subdir] = "contrib"
 projects[fontyourface][version] = "2.7"
@@ -356,7 +363,7 @@ projects[role_delegation][subdir] = "contrib"
 projects[role_delegation][version] = "1.3"
 
 projects[rules][subdir] = "contrib"
-projects[rules][version] = "2.7"
+projects[rules][version] = "2.11"
 
 projects[scheduler][subdir] = "contrib"
 projects[scheduler][version] = "1.5"
@@ -378,7 +385,7 @@ projects[services_views][subdir] = "contrib"
 projects[services_views][version] = "1.1"
 
 projects[search_api][subdir] = "contrib"
-projects[search_api][version] = "1.18"
+projects[search_api][version] = "1.26"
 
 projects[search_api_multi][subdir] = "contrib"
 projects[search_api_multi][version] = "1.3"
@@ -402,7 +409,7 @@ projects[tipsy][subdir] = "contrib"
 projects[tipsy][version] = "1.0-rc1"
 
 projects[token][subdir] = "contrib"
-projects[token][version] = "1.6"
+projects[token][version] = "1.9"
 
 projects[transliteration][subdir] = "contrib"
 projects[transliteration][version] = "3.2"
@@ -425,7 +432,7 @@ projects[virtual_field][subdir] = "contrib"
 projects[virtual_field][version] = "1.2"
 
 projects[views][subdir] = "contrib"
-projects[views][version] = "3.23"
+projects[views][version] = "3.25"
 
 projects[views_bulk_operations][subdir] = "contrib"
 projects[views_bulk_operations][version] = "3.3"
@@ -490,7 +497,7 @@ projects[ask_vopros][download][url] = "https://github.com/vopros-dk/ask_vopros.g
 projects[ask_vopros][download][tag] = "1.5"
 
 projects[xautoload][subdir] = "contrib"
-projects[xautoload][version] = "5.7"
+projects[xautoload][version] = "5.8"
 
 ; Libraries
 ; For ding_libs.
@@ -525,7 +532,7 @@ libraries[oauth2-client][destination] = "libraries"
 ; For ding_libs.
 libraries[guzzle][download][type] = "git"
 libraries[guzzle][download][url] = "https://github.com/guzzle/guzzle.git"
-libraries[guzzle][download][tag] = "6.2.2"
+libraries[guzzle][download][tag] = "6.3.3"
 libraries[guzzle][destination] = "libraries"
 
 ; For ding_libs.
