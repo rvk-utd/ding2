@@ -60,7 +60,13 @@
             // This can be triggered eventhough availability is not yet
             // fetched, which means it will show up as unavailable. So skip
             // items where we don't know if available or unavailable.
-            if (Drupal.DADB[entity_id] !== null) {
+            var allExists = true;
+            $.each(entity_ids, function(index, entity_id) {
+              if (Drupal.DADB[entity_id] === null) {
+                allExists = false;
+              }
+            });
+            if (allExists) {
               update_availability(id, entity_ids);
             }
           });
