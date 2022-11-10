@@ -86,6 +86,9 @@ projects[entitycache][patch][] = "http://drupal.org/files/issues/2146543-ensure-
 projects[entitycache][patch][] = "https://www.drupal.org/files/issues/2020-03-12/2516094-1-entitycache_fix_arry_flip.patch"
 ; Fix upgrade path from version 1.2
 projects[entitycache][patch][] = "https://git.drupalcode.org/project/entitycache/-/commit/b9b9865.patch"
+; create_function is deprecated in PHP 7.2
+; https://www.drupal.org/project/entitycache/issues/2981629
+projects[entitycache][patch][] = "https://www.drupal.org/files/issues/2018-07-05/entitycache_php_7-2981629-0.patch"
 
 projects[entityreference][subdir] = "contrib"
 projects[entityreference][version] = "1.5"
