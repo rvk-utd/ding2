@@ -71,6 +71,9 @@ projects[dynamic_background][patch][] = "https://www.drupal.org/files/issues/cre
 
 projects[eck][subdir] = "contrib"
 projects[eck][version] = "2.0-rc9"
+; PHP 8.1 compatibility
+; https://www.drupal.org/project/eck/issues/3309108
+projects[eck][patch][] = "https://www.drupal.org/files/issues/2022-09-11/eck-deprecated_functions-3309108-3.patch"
 
 projects[email][subdir] = "contrib"
 projects[email][version] = "1.3"
