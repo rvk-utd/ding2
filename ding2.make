@@ -49,7 +49,7 @@ projects[customerror][patch][] = "https://www.drupal.org/files/issues/customerro
 projects[customerror][patch][] = "patches/customerror-disable_auto_redirect.ding2.patch"
 
 projects[date][subdir] = "contrib"
-projects[date][version] = "2.11"
+projects[date][version] = "2.13"
 
 projects[dibs][subdir] = "contrib"
 projects[dibs][version] = "1.0"
