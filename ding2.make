@@ -251,7 +251,7 @@ projects[media_youtube][subdir] = "contrib"
 projects[media_youtube][version] = "3.0"
 
 projects[memcache][subdir] = "contrib"
-projects[memcache][version] = "1.6"
+projects[memcache][version] = "1.8"
 
 projects[menu_block][subdir] = "contrib"
 projects[menu_block][version] = "2.7"
