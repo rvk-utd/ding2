@@ -41,7 +41,7 @@ projects[cs_adaptive_image][subdir] = "contrib"
 projects[cs_adaptive_image][version] = "1.0"
 
 projects[ctools][subdir] = "contrib"
-projects[ctools][version] = "1.10"
+projects[ctools][version] = "1.20"
 
 projects[customerror][subdir] = "contrib"
 projects[customerror][version] = "1.4"
