@@ -512,7 +512,7 @@ function ding_base_rewrite_color_stylesheet() {
   $themes = list_themes();
   $theme = 'ddbasic';
   foreach ($themes as $name => $data) {
-    if ($data->status) {
+    if ($data->status && color_get_info($name)) {
       $theme = $name;
       break;
     }
