@@ -29,7 +29,10 @@ projects[better_exposed_filters][subdir] = "contrib"
 projects[better_exposed_filters][version] = "3.4"
 
 projects[block_access][subdir] = "contrib"
-projects[block_access][version] = "1.5"
+projects[block_access][version] = "1.6"
+; Patch for PHP 8.1 compatibility.
+; https://www.drupal.org/project/block_access/issues/3309466
+projects[block_access][patch][] = "https://git.drupalcode.org/project/block_access/-/merge_requests/1.diff"
 
 projects[cache_actions][subdir] = "contrib"
 projects[cache_actions][version] = "2.0-alpha5"
