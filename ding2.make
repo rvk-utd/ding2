@@ -116,7 +116,10 @@ projects[features][subdir] = "contrib"
 projects[features][version] = "2.11"
 
 projects[features_extra][subdir] = "contrib"
-projects[features_extra][version] = "1.0-beta1"
+projects[features_extra][version] = "1.0"
+; PHP 8.1 compatibility.
+; https://www.drupal.org/project/features_extra/issues/3256320
+projects[features_extra][patch][] = "https://www.drupal.org/files/issues/2022-08-06/3256320-features_extra-php-8-compatibility-7.patch"
 
 projects[feeds][subdir] = "contrib"
 projects[feeds][version] = "2.0-alpha8"
