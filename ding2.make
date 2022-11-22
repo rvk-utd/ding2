@@ -327,12 +327,8 @@ projects[override_node_options][version] = "1.13"
 projects[pagepreview][subdir] = "contrib"
 projects[pagepreview][version] = "1.0-alpha1"
 
-; TODO: Investigate if we can use a stable version instead.
-; If we upgrade to 3.10 it breaks pages.
 projects[panels][subdir] = "contrib"
-projects[panels][version] = "3.4"
-; Fix PHP7 errors - PHP 4 style constructors - (https://www.drupal.org/node/2557061)
-projects[panels][patch][] = "https://www.drupal.org/files/issues/deprecated-constructor-in-php-7-2557061-3.patch"
+projects[panels][version] = "3.11"
 
 ; TODO: Investigate if we upgrade.
 ; Right now it is untouched because of the locked version of panels (see above).
