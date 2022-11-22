@@ -157,7 +157,10 @@ projects[formblock][download][url] = "http://git.drupal.org/project/formblock.gi
 projects[formblock][download][revision] = "2d94c83"
 
 projects[geocoder][subdir] = "contrib"
-projects[geocoder][version] = "1.2"
+projects[geocoder][version] = "1.7"
+; Patch for PHP 8.1 compatibility.
+; https://www.drupal.org/project/geocoder/issues/3254201
+projects[geocoder][patch][] = "https://www.drupal.org/files/issues/2022-08-05/geocoder_php-8-regression-3254201-1.patch"
 
 projects[geofield][subdir] = "contrib"
 projects[geofield][version] = "1.2"
