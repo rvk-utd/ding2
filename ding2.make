@@ -540,6 +540,7 @@ libraries[guzzle][download][type] = "git"
 libraries[guzzle][download][url] = "https://github.com/guzzle/guzzle.git"
 libraries[guzzle][download][tag] = "6.5.8"
 libraries[guzzle][destination] = "libraries"
+libraries[guzzle][patch][] = "patches/guzzle-php81.patch"
 
 ; For ding_libs.
 libraries[http-message][download][type] = "git"
