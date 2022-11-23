@@ -163,7 +163,7 @@ projects[geocoder][version] = "1.7"
 projects[geocoder][patch][] = "https://www.drupal.org/files/issues/2022-08-05/geocoder_php-8-regression-3254201-1.patch"
 
 projects[geofield][subdir] = "contrib"
-projects[geofield][version] = "1.2"
+projects[geofield][version] = "2.4"
 
 projects[geophp][subdir] = "contrib"
 projects[geophp][version] = "1.7"
