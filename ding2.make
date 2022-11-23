@@ -313,7 +313,10 @@ projects[oembed][patch][] = "http://www.drupal.org/files/issues/oembed-remove_ho
 projects[oembed][patch][] = "https://www.drupal.org/files/oembed-2021015-1.patch"
 
 projects[og][subdir] = "contrib"
-projects[og][version] = "2.9"
+projects[og][version] = "2.10"
+; Patch for PHP 8.1 compatibility.
+; https://www.drupal.org/project/og/issues/3306532
+projects[og][patch][] = "https://git.drupalcode.org/project/og/-/merge_requests/3.diff"
 
 projects[og_menu][subdir] = "contrib"
 projects[og_menu][version] = "3.0"
