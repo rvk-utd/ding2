@@ -510,35 +510,41 @@ projects[xautoload][version] = "5.8"
 
 ; Libraries
 ; For ding_libs.
+libraries[bpi-client][type] = "library"
 libraries[bpi-client][destination] = "modules/bpi/lib"
 libraries[bpi-client][download][type] = "git"
 libraries[bpi-client][download][url] = "http://github.com/ding2/bpi-client.git"
 libraries[bpi-client][download][tag] = "7.x-5.0.1"
 
 ; For wysiwyg.
+libraries[ckeditor][type] = "library"
 libraries[ckeditor][download][type] = "get"
 libraries[ckeditor][download][url] = https://download.cksource.com/CKEditor/CKEditor/CKEditor%204.9.2/ckeditor_4.9.2_standard.zip
 libraries[ckeditor][directory_name] = "ckeditor"
 libraries[ckeditor][destination] = "libraries"
 
 ; For ding_libs.
+libraries[chosen][type] = "library"
 libraries[chosen][download][type] = "get"
 libraries[chosen][download][url] = "https://github.com/harvesthq/chosen/releases/download/1.4.2/chosen_v1.4.2.zip"
 libraries[chosen][destination] = "libraries"
 
 ; For ding_adgangsplatformen.
+libraries[random_compat][type] = "library"
 libraries[random_compat][download][type] = "git"
 libraries[random_compat][download][url] = "https://github.com/paragonie/random_compat.git"
 libraries[random_compat][download][tag] = "v2.0.17"
 libraries[random_compat][destination] = "libraries"
 
 ; For ding_adgangsplatformen.
+libraries[oauth2-client][type] = "library"
 libraries[oauth2-client][download][type] = "git"
 libraries[oauth2-client][download][url] = "https://github.com/thephpleague/oauth2-client.git"
 libraries[oauth2-client][download][tag] = "2.3.0"
 libraries[oauth2-client][destination] = "libraries"
 
 ; For ding_libs.
+libraries[guzzle][type] = "library"
 libraries[guzzle][download][type] = "git"
 libraries[guzzle][download][url] = "https://github.com/guzzle/guzzle.git"
 libraries[guzzle][download][tag] = "6.5.8"
@@ -546,29 +552,34 @@ libraries[guzzle][destination] = "libraries"
 libraries[guzzle][patch][] = "patches/guzzle-php81.patch"
 
 ; For ding_libs.
+libraries[http-message][type] = "library"
 libraries[http-message][download][type] = "git"
 libraries[http-message][download][url] = "https://github.com/php-fig/http-message.git"
 libraries[http-message][download][tag] = "1.0.1"
 libraries[http-message][destination] = "libraries"
 
 ; For ding_libs.
+libraries[jsonmapper][type] = "library"
 libraries[jsonmapper][download][type] = "git"
 libraries[jsonmapper][download][url] = "https://github.com/cweiske/jsonmapper"
 libraries[jsonmapper][download][tag] = "v0.4.4"
 libraries[jsonmapper][destination] = "libraries"
 
 ; For leaflet.
+libraries[leaflet][type] = "library"
 libraries[leaflet][download][type] = "get"
 libraries[leaflet][download][url] = "http://cdn.leafletjs.com/downloads/leaflet-0.7.3.zip"
 libraries[leaflet][directory_name] = "leaflet"
 libraries[leaflet][destination] = "libraries"
 
 ; For ding_libs.
+libraries[phly-http][type] = "library"
 libraries[phly-http][download][type] = "git"
 libraries[phly-http][download][url] = "https://github.com/phly/http"
 libraries[phly-http][download][tag] = "0.14.1"
 libraries[phly-http][destination] = "libraries"
 
+libraries[profiler][type] = "library"
 libraries[profiler][download][type] = "git"
 libraries[profiler][download][url] = "http://git.drupal.org/project/profiler.git"
 libraries[profiler][download][branch] = "7.x-2.0-beta1"
@@ -576,48 +587,56 @@ libraries[profiler][download][branch] = "7.x-2.0-beta1"
 libraries[profiler][patch][0] = "http://drupal.org/files/profiler-reverse.patch"
 
 ; For ding_libs.
+libraries[promises][type] = "library"
 libraries[promises][download][type] = "git"
 libraries[promises][download][url] = "https://github.com/guzzle/promises.git"
 libraries[promises][download][tag] = "1.2.0"
 libraries[promises][destination] = "libraries"
 
 ; For ding_libs.
+libraries[psr7][type] = "library"
 libraries[psr7][download][type] = "git"
 libraries[psr7][download][url] = "https://github.com/guzzle/psr7.git"
 libraries[psr7][download][tag] = "1.3.1"
 libraries[psr7][destination] = "libraries"
 
 ; For ting.
+libraries[ting-client][type] = "library"
 libraries[ting-client][download][type] = "git"
 libraries[ting-client][download][url] = "http://github.com/ding2/ting-client.git"
 libraries[ting-client][destination] = "modules/opensearch/lib"
 libraries[ting-client][download][tag] = "7.x-5.0.1"
 
 ; Obsoleted. Only reference is in ding_frontend.
+libraries[zen-grids][type] = "library"
 libraries[zen-grids][download][type] = "git"
 libraries[zen-grids][download][url] = "https://github.com/JohnAlbin/zen-grids.git"
 libraries[zen-grids][download][tag] = "1.4"
 libraries[zen-grids][destination] = "libraries"
 
 ; For manualcrop.
+libraries[jquery.imgareaselect][type] = "library"
 libraries[jquery.imgareaselect][download][type] = "get"
 libraries[jquery.imgareaselect][download][url] =  https://github.com/odyniec/imgareaselect/archive/v0.9.11-rc.1.tar.gz
 libraries[jquery.imgareaselect][directory_name] = "jquery.imgareaselect"
 libraries[jquery.imgareaselect][destination] = "libraries"
 
 ; For manualcrop and ddbasic.
+libraries[jquery.imagesloaded][type] = "library"
 libraries[jquery.imagesloaded][download][type] = "get"
 libraries[jquery.imagesloaded][download][url] = https://github.com/desandro/imagesloaded/archive/v2.1.2.tar.gz
 libraries[jquery.imagesloaded][directory_name] = "jquery.imagesloaded"
 libraries[jquery.imagesloaded][destination] = "libraries"
 
 ; For ding_libs.
+libraries[js.cookie][type] = "library"
 libraries[js.cookie][download][type] = "get"
 libraries[js.cookie][download][url] =  "https://github.com/js-cookie/js-cookie/releases/download/v2.2.0/js.cookie-2.2.0.min.js"
 libraries[js.cookie][directory_name] = "js.cookie"
 libraries[js.cookie][destination] = "libraries"
 
 ; For ding_libs.
+libraries[slick][type] = "library"
 libraries[slick][download][type] = "get"
 libraries[slick][download][url] = https://github.com/kenwheeler/slick/archive/v1.8.1.tar.gz
 libraries[slick][directory_name] = "slick"
@@ -627,17 +646,20 @@ libraries[slick][destination] = "libraries"
 libraries[slick][patch][] = "https://patch-diff.githubusercontent.com/raw/kenwheeler/slick/pull/2635.diff"
 
 ; For ding_libs.
+libraries[html5shiv][type] = "library"
 libraries[html5shiv][download][type] = "get"
 libraries[html5shiv][download][url] = https://github.com/aFarkas/html5shiv/archive/3.7.3.zip
 libraries[html5shiv][directory_name] = "html5shiv"
 libraries[html5shiv][destination] = "libraries"
 
 ; For ding_libs.
+libraries[masonry][type] = "library"
 libraries[masonry][download][type] = "get"
 libraries[masonry][download][url] = https://github.com/desandro/masonry/archive/v4.1.1.zip
 libraries[masonry][directory_name] = "masonry"
 libraries[masonry][destination] = "libraries"
 
+libraries[smart-app-banner][type] = "library"
 libraries[smart-app-banner][download][type] = "get"
 libraries[smart-app-banner][download][url] = https://github.com/kudago/smart-app-banner/archive/v1.3.0.zip
 libraries[smart-app-banner][directory_name] = "smart-app-banner"
