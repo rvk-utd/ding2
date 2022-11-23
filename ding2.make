@@ -377,7 +377,7 @@ projects[rules][subdir] = "contrib"
 projects[rules][version] = "2.13"
 
 projects[scheduler][subdir] = "contrib"
-projects[scheduler][version] = "1.5"
+projects[scheduler][version] = "1.6"
 
 ; TODO: Investigate if we can use a stable version instead.
 ; Patched with "Secure Permissions fails with features and multilingual"
