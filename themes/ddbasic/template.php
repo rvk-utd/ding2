@@ -1144,6 +1144,10 @@ function ddbasic_preprocess_material_item(&$variables) {
  * Preprocess function form element.
  */
 function ddbasic_preprocess_form_element(&$variables) {
+  if (!isset($variables['element']['#id'])) {
+    return;
+  }
+
   // Remove label to profile date field.
   if ($variables['element']['#id'] == 'edit-profile-provider-alma-field-alma-reservation-pause-und-0-value2') {
     $variables['element']['#title'] = '';
@@ -1156,7 +1160,6 @@ function ddbasic_preprocess_form_element(&$variables) {
   if ($variables['element']['#id'] == 'edit-profile-provider-alma-field-alma-reservation-pause-und-0-value-datepicker-popup-0') {
     $variables['element']['#title'] = 'Fra dato:';
   }
-
 }
 
 /**
