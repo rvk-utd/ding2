@@ -489,6 +489,9 @@ projects[workbench][version] = "1.2"
 
 projects[workflow][subdir] = "contrib"
 projects[workflow][version] = "2.13"
+; Patch for PHP 8.1 compatibility.
+; Rerolled from https://www.drupal.org/project/workflow/issues/3160640
+projects[workflow][patch][] = "patches/workflow-3160640.patch"
 
 ; Drush at CircleCI cannot find version 2.9.
 ; Maybe because it was released today
