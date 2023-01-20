@@ -349,8 +349,7 @@ projects[panels_breadcrumbs][subdir] = "contrib"
 projects[panels_breadcrumbs][version] = "2.6"
 
 projects[panels_everywhere][subdir] = "contrib"
-projects[panels_everywhere][version] = "1.0-rc1"
-projects[panels_everywhere][type] = "module"
+projects[panels_everywhere][version] = "1.0"
 
 projects[pathauto][subdir] = "contrib"
 projects[pathauto][version] = "1.2"
