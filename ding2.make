@@ -361,8 +361,12 @@ projects[pm_existing_pages][version] = "1.4"
 projects[profile2][subdir] = "contrib"
 projects[profile2][version] = "1.3"
 
+; Use dev version for  PHP 8.1 compatibility.
+projects[paragraphs][type] = "module"
 projects[paragraphs][subdir] = "contrib"
-projects[paragraphs][version] = "1.0-rc5"
+projects[paragraphs][download][type] = "git"
+projects[paragraphs][download][url] = "http://git.drupal.org/project/paragraphs.git"
+projects[paragraphs][download][revision] = "29397f85255e21666f089254f60d196e142ca9dc"
 
 projects[realname][subdir] = "contrib"
 projects[realname][version] = "1.2"
