@@ -345,11 +345,8 @@ projects[pagepreview][version] = "1.0-alpha1"
 projects[panels][subdir] = "contrib"
 projects[panels][version] = "3.11"
 
-; TODO: Investigate if we upgrade.
-; Right now it is untouched because of the locked version of panels (see above).
-; This combination (panels+panels_breadcrumbs) we know works.
 projects[panels_breadcrumbs][subdir] = "contrib"
-projects[panels_breadcrumbs][version] = "2.1"
+projects[panels_breadcrumbs][version] = "2.6"
 
 projects[panels_everywhere][subdir] = "contrib"
 projects[panels_everywhere][version] = "1.0-rc1"
