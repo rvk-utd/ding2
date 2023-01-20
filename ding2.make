@@ -41,7 +41,10 @@ projects[conditional_styles][subdir] = "contrib"
 projects[conditional_styles][version] = "2.2"
 
 projects[cs_adaptive_image][subdir] = "contrib"
-projects[cs_adaptive_image][version] = "1.0"
+projects[cs_adaptive_image][version] = "1.1"
+; Patch for PHP 8.1 compatibility.
+; https://www.drupal.org/project/cs_adaptive_image/issues/3333578
+projects[cs_adaptive_image][patch][] = "https://www.drupal.org/files/issues/2023-01-14/cs_adaptive_image-n3333578-2.patch"
 
 projects[ctools][subdir] = "contrib"
 projects[ctools][version] = "1.20"
