@@ -380,11 +380,7 @@ projects[role_delegation][subdir] = "contrib"
 projects[role_delegation][version] = "1.3"
 
 projects[rules][subdir] = "contrib"
-; Patch for PHP 8.1 compatibility.
-; https://www.drupal.org/project/rules/issues/3349546
-projects[rules][patch][] = "https://git.drupalcode.org/project/rules/-/merge_requests/12/commits.patch"
-; https://www.drupal.org/project/rules/issues/3305946
-projects[rules][patch][] = "https://git.drupalcode.org/project/rules/-/merge_requests/11.patch"
+projects[rules][version] = "2.13"
 
 projects[scheduler][subdir] = "contrib"
 projects[scheduler][version] = "1.6"
