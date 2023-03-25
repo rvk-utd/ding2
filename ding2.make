@@ -381,6 +381,9 @@ projects[role_delegation][version] = "1.3"
 
 projects[rules][subdir] = "contrib"
 projects[rules][version] = "2.13"
+; Patch upgrade path.
+; https://www.drupal.org/project/rules/issues/3334495
+projects[rules][patch][] = "https://www.drupal.org/files/issues/2023-01-18/rules-RulesPluginFeaturesIntegrationInterface_does_not_exists-3334495-3.patch"
 
 projects[scheduler][subdir] = "contrib"
 projects[scheduler][version] = "1.6"
