@@ -373,7 +373,7 @@ function ting_ding_entity_is($object, $class) {
   // more flexibilty to other modules.
   switch ($class) {
     case 'online':
-      if (!empty($object->getOnline_url())) {
+      if ($object->isOnline()) {
         return TRUE;
       }
       return NULL;
