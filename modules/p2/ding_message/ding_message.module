@@ -348,6 +348,11 @@ function ding_message_check_element($uid, DingListElement $element, $message = N
       }
   }
 
+  // Ensure we always have an array.
+  if (empty($elements)) {
+    $elements = [];
+  }
+
   // Handle updates.
   if ($has_updates) {
     // If no message exists, create a new message entity.
