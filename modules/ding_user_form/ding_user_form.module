@@ -1,5 +1,7 @@
 <?php
 
+use Alma\Users\Client as UserClient;
+
 /**
  * @file
  * Handle user login form changes.
@@ -50,8 +52,8 @@ function ding_user_form_form_alter(&$form, $form_state, $form_id) {
       // Hide titles, and add display as placeholders.
       $form['name']['#attributes']['placeholder'] = t('Loan/social security number (without dash)');
       $form['name']['#title_display'] = 'invisible';
-      $form['pass']['#attributes']['placeholder'] = t('Pincode (@length digits)',
-        ['@length' => ding_user_get_pincode_length_range_string()]);
+      $form['pass']['#attributes']['placeholder'] = t('Password (min. @length characters)',
+        ['@length' => UserClient::MIN_PASSWORD_LENGTH ]);
       $form['pass']['#title_display'] = 'invisible';
 
       // Add our own validation handler, after the default Drupal login
