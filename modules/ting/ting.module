@@ -396,20 +396,19 @@ function ting_ding_entity_buttons($type, $entity, $view_mode, $widget = 'default
     $buttons = array();
 
     if ($entity->is('online')) {
-      $settings = variable_get('ting_url_labels', _ting_default_url_labels());
-      $type = drupal_strtolower($entity->type);
-      $label = isset($settings[$type]) && $settings[$type] ? $settings[$type] : $settings['_default'];
-      // The link can't use l() as it will encode the url from ting_proxy. Use
-      // get online as the dc:identifier in $entity->online is not always the
-      // correct url.
+      // Add "borrow online" button. The button is controlled by js.
       $buttons[] = [
         '#type' => 'html_tag',
-        '#tag' => 'a',
-        '#value' => $label,
+        '#tag' => 'span',
+        '#value' => '&nbsp;',
         '#attributes' => [
-          'class' => ['button-see-online', 'action-button'],
-          'href' => $entity->getOnline_url(),
-          'target' => '_new',
+          'class' => ['borrow-online-container'],
+          'data-id' => $entity->id,
+        ],
+        '#attached' => [
+          'js' => [
+            drupal_get_path('module', 'ting') . '/js/online-link.js',
+          ],
         ],
       ];
     }
