@@ -337,7 +337,7 @@ projects[opening_hours][patch][] = "https://www.drupal.org/files/issues/opening_
 projects[opening_hours][patch][] = "https://www.drupal.org/files/issues/opening-hours-2820005-hide-field-if-empty.patch"
 
 projects[override_node_options][subdir] = "contrib"
-projects[override_node_options][version] = "1.13"
+projects[override_node_options][version] = "1.15"
 
 projects[pagepreview][subdir] = "contrib"
 projects[pagepreview][version] = "1.0-alpha1"
