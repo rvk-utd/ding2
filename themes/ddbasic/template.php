@@ -1063,6 +1063,11 @@ function ddbasic_process_ting_object(&$vars) {
           unset($content['group_material_details']);
         }
 
+        // Hide holdings, if we're on an online material.
+        if ($vars['object']->is('online')) {
+          unset($vars['content']['ting-object']['content']['right_column']['group_holdings_available']);
+        }
+
         if (isset($content['content']['ding_availability_holdings'])) {
 
           $vars['content']['holdings-available'] = array(
