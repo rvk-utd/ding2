@@ -29,7 +29,10 @@ projects[better_exposed_filters][subdir] = "contrib"
 projects[better_exposed_filters][version] = "3.4"
 
 projects[block_access][subdir] = "contrib"
-projects[block_access][version] = "1.5"
+projects[block_access][version] = "1.6"
+; Patch for PHP 8.1 compatibility.
+; https://www.drupal.org/project/block_access/issues/3309466
+projects[block_access][patch][] = "https://git.drupalcode.org/project/block_access/-/merge_requests/1.diff"
 
 projects[cache_actions][subdir] = "contrib"
 projects[cache_actions][version] = "2.0-alpha5"
@@ -38,10 +41,13 @@ projects[conditional_styles][subdir] = "contrib"
 projects[conditional_styles][version] = "2.2"
 
 projects[cs_adaptive_image][subdir] = "contrib"
-projects[cs_adaptive_image][version] = "1.0"
+projects[cs_adaptive_image][version] = "1.1"
+; Patch for PHP 8.1 compatibility.
+; https://www.drupal.org/project/cs_adaptive_image/issues/3333578
+projects[cs_adaptive_image][patch][] = "https://www.drupal.org/files/issues/2023-01-14/cs_adaptive_image-n3333578-2.patch"
 
 projects[ctools][subdir] = "contrib"
-projects[ctools][version] = "1.10"
+projects[ctools][version] = "1.20"
 
 projects[customerror][subdir] = "contrib"
 projects[customerror][version] = "1.4"
@@ -49,7 +55,7 @@ projects[customerror][patch][] = "https://www.drupal.org/files/issues/customerro
 projects[customerror][patch][] = "patches/customerror-disable_auto_redirect.ding2.patch"
 
 projects[date][subdir] = "contrib"
-projects[date][version] = "2.11"
+projects[date][version] = "2.13"
 
 projects[dibs][subdir] = "contrib"
 projects[dibs][version] = "1.0"
@@ -71,6 +77,9 @@ projects[dynamic_background][patch][] = "https://www.drupal.org/files/issues/cre
 
 projects[eck][subdir] = "contrib"
 projects[eck][version] = "2.0-rc9"
+; PHP 8.1 compatibility
+; https://www.drupal.org/project/eck/issues/3309108
+projects[eck][patch][] = "https://www.drupal.org/files/issues/2022-09-11/eck-deprecated_functions-3309108-3.patch"
 
 projects[email][subdir] = "contrib"
 projects[email][version] = "1.3"
@@ -86,6 +95,9 @@ projects[entitycache][patch][] = "http://drupal.org/files/issues/2146543-ensure-
 projects[entitycache][patch][] = "https://www.drupal.org/files/issues/2020-03-12/2516094-1-entitycache_fix_arry_flip.patch"
 ; Fix upgrade path from version 1.2
 projects[entitycache][patch][] = "https://git.drupalcode.org/project/entitycache/-/commit/b9b9865.patch"
+; create_function is deprecated in PHP 7.2
+; https://www.drupal.org/project/entitycache/issues/2981629
+projects[entitycache][patch][] = "https://www.drupal.org/files/issues/2018-07-05/entitycache_php_7-2981629-0.patch"
 
 projects[entityreference][subdir] = "contrib"
 projects[entityreference][version] = "1.5"
@@ -104,10 +116,13 @@ projects[expire][subdir] = "contrib"
 projects[expire][version] = "2.0-rc4"
 
 projects[features][subdir] = "contrib"
-projects[features][version] = "2.11"
+projects[features][version] = "2.14"
 
 projects[features_extra][subdir] = "contrib"
-projects[features_extra][version] = "1.0-beta1"
+projects[features_extra][version] = "1.0"
+; PHP 8.1 compatibility.
+; https://www.drupal.org/project/features_extra/issues/3256320
+projects[features_extra][patch][] = "https://www.drupal.org/files/issues/2022-08-06/3256320-features_extra-php-8-compatibility-7.patch"
 
 projects[feeds][subdir] = "contrib"
 projects[feeds][version] = "2.0-alpha8"
@@ -145,10 +160,13 @@ projects[formblock][download][url] = "http://git.drupal.org/project/formblock.gi
 projects[formblock][download][revision] = "2d94c83"
 
 projects[geocoder][subdir] = "contrib"
-projects[geocoder][version] = "1.2"
+projects[geocoder][version] = "1.7"
+; Patch for PHP 8.1 compatibility.
+; https://www.drupal.org/project/geocoder/issues/3254201
+projects[geocoder][patch][] = "https://www.drupal.org/files/issues/2022-08-05/geocoder_php-8-regression-3254201-1.patch"
 
 projects[geofield][subdir] = "contrib"
-projects[geofield][version] = "1.2"
+projects[geofield][version] = "2.4"
 
 projects[geophp][subdir] = "contrib"
 projects[geophp][version] = "1.7"
@@ -245,7 +263,7 @@ projects[media_youtube][subdir] = "contrib"
 projects[media_youtube][version] = "3.0"
 
 projects[memcache][subdir] = "contrib"
-projects[memcache][version] = "1.6"
+projects[memcache][version] = "1.8"
 
 projects[menu_block][subdir] = "contrib"
 projects[menu_block][version] = "2.7"
@@ -265,7 +283,7 @@ projects[message][subdir] = "contrib"
 projects[message][version] = "1.12"
 
 projects[metatag][subdir] = "contrib"
-projects[metatag][version] = "1.21"
+projects[metatag][version] = "1.30"
 
 projects[mmeu][subdir] = "contrib"
 projects[mmeu][version] = "1.0"
@@ -280,7 +298,7 @@ projects[nanosoap][version] = "1.0"
 projects[nanosoap][patch][] = "http://drupal.org/files/nanosoap-curloptions-1943732.patch"
 
 projects[nodequeue][subdir] = "contrib"
-projects[nodequeue][version] = "2.2"
+projects[nodequeue][version] = "2.5"
 
 projects[node_clone][subdir] = "contrib"
 projects[node_clone][version] = "1.0-rc2"
@@ -298,7 +316,10 @@ projects[oembed][patch][] = "http://www.drupal.org/files/issues/oembed-remove_ho
 projects[oembed][patch][] = "https://www.drupal.org/files/oembed-2021015-1.patch"
 
 projects[og][subdir] = "contrib"
-projects[og][version] = "2.9"
+projects[og][version] = "2.10"
+; Patch for PHP 8.1 compatibility.
+; https://www.drupal.org/project/og/issues/3306532
+projects[og][patch][] = "https://git.drupalcode.org/project/og/-/merge_requests/3.diff"
 
 projects[og_menu][subdir] = "contrib"
 projects[og_menu][version] = "3.0"
@@ -316,27 +337,19 @@ projects[opening_hours][patch][] = "https://www.drupal.org/files/issues/opening_
 projects[opening_hours][patch][] = "https://www.drupal.org/files/issues/opening-hours-2820005-hide-field-if-empty.patch"
 
 projects[override_node_options][subdir] = "contrib"
-projects[override_node_options][version] = "1.13"
+projects[override_node_options][version] = "1.15"
 
 projects[pagepreview][subdir] = "contrib"
 projects[pagepreview][version] = "1.0-alpha1"
 
-; TODO: Investigate if we can use a stable version instead.
-; If we upgrade to 3.10 it breaks pages.
 projects[panels][subdir] = "contrib"
-projects[panels][version] = "3.4"
-; Fix PHP7 errors - PHP 4 style constructors - (https://www.drupal.org/node/2557061)
-projects[panels][patch][] = "https://www.drupal.org/files/issues/deprecated-constructor-in-php-7-2557061-3.patch"
+projects[panels][version] = "3.11"
 
-; TODO: Investigate if we upgrade.
-; Right now it is untouched because of the locked version of panels (see above).
-; This combination (panels+panels_breadcrumbs) we know works.
 projects[panels_breadcrumbs][subdir] = "contrib"
-projects[panels_breadcrumbs][version] = "2.1"
+projects[panels_breadcrumbs][version] = "2.6"
 
 projects[panels_everywhere][subdir] = "contrib"
-projects[panels_everywhere][version] = "1.0-rc1"
-projects[panels_everywhere][type] = "module"
+projects[panels_everywhere][version] = "1.0"
 
 projects[pathauto][subdir] = "contrib"
 projects[pathauto][version] = "1.2"
@@ -347,8 +360,12 @@ projects[pm_existing_pages][version] = "1.4"
 projects[profile2][subdir] = "contrib"
 projects[profile2][version] = "1.3"
 
+; Use dev version for  PHP 8.1 compatibility.
+projects[paragraphs][type] = "module"
 projects[paragraphs][subdir] = "contrib"
-projects[paragraphs][version] = "1.0-rc5"
+projects[paragraphs][download][type] = "git"
+projects[paragraphs][download][url] = "http://git.drupal.org/project/paragraphs.git"
+projects[paragraphs][download][revision] = "29397f85255e21666f089254f60d196e142ca9dc"
 
 projects[realname][subdir] = "contrib"
 projects[realname][version] = "1.2"
@@ -363,10 +380,13 @@ projects[role_delegation][subdir] = "contrib"
 projects[role_delegation][version] = "1.3"
 
 projects[rules][subdir] = "contrib"
-projects[rules][version] = "2.11"
+projects[rules][version] = "2.13"
+; Patch upgrade path.
+; https://www.drupal.org/project/rules/issues/3334495
+projects[rules][patch][] = "https://www.drupal.org/files/issues/2023-01-18/rules-RulesPluginFeaturesIntegrationInterface_does_not_exists-3334495-3.patch"
 
 projects[scheduler][subdir] = "contrib"
-projects[scheduler][version] = "1.5"
+projects[scheduler][version] = "1.6"
 
 ; TODO: Investigate if we can use a stable version instead.
 ; Patched with "Secure Permissions fails with features and multilingual"
@@ -385,7 +405,7 @@ projects[services_views][subdir] = "contrib"
 projects[services_views][version] = "1.1"
 
 projects[search_api][subdir] = "contrib"
-projects[search_api][version] = "1.26"
+projects[search_api][version] = "1.28"
 
 projects[search_api_multi][subdir] = "contrib"
 projects[search_api_multi][version] = "1.3"
@@ -473,15 +493,11 @@ projects[webform][patch][] = "https://www.drupal.org/files/issues/2022-04-22/325
 projects[workbench][subdir] = "contrib"
 projects[workbench][version] = "1.2"
 
-; TODO: Investigate if we can use a stable version instead
-; and investigate: https://github.com/ding2/ding2/pull/389/commits/95523a97f9407aed69adbc43da3c2c59848f098d
 projects[workflow][subdir] = "contrib"
-projects[workflow][version] = "2.5"
-projects[workflow][patch][] = "http://www.drupal.org/files/issues/features_import-2484297-10.patch"
-; Prevent fatal errors on cron when using Scheduler, https://www.drupal.org/node/2499193.
-projects[workflow][patch][] = "https://www.drupal.org/files/issues/workflow-php_fatal_error_call-2499193-7-2.5.patch"
-; Add index to workflow_history to reduce query time, https://www.drupal.org/project/workflow/issues/2569801
-projects[workflow][patch][] = "https://www.drupal.org/files/issues/workflow-add_nid_index-2569801-3.patch"
+projects[workflow][version] = "2.13"
+; Patch for PHP 8.1 compatibility.
+; Rerolled from https://www.drupal.org/project/workflow/issues/3160640
+projects[workflow][patch][] = "patches/workflow-3160640.patch"
 
 ; Drush at CircleCI cannot find version 2.9.
 ; Maybe because it was released today
@@ -503,64 +519,76 @@ projects[xautoload][version] = "5.8"
 
 ; Libraries
 ; For ding_libs.
+libraries[bpi-client][type] = "library"
 libraries[bpi-client][destination] = "modules/bpi/lib"
 libraries[bpi-client][download][type] = "git"
 libraries[bpi-client][download][url] = "http://github.com/ding2/bpi-client.git"
 libraries[bpi-client][download][tag] = "7.x-5.0.1"
 
 ; For wysiwyg.
+libraries[ckeditor][type] = "library"
 libraries[ckeditor][download][type] = "get"
 libraries[ckeditor][download][url] = https://download.cksource.com/CKEditor/CKEditor/CKEditor%204.9.2/ckeditor_4.9.2_standard.zip
 libraries[ckeditor][directory_name] = "ckeditor"
 libraries[ckeditor][destination] = "libraries"
 
 ; For ding_libs.
+libraries[chosen][type] = "library"
 libraries[chosen][download][type] = "get"
 libraries[chosen][download][url] = "https://github.com/harvesthq/chosen/releases/download/1.4.2/chosen_v1.4.2.zip"
 libraries[chosen][destination] = "libraries"
 
 ; For ding_adgangsplatformen.
+libraries[random_compat][type] = "library"
 libraries[random_compat][download][type] = "git"
 libraries[random_compat][download][url] = "https://github.com/paragonie/random_compat.git"
 libraries[random_compat][download][tag] = "v2.0.17"
 libraries[random_compat][destination] = "libraries"
 
 ; For ding_adgangsplatformen.
+libraries[oauth2-client][type] = "library"
 libraries[oauth2-client][download][type] = "git"
 libraries[oauth2-client][download][url] = "https://github.com/thephpleague/oauth2-client.git"
 libraries[oauth2-client][download][tag] = "2.3.0"
 libraries[oauth2-client][destination] = "libraries"
 
 ; For ding_libs.
+libraries[guzzle][type] = "library"
 libraries[guzzle][download][type] = "git"
 libraries[guzzle][download][url] = "https://github.com/guzzle/guzzle.git"
-libraries[guzzle][download][tag] = "6.3.3"
+libraries[guzzle][download][tag] = "6.5.8"
 libraries[guzzle][destination] = "libraries"
+libraries[guzzle][patch][] = "patches/guzzle-php81.patch"
 
 ; For ding_libs.
+libraries[http-message][type] = "library"
 libraries[http-message][download][type] = "git"
 libraries[http-message][download][url] = "https://github.com/php-fig/http-message.git"
 libraries[http-message][download][tag] = "1.0.1"
 libraries[http-message][destination] = "libraries"
 
 ; For ding_libs.
+libraries[jsonmapper][type] = "library"
 libraries[jsonmapper][download][type] = "git"
 libraries[jsonmapper][download][url] = "https://github.com/cweiske/jsonmapper"
 libraries[jsonmapper][download][tag] = "v0.4.4"
 libraries[jsonmapper][destination] = "libraries"
 
 ; For leaflet.
+libraries[leaflet][type] = "library"
 libraries[leaflet][download][type] = "get"
 libraries[leaflet][download][url] = "http://cdn.leafletjs.com/downloads/leaflet-0.7.3.zip"
 libraries[leaflet][directory_name] = "leaflet"
 libraries[leaflet][destination] = "libraries"
 
 ; For ding_libs.
+libraries[phly-http][type] = "library"
 libraries[phly-http][download][type] = "git"
 libraries[phly-http][download][url] = "https://github.com/phly/http"
 libraries[phly-http][download][tag] = "0.14.1"
 libraries[phly-http][destination] = "libraries"
 
+libraries[profiler][type] = "library"
 libraries[profiler][download][type] = "git"
 libraries[profiler][download][url] = "http://git.drupal.org/project/profiler.git"
 libraries[profiler][download][branch] = "7.x-2.0-beta1"
@@ -568,48 +596,56 @@ libraries[profiler][download][branch] = "7.x-2.0-beta1"
 libraries[profiler][patch][0] = "http://drupal.org/files/profiler-reverse.patch"
 
 ; For ding_libs.
+libraries[promises][type] = "library"
 libraries[promises][download][type] = "git"
 libraries[promises][download][url] = "https://github.com/guzzle/promises.git"
 libraries[promises][download][tag] = "1.2.0"
 libraries[promises][destination] = "libraries"
 
 ; For ding_libs.
+libraries[psr7][type] = "library"
 libraries[psr7][download][type] = "git"
 libraries[psr7][download][url] = "https://github.com/guzzle/psr7.git"
 libraries[psr7][download][tag] = "1.3.1"
 libraries[psr7][destination] = "libraries"
 
 ; For ting.
+libraries[ting-client][type] = "library"
 libraries[ting-client][download][type] = "git"
 libraries[ting-client][download][url] = "http://github.com/ding2/ting-client.git"
 libraries[ting-client][destination] = "modules/opensearch/lib"
 libraries[ting-client][download][tag] = "7.x-5.0.1"
 
 ; Obsoleted. Only reference is in ding_frontend.
+libraries[zen-grids][type] = "library"
 libraries[zen-grids][download][type] = "git"
 libraries[zen-grids][download][url] = "https://github.com/JohnAlbin/zen-grids.git"
 libraries[zen-grids][download][tag] = "1.4"
 libraries[zen-grids][destination] = "libraries"
 
 ; For manualcrop.
+libraries[jquery.imgareaselect][type] = "library"
 libraries[jquery.imgareaselect][download][type] = "get"
 libraries[jquery.imgareaselect][download][url] =  https://github.com/odyniec/imgareaselect/archive/v0.9.11-rc.1.tar.gz
 libraries[jquery.imgareaselect][directory_name] = "jquery.imgareaselect"
 libraries[jquery.imgareaselect][destination] = "libraries"
 
 ; For manualcrop and ddbasic.
+libraries[jquery.imagesloaded][type] = "library"
 libraries[jquery.imagesloaded][download][type] = "get"
 libraries[jquery.imagesloaded][download][url] = https://github.com/desandro/imagesloaded/archive/v2.1.2.tar.gz
 libraries[jquery.imagesloaded][directory_name] = "jquery.imagesloaded"
 libraries[jquery.imagesloaded][destination] = "libraries"
 
 ; For ding_libs.
+libraries[js.cookie][type] = "library"
 libraries[js.cookie][download][type] = "get"
 libraries[js.cookie][download][url] =  "https://github.com/js-cookie/js-cookie/releases/download/v2.2.0/js.cookie-2.2.0.min.js"
 libraries[js.cookie][directory_name] = "js.cookie"
 libraries[js.cookie][destination] = "libraries"
 
 ; For ding_libs.
+libraries[slick][type] = "library"
 libraries[slick][download][type] = "get"
 libraries[slick][download][url] = https://github.com/kenwheeler/slick/archive/v1.8.1.tar.gz
 libraries[slick][directory_name] = "slick"
@@ -619,17 +655,20 @@ libraries[slick][destination] = "libraries"
 libraries[slick][patch][] = "https://patch-diff.githubusercontent.com/raw/kenwheeler/slick/pull/2635.diff"
 
 ; For ding_libs.
+libraries[html5shiv][type] = "library"
 libraries[html5shiv][download][type] = "get"
 libraries[html5shiv][download][url] = https://github.com/aFarkas/html5shiv/archive/3.7.3.zip
 libraries[html5shiv][directory_name] = "html5shiv"
 libraries[html5shiv][destination] = "libraries"
 
 ; For ding_libs.
+libraries[masonry][type] = "library"
 libraries[masonry][download][type] = "get"
 libraries[masonry][download][url] = https://github.com/desandro/masonry/archive/v4.1.1.zip
 libraries[masonry][directory_name] = "masonry"
 libraries[masonry][destination] = "libraries"
 
+libraries[smart-app-banner][type] = "library"
 libraries[smart-app-banner][download][type] = "get"
 libraries[smart-app-banner][download][url] = https://github.com/kudago/smart-app-banner/archive/v1.3.0.zip
 libraries[smart-app-banner][directory_name] = "smart-app-banner"

@@ -505,7 +505,7 @@ function ding_entity_rating_average($entity, $value = NULL) {
 
   }
 
-  return $averages[$id];
+  return $averages[$id] ?? 0;
 }
 
 /**

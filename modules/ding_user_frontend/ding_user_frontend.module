@@ -273,6 +273,11 @@ function ding_user_frontend_build_menu($path = NULL) {
  * This function normalizes the user/* paths, by replacing the uid with "me".
  */
 function ding_user_frontend_url_outbound_alter(&$path, &$options, $original_path) {
+  // Apparently someone invokes this hook with a null path.
+  if (!$path) {
+    return;
+  }
+
   global $user;
   if (preg_match('/^user\/(\d+)\/?(.*)$/', $path, $matches)) {
     // To allow site administrators to edit other user they have to be filter

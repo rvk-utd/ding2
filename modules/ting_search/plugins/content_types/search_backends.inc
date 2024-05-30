@@ -20,6 +20,7 @@ $plugin = array(
  * Render the ting search results amount block.
  */
 function ting_search_backend_engines_content_type_render($subtype, $conf, $panel_args, $context) {
+  $options_primary = array();
   $options = array();
 
   // Find search backends.
@@ -90,12 +91,14 @@ function ting_search_backend_engines_content_type_render($subtype, $conf, $panel
 
     // Add default option to the start of the array.
     if ($default['module'] == $backend['module']) {
-      array_unshift($options, $title);
+      $options_primary[$backend['module']] = $title;
     }
     else {
       $options[$backend['module']] = $title;
     }
   }
+
+  $options = $options_primary + $options;
 
   // Create a form with the radio buttons.
   $form = drupal_get_form('ting_search_backend_engines_form', $options, $default_value);
@@ -144,4 +147,3 @@ function ting_search_backend_engines_form($form, &$form_state, $options, $defaul
 function ting_search_backend_engines_content_type_edit_form($form, &$form_state) {
   return $form;
 }
-

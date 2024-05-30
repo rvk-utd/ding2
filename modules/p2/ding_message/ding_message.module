@@ -228,7 +228,7 @@ function ding_message_check_element($uid, DingListElement $element, $message = N
     $status = $wrapper->field_state->value();
     // Set new elements count.
     if ($status == DING_MESSAGE_ACTIVE) {
-      $new_elements_count = $wrapper->field_new_count->value();
+      $new_elements_count = (int) $wrapper->field_new_count->value();
     }
     else {
       $new_elements_count = 0;
@@ -260,7 +260,7 @@ function ding_message_check_element($uid, DingListElement $element, $message = N
               }, $collections);
               // Get the amount of new elements since last check.
               // We assume the result set is consistently ranked by date.
-              $count = array_search($last_element_id, $collection_ids);
+              $count = (int) array_search($last_element_id, $collection_ids);
               // Add the count to the new elements count.
               $new_elements_count += $count;
               if ($status != DING_MESSAGE_ACTIVE) {
@@ -282,7 +282,7 @@ function ding_message_check_element($uid, DingListElement $element, $message = N
             $last_element_id = $first_collection->getId();
             $first_element = end($collections);
             $first_element_id = $first_element->getId();
-            $new_elements_count += $result->getNumCollections();
+            $new_elements_count += (int) $result->getNumCollections();
             $has_updates = TRUE;
           }
         }
@@ -346,6 +346,11 @@ function ding_message_check_element($uid, DingListElement $element, $message = N
           }
         }
       }
+  }
+
+  // Ensure we always have an array.
+  if (empty($elements)) {
+    $elements = [];
   }
 
   // Handle updates.

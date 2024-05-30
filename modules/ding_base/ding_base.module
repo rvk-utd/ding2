@@ -512,7 +512,7 @@ function ding_base_rewrite_color_stylesheet() {
   $themes = list_themes();
   $theme = 'ddbasic';
   foreach ($themes as $name => $data) {
-    if ($data->status) {
+    if ($data->status && color_get_info($name)) {
       $theme = $name;
       break;
     }
@@ -610,7 +610,7 @@ function ding_base_field_widget_form_alter(&$elements, &$form_state, $context) {
       $display = !empty($displays) ? reset($displays) : NULL;
     }
 
-    if (!empty($display)) {
+    if (!empty($display['settings']['styles']['max_style'])) {
       // We will use functionality of image module.
       $style = image_style_load($display['settings']['styles']['max_style']);
       // Let's use sample file from image module, for applying all effects.
