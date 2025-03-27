@@ -578,7 +578,7 @@ libraries[jsonmapper][destination] = "libraries"
 libraries[leaflet][type] = "library"
 libraries[leaflet][download][type] = "get"
 libraries[leaflet][download][url] = "https://github.com/Leaflet/Leaflet/archive/refs/tags/v0.7.3.zip"
-libraries[leaflet][download][subtree] = "dist"
+libraries[leaflet][download][subtree] = "Leaflet-0.7.3/dist"
 libraries[leaflet][directory_name] = "leaflet"
 libraries[leaflet][destination] = "libraries"
 
